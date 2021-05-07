@@ -6,7 +6,7 @@
 #' @param path Path to the input file
 #' @return A dataframe of the Endnote references
 #' @export
-load_refs <-function(path, method){
+load_search <-function(path, method){
 
   if(method == "endnote"){
 
