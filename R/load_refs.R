@@ -6,8 +6,9 @@
 #' @param path Path to the input file
 #' @return A dataframe of the Endnote references
 #' @export
-#'
-load_endnote_refs <-function(path){
+load_refs <-function(path, method){
+
+  if(method == "endnote"){
 
 
         newdat<-xmlParse(path)
@@ -40,17 +41,9 @@ load_endnote_refs <-function(path){
         newdat <- newdat %>%
           mutate(Label = ifelse(is.na(Label), "NA", paste(Label)))
         return(newdat)
-}
+  }
 
-#' Load in csv references file
-#'
-#' This function loads in a comma separated values references file.
-#'
-#' @param path Path to the input file
-#' @return A dataframe of the Endnote references
-#' @export
-#'
-load_csv_refs <- function(path){
+  if(method == "csv"){
 
         cols <- c("Label","ISBN")
         newdat <- read.csv(path)
@@ -77,17 +70,7 @@ load_csv_refs <- function(path){
 }
 
 
-#' Load in tab delimited reference file
-#'
-#' This function loads in a tab delimited references file. It assumes that thefile is exported in
-#' standard Endnote tab delimited format.
-#'
-#' @param path Path to the input file
-#' @return A dataframe of the Endnote references
-#' @export
-#'
-load_txt_refs <- function(path){
-
+if(method == "txt"){
 
   cols <- c("Label","ISBN")
   newdat <- read.table(path)
@@ -112,4 +95,5 @@ load_txt_refs <- function(path){
           mutate(ISBN = ifelse(is.na(ISBN), "NA", paste(ISBN)))
 
         return(newdat)
-      }
+}
+}
