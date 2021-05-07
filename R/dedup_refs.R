@@ -1,5 +1,5 @@
 #' @export
-dedup_refs <-function(x,
+get_dedup_results <-function(x,
                       Author = "Author",
                       Title = "Title",
                       Year = "Year",
@@ -13,8 +13,6 @@ dedup_refs <-function(x,
                       RecordID = "RecordID",
                       Label = "Label")
 {
-
-  require(RecordLinkage)
 
   # Rename columns if necessary
   x <- x %>%
@@ -98,35 +96,38 @@ dedup_refs <-function(x,
   # Deduplication steps ---------------------------------------
 
   # ROUND 1: run compare.dedup function and block by Title&Pages OR Title&Author OR Title&Abstract OR DOI
-  newpairs = compare.dedup(newdatformatted, blockfld = list(c(2,8), c(1,2), c(2,5), 6), strcmp = TRUE, exclude=c("RecordID", "Label"))
+  try(newpairs <- compare.dedup(newdatformatted, blockfld = list(c(2,8), c(1,2), c(2,5), 6), strcmp = TRUE, exclude=c("RecordID", "Label")), silent=TRUE)
 
   # Create df of pairs
-  dfpairs <- as.data.frame(newpairs$pairs)
-  linkedpairs <- dfpairs
+  linkedpairs <- as.data.frame(if(exists("newpairs")) newpairs$pairs)
 
   # ROUND 2: run compare.dedup function and block by Author&Year&Pages OR Journal&Volume&Pages or ISBN&Volume&Pages OR Title&ISBN
-  newpairs2 = compare.dedup(newdatformatted, blockfld = list(c(1,3,8), c(4,9,8), c(10,9,8), c(2,10)), strcmp = TRUE, exclude= c("RecordID", "Label"))
+  try(newpairs2 <- compare.dedup(newdatformatted, blockfld = list(c(1,3,8), c(4,9,8), c(10,9,8), c(2,10)), strcmp = TRUE, exclude= c("RecordID", "Label")), silent=TRUE)
 
   #Create df of pairs
-  dfpairs2 <- as.data.frame(newpairs2$pairs)
-  linkedpairs2 <- dfpairs2
+  linkedpairs2 <- as.data.frame(if(exists("newpairs2")) newpairs2$pairs)
 
   # ROUND 3: run compare.dedup function and block by Year&Pages&Volume OR Year&Issue&Volume or Year&Pages&Issue
-  newpairs3 = compare.dedup(newdatformatted, blockfld = list(c(3,8,9), c(3,7,9), c(3,8,7)), strcmp = TRUE, exclude=c("RecordID", "Label"))
+  try(newpairs3 <- compare.dedup(newdatformatted, blockfld = list(c(3,8,9), c(3,7,9), c(3,8,7)), strcmp = TRUE, exclude=c("RecordID", "Label")), silent = TRUE)
 
   #Create df of pairs
-  dfpairs3 <- as.data.frame(newpairs3$pairs)
-  linkedpairs3 <- dfpairs3
+  linkedpairs3 <- as.data.frame(if(exists("newpairs3")) newpairs3$pairs)
 
   # ROUND 4: run compare.dedup function and block by Author&Year OR Year&Title OR Title&Volume OR Title&Journal
-  newpairs4 = compare.dedup(newdatformatted, blockfld = list(c(1,3), c(3,2), c(2,9), c(2,4)), strcmp = TRUE, exclude=c("RecordID", "Label"))
+  try(newpairs4 <- compare.dedup(newdatformatted, blockfld = list(c(1,3), c(3,2), c(2,9), c(2,4)), strcmp = TRUE, exclude=c("RecordID", "Label")), silent = TRUE)
 
   # Create df of pairs
-  dfpairs4 <- as.data.frame(newpairs4$pairs)
-  linkedpairs4 <- dfpairs4
+  linkedpairs4 <- as.data.frame(if(exists("newpairs4")) newpairs4$pairs)
+
 
   # Combine all possible pairs
-  SeePairs <- rbind(linkedpairs, linkedpairs2, linkedpairs3, linkedpairs4)
+  SeePairs <- rbind(if(exists("linkedpairs")) linkedpairs,
+                    if(exists("linkedpairs2")) linkedpairs2,
+                    if(exists("linkedpairs3")) linkedpairs3,
+                    if(exists("linkedpairs4")) linkedpairs4)
+
+
+
   SeePairs <- unique(SeePairs)
 
   # Obtain metadata for matching pairs
@@ -177,7 +178,7 @@ dedup_refs <-function(x,
 
   # Filter matching pairs to less likely unlikely pairs - make sure we only remove true duplicate matches
 
-SeePairsFiltered <- SeePairs %>%
+  SeePairsFiltered <- SeePairs %>%
     filter(
       (Pages>0.8 & Volume>0.8 & Title>0.90 & Abstract>0.90 & Author>0.50 & ISBN>0.99) |
         (Pages>0.8 & Volume>0.8 & Title>0.90 & Abstract>0.90 & Author>0.50 & Journal>0.6) |
@@ -246,30 +247,30 @@ SeePairsFiltered <- SeePairs %>%
   SeePairsFiltered$RecordID1 <- as.character(SeePairsFiltered$RecordID1)
   SeePairsFiltered$RecordID2 <- as.character(SeePairsFiltered$RecordID2)
 
-    # Remove duplicate papers ----------------------------------------------
+  # Remove duplicate papers ----------------------------------------------
 
-    # Get original data ready for removing duplicates
-    dedupdat <- newdatformatted
-    dedupdat$RecordID <- as.character(dedupdat$RecordID)
+  # Get original data ready for removing duplicates
+  dedupdat <- newdatformatted
+  dedupdat$RecordID <- as.character(dedupdat$RecordID)
 
-    SeePairsToDedup <- SeePairsFiltered
+  SeePairsToDedup <- SeePairsFiltered
 
-    # Keep record 1 and remove record 2
-    linkedpairskeep1 <- SeePairsToDedup
+  # Keep record 1 and remove record 2
+  linkedpairskeep1 <- SeePairsToDedup
 
-    # Select all Record2 IDs and remove from dataset
-    removerefs4 <- unique(linkedpairskeep1$RecordID2)
-    SeePairsToDedup <- SeePairsToDedup[which(!rownames(SeePairsToDedup) %in% rownames(linkedpairskeep1)),]
-    dedupdat <- dedupdat[which(!dedupdat$RecordID %in% removerefs4),]
+  # Select all Record2 IDs and remove from dataset
+  removerefs4 <- unique(linkedpairskeep1$RecordID2)
+  SeePairsToDedup <- SeePairsToDedup[which(!rownames(SeePairsToDedup) %in% rownames(linkedpairskeep1)),]
+  dedupdat <- dedupdat[which(!dedupdat$RecordID %in% removerefs4),]
 
-    dedupdat <- unique(dedupdat)
+  dedupdat <- unique(dedupdat)
 
-    # Get list of removed IDs
-    checkremovedalreadyID <- c(removerefs4)
-    checkremovedalreadyID <-unique(checkremovedalreadyID)
+  # Get list of removed IDs
+  checkremovedalreadyID <- c(removerefs4)
+  checkremovedalreadyID <-unique(checkremovedalreadyID)
 
 
-   # Get original data ready for removing duplicates
+  # Get original data ready for removing duplicates
   dedupdat <- newdatformatted
   dedupdat$RecordID <- as.character(dedupdat$RecordID)
 
@@ -326,7 +327,6 @@ SeePairsFiltered <- SeePairs %>%
   return(list("ManualDedup" = MaybePairs,
               "Unique" = uniquedat,
               "TruePairs" = SeePairsFiltered,
-              "PotentialPairs" = SeePairs,
               "DuplicateRefsRemoved" = removedat))
 
 }
@@ -637,13 +637,12 @@ dedup_labelled_step <-function(x,
   return(list("ManualDedup" = MaybePairs,
               "Unique" = uniquedat,
               "TruePairs" = SeePairsFiltered,
-              "PotentialPairs" = SeePairs,
               "DuplicateRefsRemoved" = removedat))
 
 }
 
 #' @export
-dedup_labelled_refs <- function (x,
+get_labelled_results <- function (x,
                                  LabelKeep = ""){
 
 
@@ -689,7 +688,7 @@ dedup_labelled_refs <- function (x,
     )
 
 
-  result2 <- dedup_refs(unique1)
+  result2 <- get_dedup_results(unique1)
 
   manual2id <- result2$ManualDedup
   manual2 <-result2$ManualDedup  %>%
@@ -731,7 +730,87 @@ dedup_labelled_refs <- function (x,
   return(list("ManualDedup" = manual,
               "Unique" = unique,
               "TruePairs" = pairs,
-              "PotentialPairs" = allmatches,
               "DuplicateRefsRemoved" = removed))
 }
 
+
+#' @export
+get_unique <-function(x,
+                      Author = "Author",
+                      Title = "Title",
+                      Year = "Year",
+                      Journal = "Journal",
+                      ISBN = "ISBN",
+                      Abstract = "Abstract",
+                      DOI = "DOI",
+                      Number = "Number",
+                      Pages = "Pages",
+                      Volume = "Volume",
+                      RecordID = "RecordID",
+                      Label = "Label"){
+
+dedup_results <- get_dedup_results(x)
+
+return(dedup_results$Unique)
+
+}
+
+#' @export
+get_dups_removed <-function(x,
+                      Author = "Author",
+                      Title = "Title",
+                      Year = "Year",
+                      Journal = "Journal",
+                      ISBN = "ISBN",
+                      Abstract = "Abstract",
+                      DOI = "DOI",
+                      Number = "Number",
+                      Pages = "Pages",
+                      Volume = "Volume",
+                      RecordID = "RecordID",
+                      Label = "Label"){
+
+dedup_results <- get_dedup_results(x)
+
+return(dedup_results$DuplicateRefsRemoved)
+}
+
+#' @export
+get_pairs <-function(x,
+                            Author = "Author",
+                            Title = "Title",
+                            Year = "Year",
+                            Journal = "Journal",
+                            ISBN = "ISBN",
+                            Abstract = "Abstract",
+                            DOI = "DOI",
+                            Number = "Number",
+                            Pages = "Pages",
+                            Volume = "Volume",
+                            RecordID = "RecordID",
+                            Label = "Label"){
+
+  dedup_results <- get_dedup_results(x)
+
+  return(dedup_results$TruePairs)
+}
+
+#' @export
+get_potential_pairs <-function(x,
+                         Author = "Author",
+                         Title = "Title",
+                         Year = "Year",
+                         Journal = "Journal",
+                         ISBN = "ISBN",
+                         Abstract = "Abstract",
+                         DOI = "DOI",
+                         Number = "Number",
+                         Pages = "Pages",
+                         Volume = "Volume",
+                         RecordID = "RecordID",
+                         Label = "Label"){
+
+  dedup_results <- get_dedup_results(x)
+
+  return(dedup_results$ManualDedup)
+}

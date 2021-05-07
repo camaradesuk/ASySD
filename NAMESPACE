@@ -2,6 +2,4 @@
 
 export(dedup_labelled_refs)
 export(dedup_refs)
-export(load_csv_refs)
-export(load_endnote_refs)
-export(load_txt_refs)
+export(load_refs)
