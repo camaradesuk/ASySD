@@ -9,7 +9,7 @@ Authors@R:
            email = "kaitlyn.hair@ed.ac.uj",
            comment = c(ORCID = "https://orcid.org/0000-0003-0180-7343"))
 Description: What the package does (one paragraph).
-License: CC BY 4.0 + file LICENSE
+License: GNU General Public License
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
