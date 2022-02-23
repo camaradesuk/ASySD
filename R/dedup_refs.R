@@ -8,7 +8,7 @@
 #'
 
 #' @export
-dedup_citations <- function(raw_citations) {
+dedup_citations <- function(raw_citations, manual_dedup = FALSE, merge_citation=FALSE, preferred_source="") {
 
   raw_citations_with_id <- add_id_citations(raw_citations)
   formatted_citations <- format_citations(raw_citations_with_id)
@@ -314,7 +314,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, true_pairs){
     mutate_all(~replace(., .=='NA', NA)) %>%
     group_by(duplicate_id) %>%
     arrange(year, abstract) %>%
-    mutate(Order = ifelse(label == labelkeep, 1, 2)) %>%
+    mutate(Order = ifelse(label == preferred_source, 1, 2)) %>%
     arrange(Order) %>%
     select(-Order) %>%
     slice_head()
