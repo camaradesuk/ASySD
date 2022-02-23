@@ -7,6 +7,20 @@
 #' @export
 #'
 
+#' @export
+dedup_citations <- function(raw_citations) {
+
+  raw_citations_with_id <- add_id_citations(raw_citations)
+  formatted_citations <- format_citations(raw_citations_with_id)
+  pairs <- match_citations(formatted_citations)
+  pair_types <- identify_true_matches(pairs)
+
+  true_pairs <- pair_types$true_pairs
+  maybe_pairs <- pair_types$maybe_pairs
+
+  unique_citations_with_metadata <- keep_one_unique_citation(raw_citations_with_id, true_pairs)
+
+}
 
 ####------ Assign id ------ ####
 
@@ -223,7 +237,6 @@ identify_true_matches <- function(pairs){
   # Identify where year differs >1 and remove from filtered dataset - need to manually deduplicate
   year_mismatch_major <- year_mismatch[which(!rownames(year_mismatch) %in% rownames(year_mismatch_minor)),]
 
-  ManualDedup <- year_mismatch_major
   true_pairs <- true_pairs[which(!rownames(true_pairs) %in% rownames(year_mismatch_major)),]
 
   true_pairs <- unique(true_pairs)
@@ -231,11 +244,29 @@ identify_true_matches <- function(pairs){
   true_pairs$record_id1 <- as.character(true_pairs$record_id1)
   true_pairs$record_id2 <- as.character(true_pairs$record_id2)
 
-  return(true_pairs)
+  # Get potential duplicates for manual deduplication
+  maybe_pairs <- rbind(true_pairs_mismatch_doi, year_mismatch_major)
+
+  maybe_also_pairs <- pairs %>%
+    filter(record_id1 %in% dedupdat$record_id &
+             record_id2 %in% dedupdat$record_id) %>%
+    filter(doi > 0.99 |
+             title>0.85 & author>0.75 |
+             title>0.80 & abstract>0.80 |
+             title>0.80 & isbn>0.99 |
+             title>0.80 & journal>0.80)
+
+  # Add in problem doi matching pairs and different year data in ManualDedup
+  maybe_pairs <- rbind(maybe_pairs, maybe_also_pairs)
+  maybe_pairs <- unique(maybe_pairs)
+
+
+  return(list("true_pairs" = true_pairs,
+              "maybe_pairs" = maybe_pairs))
 
 }
 
-generate_dup_id <- function(true_pairs){
+generate_dup_id <- function(true_pairs, formatted_citations){
 
   # generate duplicate IDs
   dup_ids <- true_pairs %>%
@@ -269,61 +300,35 @@ generate_dup_id <- function(true_pairs){
 
 }
 
-
-
   # Remove duplicate papers ----------------------------------------------
 
 keep_one_unique_citation <- function(raw_citations_with_id, true_pairs){
 
-  # Get original data ready for removing duplicates
-  dedupdat <- raw_citations_with_id
-  dedupdat$record_id <- as.character(dedupdat$record_id)
+  duplicate_id <- true_pairs_with_id %>%
+    select(duplicate_id, record_id) %>%
+    unique()
 
-  # Keep record1 and remove record2
-  linkedpairslabelledkeep1 <- true_pairs
-  removerefslabelled <- unique(linkedpairslabelledkeep1$record_id2)
-  dedupdat <- dedupdat[which(!dedupdat$record_id %in% removerefslabelled),]
+  all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations_with_id)
 
-  # Get list of references removed
-  checkremovedalreadyID <- c(removerefslabelled)
-  checkremovedalreadyID <-unique(checkremovedalreadyID)
+  citations_with_dup_id_pick <- all_metadata_with_duplicate_id %>%
+    mutate_all(~replace(., .=='NA', NA)) %>%
+    group_by(duplicate_id) %>%
+    arrange(year, abstract) %>%
+    mutate(Order = ifelse(label == labelkeep, 1, 2)) %>%
+    arrange(Order) %>%
+    select(-Order) %>%
+    slice_head()
 
-  # Get potential duplicates for manual deduplication
-  MaybePairs <- true_pairs %>%
-    filter(record_id1 %in% dedupdat$record_id &
-             record_id2 %in% dedupdat$record_id) %>%
-    filter(doi > 0.99 |
-             title>0.85 & author>0.75 |
-             title>0.80 & abstract>0.80 |
-             title>0.80 & isbn>0.99 |
-             title>0.80 & journal>0.80)
+  }
 
-  # Add in problem doi matching pairs and different year data in ManualDedup
-  MaybePairs <- rbind(MaybePairs, ManualDedup, true_pairs_mismatch_doi)
-  MaybePairs <- unique(MaybePairs)
+  get_manual_dedup_list <- function(maybe_pairs, formatted_citations){
+
 
   formatted_citations$record_id <- as.character(formatted_citations$record_id)
-  dedupdat$record_id <- as.character(dedupdat$record_id)
 
-  uniquedat <- raw_citations %>%
-    filter(record_id %in% dedupdat$record_id)
-
-  MaybePairs <- MaybePairs %>%
-    filter(record_id1 %in% uniquedat$record_id &
-             record_id2 %in% uniquedat$record_id)
-
-  # SeePairsFiltered <- rbind(SeePairsFiltered, additional)
-  true_pairs <- as.data.frame(true_pairs)
-
-  removedat <- raw_citations
-  removedat <-removedat %>%
-    filter(!record_id %in% uniquedat$record_id)
-
-
-  return(list("ManualDedup" = MaybePairs,
-              "Unique" = uniquedat,
-              "TruePairs" = SeePairsFiltered,
-              "DuplicateRefsRemoved" = removedat))
+  maybe_pairs <- maybe_pairs %>%
+    filter(record_id1 %in% true_pairs_with_id$record_id &
+             record_id2 %in% true_pairs_with_id$record_id)
 
 }
 
