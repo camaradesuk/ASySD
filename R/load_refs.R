@@ -2,7 +2,8 @@
 #'
 #' This function loads in an Endnote XML file OR csv OR text.
 #'
-#' @param path Path to the input file
+#' @param path File path to the input file
+#' @param method  Loading citations methoddepending on file format
 #' @return A dataframe of the Endnote references
 #' @export
 load_search <-function(path, method){
