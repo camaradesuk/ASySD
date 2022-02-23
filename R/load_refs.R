@@ -21,49 +21,49 @@ load_search <-function(path, method){
         }
 
         newdat <- data.frame(
-          Author = sapply(x, xpath2, ".//contributors/authors", xmlValue),
-          Year   = sapply(x, xpath2, ".//dates/year", xmlValue),
-          Journal = sapply(x, xpath2, ".//periodical/full-title", xmlValue),
-          DOI = sapply(x, xpath2, ".//electronic-resource-num", xmlValue),
-          Title = sapply(x, xpath2, ".//titles/title", xmlValue),
-          Pages = sapply(x, xpath2, ".//pages", xmlValue),
-          Volume = sapply(x, xpath2, ".//volume", xmlValue),
-          Number = sapply(x, xpath2, ".//number", xmlValue),
-          Abstract = sapply(x, xpath2, ".//abstract", xmlValue),
-          RecordID = sapply(x, xpath2, ".//rec-number", xmlValue),
-          ISBN = sapply(x, xpath2, ".//isbn", xmlValue),
-          SecondaryTitle = sapply(x, xpath2, ".//titles/secondary-title", xmlValue),
+          author = sapply(x, xpath2, ".//contributors/authors", xmlValue),
+          year   = sapply(x, xpath2, ".//dates/year", xmlValue),
+          journal = sapply(x, xpath2, ".//periodical/full-title", xmlValue),
+          doi = sapply(x, xpath2, ".//electronic-resource-num", xmlValue),
+          title = sapply(x, xpath2, ".//titles/title", xmlValue),
+          pages = sapply(x, xpath2, ".//pages", xmlValue),
+          volume = sapply(x, xpath2, ".//volume", xmlValue),
+          number = sapply(x, xpath2, ".//number", xmlValue),
+          abstract = sapply(x, xpath2, ".//abstract", xmlValue),
+          record_id = sapply(x, xpath2, ".//rec-number", xmlValue),
+          idbn = sapply(x, xpath2, ".//isbn", xmlValue),
+          secondary_title = sapply(x, xpath2, ".//titles/secondary-title", xmlValue),
           "PDF Relative Path" = sapply(x, xpath2, ".//urls/pdf-urls", xmlValue),
-          Url = sapply(x, xpath2, ".//urls/related-urls", xmlValue),
-          Label = sapply(x, xpath2, ".//label", xmlValue)
+          url = sapply(x, xpath2, ".//urls/related-urls", xmlValue),
+          label = sapply(x, xpath2, ".//label", xmlValue)
         )
 
         newdat <- newdat %>%
-          mutate(Label = ifelse(is.na(Label), "NA", paste(Label)))
+          mutate(label = ifelse(is.na(label), "NA", paste(label)))
         return(newdat)
   }
 
   if(method == "csv"){
 
-        cols <- c("Label","ISBN")
+        cols <- c("label","isbn")
         newdat <- read.csv(path)
         newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
         newdat <- newdat %>%
-          select(Author,
-                 Year,
-                 Journal,
-                 DOI,
-                 Title,
-                 Pages,
-                 Volume,
-                 Number,
-                 Abstract,
-                 RecordID,
-                 ISBN,
-                 Label) %>%
-          mutate(Label = ifelse(is.na(Label), "NA", paste(Label))) %>%
-          mutate(ISBN = ifelse(is.na(ISBN), "NA", paste(ISBN)))
+          select(author,
+                 year,
+                 journal,
+                 doi,
+                 title,
+                 pages,
+                 volume,
+                 number,
+                 abstract,
+                 record_id,
+                 isbn,
+                 label) %>%
+          mutate(label = ifelse(is.na(label), "NA", paste(label))) %>%
+          mutate(isbn = ifelse(is.na(isbn), "NA", paste(isbn)))
 
 
         return(newdat)
@@ -72,27 +72,27 @@ load_search <-function(path, method){
 
 if(method == "txt"){
 
-  cols <- c("Label","ISBN")
+  cols <- c("label","isbn")
   newdat <- read.table(path)
   newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
         newdat <- newdat %>%
-          select(Author,
-                 Year,
-                 Journal,
-                 DOI,
-                 Title,
-                 Pages,
-                 Volume,
-                 Number,
-                 Abstract,
-                 RecordID,
-                 ISBN,
-                 Label)
+          select(author,
+                 year,
+                 journal,
+                 doi,
+                 title,
+                 pages,
+                 volume,
+                 number,
+                 abstract,
+                 record_id,
+                 isbn,
+                 label)
 
         newdat <- newdat %>%
-          mutate(Label = ifelse(is.na(Label), "NA", paste(Label))) %>%
-          mutate(ISBN = ifelse(is.na(ISBN), "NA", paste(ISBN)))
+          mutate(label = ifelse(is.na(label), "NA", paste(label))) %>%
+          mutate(isbn = ifelse(is.na(isbn), "NA", paste(isbn)))
 
         return(newdat)
 }

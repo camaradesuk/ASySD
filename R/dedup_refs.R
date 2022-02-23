@@ -1,120 +1,120 @@
 #' @export
 get_dedup_results <-function(x,
-                      Author = "Author",
-                      Title = "Title",
-                      Year = "Year",
-                      Journal = "Journal",
-                      ISBN = "ISBN",
-                      Abstract = "Abstract",
-                      DOI = "DOI",
-                      Number = "Number",
-                      Pages = "Pages",
-                      Volume = "Volume",
-                      RecordID = "RecordID",
-                      Label = "Label")
+                      author = "author",
+                      title = "title",
+                      year = "year",
+                      journal = "journal",
+                      isbn = "isbn",
+                      abstract = "abstract",
+                      doi = "doi",
+                      number = "number",
+                      pages = "pages",
+                      volume = "volume",
+                      record_id = "record_id",
+                      label = "label")
 {
 
   # Rename columns if necessary
   x <- x %>%
-    rename("Author" = Author,
-           "Title" = Title,
-           "Year" = Year,
-           "Journal" = Journal,
-           "ISBN" = ISBN,
-           "Abstract" = Abstract,
-           "DOI" = DOI,
-           "Number" = Number,
-           "Pages" = Pages,
-           "Volume" = Volume,
-           "RecordID"=RecordID,
-           "Label" = Label)
+    rename("author" = author,
+           "title" = title,
+           "year" = year,
+           "journal" = journal,
+           "isbn" = isbn,
+           "abstract" = abstract,
+           "doi" = doi,
+           "number" = number,
+           "pages" = pages,
+           "volume" = volume,
+           "record_id"=record_id,
+           "label" = label)
 
   # Select relevant columns
   newdatformatted <-  x  %>%
-    select(Author, Title, Year, Journal, Abstract, DOI, Number, Pages, Volume, ISBN, RecordID, Label)
+    select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label)
 
 
-  # Arrange by Year and presence of an Abstract - we want to keep newer records and records with an abstract preferentially
+  # Arrange by year and presence of an abstract - we want to keep newer records and records with an abstract preferentially
   newdatformatted <- newdatformatted %>%
-    arrange(desc(Year), Abstract)
+    arrange(desc(year), abstract)
 
   # Rename this ordered data as y
   y <- newdatformatted
 
 
   # Make sure author is a character
-  newdatformatted$Author <- as.character(newdatformatted$Author)
+  newdatformatted$author <- as.character(newdatformatted$author)
 
   # Fix author formatting so similar
   newdatformatted <- newdatformatted %>%
-    mutate(Author = ifelse(Author=="", "Unknown", Author)) %>%
-    mutate(Author = ifelse(is.na(Author), "Unknown", Author)) %>%
-    mutate(Author = ifelse(Author=="Anonymous", "Unknown", Author))
+    mutate(author = ifelse(author=="", "Unknown", author)) %>%
+    mutate(author = ifelse(is.na(author), "Unknown", author)) %>%
+    mutate(author = ifelse(author=="Anonymous", "Unknown", author))
 
   # Make all upper case
   newdatformatted <- as.data.frame(sapply(newdatformatted, toupper))
 
 
-  ##Get rid of punctuation and differnces in DOI formatting
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("%28", "(", x)))
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("%29", ")", x)))
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("HTTP://DX.DOI.ORG/", "", x)))
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("HTTPS://DOI.ORG/", "", x)))
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("DOI: ", "", x)))
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("DOI:", "", x)))
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("DOI", "", x)))
+  ##Get rid of punctuation and differnces in doi formatting
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("%28", "(", x)))
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("%29", ")", x)))
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("HTTP://DX.doi.ORG/", "", x)))
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("HTTPS://doi.ORG/", "", x)))
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("doi: ", "", x)))
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("doi:", "", x)))
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("doi", "", x)))
 
-  newdatformatted["Title"] <- as.data.frame(sapply(newdatformatted["Title"], function(x) gsub("[[:punct:]]", "", x)))
-  newdatformatted["Year"] <- as.data.frame(sapply(newdatformatted["Year"], function(x) gsub("[[:punct:]]", "", x)))
-  newdatformatted["Abstract"] <- as.data.frame(sapply(newdatformatted["Abstract"], function(x) gsub("[[:punct:]]", "", x)))
+  newdatformatted["title"] <- as.data.frame(sapply(newdatformatted["title"], function(x) gsub("[[:punct:]]", "", x)))
+  newdatformatted["year"] <- as.data.frame(sapply(newdatformatted["year"], function(x) gsub("[[:punct:]]", "", x)))
+  newdatformatted["abstract"] <- as.data.frame(sapply(newdatformatted["abstract"], function(x) gsub("[[:punct:]]", "", x)))
 
-  newdatformatted["ISBN"] <- as.data.frame(sapply(newdatformatted["ISBN"], function(x) gsub("[[:space:]]\\(PRINT\\).*", "", x)))
-  newdatformatted["ISBN"] <- as.data.frame(sapply(newdatformatted["ISBN"], function(x) gsub("[[:space:]]\\(ELECTRONIC\\).*", "", x)))
+  newdatformatted["isbn"] <- as.data.frame(sapply(newdatformatted["isbn"], function(x) gsub("[[:space:]]\\(PRINT\\).*", "", x)))
+  newdatformatted["isbn"] <- as.data.frame(sapply(newdatformatted["isbn"], function(x) gsub("[[:space:]]\\(ELECTRONIC\\).*", "", x)))
 
   newdatformatted<-newdatformatted %>%
-    filter(!is.na(RecordID))
+    filter(!is.na(record_id))
 
 
   # Sort out NA / missing fata formatting for optimal matching
   newdatformatted <- newdatformatted %>%
-    mutate(Author = ifelse(Author=="NA", NA, paste(Author))) %>%
-    mutate(Year = ifelse(Year=="NA", NA, paste(Year))) %>%
-    mutate(Title = ifelse(Title=="NA", NA, paste(Title))) %>%
-    mutate(Number = ifelse(Number=="NA", NA, paste(Number))) %>%
-    mutate(Volume = ifelse(Volume=="NA", NA, paste(Volume))) %>%
-    mutate(Pages = ifelse(Pages=="NA", NA, paste(Pages))) %>%
-    mutate(Abstract = ifelse(Abstract=="NA", NA, paste(Abstract))) %>%
-    mutate(DOI = ifelse(DOI=="NA", NA, paste(DOI))) %>%
-    mutate(Journal = ifelse(Journal=="NA", NA, paste(Journal))) %>%
-    mutate(ISBN = ifelse(ISBN=="", NA, paste(ISBN)))
+    mutate(author = ifelse(author=="NA", NA, paste(author))) %>%
+    mutate(year = ifelse(year=="NA", NA, paste(year))) %>%
+    mutate(title = ifelse(title=="NA", NA, paste(title))) %>%
+    mutate(number = ifelse(number=="NA", NA, paste(number))) %>%
+    mutate(volume = ifelse(volume=="NA", NA, paste(volume))) %>%
+    mutate(pages = ifelse(pages=="NA", NA, paste(pages))) %>%
+    mutate(abstract = ifelse(abstract=="NA", NA, paste(abstract))) %>%
+    mutate(doi = ifelse(doi=="NA", NA, paste(doi))) %>%
+    mutate(journal = ifelse(journal=="NA", NA, paste(journal))) %>%
+    mutate(isbn = ifelse(isbn=="", NA, paste(isbn)))
 
 
   newdatformatted<- newdatformatted %>%
-    select(Author, Title, Year, Journal, Abstract, DOI, Number, Pages, Volume, ISBN, RecordID, Label)
+    select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label)
 
 
   # Deduplication steps ---------------------------------------
 
-  # ROUND 1: run compare.dedup function and block by Title&Pages OR Title&Author OR Title&Abstract OR DOI
-  try(newpairs <- compare.dedup(newdatformatted, blockfld = list(c(2,8), c(1,2), c(2,5), 6), strcmp = TRUE, exclude=c("RecordID", "Label")), silent=TRUE)
+  # ROUND 1: run compare.dedup function and block by title&pages OR title&author OR title&abstract OR doi
+  try(newpairs <- compare.dedup(newdatformatted, blockfld = list(c(2,8), c(1,2), c(2,5), 6), strcmp = TRUE, exclude=c("record_id", "label")), silent=TRUE)
 
   # Create df of pairs
   linkedpairs <- as.data.frame(if(exists("newpairs")) newpairs$pairs)
 
-  # ROUND 2: run compare.dedup function and block by Author&Year&Pages OR Journal&Volume&Pages or ISBN&Volume&Pages OR Title&ISBN
-  try(newpairs2 <- compare.dedup(newdatformatted, blockfld = list(c(1,3,8), c(4,9,8), c(10,9,8), c(2,10)), strcmp = TRUE, exclude= c("RecordID", "Label")), silent=TRUE)
+  # ROUND 2: run compare.dedup function and block by author&year&pages OR journal&volume&pages or isbn&volume&pages OR title&isbn
+  try(newpairs2 <- compare.dedup(newdatformatted, blockfld = list(c(1,3,8), c(4,9,8), c(10,9,8), c(2,10)), strcmp = TRUE, exclude= c("record_id", "label")), silent=TRUE)
 
   #Create df of pairs
   linkedpairs2 <- as.data.frame(if(exists("newpairs2")) newpairs2$pairs)
 
-  # ROUND 3: run compare.dedup function and block by Year&Pages&Volume OR Year&Issue&Volume or Year&Pages&Issue
-  try(newpairs3 <- compare.dedup(newdatformatted, blockfld = list(c(3,8,9), c(3,7,9), c(3,8,7)), strcmp = TRUE, exclude=c("RecordID", "Label")), silent = TRUE)
+  # ROUND 3: run compare.dedup function and block by year&pages&volume OR year&Issue&volume or year&pages&Issue
+  try(newpairs3 <- compare.dedup(newdatformatted, blockfld = list(c(3,8,9), c(3,7,9), c(3,8,7)), strcmp = TRUE, exclude=c("record_id", "label")), silent = TRUE)
 
   #Create df of pairs
   linkedpairs3 <- as.data.frame(if(exists("newpairs3")) newpairs3$pairs)
 
-  # ROUND 4: run compare.dedup function and block by Author&Year OR Year&Title OR Title&Volume OR Title&Journal
-  try(newpairs4 <- compare.dedup(newdatformatted, blockfld = list(c(1,3), c(3,2), c(2,9), c(2,4)), strcmp = TRUE, exclude=c("RecordID", "Label")), silent = TRUE)
+  # ROUND 4: run compare.dedup function and block by author&year OR year&title OR title&volume OR title&journal
+  try(newpairs4 <- compare.dedup(newdatformatted, blockfld = list(c(1,3), c(3,2), c(2,9), c(2,4)), strcmp = TRUE, exclude=c("record_id", "label")), silent = TRUE)
 
   # Create df of pairs
   linkedpairs4 <- as.data.frame(if(exists("newpairs4")) newpairs4$pairs)
@@ -132,47 +132,47 @@ get_dedup_results <-function(x,
 
   # Obtain metadata for matching pairs
   SeePairs <- SeePairs  %>%
-    mutate(Author1 =y$Author[id1]) %>%
-    mutate(Author2 =y$Author[id2])
+    mutate(author1 =y$author[id1]) %>%
+    mutate(author2 =y$author[id2])
 
   SeePairs <- SeePairs %>%
-    mutate(Title1 =y$Title[id1]) %>%
-    mutate(Title2 =y$Title[id2]) %>%
-    mutate(Abstract1 =y$Abstract[id1]) %>%
-    mutate(Abstract2 =y$Abstract[id2]) %>%
-    mutate(DOI1= y$DOI[id1]) %>%
-    mutate(DOI2 =y$DOI[id2])
+    mutate(title1 =y$title[id1]) %>%
+    mutate(title2 =y$title[id2]) %>%
+    mutate(abstract1 =y$abstract[id1]) %>%
+    mutate(abstract2 =y$abstract[id2]) %>%
+    mutate(doi1= y$doi[id1]) %>%
+    mutate(doi2 =y$doi[id2])
 
   SeePairs <- SeePairs  %>%
-    mutate(Year1=y$Year[id1]) %>%
-    mutate(Year2=y$Year[id2]) %>%
-    mutate(Number1 =y$Number[id1]) %>%
-    mutate(Number2 =y$Number[id2]) %>%
-    mutate(Pages1 =y$Pages[id1]) %>%
-    mutate(Pages2 =y$Pages[id2]) %>%
-    mutate(Volume1 =y$Volume[id1]) %>%
-    mutate(Volume2 =y$Volume[id2])
+    mutate(year1=y$year[id1]) %>%
+    mutate(year2=y$year[id2]) %>%
+    mutate(number1 =y$number[id1]) %>%
+    mutate(number2 =y$number[id2]) %>%
+    mutate(pages1 =y$pages[id1]) %>%
+    mutate(pages2 =y$pages[id2]) %>%
+    mutate(volume1 =y$volume[id1]) %>%
+    mutate(volume2 =y$volume[id2])
 
   SeePairs <- SeePairs  %>%
-    mutate(Journal1 =y$Journal[id1]) %>%
-    mutate(Journal2 =y$Journal[id2]) %>%
-    mutate(ISBN1 =y$ISBN[id1]) %>%
-    mutate(ISBN2 =y$ISBN[id2]) %>%
-    mutate(RecordID1=y$RecordID[id1]) %>%
-    mutate(RecordID2 =y$RecordID[id2]) %>%
-    mutate(Label1 =y$Label[id1]) %>%
-    mutate(Label2 =y$Label[id2])
+    mutate(journal1 =y$journal[id1]) %>%
+    mutate(journal2 =y$journal[id2]) %>%
+    mutate(isbn1 =y$isbn[id1]) %>%
+    mutate(isbn2 =y$isbn[id2]) %>%
+    mutate(record_id1=y$record_id[id1]) %>%
+    mutate(record_id2 =y$record_id[id2]) %>%
+    mutate(label1 =y$label[id1]) %>%
+    mutate(label2 =y$label[id2])
 
   SeePairs <- SeePairs %>%
-    select(id1, id2, Author1, Author2, Author, Title1, Title2, Title, Abstract1, Abstract2, Abstract, Year1, Year2, Year, Number1, Number2, Number, Pages1, Pages2, Pages, Volume1, Volume2, Volume, Journal1, Journal2, Journal, ISBN, ISBN1, ISBN2, DOI1, DOI2, DOI, RecordID1, RecordID2, Label1, Label2)
+    select(id1, id2, author1, author2, author, title1, title2, title, abstract1, abstract2, abstract, year1, year2, year, number1, number2, number, pages1, pages2, pages, volume1, volume2, volume, journal1, journal2, journal, isbn, isbn1, isbn2, doi1, doi2, doi, record_id1, record_id2, label1, label2)
 
   SeePairs <- SeePairs %>%
-    mutate(Abstract = ifelse(is.na(Abstract1) & is.na(Abstract2), 0, Abstract)) %>%
-    mutate(Pages = ifelse(is.na(Pages1) & is.na(Pages2), 1, Pages)) %>%
-    mutate(Volume = ifelse(is.na(Volume1) & is.na(Volume2), 1, Volume)) %>%
-    mutate(Number = ifelse(is.na(Number1) & is.na(Number2), 1, Number)) %>%
-    mutate(DOI = ifelse(is.na(DOI1) & is.na(DOI2), 0, DOI)) %>%
-    mutate(ISBN = ifelse(is.na(ISBN1) & is.na(ISBN2), 0, ISBN))
+    mutate(abstract = ifelse(is.na(abstract1) & is.na(abstract2), 0, abstract)) %>%
+    mutate(pages = ifelse(is.na(pages1) & is.na(pages2), 1, pages)) %>%
+    mutate(volume = ifelse(is.na(volume1) & is.na(volume2), 1, volume)) %>%
+    mutate(number = ifelse(is.na(number1) & is.na(number2), 1, number)) %>%
+    mutate(doi = ifelse(is.na(doi1) & is.na(doi2), 0, doi)) %>%
+    mutate(isbn = ifelse(is.na(isbn1) & is.na(isbn2), 0, isbn))
 
 
 
@@ -180,78 +180,78 @@ get_dedup_results <-function(x,
 
   SeePairsFiltered <- SeePairs %>%
     filter(
-      (Pages>0.8 & Volume>0.8 & Title>0.90 & Abstract>0.90 & Author>0.50 & ISBN>0.99) |
-        (Pages>0.8 & Volume>0.8 & Title>0.90 & Abstract>0.90 & Author>0.50 & Journal>0.6) |
-        (Pages>0.8 & Number>0.8 & Title>0.90 & Abstract>0.90 & Author>0.50 & Journal>0.6) |
-        (Volume >0.8 & Number>0.8 & Title>0.90 & Abstract>0.90 & Author>0.50  & Journal>0.6) |
+      (pages>0.8 & volume>0.8 & title>0.90 & abstract>0.90 & author>0.50 & isbn>0.99) |
+        (pages>0.8 & volume>0.8 & title>0.90 & abstract>0.90 & author>0.50 & journal>0.6) |
+        (pages>0.8 & number>0.8 & title>0.90 & abstract>0.90 & author>0.50 & journal>0.6) |
+        (volume >0.8 & number>0.8 & title>0.90 & abstract>0.90 & author>0.50  & journal>0.6) |
 
-        (Volume >0.8 & Number>0.8 & Title>0.90 & Abstract>0.90 & Author>0.8) |
-        (Volume>0.8 & Pages>0.8 & Title>0.90 & Abstract>0.9 & Author>0.8) |
-        (Pages>0.8 & Number>0.8 & Title>0.90 & Abstract>0.9 & Author>0.8) |
+        (volume >0.8 & number>0.8 & title>0.90 & abstract>0.90 & author>0.8) |
+        (volume>0.8 & pages>0.8 & title>0.90 & abstract>0.9 & author>0.8) |
+        (pages>0.8 & number>0.8 & title>0.90 & abstract>0.9 & author>0.8) |
 
-        (DOI>0.95 & Author>0.75 & Title>0.9) |
+        (doi>0.95 & author>0.75 & title>0.9) |
 
-        (Title>0.80 & Abstract>0.90 & Volume>0.85 & Journal>0.65 & Author>0.9) |
-        (Title>0.90 & Abstract>0.80 & Volume>0.85 & Journal>0.65 & Author>0.9)|
+        (title>0.80 & abstract>0.90 & volume>0.85 & journal>0.65 & author>0.9) |
+        (title>0.90 & abstract>0.80 & volume>0.85 & journal>0.65 & author>0.9)|
 
-        (Pages>0.8 & Volume>0.8 & Title>0.90 & Abstract>0.8 & Author>0.9 & Journal>0.75) |
-        (Pages>0.8 & Number>0.8 & Title>0.90 & Abstract>0.80 & Author>0.9 & Journal>0.75) |
-        (Volume>0.8 & Number>0.8 & Title>0.90 & Abstract>0.8 & Author>0.9  & Journal>0.75) |
+        (pages>0.8 & volume>0.8 & title>0.90 & abstract>0.8 & author>0.9 & journal>0.75) |
+        (pages>0.8 & number>0.8 & title>0.90 & abstract>0.80 & author>0.9 & journal>0.75) |
+        (volume>0.8 & number>0.8 & title>0.90 & abstract>0.8 & author>0.9  & journal>0.75) |
 
-        (Title>0.9 & Author>0.9 & Abstract>0.9 & Journal >0.7)|
-        (Title>0.9 & Author>0.9 & Abstract>0.9 & ISBN >0.99)|
+        (title>0.9 & author>0.9 & abstract>0.9 & journal >0.7)|
+        (title>0.9 & author>0.9 & abstract>0.9 & isbn >0.99)|
 
-        (Pages>0.9 & Number>0.9 & Title>0.90 & Author>0.80 & Journal>0.6) |
-        (Number>0.9 & Volume>0.9 & Title>0.90 & Author>0.90 & Journal>0.6) |
-        (Pages>0.9 & Volume>0.9 & Title>0.90 & Author>0.80 & Journal>0.6) |
-        (Pages>0.9 & Number>0.9 & Title>0.90 & Author>0.80 & ISBN>0.99) |
-        (Pages>0.9 & Number>0.9 & Title>0.90 & Author>0.80 & ISBN>0.99) |
-        (Pages>0.9 & Number>0.9 & Title>0.90 & Author>0.80 & ISBN>0.99) |
+        (pages>0.9 & number>0.9 & title>0.90 & author>0.80 & journal>0.6) |
+        (number>0.9 & volume>0.9 & title>0.90 & author>0.90 & journal>0.6) |
+        (pages>0.9 & volume>0.9 & title>0.90 & author>0.80 & journal>0.6) |
+        (pages>0.9 & number>0.9 & title>0.90 & author>0.80 & isbn>0.99) |
+        (pages>0.9 & number>0.9 & title>0.90 & author>0.80 & isbn>0.99) |
+        (pages>0.9 & number>0.9 & title>0.90 & author>0.80 & isbn>0.99) |
 
-        (Pages>0.8 & Volume>0.8 & Title>0.95 & Author>0.80 & Journal>0.9) |
-        (Number>0.8 & Volume>0.8 & Title>0.95 & Author>0.80 & Journal>0.9)|
-        (Number>0.8 & Pages>0.8 & Title>0.95 & Author>0.80 & Journal>0.9) |
-        (Pages>0.8 & Volume>0.8 & Title>0.95 & Author>0.80 & ISBN>0.99) |
-        (Pages>0.8 & Volume>0.8 & Title>0.95 & Author>0.80 & ISBN>0.99) |
-        (Pages>0.8 & Volume>0.8 & Title>0.95 & Author>0.80 & ISBN>0.99))
+        (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & journal>0.9) |
+        (number>0.8 & volume>0.8 & title>0.95 & author>0.80 & journal>0.9)|
+        (number>0.8 & pages>0.8 & title>0.95 & author>0.80 & journal>0.9) |
+        (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99) |
+        (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99) |
+        (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99))
 
-  # Find papers with low matching DOIs - often indicates FALSE positive matches
-  SeePairsFilteredDOIBAD <- SeePairsFiltered %>%
-    filter(!(is.na(DOI)| DOI ==0 | DOI > 0.99)) %>%
-    filter(!(Title > 0.9 & Abstract > 0.9 & (Journal|ISBN > 0.9)))
+  # Find papers with low matching dois - often indicates FALSE positive matches
+  SeePairsFiltereddoiBAD <- SeePairsFiltered %>%
+    filter(!(is.na(doi)| doi ==0 | doi > 0.99)) %>%
+    filter(!(title > 0.9 & abstract > 0.9 & (journal|isbn > 0.9)))
 
-  # Remove papers with low matching DOIs from filtered matched
+  # Remove papers with low matching dois from filtered matched
   SeePairsFiltered <- SeePairsFiltered %>%
-    filter(is.na(DOI)| DOI > 0.99 | DOI == 0 | (Title > 0.9 & Abstract>0.9 & (Journal|ISBN > 0.9)))
+    filter(is.na(doi)| doi > 0.99 | doi == 0 | (title > 0.9 & abstract>0.9 & (journal|isbn > 0.9)))
 
   SeePairsFiltered <- unique(SeePairsFiltered)
 
   # Make year numeric, then find matches where year differs
-  SeePairsFiltered$Year1 <- as.numeric(as.character(SeePairsFiltered$Year1))
-  SeePairsFiltered$Year2 <- as.numeric(as.character(SeePairsFiltered$Year2))
-  YearsDiff <- SeePairsFiltered[which(SeePairsFiltered$Year1 != SeePairsFiltered$Year2),]
-  YearsNotVeryDiff1 <- YearsDiff[which(YearsDiff$Year1 == YearsDiff$Year2+1 ),]
-  YearsNotVeryDiff2 <- YearsDiff[which(YearsDiff$Year1 == YearsDiff$Year2-1 ),]
+  SeePairsFiltered$year1 <- as.numeric(as.character(SeePairsFiltered$year1))
+  SeePairsFiltered$year2 <- as.numeric(as.character(SeePairsFiltered$year2))
+  yearsDiff <- SeePairsFiltered[which(SeePairsFiltered$year1 != SeePairsFiltered$year2),]
+  yearsNotVeryDiff1 <- yearsDiff[which(yearsDiff$year1 == yearsDiff$year2+1 ),]
+  yearsNotVeryDiff2 <- yearsDiff[which(yearsDiff$year1 == yearsDiff$year2-1 ),]
 
-  YearsNotVeryDiff <- rbind(YearsNotVeryDiff1, YearsNotVeryDiff2)
-  YearsNotVeryDiff <- unique(YearsNotVeryDiff)
+  yearsNotVeryDiff <- rbind(yearsNotVeryDiff1, yearsNotVeryDiff2)
+  yearsNotVeryDiff <- unique(yearsNotVeryDiff)
 
   # Identify where year differs >1 and remove from filtered dataset - need to manually deduplicate
-  YearsVeryDiff <- YearsDiff[which(!rownames(YearsDiff) %in% rownames(YearsNotVeryDiff)),]
+  yearsVeryDiff <- yearsDiff[which(!rownames(yearsDiff) %in% rownames(yearsNotVeryDiff)),]
 
-  ManualDedup <- YearsVeryDiff
-  SeePairsFiltered <- SeePairsFiltered[which(!rownames(SeePairsFiltered) %in% rownames(YearsVeryDiff)),]
+  ManualDedup <- yearsVeryDiff
+  SeePairsFiltered <- SeePairsFiltered[which(!rownames(SeePairsFiltered) %in% rownames(yearsVeryDiff)),]
 
   SeePairsFiltered <- unique(SeePairsFiltered)
 
-  SeePairsFiltered$RecordID1 <- as.character(SeePairsFiltered$RecordID1)
-  SeePairsFiltered$RecordID2 <- as.character(SeePairsFiltered$RecordID2)
+  SeePairsFiltered$record_id1 <- as.character(SeePairsFiltered$record_id1)
+  SeePairsFiltered$record_id2 <- as.character(SeePairsFiltered$record_id2)
 
   # Remove duplicate papers ----------------------------------------------
 
   # Get original data ready for removing duplicates
   dedupdat <- newdatformatted
-  dedupdat$RecordID <- as.character(dedupdat$RecordID)
+  dedupdat$record_id <- as.character(dedupdat$record_id)
 
   SeePairsToDedup <- SeePairsFiltered
 
@@ -259,9 +259,9 @@ get_dedup_results <-function(x,
   linkedpairskeep1 <- SeePairsToDedup
 
   # Select all Record2 IDs and remove from dataset
-  removerefs4 <- unique(linkedpairskeep1$RecordID2)
+  removerefs4 <- unique(linkedpairskeep1$record_id2)
   SeePairsToDedup <- SeePairsToDedup[which(!rownames(SeePairsToDedup) %in% rownames(linkedpairskeep1)),]
-  dedupdat <- dedupdat[which(!dedupdat$RecordID %in% removerefs4),]
+  dedupdat <- dedupdat[which(!dedupdat$record_id %in% removerefs4),]
 
   dedupdat <- unique(dedupdat)
 
@@ -272,12 +272,12 @@ get_dedup_results <-function(x,
 
   # Get original data ready for removing duplicates
   dedupdat <- newdatformatted
-  dedupdat$RecordID <- as.character(dedupdat$RecordID)
+  dedupdat$record_id <- as.character(dedupdat$record_id)
 
   # Keep record1 and remove record2
   linkedpairslabelledkeep1 <- SeePairsFiltered
-  removerefslabelled <- unique(linkedpairslabelledkeep1$RecordID2)
-  dedupdat <- dedupdat[which(!dedupdat$RecordID %in% removerefslabelled),]
+  removerefslabelled <- unique(linkedpairslabelledkeep1$record_id2)
+  dedupdat <- dedupdat[which(!dedupdat$record_id %in% removerefslabelled),]
 
   # Get list of references removed
   checkremovedalreadyID <- c(removerefslabelled)
@@ -285,43 +285,43 @@ get_dedup_results <-function(x,
 
   # Get potential duplicates for manual deduplication
   MaybePairs <- SeePairs %>%
-    filter(RecordID1 %in% dedupdat$RecordID &
-             RecordID2 %in% dedupdat$RecordID) %>%
+    filter(record_id1 %in% dedupdat$record_id &
+             record_id2 %in% dedupdat$record_id) %>%
 
-    filter(DOI > 0.99 |
-             Title>0.85 & Author>0.75 |
-             Title>0.80 & Abstract>0.80 |
-             Title>0.80 & ISBN>0.99 |
-             Title>0.80 & Journal>0.80)
+    filter(doi > 0.99 |
+             title>0.85 & author>0.75 |
+             title>0.80 & abstract>0.80 |
+             title>0.80 & isbn>0.99 |
+             title>0.80 & journal>0.80)
 
-  # Add in problem DOI matching pairs and different year data in ManualDedup
-  MaybePairs <- rbind(MaybePairs, ManualDedup, SeePairsFilteredDOIBAD)
+  # Add in problem doi matching pairs and different year data in ManualDedup
+  MaybePairs <- rbind(MaybePairs, ManualDedup, SeePairsFiltereddoiBAD)
   MaybePairs <- unique(MaybePairs)
 
-  y$RecordID <- as.character(y$RecordID)
-  dedupdat$RecordID <- as.character(dedupdat$RecordID)
+  y$record_id <- as.character(y$record_id)
+  dedupdat$record_id <- as.character(dedupdat$record_id)
 
   uniquedat <- x %>%
-    filter(RecordID %in% dedupdat$RecordID)
+    filter(record_id %in% dedupdat$record_id)
 
-  #Remove one recordID1 when 2 match the same recordID2
+  #Remove one record_id1 when 2 match the same record_id2
   # additional <- SeePairsFiltered %>%
-  #   filter(RecordID1 %in% uniquedat$RecordID) %>%
-  #   group_by(RecordID2) %>%
-  #   mutate(N = length(unique(RecordID1))) %>%
+  #   filter(record_id1 %in% uniquedat$record_id) %>%
+  #   group_by(record_id2) %>%
+  #   mutate(N = length(unique(record_id1))) %>%
   #   filter(N>1) %>%
   #   select(-N) %>%
-  #   mutate(RecordID1 = first(RecordID1)) %>%
-  #   mutate(Label1 = "additionaldup") %>%
+  #   mutate(record_id1 = first(record_id1)) %>%
+  #   mutate(label1 = "additionaldup") %>%
   #   ungroup()
 
   MaybePairs <- MaybePairs %>%
-    filter(RecordID1 %in% uniquedat$RecordID &
-             RecordID2 %in% uniquedat$RecordID)
+    filter(record_id1 %in% uniquedat$record_id &
+             record_id2 %in% uniquedat$record_id)
 
   removedat <- x
   removedat <-removedat %>%
-    filter(!RecordID %in% uniquedat$RecordID)
+    filter(!record_id %in% uniquedat$record_id)
 
 
   return(list("ManualDedup" = MaybePairs,
@@ -332,41 +332,41 @@ get_dedup_results <-function(x,
 }
 
 dedup_labelled_step <-function(x,
-                               Author = "Author",
-                               Title = "Title",
-                               Year = "Year",
-                               Journal = "Journal",
-                               ISBN = "ISBN",
-                               Abstract = "Abstract",
-                               DOI = "DOI",
-                               Number = "Number",
-                               Pages = "Pages",
-                               Volume = "Volume",
-                               RecordID = "RecordID",
-                               Label = "Label",
-                               LabelKeep = "De-duplicate as normal"){
+                               author = "author",
+                               title = "title",
+                               year = "year",
+                               journal = "journal",
+                               isbn = "isbn",
+                               abstract = "abstract",
+                               doi = "doi",
+                               number = "number",
+                               pages = "pages",
+                               volume = "volume",
+                               record_id = "record_id",
+                               label = "label",
+                               labelKeep = "De-duplicate as normal"){
 
   # Rename columns if necessary
   x <- x %>%
-    rename("Author" = Author,
-           "Title" = Title,
-           "Year" = Year,
-           "Journal" = Journal,
-           "ISBN" = ISBN,
-           "Abstract" = Abstract,
-           "DOI" = DOI,
-           "Number" = Number,
-           "Pages" = Pages,
-           "Volume" = Volume,
-           "RecordID"=RecordID,
-           "Label" = Label)
+    rename("author" = author,
+           "title" = title,
+           "year" = year,
+           "journal" = journal,
+           "isbn" = isbn,
+           "abstract" = abstract,
+           "doi" = doi,
+           "number" = number,
+           "pages" = pages,
+           "volume" = volume,
+           "record_id"=record_id,
+           "label" = label)
 
   #Ensure columns are in this order
   newdatformatted <- x  %>%
-    select(Author, Title, Year, Journal, Abstract, DOI, Number, Pages, Volume, ISBN, RecordID, Label)
+    select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label)
 
   newdatformatted <- newdatformatted %>%
-    mutate(Order = ifelse(Label == LabelKeep, 1, 2)) %>%
+    mutate(Order = ifelse(label == labelKeep, 1, 2)) %>%
     arrange(Order) %>%
     select(-Order) %>%
     unique()
@@ -375,78 +375,78 @@ dedup_labelled_step <-function(x,
   y <- newdatformatted
 
   # Make sure author is a character
-  newdatformatted$Author <- as.character(newdatformatted$Author)
+  newdatformatted$author <- as.character(newdatformatted$author)
 
   # Fix author formatting so similar
   newdatformatted <- newdatformatted %>%
-    mutate(Author = ifelse(Author=="", "Unknown", Author)) %>%
-    mutate(Author = ifelse(is.na(Author), "Unknown", Author)) %>%
-    mutate(Author = ifelse(Author=="Anonymous", "Unknown", Author))
+    mutate(author = ifelse(author=="", "Unknown", author)) %>%
+    mutate(author = ifelse(is.na(author), "Unknown", author)) %>%
+    mutate(author = ifelse(author=="Anonymous", "Unknown", author))
 
   # Make all upper case
   newdatformatted <- as.data.frame(sapply(newdatformatted, toupper))
 
-  ##Get rid of punctuation and differnces in DOI formatting
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("%28", "(", x)))
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("%29", ")", x)))
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("HTTP://DX.DOI.ORG/", "", x)))
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("HTTPS://DOI.ORG/", "", x)))
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("DOI: ", "", x)))
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("DOI:", "", x)))
-  newdatformatted["DOI"] <- as.data.frame(sapply(newdatformatted["DOI"], function(x) gsub("DOI", "", x)))
+  ##Get rid of punctuation and differnces in doi formatting
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("%28", "(", x)))
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("%29", ")", x)))
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("HTTP://DX.doi.ORG/", "", x)))
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("HTTPS://doi.ORG/", "", x)))
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("doi: ", "", x)))
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("doi:", "", x)))
+  newdatformatted["doi"] <- as.data.frame(sapply(newdatformatted["doi"], function(x) gsub("doi", "", x)))
 
-  newdatformatted["Title"] <- as.data.frame(sapply(newdatformatted["Title"], function(x) gsub("[[:punct:]]", "", x)))
-  newdatformatted["Year"] <- as.data.frame(sapply(newdatformatted["Year"], function(x) gsub("[[:punct:]]", "", x)))
-  newdatformatted["Abstract"] <- as.data.frame(sapply(newdatformatted["Abstract"], function(x) gsub("[[:punct:]]", "", x)))
+  newdatformatted["title"] <- as.data.frame(sapply(newdatformatted["title"], function(x) gsub("[[:punct:]]", "", x)))
+  newdatformatted["year"] <- as.data.frame(sapply(newdatformatted["year"], function(x) gsub("[[:punct:]]", "", x)))
+  newdatformatted["abstract"] <- as.data.frame(sapply(newdatformatted["abstract"], function(x) gsub("[[:punct:]]", "", x)))
 
-  newdatformatted["ISBN"] <- as.data.frame(sapply(newdatformatted["ISBN"], function(x) gsub("[[:space:]]\\(PRINT\\).*", "", x)))
-  newdatformatted["ISBN"] <- as.data.frame(sapply(newdatformatted["ISBN"], function(x) gsub("[[:space:]]\\(ELECTRONIC\\).*", "", x)))
+  newdatformatted["isbn"] <- as.data.frame(sapply(newdatformatted["isbn"], function(x) gsub("[[:space:]]\\(PRINT\\).*", "", x)))
+  newdatformatted["isbn"] <- as.data.frame(sapply(newdatformatted["isbn"], function(x) gsub("[[:space:]]\\(ELECTRONIC\\).*", "", x)))
 
   newdatformatted<-newdatformatted %>%
-    filter(!is.na(RecordID))
+    filter(!is.na(record_id))
 
   # Sort out NA / missing fata formatting for optimal matching
   newdatformatted <- newdatformatted %>%
-    mutate(Author = ifelse(Author=="NA", NA, paste(Author))) %>%
-    mutate(Year = ifelse(Year=="NA", NA, paste(Year))) %>%
-    mutate(Title = ifelse(Title=="NA", NA, paste(Title))) %>%
-    mutate(Number = ifelse(Number=="NA", NA, paste(Number))) %>%
-    mutate(Volume = ifelse(Volume=="NA", NA, paste(Volume))) %>%
-    mutate(Pages = ifelse(Pages=="NA", NA, paste(Pages))) %>%
-    mutate(Abstract = ifelse(Abstract=="NA", NA, paste(Abstract))) %>%
-    mutate(DOI = ifelse(DOI=="NA", NA, paste(DOI))) %>%
-    mutate(Journal = ifelse(Journal=="NA", NA, paste(Journal))) %>%
-    mutate(ISBN = ifelse(ISBN=="", NA, paste(ISBN)))
+    mutate(author = ifelse(author=="NA", NA, paste(author))) %>%
+    mutate(year = ifelse(year=="NA", NA, paste(year))) %>%
+    mutate(title = ifelse(title=="NA", NA, paste(title))) %>%
+    mutate(number = ifelse(number=="NA", NA, paste(number))) %>%
+    mutate(volume = ifelse(volume=="NA", NA, paste(volume))) %>%
+    mutate(pages = ifelse(pages=="NA", NA, paste(pages))) %>%
+    mutate(abstract = ifelse(abstract=="NA", NA, paste(abstract))) %>%
+    mutate(doi = ifelse(doi=="NA", NA, paste(doi))) %>%
+    mutate(journal = ifelse(journal=="NA", NA, paste(journal))) %>%
+    mutate(isbn = ifelse(isbn=="", NA, paste(isbn)))
 
   newdatformatted<- newdatformatted %>%
-    select(Author, Title, Year, Journal, Abstract, DOI, Number, Pages, Volume, ISBN, RecordID, Label)
+    select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label)
 
   # Deduplication steps ---------------------------------------
 
-  # ROUND 1: run compare.dedup function and block by Title&Pages OR Title&Author OR Title&Abstract OR DOI
-  newpairs = compare.dedup(newdatformatted, blockfld = list(c(2,8), c(1,2), c(2,5), 6), strcmp = TRUE, exclude=c("RecordID", "Label"))
+  # ROUND 1: run compare.dedup function and block by title&pages OR title&author OR title&abstract OR doi
+  newpairs = compare.dedup(newdatformatted, blockfld = list(c(2,8), c(1,2), c(2,5), 6), strcmp = TRUE, exclude=c("record_id", "label"))
 
   # Create df of pairs
   dfpairs <- as.data.frame(newpairs$pairs)
   linkedpairs <- dfpairs
 
-  # ROUND 2: run compare.dedup function and block by Author&Year&Pages OR Journal&Volume&Pages or Title&ISBN
-  newpairs2 = compare.dedup(newdatformatted, blockfld = list(c(1,3,8), c(4,9,8), c(10,9,8), c(2,10)), strcmp = TRUE, exclude= c("RecordID", "Label"))
+  # ROUND 2: run compare.dedup function and block by author&year&pages OR journal&volume&pages or title&isbn
+  newpairs2 = compare.dedup(newdatformatted, blockfld = list(c(1,3,8), c(4,9,8), c(10,9,8), c(2,10)), strcmp = TRUE, exclude= c("record_id", "label"))
 
 
   #Create df of pairs
   dfpairs2 <- as.data.frame(newpairs2$pairs)
   linkedpairs2 <- dfpairs2
 
-  # ROUND 3: run compare.dedup function and block by Year&Pages&Volume OR Year&Issue&Volume or Year&Pages&Issue
-  newpairs3 = compare.dedup(newdatformatted, blockfld = list(c(3,8,9), c(3,7,9), c(3,8,7)), strcmp = TRUE, exclude=c("RecordID", "Label"))
+  # ROUND 3: run compare.dedup function and block by year&pages&volume OR year&Issue&volume or year&pages&Issue
+  newpairs3 = compare.dedup(newdatformatted, blockfld = list(c(3,8,9), c(3,7,9), c(3,8,7)), strcmp = TRUE, exclude=c("record_id", "label"))
 
   #Create df of pairs
   dfpairs3 <- as.data.frame(newpairs3$pairs)
   linkedpairs3 <- dfpairs3
 
-  # ROUND 4: run compare.dedup function and block by Author&Year OR Year&Title OR Title&Volume OR Title&Journal
-  newpairs4 = compare.dedup(newdatformatted, blockfld = list(c(1,3), c(3,2), c(2,9), c(2,4)), strcmp = TRUE, exclude=c("RecordID", "Label"))
+  # ROUND 4: run compare.dedup function and block by author&year OR year&title OR title&volume OR title&journal
+  newpairs4 = compare.dedup(newdatformatted, blockfld = list(c(1,3), c(3,2), c(2,9), c(2,4)), strcmp = TRUE, exclude=c("record_id", "label"))
 
   # Create df of pairs
   dfpairs4 <- as.data.frame(newpairs4$pairs)
@@ -458,130 +458,130 @@ dedup_labelled_step <-function(x,
 
   # Obtain metadata for matching pairs
   SeePairs <- SeePairs  %>%
-    mutate(Author1 =y$Author[id1]) %>%
-    mutate(Author2 =y$Author[id2])
+    mutate(author1 =y$author[id1]) %>%
+    mutate(author2 =y$author[id2])
 
   SeePairs <- SeePairs %>%
-    mutate(Title1 =y$Title[id1]) %>%
-    mutate(Title2 =y$Title[id2]) %>%
-    mutate(Abstract1 =y$Abstract[id1]) %>%
-    mutate(Abstract2 =y$Abstract[id2]) %>%
-    mutate(DOI1= y$DOI[id1]) %>%
-    mutate(DOI2 =y$DOI[id2])
+    mutate(title1 =y$title[id1]) %>%
+    mutate(title2 =y$title[id2]) %>%
+    mutate(abstract1 =y$abstract[id1]) %>%
+    mutate(abstract2 =y$abstract[id2]) %>%
+    mutate(doi1= y$doi[id1]) %>%
+    mutate(doi2 =y$doi[id2])
 
   SeePairs <- SeePairs  %>%
-    mutate(Year1=y$Year[id1]) %>%
-    mutate(Year2=y$Year[id2]) %>%
-    mutate(Number1 =y$Number[id1]) %>%
-    mutate(Number2 =y$Number[id2]) %>%
-    mutate(Pages1 =y$Pages[id1]) %>%
-    mutate(Pages2 =y$Pages[id2]) %>%
-    mutate(Volume1 =y$Volume[id1]) %>%
-    mutate(Volume2 =y$Volume[id2])
+    mutate(year1=y$year[id1]) %>%
+    mutate(year2=y$year[id2]) %>%
+    mutate(number1 =y$number[id1]) %>%
+    mutate(number2 =y$number[id2]) %>%
+    mutate(pages1 =y$pages[id1]) %>%
+    mutate(pages2 =y$pages[id2]) %>%
+    mutate(volume1 =y$volume[id1]) %>%
+    mutate(volume2 =y$volume[id2])
 
   SeePairs <- SeePairs  %>%
-    mutate(Journal1 =y$Journal[id1]) %>%
-    mutate(Journal2 =y$Journal[id2]) %>%
-    mutate(ISBN1 =y$ISBN[id1]) %>%
-    mutate(ISBN2 =y$ISBN[id2]) %>%
-    mutate(RecordID1=y$RecordID[id1]) %>%
-    mutate(RecordID2 =y$RecordID[id2]) %>%
-    mutate(Label1 =y$Label[id1]) %>%
-    mutate(Label2 =y$Label[id2])
+    mutate(journal1 =y$journal[id1]) %>%
+    mutate(journal2 =y$journal[id2]) %>%
+    mutate(isbn1 =y$isbn[id1]) %>%
+    mutate(isbn2 =y$isbn[id2]) %>%
+    mutate(record_id1=y$record_id[id1]) %>%
+    mutate(record_id2 =y$record_id[id2]) %>%
+    mutate(label1 =y$label[id1]) %>%
+    mutate(label2 =y$label[id2])
 
   SeePairs <- SeePairs %>%
-    select(id1, id2, Author1, Author2, Author, Title1, Title2, Title, Abstract1, Abstract2, Abstract, Year1, Year2, Year, Number1, Number2, Number, Pages1, Pages2, Pages, Volume1, Volume2, Volume, Journal1, Journal2, Journal, ISBN, ISBN1, ISBN2, DOI1, DOI2, DOI, RecordID1, RecordID2, Label1, Label2)
+    select(id1, id2, author1, author2, author, title1, title2, title, abstract1, abstract2, abstract, year1, year2, year, number1, number2, number, pages1, pages2, pages, volume1, volume2, volume, journal1, journal2, journal, isbn, isbn1, isbn2, doi1, doi2, doi, record_id1, record_id2, label1, label2)
 
   SeePairs <- SeePairs %>%
-    mutate(Abstract = ifelse(is.na(Abstract1) & is.na(Abstract2), 0, Abstract)) %>%
-    mutate(Pages = ifelse(is.na(Pages1) & is.na(Pages2), 1, Pages)) %>%
-    mutate(Volume = ifelse(is.na(Volume1) & is.na(Volume2), 1, Volume)) %>%
-    mutate(Number = ifelse(is.na(Number1) & is.na(Number2), 1, Number)) %>%
-    mutate(DOI = ifelse(is.na(DOI1) & is.na(DOI2), 0, DOI)) %>%
-    mutate(ISBN = ifelse(is.na(ISBN1) & is.na(ISBN2), 0, ISBN))
+    mutate(abstract = ifelse(is.na(abstract1) & is.na(abstract2), 0, abstract)) %>%
+    mutate(pages = ifelse(is.na(pages1) & is.na(pages2), 1, pages)) %>%
+    mutate(volume = ifelse(is.na(volume1) & is.na(volume2), 1, volume)) %>%
+    mutate(number = ifelse(is.na(number1) & is.na(number2), 1, number)) %>%
+    mutate(doi = ifelse(is.na(doi1) & is.na(doi2), 0, doi)) %>%
+    mutate(isbn = ifelse(is.na(isbn1) & is.na(isbn2), 0, isbn))
 
 
   # Filter matching pairs to less likely unlikely pairs - make sure we only remove true duplicate matches
   SeePairsFiltered <- SeePairs %>%
     filter(
-      (Pages>0.8 & Volume>0.8 & Title>0.90 & Abstract>0.90 & Author>0.50 & ISBN>0.99) |
-        (Pages>0.8 & Volume>0.8 & Title>0.90 & Abstract>0.90 & Author>0.50 & Journal>0.6) |
-        (Pages>0.8 & Number>0.8 & Title>0.90 & Abstract>0.90 & Author>0.50 & Journal>0.6) |
-        (Volume >0.8 & Number>0.8 & Title>0.90 & Abstract>0.90 & Author>0.50  & Journal>0.6) |
+      (pages>0.8 & volume>0.8 & title>0.90 & abstract>0.90 & author>0.50 & isbn>0.99) |
+        (pages>0.8 & volume>0.8 & title>0.90 & abstract>0.90 & author>0.50 & journal>0.6) |
+        (pages>0.8 & number>0.8 & title>0.90 & abstract>0.90 & author>0.50 & journal>0.6) |
+        (volume >0.8 & number>0.8 & title>0.90 & abstract>0.90 & author>0.50  & journal>0.6) |
 
-        (Volume >0.8 & Number>0.8 & Title>0.90 & Abstract>0.90 & Author>0.8) |
-        (Volume>0.8 & Pages>0.8 & Title>0.90 & Abstract>0.9 & Author>0.8) |
-        (Pages>0.8 & Number>0.8 & Title>0.90 & Abstract>0.9 & Author>0.8) |
+        (volume >0.8 & number>0.8 & title>0.90 & abstract>0.90 & author>0.8) |
+        (volume>0.8 & pages>0.8 & title>0.90 & abstract>0.9 & author>0.8) |
+        (pages>0.8 & number>0.8 & title>0.90 & abstract>0.9 & author>0.8) |
 
-        (DOI>0.95 & Author>0.75 & Title>0.9) |
+        (doi>0.95 & author>0.75 & title>0.9) |
 
-        (Title>0.80 & Abstract>0.90 & Volume>0.85 & Journal>0.65 & Author>0.9) |
-        (Title>0.90 & Abstract>0.80 & Volume>0.85 & Journal>0.65 & Author>0.9)|
+        (title>0.80 & abstract>0.90 & volume>0.85 & journal>0.65 & author>0.9) |
+        (title>0.90 & abstract>0.80 & volume>0.85 & journal>0.65 & author>0.9)|
 
-        (Pages>0.8 & Volume>0.8 & Title>0.90 & Abstract>0.8 & Author>0.9 & Journal>0.75) |
-        (Pages>0.8 & Number>0.8 & Title>0.90 & Abstract>0.80 & Author>0.9 & Journal>0.75) |
-        (Volume>0.8 & Number>0.8 & Title>0.90 & Abstract>0.8 & Author>0.9  & Journal>0.75) |
+        (pages>0.8 & volume>0.8 & title>0.90 & abstract>0.8 & author>0.9 & journal>0.75) |
+        (pages>0.8 & number>0.8 & title>0.90 & abstract>0.80 & author>0.9 & journal>0.75) |
+        (volume>0.8 & number>0.8 & title>0.90 & abstract>0.8 & author>0.9  & journal>0.75) |
 
-        (Title>0.9 & Author>0.9 & Abstract>0.9 & Journal >0.7)|
-        (Title>0.9 & Author>0.9 & Abstract>0.9 & ISBN >0.99)|
+        (title>0.9 & author>0.9 & abstract>0.9 & journal >0.7)|
+        (title>0.9 & author>0.9 & abstract>0.9 & isbn >0.99)|
 
-        (Pages>0.9 & Number>0.9 & Title>0.90 & Author>0.80 & Journal>0.6) |
-        (Number>0.9 & Volume>0.9 & Title>0.90 & Author>0.90 & Journal>0.6) |
-        (Pages>0.9 & Volume>0.9 & Title>0.90 & Author>0.80 & Journal>0.6) |
-        (Pages>0.9 & Number>0.9 & Title>0.90 & Author>0.80 & ISBN>0.99) |
-        (Pages>0.9 & Number>0.9 & Title>0.90 & Author>0.80 & ISBN>0.99) |
-        (Pages>0.9 & Number>0.9 & Title>0.90 & Author>0.80 & ISBN>0.99) |
+        (pages>0.9 & number>0.9 & title>0.90 & author>0.80 & journal>0.6) |
+        (number>0.9 & volume>0.9 & title>0.90 & author>0.90 & journal>0.6) |
+        (pages>0.9 & volume>0.9 & title>0.90 & author>0.80 & journal>0.6) |
+        (pages>0.9 & number>0.9 & title>0.90 & author>0.80 & isbn>0.99) |
+        (pages>0.9 & number>0.9 & title>0.90 & author>0.80 & isbn>0.99) |
+        (pages>0.9 & number>0.9 & title>0.90 & author>0.80 & isbn>0.99) |
 
-        (Pages>0.8 & Volume>0.8 & Title>0.95 & Author>0.80 & Journal>0.9) |
-        (Number>0.8 & Volume>0.8 & Title>0.95 & Author>0.80 & Journal>0.9)|
-        (Number>0.8 & Pages>0.8 & Title>0.95 & Author>0.80 & Journal>0.9) |
-        (Pages>0.8 & Volume>0.8 & Title>0.95 & Author>0.80 & ISBN>0.99) |
-        (Pages>0.8 & Volume>0.8 & Title>0.95 & Author>0.80 & ISBN>0.99) |
-        (Pages>0.8 & Volume>0.8 & Title>0.95 & Author>0.80 & ISBN>0.99))
+        (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & journal>0.9) |
+        (number>0.8 & volume>0.8 & title>0.95 & author>0.80 & journal>0.9)|
+        (number>0.8 & pages>0.8 & title>0.95 & author>0.80 & journal>0.9) |
+        (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99) |
+        (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99) |
+        (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99))
 
 
-  # Find papers with low matching DOIs - often indicates FALSE positive matches
-  SeePairsFilteredDOIBAD <- SeePairsFiltered %>%
-    filter(!(is.na(DOI)| DOI ==0 | DOI > 0.99)) %>%
-    filter(!(Title > 0.9 & Abstract > 0.9 & (Journal|ISBN > 0.9)))
+  # Find papers with low matching dois - often indicates FALSE positive matches
+  SeePairsFiltereddoiBAD <- SeePairsFiltered %>%
+    filter(!(is.na(doi)| doi ==0 | doi > 0.99)) %>%
+    filter(!(title > 0.9 & abstract > 0.9 & (journal|isbn > 0.9)))
 
-  # Remove papers with low matching DOIs from filtered matched
+  # Remove papers with low matching dois from filtered matched
   SeePairsFiltered <- SeePairsFiltered %>%
-    filter(is.na(DOI)| DOI > 0.99 | DOI == 0 | (Title > 0.9 & Abstract>0.9 & (Journal|ISBN > 0.9)))
+    filter(is.na(doi)| doi > 0.99 | doi == 0 | (title > 0.9 & abstract>0.9 & (journal|isbn > 0.9)))
 
   SeePairsFiltered <- unique(SeePairsFiltered)
 
   # Make year numeric, then find matches where year differs
-  SeePairsFiltered$Year1 <- as.numeric(as.character(SeePairsFiltered$Year1))
-  SeePairsFiltered$Year2 <- as.numeric(as.character(SeePairsFiltered$Year2))
-  YearsDiff <- SeePairsFiltered[which(SeePairsFiltered$Year1 != SeePairsFiltered$Year2),]
-  YearsNotVeryDiff1 <- YearsDiff[which(YearsDiff$Year1 == YearsDiff$Year2+1 ),]
-  YearsNotVeryDiff2 <- YearsDiff[which(YearsDiff$Year1 == YearsDiff$Year2-1 ),]
+  SeePairsFiltered$year1 <- as.numeric(as.character(SeePairsFiltered$year1))
+  SeePairsFiltered$year2 <- as.numeric(as.character(SeePairsFiltered$year2))
+  yearsDiff <- SeePairsFiltered[which(SeePairsFiltered$year1 != SeePairsFiltered$year2),]
+  yearsNotVeryDiff1 <- yearsDiff[which(yearsDiff$year1 == yearsDiff$year2+1 ),]
+  yearsNotVeryDiff2 <- yearsDiff[which(yearsDiff$year1 == yearsDiff$year2-1 ),]
 
-  YearsNotVeryDiff <- rbind(YearsNotVeryDiff1, YearsNotVeryDiff2)
-  YearsNotVeryDiff <- unique(YearsNotVeryDiff)
+  yearsNotVeryDiff <- rbind(yearsNotVeryDiff1, yearsNotVeryDiff2)
+  yearsNotVeryDiff <- unique(yearsNotVeryDiff)
 
   # Identify where year differs >1 and remove from filtered dataset - need to manually deduplicate
-  YearsVeryDiff <- YearsDiff[which(!rownames(YearsDiff) %in% rownames(YearsNotVeryDiff)),]
+  yearsVeryDiff <- yearsDiff[which(!rownames(yearsDiff) %in% rownames(yearsNotVeryDiff)),]
 
-  ManualDedup <- YearsVeryDiff
-  SeePairsFiltered <- SeePairsFiltered[which(!rownames(SeePairsFiltered) %in% rownames(YearsVeryDiff)),]
+  ManualDedup <- yearsVeryDiff
+  SeePairsFiltered <- SeePairsFiltered[which(!rownames(SeePairsFiltered) %in% rownames(yearsVeryDiff)),]
 
   SeePairsFiltered <- unique(SeePairsFiltered)
 
-  SeePairsFiltered$RecordID1 <- as.character(SeePairsFiltered$RecordID1)
-  SeePairsFiltered$RecordID2 <- as.character(SeePairsFiltered$RecordID2)
+  SeePairsFiltered$record_id1 <- as.character(SeePairsFiltered$record_id1)
+  SeePairsFiltered$record_id2 <- as.character(SeePairsFiltered$record_id2)
 
   # Remove duplicate papers ----------------------------------------------
 
   # Get original data ready for removing duplicates
   dedupdat <- newdatformatted
-  dedupdat$RecordID <- as.character(dedupdat$RecordID)
+  dedupdat$record_id <- as.character(dedupdat$record_id)
 
   # Keep record1 and remove record2
   linkedpairslabelledkeep1 <- SeePairsFiltered
-  removerefslabelled <- unique(linkedpairslabelledkeep1$RecordID2)
-  dedupdat <- dedupdat[which(!dedupdat$RecordID %in% removerefslabelled),]
+  removerefslabelled <- unique(linkedpairslabelledkeep1$record_id2)
+  dedupdat <- dedupdat[which(!dedupdat$record_id %in% removerefslabelled),]
 
   # Get list of references removed
   checkremovedalreadyID <- c(removerefslabelled)
@@ -589,49 +589,49 @@ dedup_labelled_step <-function(x,
 
   # Get potential duplicates for manual deduplication
   MaybePairs <- SeePairs %>%
-    filter(RecordID1 %in% dedupdat$RecordID &
-             RecordID2 %in% dedupdat$RecordID) %>%
-    filter(DOI > 0.99 |
-             Title>0.85 & Author>0.75 |
-             Title>0.80 & Abstract>0.80 |
-             Title>0.80 & ISBN>0.99 |
-             Title>0.80 & Journal>0.80)
+    filter(record_id1 %in% dedupdat$record_id &
+             record_id2 %in% dedupdat$record_id) %>%
+    filter(doi > 0.99 |
+             title>0.85 & author>0.75 |
+             title>0.80 & abstract>0.80 |
+             title>0.80 & isbn>0.99 |
+             title>0.80 & journal>0.80)
 
-  # Add in problem DOI matching pairs and different year data in ManualDedup
-  MaybePairs <- rbind(MaybePairs, ManualDedup, SeePairsFilteredDOIBAD)
+  # Add in problem doi matching pairs and different year data in ManualDedup
+  MaybePairs <- rbind(MaybePairs, ManualDedup, SeePairsFiltereddoiBAD)
   MaybePairs <- unique(MaybePairs)
 
-  y$RecordID <- as.character(y$RecordID)
-  dedupdat$RecordID <- as.character(dedupdat$RecordID)
+  y$record_id <- as.character(y$record_id)
+  dedupdat$record_id <- as.character(dedupdat$record_id)
 
   uniquedat <- x %>%
-    filter(RecordID %in% dedupdat$RecordID)
+    filter(record_id %in% dedupdat$record_id)
 
-  # #Remove one recordID1 when 2 match the same recordID2
+  # #Remove one record_id1 when 2 match the same record_id2
   # additional <- SeePairsFiltered %>%
-  #   filter(!Label1 == LabelKeep) %>%
-  #   filter(RecordID1 %in% uniquedat$RecordID) %>%
-  #   group_by(RecordID2) %>%
-  #   mutate(N = length(unique(RecordID1))) %>%
+  #   filter(!label1 == labelKeep) %>%
+  #   filter(record_id1 %in% uniquedat$record_id) %>%
+  #   group_by(record_id2) %>%
+  #   mutate(N = length(unique(record_id1))) %>%
   #   filter(N>1) %>%
   #   select(-N) %>%
-  #   mutate(RecordID1 = first(RecordID1)) %>%
-  #   mutate(Label1 = "additionaldup") %>%
+  #   mutate(record_id1 = first(record_id1)) %>%
+  #   mutate(label1 = "additionaldup") %>%
   #   ungroup()
   #
   # uniquedat <- uniquedat %>%
-  #   filter(!RecordID %in% unique(additional$RecordID1))
+  #   filter(!record_id %in% unique(additional$record_id1))
 
   MaybePairs <- MaybePairs %>%
-    filter(RecordID1 %in% uniquedat$RecordID &
-             RecordID2 %in% uniquedat$RecordID)
+    filter(record_id1 %in% uniquedat$record_id &
+             record_id2 %in% uniquedat$record_id)
 
   # SeePairsFiltered <- rbind(SeePairsFiltered, additional)
   SeePairsFiltered <- as.data.frame(SeePairsFiltered)
 
   removedat <- x
   removedat <-removedat %>%
-    filter(!RecordID %in% uniquedat$RecordID)
+    filter(!record_id %in% uniquedat$record_id)
 
 
   return(list("ManualDedup" = MaybePairs,
@@ -643,12 +643,12 @@ dedup_labelled_step <-function(x,
 
 #' @export
 get_labelled_results <- function (x,
-                                 LabelKeep = ""){
+                                 labelKeep = ""){
 
 
 
   result1 <- dedup_labelled_step(x,
-                                 LabelKeep = LabelKeep)
+                                 labelKeep = labelKeep)
   manual1 <- result1$ManualDedup
   unique1 <- result1$Unique
   pairs1 <- result1$TruePairs
@@ -656,35 +656,35 @@ get_labelled_results <- function (x,
   removed1 <- result1$DuplicateRefsRemoved
 
   unique1<-unique1 %>%
-    select(RecordID, Author, Year, Title, Journal, Abstract, Volume, Number, Pages, DOI, Label, ISBN)
+    select(record_id, author, year, title, journal, abstract, volume, number, pages, doi, label, isbn)
 
   manual_otherway <- manual1 %>%
-    mutate(id1 = RecordID2) %>%
-    mutate(id2= RecordID1) %>%
-    rename(Title1 = Title2,
-           Title2 = Title1,
-           Author1 = Author2,
-           Author2 = Author1,
-           Year1 = Year2,
-           Year2 = Year1,
-           Journal1 = Journal2,
-           Journal2 = Journal1,
-           Abstract1 = Abstract2,
-           Abstract2 = Abstract1,
-           Volume1 = Volume2,
-           Volume2 = Volume1,
-           Number1 = Number2,
-           Number2 = Number1,
-           Pages1 = Pages2,
-           Pages2 = Pages1,
-           DOI1 = DOI2,
-           DOI2 = DOI1,
-           Label1 = Label2,
-           Label2 = Label1,
-           ISBN1 = ISBN2,
-           ISBN2 = ISBN1,
-           RecordID1 = RecordID2,
-           RecordID2 = RecordID1
+    mutate(id1 = record_id2) %>%
+    mutate(id2= record_id1) %>%
+    rename(title1 = title2,
+           title2 = title1,
+           author1 = author2,
+           author2 = author1,
+           year1 = year2,
+           year2 = year1,
+           journal1 = journal2,
+           journal2 = journal1,
+           abstract1 = abstract2,
+           abstract2 = abstract1,
+           volume1 = volume2,
+           volume2 = volume1,
+           number1 = number2,
+           number2 = number1,
+           pages1 = pages2,
+           pages2 = pages1,
+           doi1 = doi2,
+           doi2 = doi1,
+           label1 = label2,
+           label2 = label1,
+           isbn1 = isbn2,
+           isbn2 = isbn1,
+           record_id1 = record_id2,
+           record_id2 = record_id1
     )
 
 
@@ -692,8 +692,8 @@ get_labelled_results <- function (x,
 
   manual2id <- result2$ManualDedup
   manual2 <-result2$ManualDedup  %>%
-    mutate(id1 = RecordID1,
-           id2 = RecordID2)
+    mutate(id1 = record_id1,
+           id2 = record_id2)
 
   manual2 <- anti_join(manual2, manual_otherway)
 
@@ -703,11 +703,11 @@ get_labelled_results <- function (x,
   removed2 <- result2$DuplicateRefsRemoved
 
   unique2<-unique2 %>%
-    select(RecordID, Author, Year, Title, Journal, Abstract, Volume, Number, Pages, DOI, Label, ISBN)
+    select(record_id, author, year, title, journal, abstract, volume, number, pages, doi, label, isbn)
 
   manual <- rbind(manual1, manual2)
   manual <- manual %>%
-    group_by(RecordID1, RecordID2) %>%
+    group_by(record_id1, record_id2) %>%
     mutate(id1 = first(id1)) %>%
     mutate(id2 = first(id2)) %>%
     ungroup()
@@ -724,8 +724,8 @@ get_labelled_results <- function (x,
 
   removed <- rbind(removed1, removed2)
 
-  print(length(unique1$RecordID))
-  print(length(unique2$RecordID))
+  print(length(unique1$record_id))
+  print(length(unique2$record_id))
 
   return(list("ManualDedup" = manual,
               "Unique" = unique,
@@ -736,18 +736,18 @@ get_labelled_results <- function (x,
 
 #' @export
 get_unique <-function(x,
-                      Author = "Author",
-                      Title = "Title",
-                      Year = "Year",
-                      Journal = "Journal",
-                      ISBN = "ISBN",
-                      Abstract = "Abstract",
-                      DOI = "DOI",
-                      Number = "Number",
-                      Pages = "Pages",
-                      Volume = "Volume",
-                      RecordID = "RecordID",
-                      Label = "Label"){
+                      author = "author",
+                      title = "title",
+                      year = "year",
+                      journal = "journal",
+                      isbn = "isbn",
+                      abstract = "abstract",
+                      doi = "doi",
+                      number = "number",
+                      pages = "pages",
+                      volume = "volume",
+                      record_id = "record_id",
+                      label = "label"){
 
 dedup_results <- get_dedup_results(x)
 
@@ -757,18 +757,18 @@ return(dedup_results$Unique)
 
 #' @export
 get_dups_removed <-function(x,
-                      Author = "Author",
-                      Title = "Title",
-                      Year = "Year",
-                      Journal = "Journal",
-                      ISBN = "ISBN",
-                      Abstract = "Abstract",
-                      DOI = "DOI",
-                      Number = "Number",
-                      Pages = "Pages",
-                      Volume = "Volume",
-                      RecordID = "RecordID",
-                      Label = "Label"){
+                      author = "author",
+                      title = "title",
+                      year = "year",
+                      journal = "journal",
+                      isbn = "isbn",
+                      abstract = "abstract",
+                      doi = "doi",
+                      number = "number",
+                      pages = "pages",
+                      volume = "volume",
+                      record_id = "record_id",
+                      label = "label"){
 
 dedup_results <- get_dedup_results(x)
 
@@ -777,18 +777,18 @@ return(dedup_results$DuplicateRefsRemoved)
 
 #' @export
 get_pairs <-function(x,
-                            Author = "Author",
-                            Title = "Title",
-                            Year = "Year",
-                            Journal = "Journal",
-                            ISBN = "ISBN",
-                            Abstract = "Abstract",
-                            DOI = "DOI",
-                            Number = "Number",
-                            Pages = "Pages",
-                            Volume = "Volume",
-                            RecordID = "RecordID",
-                            Label = "Label"){
+                            author = "author",
+                            title = "title",
+                            year = "year",
+                            journal = "journal",
+                            isbn = "isbn",
+                            abstract = "abstract",
+                            doi = "doi",
+                            number = "number",
+                            pages = "pages",
+                            volume = "volume",
+                            record_id = "record_id",
+                            label = "label"){
 
   dedup_results <- get_dedup_results(x)
 
@@ -797,18 +797,18 @@ get_pairs <-function(x,
 
 #' @export
 get_potential_pairs <-function(x,
-                         Author = "Author",
-                         Title = "Title",
-                         Year = "Year",
-                         Journal = "Journal",
-                         ISBN = "ISBN",
-                         Abstract = "Abstract",
-                         DOI = "DOI",
-                         Number = "Number",
-                         Pages = "Pages",
-                         Volume = "Volume",
-                         RecordID = "RecordID",
-                         Label = "Label"){
+                         author = "author",
+                         title = "title",
+                         year = "year",
+                         journal = "journal",
+                         isbn = "isbn",
+                         abstract = "abstract",
+                         doi = "doi",
+                         number = "number",
+                         pages = "pages",
+                         volume = "volume",
+                         record_id = "record_id",
+                         label = "label"){
 
   dedup_results <- get_dedup_results(x)
 
