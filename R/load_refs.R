@@ -1,7 +1,6 @@
-#' Load in Endnote references via XML file
+#' Load in citations for deduplication
 #'
-#' This function loads in an Endnote XML file. It assumes that thefile is exported in
-#' standard Endnote XML format.
+#' This function loads in an Endnote XML file OR csv OR text.
 #'
 #' @param path Path to the input file
 #' @return A dataframe of the Endnote references
