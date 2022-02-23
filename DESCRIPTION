@@ -22,5 +22,6 @@ Depends:
 	RecordLinkage,
 	XML,
 	RCurl,
-	roxygen2
+	roxygen2,
+	snakecase
 

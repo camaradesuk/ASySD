@@ -1,40 +1,8 @@
-#' Deduplicate citations
-#'
-#' This function deduplicates citation data
-#'
-#' @return A dataframe of the Endnote references
-#' @export
-#' @export
-#'
-
-#' @export
-dedup_citations <- function(raw_citations, manual_dedup = FALSE, merge_citation=FALSE, preferred_source="") {
-
-  raw_citations_with_id <- add_id_citations(raw_citations)
-  formatted_citations <- format_citations(raw_citations_with_id)
-  pairs <- match_citations(formatted_citations)
-  pair_types <- identify_true_matches(pairs)
-
-  true_pairs <- pair_types$true_pairs
-  maybe_pairs <- pair_types$maybe_pairs
-
-  unique_citations_with_metadata <- keep_one_unique_citation(raw_citations_with_id, true_pairs)
-
-  if(manual_dedup == TRUE){
-
-    manual_dedup <- get_manual_dedup_list(maybe_pairs, formatted_citations)
-  }
-
-  if(merge_citation == TRUE){
-
-    unique_citations_with_metadata <- merge_citation(raw_citations_with_id, true_pairs)
-  }
-
-  return(list("unique" = unique_citations_with_metadata,
-              "manual_dedup" = manual_dedup))
-}
-
 ####------ Assign id ------ ####
+
+#' This function adds an id to citation data if missing
+#' @param raw_citations Citation dataframe with relevant columns
+#' @return Dataframe of citations with id
 
 add_id_citations <- function(raw_citations){
 
@@ -46,6 +14,10 @@ add_id_citations <- function(raw_citations){
 }
 
 ####------ Format citation data ------ ####
+
+#' This function formats citation data for deduplication
+#' @param raw_citations_with_id Citation dataframe with relevant columns and id column
+#' @return Dataframe of formatted citations with id
 
 format_citations <- function(raw_citations_with_id){
 
@@ -111,6 +83,10 @@ format_citations <- function(raw_citations_with_id){
 }
 
 ####------ Identify all possible matching pairs of citations ------ ####
+
+#' This function identifies matching pairs of citations
+#' @param formatted_citations Formatted citation dataframe with relevant columns and id column
+#' @return Dataframe of citation pairs
 
 match_citations <- function(formatted_citations){
 
@@ -184,6 +160,11 @@ match_citations <- function(formatted_citations){
     mutate(doi = ifelse(is.na(doi1) & is.na(doi2), 0, doi)) %>%
     mutate(isbn = ifelse(is.na(isbn1) & is.na(isbn2), 0, isbn))
 }
+
+
+#' This function identifies true pairs from matching pairs of citations and pairs which may be duplicates - for manual deduplication
+#' @param pairs citation matches which may be duplicates
+#' @return Dataframe of true citation pairs
 
 identify_true_matches <- function(pairs){
 
@@ -278,6 +259,11 @@ identify_true_matches <- function(pairs){
 
 }
 
+#' This function generates a duplicate ID for sets of matching citations
+#' @param true_pairs citation matches which are true duplicates'
+#' @param formatted_citations formatted citation data
+#' @return Dataframe of formatted citation data with duplicate id
+
 generate_dup_id <- function(true_pairs, formatted_citations){
 
   # generate duplicate IDs
@@ -306,17 +292,20 @@ generate_dup_id <- function(true_pairs, formatted_citations){
     mutate(duplicate_id = record_id)
 
   citations_with_dup_id <- rbind(unique_citations, citations_with_dup_id)
-  true_pairs_with_id <- unique(citations_with_dup_id)
+  matched_data_with_ids <- unique(citations_with_dup_id)
 
-  return(true_pairs_with_id)
+  return(matched_data_with_ids)
 
 }
 
-  # Remove duplicate papers ----------------------------------------------
-
+# Remove duplicate papers ----------------------------------------------
+#' This function retains one citation in a set of matching records
+#' @param matched_data_with_idscitation data with duplicate ids
+#' @param raw_citations_with_id original citation data with ids
+#' @return Dataframe of citation data with duplicate citation rows removed
 keep_one_unique_citation <- function(raw_citations_with_id, true_pairs){
 
-  duplicate_id <- true_pairs_with_id %>%
+  duplicate_id <- matched_data_with_ids %>%
     select(duplicate_id, record_id) %>%
     unique()
 
@@ -339,14 +328,18 @@ keep_one_unique_citation <- function(raw_citations_with_id, true_pairs){
   formatted_citations$record_id <- as.character(formatted_citations$record_id)
 
   maybe_pairs <- maybe_pairs %>%
-    filter(record_id1 %in% true_pairs_with_id$record_id &
-             record_id2 %in% true_pairs_with_id$record_id)
+    filter(record_id1 %in% matched_data_with_ids$record_id &
+             record_id2 %in% matched_data_with_ids$record_id)
 
   }
+  #' This function generates a duplicate ID for sets of matching citations
+  #' @param matched_data_with_ids citation data with duplicate ids
+  #' @param raw_citations_with_id  original citation data with unique ids
+  #' @return Dataframe of formatted citation data with duplicate id
 
-  merge_metadata <- function(true_pairs_with_id, raw_citations_with_id){
+  merge_metadata <- function(matched_data_with_ids, raw_citations_with_id){
 
-    duplicate_id <- true_pairs_with_id %>%
+    duplicate_id <- matched_data_with_ids %>%
       select(duplicate_id, record_id) %>%
       unique()
 
@@ -355,182 +348,46 @@ keep_one_unique_citation <- function(raw_citations_with_id, true_pairs){
     citations_with_dup_id_merged <- all_metadata_with_duplicate_id %>%
       mutate_all(~replace(., .=='NA', NA)) %>%
       group_by(duplicate_id) %>%
+      mutate(Order = ifelse(label == preferred_source, 1, 2)) %>%
+      arrange(Order) %>%
+      select(-Order) %>%
       summarise_all(funs(trimws(paste(na.omit(.), collapse = ';;;')))) %>%
       mutate(across(c(everything(), -database), gsub, pattern = ";;;.*", replacement = "")) %>%
       mutate(across(database, gsub, pattern = ";;;", replacement = ", "))
 
   }
 
-#' @export
-get_labelled_results <- function (x,
-                                 labelKeep = ""){
+  #' Deduplicate citations
+  #'
+  #' This function deduplicates citation data
+  #' @export
+  #' @param raw_citations Citation dataframe with relevant columns
+  #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
+  #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
+  #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 
+  dedup_citations <- function(raw_citations, manual_dedup = FALSE, merge_citation=FALSE, preferred_source="") {
 
+    raw_citations_with_id <- add_id_citations(raw_citations)
+    formatted_citations <- format_citations(raw_citations_with_id)
+    pairs <- match_citations(formatted_citations)
+    pair_types <- identify_true_matches(pairs)
 
-  result1 <- dedup_labelled_step(x,
-                                 labelKeep = labelKeep)
-  manual1 <- result1$ManualDedup
-  unique1 <- result1$Unique
-  pairs1 <- result1$TruePairs
-  allmatches1 <- result1$PotentialPairs
-  removed1 <- result1$DuplicateRefsRemoved
+    true_pairs <- pair_types$true_pairs
+    maybe_pairs <- pair_types$maybe_pairs
 
-  unique1<-unique1 %>%
-    select(record_id, author, year, title, journal, abstract, volume, number, pages, doi, label, isbn)
+    unique_citations_with_metadata <- keep_one_unique_citation(raw_citations_with_id, true_pairs)
 
-  manual_otherway <- manual1 %>%
-    mutate(id1 = record_id2) %>%
-    mutate(id2= record_id1) %>%
-    rename(title1 = title2,
-           title2 = title1,
-           author1 = author2,
-           author2 = author1,
-           year1 = year2,
-           year2 = year1,
-           journal1 = journal2,
-           journal2 = journal1,
-           abstract1 = abstract2,
-           abstract2 = abstract1,
-           volume1 = volume2,
-           volume2 = volume1,
-           number1 = number2,
-           number2 = number1,
-           pages1 = pages2,
-           pages2 = pages1,
-           doi1 = doi2,
-           doi2 = doi1,
-           label1 = label2,
-           label2 = label1,
-           isbn1 = isbn2,
-           isbn2 = isbn1,
-           record_id1 = record_id2,
-           record_id2 = record_id1
-    )
+    if(manual_dedup == TRUE){
 
+      manual_dedup <- get_manual_dedup_list(maybe_pairs, formatted_citations)
+    }
 
-  result2 <- get_dedup_results(unique1)
+    if(merge_citation == TRUE){
 
-  manual2id <- result2$ManualDedup
-  manual2 <-result2$ManualDedup  %>%
-    mutate(id1 = record_id1,
-           id2 = record_id2)
+      unique_citations_with_metadata <- merge_citation(raw_citations_with_id, true_pairs)
+    }
 
-  manual2 <- anti_join(manual2, manual_otherway)
-
-  unique2 <- result2$Unique
-  pairs2 <- result2$TruePairs
-  allmatches2 <- result2$PotentialPairs
-  removed2 <- result2$DuplicateRefsRemoved
-
-  unique2<-unique2 %>%
-    select(record_id, author, year, title, journal, abstract, volume, number, pages, doi, label, isbn)
-
-  manual <- rbind(manual1, manual2)
-  manual <- manual %>%
-    group_by(record_id1, record_id2) %>%
-    mutate(id1 = first(id1)) %>%
-    mutate(id2 = first(id2)) %>%
-    ungroup()
-
-  manual <- unique(manual)
-
-  unique <- unique(unique2)
-
-  pairs <- rbind(pairs1, pairs2)
-  pairs <- unique(pairs)
-
-  allmatches <- rbind(allmatches1, allmatches2)
-  allmatches<-unique(allmatches)
-
-  removed <- rbind(removed1, removed2)
-
-  print(length(unique1$record_id))
-  print(length(unique2$record_id))
-
-  return(list("ManualDedup" = manual,
-              "Unique" = unique,
-              "TruePairs" = pairs,
-              "DuplicateRefsRemoved" = removed))
-}
-
-
-#' @export
-get_unique <-function(x,
-                      author = "author",
-                      title = "title",
-                      year = "year",
-                      journal = "journal",
-                      isbn = "isbn",
-                      abstract = "abstract",
-                      doi = "doi",
-                      number = "number",
-                      pages = "pages",
-                      volume = "volume",
-                      record_id = "record_id",
-                      label = "label"){
-
-dedup_results <- get_dedup_results(x)
-
-return(dedup_results$Unique)
-
-}
-
-#' @export
-get_dups_removed <-function(x,
-                      author = "author",
-                      title = "title",
-                      year = "year",
-                      journal = "journal",
-                      isbn = "isbn",
-                      abstract = "abstract",
-                      doi = "doi",
-                      number = "number",
-                      pages = "pages",
-                      volume = "volume",
-                      record_id = "record_id",
-                      label = "label"){
-
-dedup_results <- get_dedup_results(x)
-
-return(dedup_results$DuplicateRefsRemoved)
-}
-
-#' @export
-get_pairs <-function(x,
-                            author = "author",
-                            title = "title",
-                            year = "year",
-                            journal = "journal",
-                            isbn = "isbn",
-                            abstract = "abstract",
-                            doi = "doi",
-                            number = "number",
-                            pages = "pages",
-                            volume = "volume",
-                            record_id = "record_id",
-                            label = "label"){
-
-  dedup_results <- get_dedup_results(x)
-
-  return(dedup_results$TruePairs)
-}
-
-#' @export
-get_potential_pairs <-function(x,
-                         author = "author",
-                         title = "title",
-                         year = "year",
-                         journal = "journal",
-                         isbn = "isbn",
-                         abstract = "abstract",
-                         doi = "doi",
-                         number = "number",
-                         pages = "pages",
-                         volume = "volume",
-                         record_id = "record_id",
-                         label = "label"){
-
-  dedup_results <- get_dedup_results(x)
-
-  return(dedup_results$ManualDedup)
-}
+    return(list("unique" = unique_citations_with_metadata,
+                "manual_dedup" = manual_dedup))
+  }
