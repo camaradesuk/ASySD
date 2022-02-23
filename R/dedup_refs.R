@@ -20,6 +20,18 @@ dedup_citations <- function(raw_citations, manual_dedup = FALSE, merge_citation=
 
   unique_citations_with_metadata <- keep_one_unique_citation(raw_citations_with_id, true_pairs)
 
+  if(manual_dedup == TRUE){
+
+    manual_dedup <- get_manual_dedup_list(maybe_pairs, formatted_citations)
+  }
+
+  if(merge_citation == TRUE){
+
+    unique_citations_with_metadata <- merge_citation(raw_citations_with_id, true_pairs)
+  }
+
+  return(list("unique" = unique_citations_with_metadata,
+              "manual_dedup" = manual_dedup))
 }
 
 ####------ Assign id ------ ####
@@ -330,7 +342,24 @@ keep_one_unique_citation <- function(raw_citations_with_id, true_pairs){
     filter(record_id1 %in% true_pairs_with_id$record_id &
              record_id2 %in% true_pairs_with_id$record_id)
 
-}
+  }
+
+  merge_metadata <- function(true_pairs_with_id, raw_citations_with_id){
+
+    duplicate_id <- true_pairs_with_id %>%
+      select(duplicate_id, record_id) %>%
+      unique()
+
+    all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations_with_id)
+
+    citations_with_dup_id_merged <- all_metadata_with_duplicate_id %>%
+      mutate_all(~replace(., .=='NA', NA)) %>%
+      group_by(duplicate_id) %>%
+      summarise_all(funs(trimws(paste(na.omit(.), collapse = ';;;')))) %>%
+      mutate(across(c(everything(), -database), gsub, pattern = ";;;.*", replacement = "")) %>%
+      mutate(across(database, gsub, pattern = ";;;", replacement = ", "))
+
+  }
 
 #' @export
 get_labelled_results <- function (x,
