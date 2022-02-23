@@ -8,3 +8,16 @@ Removing duplicate references obtained from different databases is an essential 
 install.packages("devtools")
 devtools::install_github("camaradesuk/ASySD")
 ```
+## Automatically deduplicate citation data
+
+```{r}
+# load citations 
+citation_data <- load_search(filepath, method="endnote")
+
+# deduplicate
+dedup_citations <- dedup_citations(citation_data)
+
+# get unique citation dataframe
+unique_citations <- dedup_citations$unique 
+
+```
