@@ -289,7 +289,7 @@ generate_dup_id <- function(true_pairs, formatted_citations){
 #' @param matched_data_with_idscitation data with duplicate ids
 #' @param raw_citations_with_id original citation data with ids
 #' @return Dataframe of citation data with duplicate citation rows removed
-keep_one_unique_citation <- function(raw_citations_with_id, true_pairs){
+keep_one_unique_citation <- function(raw_citations_with_id, matched_data_with_ids){
 
   duplicate_id <- matched_data_with_ids %>%
     select(duplicate_id, record_id) %>%
@@ -362,7 +362,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, true_pairs){
   #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
   #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 
-  dedup_citations <- function(raw_citations, manual_dedup = FALSE, merge_citation=FALSE, preferred_source="") {
+  dedup_citations <- function(raw_citations, manual_dedup = FALSE, merge_citations=FALSE, preferred_source="") {
 
     raw_citations_with_id <- add_id_citations(raw_citations)
     formatted_citations <- format_citations(raw_citations_with_id)
@@ -371,17 +371,18 @@ keep_one_unique_citation <- function(raw_citations_with_id, true_pairs){
 
     true_pairs <- pair_types$true_pairs
     maybe_pairs <- pair_types$maybe_pairs
+    matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
 
-    unique_citations_with_metadata <- keep_one_unique_citation(raw_citations_with_id, true_pairs)
+    unique_citations_with_metadata <- keep_one_unique_citation(raw_citations_with_id, matched_data_with_ids)
 
     if(manual_dedup == TRUE){
 
       manual_dedup <- get_manual_dedup_list(maybe_pairs, formatted_citations)
     }
 
-    if(merge_citation == TRUE){
+    if(merge_citations == TRUE){
 
-      unique_citations_with_metadata <- merge_citation(raw_citations_with_id, true_pairs)
+      unique_citations_with_metadata <- merge_metadata(raw_citations_with_id, matched_data_with_ids)
     }
 
     return(list("unique" = unique_citations_with_metadata,
