@@ -240,20 +240,6 @@ identify_true_matches <- function(pairs){
   # Get potential duplicates for manual deduplication
   maybe_pairs <- rbind(true_pairs_mismatch_doi, year_mismatch_major)
 
-  maybe_also_pairs <- pairs %>%
-    filter(record_id1 %in% dedupdat$record_id &
-             record_id2 %in% dedupdat$record_id) %>%
-    filter(doi > 0.99 |
-             title>0.85 & author>0.75 |
-             title>0.80 & abstract>0.80 |
-             title>0.80 & isbn>0.99 |
-             title>0.80 & journal>0.80)
-
-  # Add in problem doi matching pairs and different year data in ManualDedup
-  maybe_pairs <- rbind(maybe_pairs, maybe_also_pairs)
-  maybe_pairs <- unique(maybe_pairs)
-
-
   return(list("true_pairs" = true_pairs,
               "maybe_pairs" = maybe_pairs))
 
@@ -322,10 +308,20 @@ keep_one_unique_citation <- function(raw_citations_with_id, true_pairs){
 
   }
 
-  get_manual_dedup_list <- function(maybe_pairs, formatted_citations){
+  get_manual_dedup_list <- function(maybe_pairs, matched_data_with_ids){
 
+    maybe_also_pairs <- pairs %>%
+      filter(record_id1 %in% matched_data_with_ids$record_id &
+               record_id2 %in% matched_data_with_ids$record_id) %>%
+      filter(doi > 0.99 |
+               title>0.85 & author>0.75 |
+               title>0.80 & abstract>0.80 |
+               title>0.80 & isbn>0.99 |
+               title>0.80 & journal>0.80)
 
-  formatted_citations$record_id <- as.character(formatted_citations$record_id)
+    # Add in problem doi matching pairs and different year data in ManualDedup
+    maybe_pairs <- rbind(maybe_pairs, maybe_also_pairs)
+    maybe_pairs <- unique(maybe_pairs)
 
   maybe_pairs <- maybe_pairs %>%
     filter(record_id1 %in% matched_data_with_ids$record_id &
