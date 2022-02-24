@@ -278,20 +278,20 @@ generate_dup_id <- function(true_pairs, formatted_citations){
     mutate(duplicate_id = record_id)
 
   citations_with_dup_id <- rbind(unique_citations, citations_with_dup_id)
-  matched_data_with_ids <- unique(citations_with_dup_id)
+  matched_pairs_with_ids <- unique(citations_with_dup_id)
 
-  return(matched_data_with_ids)
+  return(matched_pairs_with_ids)
 
 }
 
 # Remove duplicate papers ----------------------------------------------
 #' This function retains one citation in a set of matching records
-#' @param matched_data_with_idscitation data with duplicate ids
+#' @param matched_pairs_with_ids citation data with duplicate ids
 #' @param raw_citations_with_id original citation data with ids
 #' @return Dataframe of citation data with duplicate citation rows removed
-keep_one_unique_citation <- function(raw_citations_with_id, matched_data_with_ids){
+keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_ids){
 
-  duplicate_id <- matched_data_with_ids %>%
+  duplicate_id <- matched_pairs_with_ids %>%
     select(duplicate_id, record_id) %>%
     unique()
 
@@ -308,11 +308,11 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_data_with_id
 
   }
 
-  get_manual_dedup_list <- function(maybe_pairs, matched_data_with_ids){
+  get_manual_dedup_list <- function(maybe_pairs, matched_pairs_with_ids){
 
     maybe_also_pairs <- pairs %>%
-      filter(record_id1 %in% matched_data_with_ids$record_id &
-               record_id2 %in% matched_data_with_ids$record_id) %>%
+      filter(record_id1 %in% matched_pairs_with_ids$record_id &
+               record_id2 %in% matched_pairs_with_ids$record_id) %>%
       filter(doi > 0.99 |
                title>0.85 & author>0.75 |
                title>0.80 & abstract>0.80 |
@@ -324,18 +324,18 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_data_with_id
     maybe_pairs <- unique(maybe_pairs)
 
   maybe_pairs <- maybe_pairs %>%
-    filter(record_id1 %in% matched_data_with_ids$record_id &
-             record_id2 %in% matched_data_with_ids$record_id)
+    filter(record_id1 %in% matched_pairs_with_ids$record_id &
+             record_id2 %in% matched_pairs_with_ids$record_id)
 
   }
   #' This function generates a duplicate ID for sets of matching citations
-  #' @param matched_data_with_ids citation data with duplicate ids
+  #' @param matched_pairs_with_ids citation data with duplicate ids
   #' @param raw_citations_with_id  original citation data with unique ids
   #' @return Dataframe of formatted citation data with duplicate id
 
-  merge_metadata <- function(matched_data_with_ids, raw_citations_with_id){
+  merge_metadata <- function(raw_citations_with_id, matched_pairs_with_ids){
 
-    duplicate_id <- matched_data_with_ids %>%
+    duplicate_id <- matched_pairs_with_ids %>%
       select(duplicate_id, record_id) %>%
       unique()
 
@@ -373,7 +373,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_data_with_id
     maybe_pairs <- pair_types$maybe_pairs
     matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
 
-    unique_citations_with_metadata <- keep_one_unique_citation(raw_citations_with_id, matched_data_with_ids)
+    unique_citations_with_metadata <- keep_one_unique_citation(raw_citations_with_id, matched_pairs_with_ids)
 
     if(manual_dedup == TRUE){
 
@@ -382,7 +382,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_data_with_id
 
     if(merge_citations == TRUE){
 
-      unique_citations_with_metadata <- merge_metadata(raw_citations_with_id, matched_data_with_ids)
+      unique_citations_with_metadata <- merge_metadata(raw_citations_with_id, matched_pairs_with_ids)
     }
 
     return(list("unique" = unique_citations_with_metadata,
