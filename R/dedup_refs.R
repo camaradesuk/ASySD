@@ -373,8 +373,6 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
     maybe_pairs <- pair_types$maybe_pairs
     matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
 
-    unique_citations_with_metadata <- keep_one_unique_citation(raw_citations_with_id, matched_pairs_with_ids)
-
     if(manual_dedup == TRUE){
 
       manual_dedup <- get_manual_dedup_list(maybe_pairs, formatted_citations)
@@ -383,6 +381,11 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
     if(merge_citations == TRUE){
 
       unique_citations_with_metadata <- merge_metadata(raw_citations_with_id, matched_pairs_with_ids)
+    }
+
+    else{
+      unique_citations_with_metadata <- keep_one_unique_citation(raw_citations_with_id, matched_pairs_with_ids)
+
     }
 
     return(list("unique" = unique_citations_with_metadata,
