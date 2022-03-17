@@ -9,7 +9,8 @@ add_id_citations <- function(raw_citations){
   names(raw_citations)  <- to_any_case(names(raw_citations), case = c("snake"))
 
   raw_citations_with_id <- raw_citations %>%
-    mutate(record_id = ifelse(is.na(record_id), as.character(row_number()+1000), paste(record_id)))
+    mutate(record_id = ifelse(is.na(record_id), as.character(row_number()+1000), paste(record_id))) %>%
+    mutate(record_id = ifelse(record_id=="", as.character(row_number()+1000), paste(record_id)))
 
 }
 
@@ -308,7 +309,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
 
   }
 
-  get_manual_dedup_list <- function(maybe_pairs, matched_pairs_with_ids){
+  get_manual_dedup_list <- function(maybe_pairs, matched_pairs_with_ids, pairs){
 
     maybe_also_pairs <- pairs %>%
       filter(record_id1 %in% matched_pairs_with_ids$record_id &
@@ -344,9 +345,6 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
     citations_with_dup_id_merged <- all_metadata_with_duplicate_id %>%
       mutate_all(~replace(., .=='NA', NA)) %>%
       group_by(duplicate_id) %>%
-      mutate(Order = ifelse(label == preferred_source, 1, 2)) %>%
-      arrange(Order) %>%
-      select(-Order) %>%
       summarise_all(funs(trimws(paste(na.omit(.), collapse = ';;;')))) %>%
       mutate(across(c(everything(), -database), gsub, pattern = ";;;.*", replacement = "")) %>%
       mutate(across(database, gsub, pattern = ";;;", replacement = ", "))
@@ -362,7 +360,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
   #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
   #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 
-  dedup_citations <- function(raw_citations, manual_dedup = FALSE, merge_citations=FALSE, preferred_source="") {
+  dedup_citations <- function(raw_citations, manual_dedup = TRUE, merge_citations=FALSE, preferred_source="") {
 
     raw_citations_with_id <- add_id_citations(raw_citations)
     formatted_citations <- format_citations(raw_citations_with_id)
@@ -375,7 +373,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
 
     if(manual_dedup == TRUE){
 
-      manual_dedup <- get_manual_dedup_list(maybe_pairs, formatted_citations)
+      manual_dedup <- get_manual_dedup_list(maybe_pairs, formatted_citations, pairs)
     }
 
     if(merge_citations == TRUE){
