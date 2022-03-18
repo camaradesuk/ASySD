@@ -28,7 +28,7 @@ format_citations <- function(raw_citations_with_id){
 
   # select relevant columns
   formatted_citations <- formatted_citations  %>%
-      select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label)
+      select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label, source)
 
   # make sure author is a character
   formatted_citations$author <- as.character(formatted_citations$author)
@@ -77,7 +77,7 @@ format_citations <- function(raw_citations_with_id){
     mutate(isbn = ifelse(isbn=="", NA, paste(isbn)))
 
   formatted_citations<- formatted_citations %>%
-    select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label)
+    select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, source, label)
 
   return(formatted_citations)
 
@@ -92,25 +92,25 @@ format_citations <- function(raw_citations_with_id){
 match_citations <- function(formatted_citations){
 
   # ROUND 1: run compare.dedup function and block by title&pages OR title&author OR title&abstract OR doi
-  try(newpairs <- compare.dedup(formatted_citations, blockfld = list(c(2,8), c(1,2), c(2,5), 6), strcmp = TRUE, exclude=c("record_id", "label")), silent=TRUE)
+  try(newpairs <- compare.dedup(formatted_citations, blockfld = list(c(2,8), c(1,2), c(2,5), 6), strcmp = TRUE, exclude=c("record_id", "source", "label")), silent=TRUE)
 
   # Create df of pairs
   linkedpairs <- as.data.frame(if(exists("newpairs")) newpairs$pairs)
 
   # ROUND 2: run compare.dedup function and block by author&year&pages OR journal&volume&pages or isbn&volume&pages OR title&isbn
-  try(newpairs2 <- compare.dedup(formatted_citations, blockfld = list(c(1,3,8), c(4,9,8), c(10,9,8), c(2,10)), strcmp = TRUE, exclude= c("record_id", "label")), silent=TRUE)
+  try(newpairs2 <- compare.dedup(formatted_citations, blockfld = list(c(1,3,8), c(4,9,8), c(10,9,8), c(2,10)), strcmp = TRUE, exclude= c("record_id", "source", "label")), silent=TRUE)
 
   #Create df of pairs
   linkedpairs2 <- as.data.frame(if(exists("newpairs2")) newpairs2$pairs)
 
   # ROUND 3: run compare.dedup function and block by year&pages&volume OR year&number&volume or year&pages&number
-  try(newpairs3 <- compare.dedup(formatted_citations, blockfld = list(c(3,8,9), c(3,7,9), c(3,8,7)), strcmp = TRUE, exclude=c("record_id", "label")), silent = TRUE)
+  try(newpairs3 <- compare.dedup(formatted_citations, blockfld = list(c(3,8,9), c(3,7,9), c(3,8,7)), strcmp = TRUE, exclude=c("record_id", "source", "label")), silent = TRUE)
 
   #Create df of pairs
   linkedpairs3 <- as.data.frame(if(exists("newpairs3")) newpairs3$pairs)
 
   # ROUND 4: run compare.dedup function and block by author&year OR year&title OR title&volume OR title&journal
-  try(newpairs4 <- compare.dedup(formatted_citations, blockfld = list(c(1,3), c(3,2), c(2,9), c(2,4)), strcmp = TRUE, exclude=c("record_id", "label")), silent = TRUE)
+  try(newpairs4 <- compare.dedup(formatted_citations, blockfld = list(c(1,3), c(3,2), c(2,9), c(2,4)), strcmp = TRUE, exclude=c("record_id", "source", "label")), silent = TRUE)
 
   # Create df of pairs
   linkedpairs4 <- as.data.frame(if(exists("newpairs4")) newpairs4$pairs)
@@ -148,10 +148,12 @@ match_citations <- function(formatted_citations){
     mutate(record_id1=formatted_citations$record_id[id1]) %>%
     mutate(record_id2 =formatted_citations$record_id[id2]) %>%
     mutate(label1 =formatted_citations$label[id1]) %>%
-    mutate(label2 =formatted_citations$label[id2])
+    mutate(label2 =formatted_citations$label[id2]) %>%
+    mutate(source1 =formatted_citations$source[id1]) %>%
+    mutate(source2 =formatted_citations$source[id2])
 
   pairs <- pairs %>%
-    select(id1, id2, author1, author2, author, title1, title2, title, abstract1, abstract2, abstract, year1, year2, year, number1, number2, number, pages1, pages2, pages, volume1, volume2, volume, journal1, journal2, journal, isbn, isbn1, isbn2, doi1, doi2, doi, record_id1, record_id2, label1, label2)
+    select(id1, id2, author1, author2, author, title1, title2, title, abstract1, abstract2, abstract, year1, year2, year, number1, number2, number, pages1, pages2, pages, volume1, volume2, volume, journal1, journal2, journal, isbn, isbn1, isbn2, doi1, doi2, doi, record_id1, record_id2, label1, label2, source1, source2)
 
   pairs <- pairs %>%
     mutate(abstract = ifelse(is.na(abstract1) & is.na(abstract2), 0, abstract)) %>%
@@ -305,7 +307,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
     mutate_all(~replace(., .=='NA', NA)) %>%
     group_by(duplicate_id) %>%
     arrange(doi, abstract) %>%
-     mutate(Order = ifelse(label == preferred_source, 1, 2)) %>%
+     mutate(Order = ifelse(source == preferred_source, 1, 2)) %>%
     arrange(Order) %>%
     select(-Order, -preferred_source) %>%
     slice_head()
@@ -358,8 +360,9 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
       mutate_all(~replace(., .=='NA', NA)) %>%
       group_by(duplicate_id) %>%
       summarise_all(funs(trimws(paste(na.omit(.), collapse = ';;;')))) %>%
-      mutate(across(c(everything(), -database), gsub, pattern = ";;;.*", replacement = "")) %>%
-      mutate(across(database, gsub, pattern = ";;;", replacement = ", "))
+      mutate(across(c(everything(), -label, -source), gsub, pattern = ";;;.*", replacement = "")) %>%
+      mutate(across(label, gsub, pattern = ";;;", replacement = ", ")) %>%
+      mutate(across(source, gsub, pattern = ";;;", replacement = ", "))
 
   }
 
