@@ -358,12 +358,16 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
       select(duplicate_id, record_id) %>%
       unique()
 
-    all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations_with_id)
+    duplicate_id$record_id <- as.character(duplicate_id$record_id)
+
+    raw_citations_with_id$record_id <- toupper(raw_citations_with_id$record_id)
+
+    all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations_with_id, by="record_id")
 
     citations_with_dup_id_merged <- all_metadata_with_duplicate_id %>%
       mutate_all(~replace(., .=='NA', NA)) %>%
       group_by(duplicate_id) %>%
-      summarise_all(funs(trimws(paste(na.omit(.), collapse = ';;;')))) %>%
+      summarise_all(lst(trimws(paste(na.omit(.), collapse = ';;;')))) %>%
       mutate(across(c(everything(), -label, -source), gsub, pattern = ";;;.*", replacement = "")) %>%
       mutate(across(label, gsub, pattern = ";;;", replacement = ", ")) %>%
       mutate(across(source, gsub, pattern = ";;;", replacement = ", "))
