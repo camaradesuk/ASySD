@@ -91,35 +91,39 @@ format_citations <- function(raw_citations_with_id){
 
 match_citations <- function(formatted_citations){
 
+
   # ROUND 1: run compare.dedup function and block by title&pages OR title&author OR title&abstract OR doi
   try(newpairs <- compare.dedup(formatted_citations, blockfld = list(c(2,8), c(1,2), c(2,5), 6), strcmp = TRUE, exclude=c("record_id", "source", "label")), silent=TRUE)
 
   # Create df of pairs
-  linkedpairs <- as.data.frame(if(exists("newpairs")) newpairs$pairs)
+  try(linkedpairs <- as.data.frame(newpairs$pairs), silent=TRUE)
 
   # ROUND 2: run compare.dedup function and block by author&year&pages OR journal&volume&pages or isbn&volume&pages OR title&isbn
   try(newpairs2 <- compare.dedup(formatted_citations, blockfld = list(c(1,3,8), c(4,9,8), c(10,9,8), c(2,10)), strcmp = TRUE, exclude= c("record_id", "source", "label")), silent=TRUE)
 
   #Create df of pairs
-  linkedpairs2 <- as.data.frame(if(exists("newpairs2")) newpairs2$pairs)
+  try(linkedpairs2 <- as.data.frame(newpairs2$pairs), silent=TRUE)
 
   # ROUND 3: run compare.dedup function and block by year&pages&volume OR year&number&volume or year&pages&number
   try(newpairs3 <- compare.dedup(formatted_citations, blockfld = list(c(3,8,9), c(3,7,9), c(3,8,7)), strcmp = TRUE, exclude=c("record_id", "source", "label")), silent = TRUE)
 
   #Create df of pairs
-  linkedpairs3 <- as.data.frame(if(exists("newpairs3")) newpairs3$pairs)
+  try(linkedpairs3 <- as.data.frame(newpairs3$pairs), silent=TRUE)
 
   # ROUND 4: run compare.dedup function and block by author&year OR year&title OR title&volume OR title&journal
-  try(newpairs4 <- compare.dedup(formatted_citations, blockfld = list(c(1,3), c(3,2), c(2,9), c(2,4)), strcmp = TRUE, exclude=c("record_id", "source", "label")), silent = TRUE)
+  try(newpairs4 <- compare.dedup(formatted_citations, blockfld = list(c(1,3), c(3,2),c(2,9), c(2,4)), strcmp = TRUE, exclude=c("record_id", "source", "label")), silent = TRUE)
 
   # Create df of pairs
-  linkedpairs4 <- as.data.frame(if(exists("newpairs4")) newpairs4$pairs)
+  try(linkedpairs4 <- as.data.frame(newpairs4$pairs), silent=TRUE)
 
   # Combine all possible pairs
-  pairs <- rbind(if(exists("linkedpairs")) linkedpairs,
-                 if(exists("linkedpairs2")) linkedpairs2,
-                 if(exists("linkedpairs3")) linkedpairs3,
-                 if(exists("linkedpairs4")) linkedpairs4)
+  pairs <- rbind(get0("linkedpairs"),
+                 get0("linkedpairs2"),
+                 get0("linkedpairs3"),
+                 get0("linkedpairs4_1"),
+                 get0("linkedpairs4_2"),
+                 get0("linkedpairs4_3"),
+                 get0("linkedpairs4_4"))
 
   pairs <- unique(pairs)
 
