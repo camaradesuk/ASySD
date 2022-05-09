@@ -18,12 +18,12 @@ Depends:
 	readr,
 	magrittr,
 	stringr,
-	dplyr,
+	MASS,
+	parallel,
 	RecordLinkage,
 	XML,
 	RCurl,
+	dplyr,
 	roxygen2,
-	MASS,
-	parallel,
 	snakecase
 
