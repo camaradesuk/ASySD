@@ -50,7 +50,7 @@ load_search <-function(path, method){
         newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
         newdat <- newdat %>%
-          select(author,
+          dplyr::select(author,
                  year,
                  journal,
                  doi,
@@ -77,7 +77,7 @@ if(method == "txt"){
   newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
         newdat <- newdat %>%
-          select(author,
+          dplyr::select(author,
                  year,
                  journal,
                  doi,
