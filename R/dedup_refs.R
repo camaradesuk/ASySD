@@ -92,26 +92,27 @@ format_citations <- function(raw_citations_with_id){
 match_citations <- function(formatted_citations){
 
 
+
   # ROUND 1: run compare.dedup function and block by title&pages OR title&author OR title&abstract OR doi
-  try(newpairs <- compare.dedup(formatted_citations, blockfld = list(c(2,8), c(1,2), c(2,5), 6), strcmp = TRUE, exclude=c("record_id", "source", "label")), silent=TRUE)
+  try(newpairs <- compare.dedup(formatted_citations, blockfld = list(c(2,8), c(1,2), c(2,5), 6), exclude=c("record_id", "source", "label")), silent=TRUE)
 
   # Create df of pairs
   try(linkedpairs <- as.data.frame(newpairs$pairs), silent=TRUE)
 
   # ROUND 2: run compare.dedup function and block by author&year&pages OR journal&volume&pages or isbn&volume&pages OR title&isbn
-  try(newpairs2 <- compare.dedup(formatted_citations, blockfld = list(c(1,3,8), c(4,9,8), c(10,9,8), c(2,10)), strcmp = TRUE, exclude= c("record_id", "source", "label")), silent=TRUE)
+  try(newpairs2 <- compare.dedup(formatted_citations, blockfld = list(c(1,3,8), c(4,9,8), c(10,9,8), c(2,10)), exclude= c("record_id", "source", "label")), silent=TRUE)
 
   #Create df of pairs
   try(linkedpairs2 <- as.data.frame(newpairs2$pairs), silent=TRUE)
 
   # ROUND 3: run compare.dedup function and block by year&pages&volume OR year&number&volume or year&pages&number
-  try(newpairs3 <- compare.dedup(formatted_citations, blockfld = list(c(3,8,9), c(3,7,9), c(3,8,7)), strcmp = TRUE, exclude=c("record_id", "source", "label")), silent = TRUE)
+  try(newpairs3 <- compare.dedup(formatted_citations, blockfld = list(c(3,8,9), c(3,7,9), c(3,8,7)), exclude=c("record_id", "source", "label")), silent = TRUE)
 
   #Create df of pairs
   try(linkedpairs3 <- as.data.frame(newpairs3$pairs), silent=TRUE)
 
   # ROUND 4: run compare.dedup function and block by author&year OR year&title OR title&volume OR title&journal
-  try(newpairs4 <- compare.dedup(formatted_citations, blockfld = list(c(1,3), c(3,2),c(2,9), c(2,4)), strcmp = TRUE, exclude=c("record_id", "source", "label")), silent = TRUE)
+  try(newpairs4 <- compare.dedup(formatted_citations, blockfld = list(c(1,3), c(3,2),c(2,9), c(2,4)), exclude=c("record_id", "source", "label")), silent = TRUE)
 
   # Create df of pairs
   try(linkedpairs4 <- as.data.frame(newpairs4$pairs), silent=TRUE)
@@ -120,10 +121,7 @@ match_citations <- function(formatted_citations){
   pairs <- rbind(get0("linkedpairs"),
                  get0("linkedpairs2"),
                  get0("linkedpairs3"),
-                 get0("linkedpairs4_1"),
-                 get0("linkedpairs4_2"),
-                 get0("linkedpairs4_3"),
-                 get0("linkedpairs4_4"))
+                 get0("linkedpairs4"))
 
   pairs <- unique(pairs)
 
@@ -157,7 +155,20 @@ match_citations <- function(formatted_citations){
     mutate(source2 =formatted_citations$source[id2])
 
   pairs <- pairs %>%
-    select(id1, id2, author1, author2, author, title1, title2, title, abstract1, abstract2, abstract, year1, year2, year, number1, number2, number, pages1, pages2, pages, volume1, volume2, volume, journal1, journal2, journal, isbn, isbn1, isbn2, doi1, doi2, doi, record_id1, record_id2, label1, label2, source1, source2)
+    dplyr::select(id1, id2, author1, author2, author, title1, title2, title, abstract1, abstract2, abstract, year1, year2, year, number1, number2, number, pages1, pages2, pages, volume1, volume2, volume, journal1, journal2, journal, isbn, isbn1, isbn2, doi1, doi2, doi, record_id1, record_id2, label1, label2, source1, source2)
+
+  numCores <- detectCores()
+  numCores
+
+  try(pairs$author <- mapply(jarowinkler, pairs$author1, pairs$author2), silent = TRUE)
+  try(pairs$title <- mapply(jarowinkler, pairs$title1, pairs$title2), silent = TRUE)
+  try(pairs$abstract <- mcmapply(jarowinkler, pairs$abstract1, pairs$abstract2, mc.cores = numCores), silent = TRUE)
+  try(pairs$year <- mapply(jarowinkler, pairs$year1, pairs$year2), silent = TRUE)
+  try(pairs$number <- mapply(jarowinkler, pairs$number1, pairs$number2), silent = TRUE)
+  try(pairs$volume <- mapply(jarowinkler, pairs$volume1, pairs$volume2), silent = TRUE)
+  try(pairs$journal <- mapply(jarowinkler, pairs$journal1, pairs$journal2), silent = TRUE)
+  try(pairs$isbn <- mapply(jarowinkler, pairs$isbn1, pairs$isbn2), silent = TRUE)
+  try(pairs$doi <- mapply(jarowinkler, pairs$doi1, pairs$doi2), silent = TRUE)
 
   pairs <- pairs %>%
     mutate(abstract = ifelse(is.na(abstract1) & is.na(abstract2), 0, abstract)) %>%
