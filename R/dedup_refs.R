@@ -306,6 +306,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
 
   if(!is.null(preferred_source)){
 
+    preferred_source <- toupper(preferred_source)
 
   citations_with_dup_id_pick <- all_metadata_with_duplicate_id %>%
     mutate_all(~replace(., .=='NA', NA)) %>%
