@@ -28,7 +28,7 @@ format_citations <- function(raw_citations_with_id){
 
   # select relevant columns
   formatted_citations <- formatted_citations  %>%
-      select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label, source)
+      dplyr::select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label, source)
 
   # make sure author is a character
   formatted_citations$author <- as.character(formatted_citations$author)
@@ -77,7 +77,7 @@ format_citations <- function(raw_citations_with_id){
     mutate(isbn = ifelse(isbn=="", NA, paste(isbn)))
 
   formatted_citations<- formatted_citations %>%
-    select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, source, label)
+    dplyr::select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, source, label)
 
   return(formatted_citations)
 
@@ -278,15 +278,15 @@ generate_dup_id <- function(true_pairs, formatted_citations){
     group_by(record_id2) %>%
     mutate(duplicate_id = first(duplicate_id)) %>%
     ungroup() %>%
-    select(record_id1, record_id2, duplicate_id) %>%
+    dplyr::select(record_id1, record_id2, duplicate_id) %>%
     unique()
 
   citations_with_dup_id1 <- inner_join(formatted_citations, dup_ids, by=c("record_id"="record_id1")) %>%
-    select(-record_id2) %>%
+    dplyr::select(-record_id2) %>%
     unique()
 
   citations_with_dup_id2 <- inner_join(formatted_citations, dup_ids, by=c("record_id"="record_id2")) %>%
-    select(-record_id1) %>%
+    dplyr::select(-record_id1) %>%
     unique()
 
   citations_with_dup_id <- rbind(citations_with_dup_id1, citations_with_dup_id2) %>% unique()
@@ -310,7 +310,7 @@ generate_dup_id <- function(true_pairs, formatted_citations){
 keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_ids, preferred_source){
 
   duplicate_id <- matched_pairs_with_ids %>%
-    select(duplicate_id, record_id) %>%
+    dplyr::select(duplicate_id, record_id) %>%
     unique()
 
   all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations_with_id)
@@ -325,7 +325,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
     arrange(doi, abstract) %>%
      mutate(Order = ifelse(source == preferred_source, 1, 2)) %>%
     arrange(Order) %>%
-    select(-Order, -preferred_source) %>%
+    dplyr::select(-Order, -preferred_source) %>%
     slice_head()
   }
 
@@ -367,7 +367,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
   merge_metadata <- function(raw_citations_with_id, matched_pairs_with_ids){
 
     duplicate_id <- matched_pairs_with_ids %>%
-      select(duplicate_id, record_id) %>%
+      dplyr::select(duplicate_id, record_id) %>%
       unique()
 
     duplicate_id$record_id <- as.character(duplicate_id$record_id)
