@@ -23,5 +23,7 @@ Depends:
 	XML,
 	RCurl,
 	roxygen2,
+	MASS,
+	parallel,
 	snakecase
 
