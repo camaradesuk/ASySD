@@ -376,6 +376,12 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
 
     all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations_with_id, by="record_id")
 
+    rem_dup_word <- function(x){
+      x <- tolower(x)
+      paste(unique(trimws(unlist(strsplit(x,split=" ",fixed=F,perl=T)))),collapse =
+              " ")
+    }
+
     citations_with_dup_id_merged <- all_metadata_with_duplicate_id %>%
       mutate_if(is.character, utf8_encode) %>%
       mutate_all(~replace(., .=='NA', NA)) %>%
