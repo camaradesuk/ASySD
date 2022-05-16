@@ -416,16 +416,23 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
 
   dedup_citations <- function(raw_citations, manual_dedup = TRUE, merge_citations=FALSE, preferred_source=NULL) {
 
+    print("formatting data...")
     raw_citations_with_id <- add_id_citations(raw_citations)
     formatted_citations <- format_citations(raw_citations_with_id)
+    print("identifying potential duplicates...")
     pairs <- match_citations(formatted_citations)
+
     pair_types <- identify_true_matches(pairs)
 
     true_pairs <- pair_types$true_pairs
+    print("identified duplicates!")
+
     maybe_pairs <- pair_types$maybe_pairs
     matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
 
     if(manual_dedup == TRUE){
+
+      print("merging citations...")
 
       manual_dedup <- get_manual_dedup_list(maybe_pairs, formatted_citations, pairs)
     }
