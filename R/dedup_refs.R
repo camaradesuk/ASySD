@@ -380,10 +380,22 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
       mutate_if(is.character, utf8_encode) %>%
       mutate_all(~replace(., .=='NA', NA)) %>%
       group_by(duplicate_id) %>%
+      arrange(record_id) %>%
       summarise_all(~(trimws(paste(na.omit(.), collapse = ';;;')))) %>%
-      mutate(across(c(everything(), -label, -source), gsub, pattern = ";;;.*", replacement = "")) %>%
+      mutate(across(c(everything(), -label, -source, -record_id), gsub, pattern = ";;;.*", replacement = "")) %>%
       mutate(across(label, gsub, pattern = ";;;", replacement = ", ")) %>%
-      mutate(across(source, gsub, pattern = ";;;", replacement = ", "))
+      mutate(across(source, gsub, pattern = ";;;", replacement = ", ")) %>%
+      mutate(across(record_id, gsub, pattern = ";;;", replacement = ", ")) %>%
+      ungroup() %>%
+      mutate(duplicate_id = paste0(str_match(record_id, "^.*?(?=,.*)"))) %>%
+      mutate(duplicate_id = ifelse(duplicate_id == "NA", paste0(record_id), paste0(duplicate_id))) %>%
+      group_by(duplicate_id) %>%
+      mutate(record_ids = paste0(unique(record_id),collapse=", ")) %>%
+      mutate(record_ids = rem_dup_word(record_ids)) %>%
+      arrange(desc(source)) %>%
+      slice_head() %>%
+      dplyr::select(-record_id) %>%
+      ungroup()
 
   }
 
