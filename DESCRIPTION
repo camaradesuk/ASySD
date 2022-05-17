@@ -25,5 +25,6 @@ Depends:
 	RCurl,
 	dplyr,
 	roxygen2,
-	snakecase
+	snakecase,
+	utf8
 
