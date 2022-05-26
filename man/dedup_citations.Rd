@@ -6,9 +6,9 @@
 \usage{
 dedup_citations(
   raw_citations,
-  manual_dedup = FALSE,
-  merge_citation = FALSE,
-  preferred_source = ""
+  manual_dedup = TRUE,
+  merge_citations = FALSE,
+  preferred_source = NULL
 )
 }
 \arguments{

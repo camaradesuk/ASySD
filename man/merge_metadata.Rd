@@ -4,12 +4,12 @@
 \alias{merge_metadata}
 \title{This function generates a duplicate ID for sets of matching citations}
 \usage{
-merge_metadata(matched_data_with_ids, raw_citations_with_id)
+merge_metadata(raw_citations_with_id, matched_pairs_with_ids)
 }
 \arguments{
-\item{matched_data_with_ids}{citation data with duplicate ids}
-
 \item{raw_citations_with_id}{original citation data with unique ids}
+
+\item{matched_pairs_with_ids}{citation data with duplicate ids}
 }
 \value{
 Dataframe of formatted citation data with duplicate id
