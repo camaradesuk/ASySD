@@ -411,7 +411,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
   #' @export
   #' @param raw_citations Citation dataframe with relevant columns
   #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
-  #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
+  #' @param merge_citations Logical value. Do you want to merge matching citations?
   #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 
   dedup_citations <- function(raw_citations, manual_dedup = TRUE, merge_citations=FALSE, preferred_source=NULL) {
