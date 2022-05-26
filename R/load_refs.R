@@ -31,7 +31,7 @@ load_search <-function(path, method){
           number = sapply(x, xpath2, ".//number", xmlValue),
           abstract = sapply(x, xpath2, ".//abstract", xmlValue),
           record_id = sapply(x, xpath2, ".//rec-number", xmlValue),
-          idbn = sapply(x, xpath2, ".//isbn", xmlValue),
+          isbn = sapply(x, xpath2, ".//isbn", xmlValue),
           secondary_title = sapply(x, xpath2, ".//titles/secondary-title", xmlValue),
           "PDF Relative Path" = sapply(x, xpath2, ".//urls/pdf-urls", xmlValue),
           url = sapply(x, xpath2, ".//urls/related-urls", xmlValue),
