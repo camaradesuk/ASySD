@@ -6,7 +6,7 @@
 
 add_id_citations <- function(raw_citations){
 
-  names(raw_citations)  <- to_any_case(names(raw_citations), case = c("snake"))
+  names(raw_citations)  <- snakecase::to_any_case(names(raw_citations), case = c("snake"))
 
   raw_citations_with_id <- raw_citations %>%
     mutate(record_id = ifelse(is.na(record_id), as.character(row_number()+1000), paste(record_id))) %>%
