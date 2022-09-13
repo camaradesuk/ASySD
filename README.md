@@ -1,5 +1,4 @@
-# Automated Systematic Search Deduplicator (ASySD)
-![image](https://user-images.githubusercontent.com/46422034/190010939-38acb9f3-e661-4bcc-b927-a97fc86092de.png)
+# Automated Systematic Search Deduplicator (ASySD) <img src="man/figures/asysd_logo.png" align="right" />
 
 Removing duplicate references obtained from different databases is an essential step when conducting and updating systematic literature reviews. ASySD (pronounced "assist") is a tool to automatically identify and remove duplicate records. This tool is available as an R package and a user-friendly [shiny application](https://camarades.shinyapps.io/RDedup/). 
 
