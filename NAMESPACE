@@ -2,4 +2,6 @@
 
 export(dedup_citations)
 export(load_search)
+import(RecordLinkage)
+import(XML)
 import(dplyr)

@@ -6,12 +6,13 @@
 #' @param method  Loading citations methoddepending on file format
 #' @return A dataframe of the Endnote references
 #' @export
+#' @import XML
 load_search <-function(path, method){
 
   if(method == "endnote"){
 
 
-        newdat<-xmlParse(path)
+        newdat<- xmlParse(path)
         x <-  getNodeSet(newdat,'//record')
 
         xpath2 <-function(x, ...){

@@ -26,7 +26,7 @@ format_citations <- function(raw_citations_with_id){
 
   # select relevant columns
   formatted_citations <- formatted_citations  %>%
-      dplyr::select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label, source)
+      select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label, source)
 
   # make sure author is a character
   formatted_citations$author <- as.character(formatted_citations$author)
@@ -75,7 +75,7 @@ format_citations <- function(raw_citations_with_id){
     mutate(isbn = ifelse(isbn=="", NA, paste(isbn)))
 
   formatted_citations<- formatted_citations %>%
-    dplyr::select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, source, label)
+    select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, source, label)
 
   return(formatted_citations)
 
@@ -86,6 +86,7 @@ format_citations <- function(raw_citations_with_id){
 #' This function identifies matching pairs of citations
 #' @param formatted_citations Formatted citation dataframe with relevant columns and id column
 #' @return Dataframe of citation pairs
+#' @import RecordLinkage
 match_citations <- function(formatted_citations){
 
   # ROUND 1: run compare.dedup function and block by title&pages OR title&author OR title&abstract OR doi
@@ -150,9 +151,9 @@ match_citations <- function(formatted_citations){
     mutate(source2 =formatted_citations$source[id2])
 
   pairs <- pairs %>%
-    dplyr::select(id1, id2, author1, author2, author, title1, title2, title, abstract1, abstract2, abstract, year1, year2, year, number1, number2, number, pages1, pages2, pages, volume1, volume2, volume, journal1, journal2, journal, isbn, isbn1, isbn2, doi1, doi2, doi, record_id1, record_id2, label1, label2, source1, source2)
+    select(id1, id2, author1, author2, author, title1, title2, title, abstract1, abstract2, abstract, year1, year2, year, number1, number2, number, pages1, pages2, pages, volume1, volume2, volume, journal1, journal2, journal, isbn, isbn1, isbn2, doi1, doi2, doi, record_id1, record_id2, label1, label2, source1, source2)
 
-  numCores <- detectCores()
+  numCores <- parallel::detectCores()
   numCores
 
   try(pairs$author <- mapply(jarowinkler, pairs$author1, pairs$author2), silent = TRUE)
@@ -249,9 +250,20 @@ identify_true_matches <- function(pairs){
   true_pairs$record_id1 <- as.character(true_pairs$record_id1)
   true_pairs$record_id2 <- as.character(true_pairs$record_id2)
 
-  # Get potential duplicates for manual deduplication
-    # Get potential duplicates for manual deduplication
+  return(true_pairs)
+
+}
+
+#' This function generates a a set of likely pairs for manual assessment
+#' @param matched_pairs_with_ids citation data with duplicate ids
+#' @param pairs  original citation data with unique ids
+#' @return Dataframe of pairs which are likely to be duplicates
+get_manual_dedup_list <- function(matched_pairs_with_ids, true_pairs, pairs){
+
+  # get likely pairs which need manual assessment
   maybe_pairs <- pairs %>%
+    filter(record_id1 %in% matched_pairs_with_ids$record_id &
+             record_id2 %in% matched_pairs_with_ids$record_id) %>%
     filter(doi > 0.99 |
              title>0.85 & author>0.75 |
              title>0.80 & abstract>0.80 |
@@ -260,14 +272,7 @@ identify_true_matches <- function(pairs){
 
   # get pairs required for manual dedup which are not in true pairs
   maybe_pairs <- anti_join(maybe_pairs, true_pairs, by = c("record_id1", "record_id2"))
-
-  # Add in problem doi matching pairs and different year data in ManualDedup
-  important_mismatch <- rbind(true_pairs_mismatch_doi, year_mismatch_major)
-  maybe_pairs <- rbind(maybe_pairs, important_mismatch)
   maybe_pairs <- unique(maybe_pairs)
-
-  return(list("true_pairs" = true_pairs,
-              "maybe_pairs" = maybe_pairs))
 
 }
 
@@ -380,7 +385,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
       mutate(across(source, gsub, pattern = ";;;", replacement = ", ")) %>%
       mutate(across(record_id, gsub, pattern = ";;;", replacement = ", ")) %>%
       ungroup() %>%
-      mutate(duplicate_id = paste0(str_match(record_id, "^.*?(?=,.*)"))) %>%
+      mutate(duplicate_id = paste0(stringr::str_match(record_id, "^.*?(?=,.*)"))) %>%
       mutate(duplicate_id = ifelse(duplicate_id == "NA", paste0(record_id), paste0(duplicate_id))) %>%
       group_by(duplicate_id) %>%
       mutate(record_ids = paste0(unique(record_id),collapse=", ")) %>%
@@ -410,19 +415,18 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
     print("identifying potential duplicates...")
     pairs <- match_citations(formatted_citations)
 
-    pair_types <- identify_true_matches(pairs)
+    true_pairs <- identify_true_matches(pairs)
 
-    true_pairs <- pair_types$true_pairs
     print("identified duplicates!")
 
-    maybe_pairs <- pair_types$maybe_pairs
     matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
 
     if(manual_dedup == TRUE){
 
       print("merging citations...")
 
-      manual_dedup <- pair_types$maybe_pairs
+      manual_dedup <- get_manual_dedup_list(matched_pairs_with_ids, true_pairs, pairs)
+
     }
 
     if(merge_citations == TRUE){
