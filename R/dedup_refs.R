@@ -377,7 +377,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
     }
 
     citations_with_dup_id_merged <- all_metadata_with_duplicate_id %>%
-      mutate_if(is.character, utf8_encode) %>%
+      mutate_if(is.character, utf8::utf8_encode) %>%
       mutate_all(~replace(., .=='NA', NA)) %>%
       group_by(duplicate_id) %>%
       arrange(record_id) %>%
