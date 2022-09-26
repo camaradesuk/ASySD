@@ -354,36 +354,6 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
   }
 }
 
-#' This function generates a a set of likely pairs for manual assessment
-#' @param matched_pairs_with_ids citation data with duplicate ids
-#' @param pairs  original citation data with unique ids
-#' @return Dataframe of pairs which are likely to be duplicates
-  get_manual_dedup_list <- function(maybe_pairs, matched_pairs_with_ids, pairs){
-
-    # get likely pairs which need manual assessment
-    maybe_also_pairs <- pairs %>%
-      filter(record_id1 %in% matched_pairs_with_ids$record_id &
-               record_id2 %in% matched_pairs_with_ids$record_id) %>%
-      filter(doi > 0.99 |
-               title>0.85 & author>0.75 |
-               title>0.80 & abstract>0.80 |
-               title>0.80 & isbn>0.99 |
-               title>0.80 & journal>0.80)
-
-    # get pairs required for manual dedup which are not in true pairs
-    maybe_also_pairs <- dplyr::anti_join(maybe_also_pairs, true_pairs, by = c("record_id1", "record_id2"))
-
-    # Add in problem doi matching pairs and different year data in ManualDedup
-    maybe_pairs <- rbind(maybe_pairs, maybe_also_pairs)
-    maybe_pairs <- unique(maybe_pairs)
-
-
-
-  maybe_pairs <- maybe_pairs %>%
-    filter(record_id1 %in% matched_pairs_with_ids$record_id &
-             record_id2 %in% matched_pairs_with_ids$record_id)
-
-  }
   #' This function generates a duplicate ID for sets of matching citations
   #' @param matched_pairs_with_ids citation data with duplicate ids
   #' @param raw_citations_with_id  original citation data with unique ids
@@ -438,6 +408,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
   #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
   #' @param merge_citations Logical value. Do you want to merge matching citations?
   #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
+  #' @export
 
   dedup_citations <- function(raw_citations, manual_dedup = TRUE, merge_citations=FALSE, preferred_source=NULL) {
 
