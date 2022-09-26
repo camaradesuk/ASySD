@@ -256,23 +256,22 @@ identify_true_matches <- function(pairs){
   true_pairs$record_id2 <- as.character(true_pairs$record_id2)
 
   # Get potential duplicates for manual deduplication
+    # Get potential duplicates for manual deduplication
   maybe_pairs <- pairs %>%
-    filter(record_id1 %in% matched_pairs_with_ids$record_id &
-             record_id2 %in% matched_pairs_with_ids$record_id) %>%
     filter(doi > 0.99 |
              title>0.85 & author>0.75 |
              title>0.80 & abstract>0.80 |
              title>0.80 & isbn>0.99 |
              title>0.80 & journal>0.80)
-
+  
   # get pairs required for manual dedup which are not in true pairs
-  maybe_also_pairs <- anti_join(maybe_pairs, true_pairs, by = c("record_id1", "record_id2"))
-
+  maybe_pairs <- anti_join(maybe_pairs, true_pairs, by = c("record_id1", "record_id2"))
+  
   # Add in problem doi matching pairs and different year data in ManualDedup
   important_mismatch <- rbind(true_pairs_mismatch_doi, year_mismatch_major)
   maybe_pairs <- rbind(maybe_pairs, important_mismatch)
   maybe_pairs <- unique(maybe_pairs)
-
+  
   return(list("true_pairs" = true_pairs,
               "maybe_pairs" = maybe_pairs))
 
