@@ -3,7 +3,6 @@
 #' This function adds an id to citation data if missing
 #' @param raw_citations Citation dataframe with relevant columns
 #' @return Dataframe of citations with id
-
 add_id_citations <- function(raw_citations){
 
   names(raw_citations)  <- snakecase::to_any_case(names(raw_citations), case = c("snake"))
@@ -19,7 +18,6 @@ add_id_citations <- function(raw_citations){
 #' This function formats citation data for deduplication
 #' @param raw_citations_with_id Citation dataframe with relevant columns and id column
 #' @return Dataframe of formatted citations with id
-
 format_citations <- function(raw_citations_with_id){
 
   # arrange by Year and presence of an Abstract - we want to keep newer records and records with an abstract preferentially
@@ -88,10 +86,7 @@ format_citations <- function(raw_citations_with_id){
 #' This function identifies matching pairs of citations
 #' @param formatted_citations Formatted citation dataframe with relevant columns and id column
 #' @return Dataframe of citation pairs
-
 match_citations <- function(formatted_citations){
-
-
 
   # ROUND 1: run compare.dedup function and block by title&pages OR title&author OR title&abstract OR doi
   try(newpairs <- compare.dedup(formatted_citations, blockfld = list(c(2,8), c(1,2), c(2,5), 6), exclude=c("record_id", "source", "label")), silent=TRUE)
@@ -183,7 +178,6 @@ match_citations <- function(formatted_citations){
 #' This function identifies true pairs from matching pairs of citations and pairs which may be duplicates - for manual deduplication
 #' @param pairs citation matches which may be duplicates
 #' @return Dataframe of true citation pairs
-
 identify_true_matches <- function(pairs){
 
   ####------ Filter matching pairs - retain correct matches ------ ####
@@ -263,15 +257,15 @@ identify_true_matches <- function(pairs){
              title>0.80 & abstract>0.80 |
              title>0.80 & isbn>0.99 |
              title>0.80 & journal>0.80)
-  
+
   # get pairs required for manual dedup which are not in true pairs
   maybe_pairs <- anti_join(maybe_pairs, true_pairs, by = c("record_id1", "record_id2"))
-  
+
   # Add in problem doi matching pairs and different year data in ManualDedup
   important_mismatch <- rbind(true_pairs_mismatch_doi, year_mismatch_major)
   maybe_pairs <- rbind(maybe_pairs, important_mismatch)
   maybe_pairs <- unique(maybe_pairs)
-  
+
   return(list("true_pairs" = true_pairs,
               "maybe_pairs" = maybe_pairs))
 
@@ -281,7 +275,6 @@ identify_true_matches <- function(pairs){
 #' @param true_pairs citation matches which are true duplicates'
 #' @param formatted_citations formatted citation data
 #' @return Dataframe of formatted citation data with duplicate id
-
 generate_dup_id <- function(true_pairs, formatted_citations){
 
   # generate duplicate IDs
@@ -403,11 +396,11 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
   #'
   #' This function deduplicates citation data
   #' @export
+  #' @import dplyr
   #' @param raw_citations Citation dataframe with relevant columns
   #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
   #' @param merge_citations Logical value. Do you want to merge matching citations?
   #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
-  #' @export
 
   dedup_citations <- function(raw_citations, manual_dedup = TRUE, merge_citations=FALSE, preferred_source=NULL) {
 
