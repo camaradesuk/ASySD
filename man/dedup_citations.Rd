@@ -15,6 +15,8 @@ dedup_citations(
 \item{raw_citations}{Citation dataframe with relevant columns}
 
 \item{manual_dedup}{Logical value. Do you want to retrieve dataframe for manual deduplication?}
+
+\item{merge_citations}{Logical value. Do you want to merge matching citations?}
 }
 \value{
 A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
