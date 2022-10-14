@@ -4,10 +4,10 @@
 \alias{merge_metadata}
 \title{This function generates a duplicate ID for sets of matching citations}
 \usage{
-merge_metadata(raw_citations_with_id, matched_pairs_with_ids)
+merge_metadata(raw_citations, matched_pairs_with_ids)
 }
 \arguments{
-\item{raw_citations_with_id}{original citation data with unique ids}
+\item{raw_citations}{original citation data with unique ids}
 
 \item{matched_pairs_with_ids}{citation data with duplicate ids}
 }

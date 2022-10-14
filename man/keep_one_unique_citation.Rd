@@ -5,13 +5,13 @@
 \title{This function retains one citation in a set of matching records}
 \usage{
 keep_one_unique_citation(
-  raw_citations_with_id,
+  raw_citations,
   matched_pairs_with_ids,
   preferred_source
 )
 }
 \arguments{
-\item{raw_citations_with_id}{original citation data with ids}
+\item{raw_citations}{original citation data with ids}
 
 \item{matched_pairs_with_ids}{citation data with duplicate ids}
 }
