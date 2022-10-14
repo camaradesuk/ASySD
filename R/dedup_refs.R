@@ -22,7 +22,8 @@ format_citations <- function(raw_citations_with_id){
 
   # arrange by Year and presence of an Abstract - we want to keep newer records and records with an abstract preferentially
   formatted_citations <- raw_citations_with_id %>%
-    arrange(desc(year), abstract)
+    arrange(desc(year), abstract) %>%
+    mutate_if(is.character, utf8::utf8_encode) # mkae sure utf8
 
   # select relevant columns
   formatted_citations <- formatted_citations  %>%
@@ -158,7 +159,7 @@ match_citations <- function(formatted_citations){
 
   try(pairs$author <- mapply(jarowinkler, pairs$author1, pairs$author2), silent = TRUE)
   try(pairs$title <- mapply(jarowinkler, pairs$title1, pairs$title2), silent = TRUE)
-  try(pairs$abstract <- mcmapply(jarowinkler, pairs$abstract1, pairs$abstract2, mc.cores = numCores), silent = TRUE)
+  try(pairs$abstract <- parallel::mcmapply(jarowinkler, pairs$abstract1, pairs$abstract2, mc.cores = numCores), silent = TRUE)
   try(pairs$year <- mapply(jarowinkler, pairs$year1, pairs$year2), silent = TRUE)
   try(pairs$number <- mapply(jarowinkler, pairs$number1, pairs$number2), silent = TRUE)
   try(pairs$volume <- mapply(jarowinkler, pairs$volume1, pairs$volume2), silent = TRUE)
@@ -173,6 +174,7 @@ match_citations <- function(formatted_citations){
     mutate(number = ifelse(is.na(number1) & is.na(number2), 1, number)) %>%
     mutate(doi = ifelse(is.na(doi1) & is.na(doi2), 0, doi)) %>%
     mutate(isbn = ifelse(is.na(isbn1) & is.na(isbn2), 0, isbn))
+
 }
 
 
@@ -290,15 +292,15 @@ generate_dup_id <- function(true_pairs, formatted_citations){
     group_by(record_id2) %>%
     mutate(duplicate_id = first(duplicate_id)) %>%
     ungroup() %>%
-    dplyr::select(record_id1, record_id2, duplicate_id) %>%
+    select(record_id1, record_id2, duplicate_id) %>%
     unique()
 
   citations_with_dup_id1 <- inner_join(formatted_citations, dup_ids, by=c("record_id"="record_id1")) %>%
-    dplyr::select(-record_id2) %>%
+    select(-record_id2) %>%
     unique()
 
   citations_with_dup_id2 <- inner_join(formatted_citations, dup_ids, by=c("record_id"="record_id2")) %>%
-    dplyr::select(-record_id1) %>%
+    select(-record_id1) %>%
     unique()
 
   citations_with_dup_id <- rbind(citations_with_dup_id1, citations_with_dup_id2) %>% unique()
@@ -309,6 +311,20 @@ generate_dup_id <- function(true_pairs, formatted_citations){
 
   citations_with_dup_id <- rbind(unique_citations, citations_with_dup_id)
   matched_pairs_with_ids <- unique(citations_with_dup_id)
+
+  # extra merging is required
+  # record A = record B, record B = record C, BUT if no link to indicate A=C, need to ensure that A,B,C are all part of the same group (gets complicated quickly)
+  matched_pairs_with_ids <- matched_pairs_with_ids %>%
+    group_by(record_id) %>%
+    arrange(duplicate_id) %>%
+    add_count() # get count of duplicate ids assigned to a single record ID (happens when A = B, A = C, A = D for example, duplicate ID for A could be both D and B
+
+  matched_pairs_with_ids <- matched_pairs_with_ids %>%
+    mutate(duplicate_id = ifelse(n>1, first(duplicate_id), paste(duplicate_id))) %>% #when more than 1 duplicate id for one record id, make duplicate ID the FIRST one.
+    mutate(duplicate_id = ifelse(n==1 & duplicate_id %in% matched_pairs_with_ids$record_id,
+                                 paste(matched_pairs_with_ids$duplicate_id[which(matched_pairs_with_ids$record_id == duplicate_id)]),
+                                 paste0(duplicate_id))) %>%
+    ungroup()
 
   return(matched_pairs_with_ids)
 
@@ -322,22 +338,20 @@ generate_dup_id <- function(true_pairs, formatted_citations){
 keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_ids, preferred_source){
 
   duplicate_id <- matched_pairs_with_ids %>%
-    dplyr::select(duplicate_id, record_id) %>%
+    select(duplicate_id, record_id) %>%
     unique()
 
   all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations_with_id)
 
   if(!is.null(preferred_source)){
 
-    preferred_source <- toupper(preferred_source)
-
   citations_with_dup_id_pick <- all_metadata_with_duplicate_id %>%
     mutate_all(~replace(., .=='NA', NA)) %>%
     group_by(duplicate_id) %>%
     arrange(doi, abstract) %>%
-     mutate(Order = ifelse(source == preferred_source, 1, 2)) %>%
+    mutate(Order = ifelse(source == preferred_source, 1, 2)) %>%
     arrange(Order) %>%
-    dplyr::select(-Order, -preferred_source) %>%
+    select(-Order) %>%
     slice_head()
   }
 
@@ -358,42 +372,31 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
 
   merge_metadata <- function(raw_citations_with_id, matched_pairs_with_ids){
 
+    # get df of duplicate ids and record ids
     duplicate_id <- matched_pairs_with_ids %>%
-      dplyr::select(duplicate_id, record_id) %>%
+      select(duplicate_id, record_id) %>%
       unique()
 
+    # make character
     duplicate_id$record_id <- as.character(duplicate_id$record_id)
 
-    raw_citations_with_id$record_id <- toupper(raw_citations_with_id$record_id)
-
+    # join duplicate id to raw citation metadata (e.g. title, author, journal)
     all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations_with_id, by="record_id")
 
-    rem_dup_word <- function(x){
-      x <- tolower(x)
-      paste(unique(trimws(unlist(strsplit(x,split=" ",fixed=F,perl=T)))),collapse =
-              " ")
-    }
-
-    citations_with_dup_id_merged <- all_metadata_with_duplicate_id %>%
-      mutate_if(is.character, utf8::utf8_encode) %>%
-      mutate_all(~replace(., .=='NA', NA)) %>%
-      group_by(duplicate_id) %>%
-      arrange(record_id) %>%
-      summarise_all(~(trimws(paste(na.omit(.), collapse = ';;;')))) %>%
-      mutate(across(c(everything(), -label, -source, -record_id), gsub, pattern = ";;;.*", replacement = "")) %>%
+    all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
+      mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
+      mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
+      group_by(duplicate_id) %>% # group by duplicate id
+      summarise(across(everything(), ~trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
+      mutate(across(c(everything(), -label, -source, -record_id), gsub, pattern = ";;;.*", replacement = "")) %>% #remove extra values in each col, keep first one only
       mutate(across(label, gsub, pattern = ";;;", replacement = ", ")) %>%
       mutate(across(source, gsub, pattern = ";;;", replacement = ", ")) %>%
-      mutate(across(record_id, gsub, pattern = ";;;", replacement = ", ")) %>%
+      mutate(across(record_id, gsub, pattern = ";;;", replacement = ", ")) %>% #replace separator to comma
       ungroup() %>%
-      mutate(duplicate_id = paste0(stringr::str_match(record_id, "^.*?(?=,.*)"))) %>%
-      mutate(duplicate_id = ifelse(duplicate_id == "NA", paste0(record_id), paste0(duplicate_id))) %>%
-      group_by(duplicate_id) %>%
-      mutate(record_ids = paste0(unique(record_id),collapse=", ")) %>%
-      mutate(record_ids = rem_dup_word(record_ids)) %>%
-      arrange(desc(source)) %>%
-      slice_head() %>%
-      dplyr::select(-record_id) %>%
+      mutate(record_ids = record_id) %>%
+      select(-record_id) %>%
       ungroup()
+
 
   }
 
