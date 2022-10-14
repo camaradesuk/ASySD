@@ -5,25 +5,24 @@
 #' @return Dataframe of citations with id
 add_id_citations <- function(raw_citations){
 
-  names(raw_citations)  <- snakecase::to_any_case(names(raw_citations), case = c("snake"))
-
-  raw_citations_with_id <- raw_citations %>%
-    mutate(record_id = ifelse(is.na(record_id), as.character(row_number()+1000), paste(record_id))) %>%
-    mutate(record_id = ifelse(record_id=="", as.character(row_number()+1000), paste(record_id)))
+  # add record id from row number if missing
+  raw_citations <- raw_citations %>%
+    mutate(record_id =  as.character(row_number()+1000))
 
 }
 
 ####------ Format citation data ------ ####
 
 #' This function formats citation data for deduplication
-#' @param raw_citations_with_id Citation dataframe with relevant columns and id column
+#' @param raw_citations Citation dataframe with relevant columns and id column
 #' @return Dataframe of formatted citations with id
-format_citations <- function(raw_citations_with_id){
+#' @import dplyr
+format_citations <- function(raw_citations){
 
   # arrange by Year and presence of an Abstract - we want to keep newer records and records with an abstract preferentially
-  formatted_citations <- raw_citations_with_id %>%
+  formatted_citations <- raw_citations %>%
     arrange(desc(year), abstract) %>%
-    mutate_if(is.character, utf8::utf8_encode) # mkae sure utf8
+    dplyr::mutate_if(is.character, utf8::utf8_encode) # make sure utf8
 
   # select relevant columns
   formatted_citations <- formatted_citations  %>%
@@ -121,6 +120,11 @@ match_citations <- function(formatted_citations){
                  get0("linkedpairs4"))
 
   pairs <- unique(pairs)
+
+  if(is.null(pairs)){
+
+    return()
+  }
 
   # Obtain metadata for matching pairs
   pairs <- pairs  %>%
@@ -220,6 +224,12 @@ identify_true_matches <- function(pairs){
         (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99) |
         (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99) |
         (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99))
+
+  if(is.null(true_pairs)){
+
+    return()
+  }
+
 
   # Find papers with low matching dois - often indicates FALSE positive matches
   true_pairs_mismatch_doi <- true_pairs %>%
@@ -333,15 +343,15 @@ generate_dup_id <- function(true_pairs, formatted_citations){
 # Remove duplicate papers ----------------------------------------------
 #' This function retains one citation in a set of matching records
 #' @param matched_pairs_with_ids citation data with duplicate ids
-#' @param raw_citations_with_id original citation data with ids
+#' @param raw_citations original citation data with ids
 #' @return Dataframe of citation data with duplicate citation rows removed
-keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_ids, preferred_source){
+keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, preferred_source){
 
   duplicate_id <- matched_pairs_with_ids %>%
     select(duplicate_id, record_id) %>%
     unique()
 
-  all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations_with_id)
+  all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations)
 
   if(!is.null(preferred_source)){
 
@@ -365,12 +375,12 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
   }
 }
 
-  #' This function generates a duplicate ID for sets of matching citations
-  #' @param matched_pairs_with_ids citation data with duplicate ids
-  #' @param raw_citations_with_id  original citation data with unique ids
-  #' @return Dataframe of formatted citation data with duplicate id
-
-  merge_metadata <- function(raw_citations_with_id, matched_pairs_with_ids){
+#' This function generates a duplicate ID for sets of matching citations
+#' @param matched_pairs_with_ids citation data with duplicate ids
+#' @param raw_citations  original citation data with unique ids
+#' @return Dataframe of formatted citation data with duplicate id
+#' @import dplyr
+  merge_metadata <- function(raw_citations, matched_pairs_with_ids){
 
     # get df of duplicate ids and record ids
     duplicate_id <- matched_pairs_with_ids %>%
@@ -381,7 +391,7 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
     duplicate_id$record_id <- as.character(duplicate_id$record_id)
 
     # join duplicate id to raw citation metadata (e.g. title, author, journal)
-    all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations_with_id, by="record_id")
+    all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations, by="record_id")
 
     all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
       mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
@@ -413,12 +423,51 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
   dedup_citations <- function(raw_citations, manual_dedup = TRUE, merge_citations=FALSE, preferred_source=NULL) {
 
     print("formatting data...")
-    raw_citations_with_id <- add_id_citations(raw_citations)
-    formatted_citations <- format_citations(raw_citations_with_id)
+
+    # add warning for no record id
+    if(!"record_id" %in% names(raw_citations)){
+      warning("Search does not contain a record_id column. A record_id will be created using row names")
+
+       # add record id using row number
+       raw_citations <- add_id_citations(raw_citations)
+    }
+
+    # add warning for any missing record id
+    else if(any(is.na(raw_citations$record_id) | raw_citations$record_id=="")){
+    warning("Search contains missing values for the record_id column. A record_id will be created using row names")
+
+      # add record id using row number
+      raw_citations <- add_id_citations(raw_citations)
+    }
+
+    # add warning for non unique ids
+    else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
+    warning("The record_id column is not unique. A record_id will be created using row names")
+
+      # add record id using row number
+      raw_citations <- add_id_citations(raw_citations)
+    }
+
+    formatted_citations <- format_citations(raw_citations)
+
     print("identifying potential duplicates...")
+
+    # find matching pairs
     pairs <- match_citations(formatted_citations)
 
+    # warning if no duplicates
+    if(is.null(pairs)) {
+      warning("No duplicates detected!")
+      return(raw_citations)
+    }
+
     true_pairs <- identify_true_matches(pairs)
+
+    # warning if no duplicates
+    if(is.null(true_pairs)) {
+      warning("No duplicates detected!")
+      return(raw_citations)
+    }
 
     print("identified duplicates!")
 
@@ -434,11 +483,11 @@ keep_one_unique_citation <- function(raw_citations_with_id, matched_pairs_with_i
 
     if(merge_citations == TRUE){
 
-      unique_citations_with_metadata <- merge_metadata(raw_citations_with_id, matched_pairs_with_ids)
+      unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids)
     }
 
     else{
-      unique_citations_with_metadata <- keep_one_unique_citation(raw_citations_with_id, matched_pairs_with_ids, preferred_source)
+      unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, preferred_source)
 
     }
 
