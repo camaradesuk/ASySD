@@ -225,12 +225,6 @@ identify_true_matches <- function(pairs){
         (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99) |
         (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99))
 
-  if(is.null(true_pairs)){
-
-    return()
-  }
-
-
   # Find papers with low matching dois - often indicates FALSE positive matches
   true_pairs_mismatch_doi <- true_pairs %>%
     filter(!(is.na(doi)| doi ==0 | doi > 0.99)) %>%
@@ -262,10 +256,32 @@ identify_true_matches <- function(pairs){
   true_pairs$record_id1 <- as.character(true_pairs$record_id1)
   true_pairs$record_id2 <- as.character(true_pairs$record_id2)
 
-  return(true_pairs)
+  # Get potential duplicates for manual deduplication
+  maybe_pairs <- pairs %>%
+    filter(doi > 0.99 |
+             title>0.85 & author>0.75 |
+             title>0.80 & abstract>0.80 |
+             title>0.80 & isbn>0.99 |
+             title>0.80 & journal>0.80) %>%
+    filter(!(as.numeric(year1) - as.numeric(year2) >1)) %>%
+    filter(!(as.numeric(year2) - as.numeric(year1) >1))
+
+  # get pairs required for manual dedup which are not in true pairs
+  maybe_pairs <- anti_join(maybe_pairs, true_pairs, by = c("record_id1", "record_id2"))
+
+  # Add in problem doi matching pairs and different year data in ManualDedup
+  important_mismatch <- rbind(true_pairs_mismatch_doi, year_mismatch_major)
+  maybe_pairs <- rbind(maybe_pairs, important_mismatch)
+  maybe_pairs <- unique(maybe_pairs)
+
+  true_pairs <- true_pairs %>%
+    select(author1, author2, title1, title2, year1, year2, journal1, journal2, doi1, doi2,
+           record_id1, record_id2)
+
+  return(list("true_pairs" = true_pairs,
+              "maybe_pairs" = maybe_pairs))
 
 }
-
 #' This function generates a a set of likely pairs for manual assessment
 #' @param matched_pairs_with_ids citation data with duplicate ids
 #' @param pairs  original citation data with unique ids
@@ -345,11 +361,14 @@ generate_dup_id <- function(true_pairs, formatted_citations){
 #' @param matched_pairs_with_ids citation data with duplicate ids
 #' @param raw_citations original citation data with ids
 #' @return Dataframe of citation data with duplicate citation rows removed
-keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep_source){
+keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep_source, keep_label){
 
   duplicate_id <- matched_pairs_with_ids %>%
     select(duplicate_id, record_id) %>%
     unique()
+
+  raw_citations <- raw_citations %>%
+    mutate(record_id = as.character(record_id))
 
   all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations)
 
@@ -398,6 +417,9 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
     duplicate_id <- matched_pairs_with_ids %>%
       select(duplicate_id, record_id) %>%
       unique()
+
+    raw_citations <- raw_citations %>%
+      mutate(record_id = as.character(record_id))
 
     # make character
     duplicate_id$record_id <- as.character(duplicate_id$record_id)
@@ -480,7 +502,8 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
       return(raw_citations)
     }
 
-    true_pairs <- identify_true_matches(pairs)
+    pair_types <- identify_true_matches(pairs)
+    true_pairs <- pair_types$true_pairs
 
     # warning if no duplicates
     if(is.null(true_pairs)) {
@@ -506,10 +529,11 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
     }
 
     else{
-      unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source)
+      unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
 
     }
 
     return(list("unique" = unique_citations_with_metadata,
                 "manual_dedup" = manual_dedup))
   }
+
