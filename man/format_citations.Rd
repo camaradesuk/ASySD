@@ -4,10 +4,10 @@
 \alias{format_citations}
 \title{This function formats citation data for deduplication}
 \usage{
-format_citations(raw_citations_with_id)
+format_citations(raw_citations)
 }
 \arguments{
-\item{raw_citations_with_id}{Citation dataframe with relevant columns and id column}
+\item{raw_citations}{Citation dataframe with relevant columns and id column}
 }
 \value{
 Dataframe of formatted citations with id
