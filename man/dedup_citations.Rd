@@ -8,19 +8,27 @@ dedup_citations(
   raw_citations,
   manual_dedup = TRUE,
   merge_citations = FALSE,
-  preferred_source = NULL
+  keep_source = NULL,
+  keep_label = NULL
 )
 }
 \arguments{
-\item{raw_citations}{Citation dataframe with relevant columns}
+\item{raw_citations}{A dataframe containing duplicate ciations}
 
 \item{manual_dedup}{Logical value. Do you want to retrieve dataframe for manual deduplication?}
 
 \item{merge_citations}{Logical value. Do you want to merge matching citations?}
+
+\item{keep_source}{Selected citation label to preferentially retain in the dataset as the unique record}
 }
 \value{
 A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 }
 \description{
 This function deduplicates citation data
+}
+\examples{
+
+result <- dedup_citations(data, keep_source = "pubmed")
+unique_citations <- result$unique
 }
