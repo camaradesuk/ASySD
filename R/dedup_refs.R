@@ -3,6 +3,7 @@
 #' This function adds an id to citation data if missing
 #' @param raw_citations Citation dataframe with relevant columns
 #' @return Dataframe of citations with id
+#' @import dplyr
 add_id_citations <- function(raw_citations){
 
   # add record id from row number if missing
@@ -11,6 +12,10 @@ add_id_citations <- function(raw_citations){
 
 }
 
+#' This function orders citation data for deduplication
+#' @param raw_citations Citation dataframe with relevant columns and id column
+#' @return Dataframe of ordered citations with id
+#' @import dplyr
 order_citations <- function(raw_citations){
 # arrange by Year and presence of an Abstract - we want to keep newer records and records with an abstract preferentially
 
@@ -263,11 +268,12 @@ identify_true_matches <- function(pairs){
 
   # Get potential duplicates for manual deduplication
   maybe_pairs <- pairs %>%
-    filter(doi > 0.99 |
+    filter(doi > 0.99 & title > 0.8 |
              title>0.85 & author>0.75 |
              title>0.80 & abstract>0.80 |
              title>0.80 & isbn>0.99 |
              title>0.80 & journal>0.80) %>%
+    filter(doi > 0.95 | doi == 0 | is.na(doi)) %>%
     filter(!(as.numeric(year1) - as.numeric(year2) >1)) %>%
     filter(!(as.numeric(year2) - as.numeric(year1) >1))
 
@@ -287,32 +293,12 @@ identify_true_matches <- function(pairs){
               "maybe_pairs" = maybe_pairs))
 
 }
-#' This function generates a a set of likely pairs for manual assessment
-#' @param matched_pairs_with_ids citation data with duplicate ids
-#' @param pairs  original citation data with unique ids
-#' @return Dataframe of pairs which are likely to be duplicates
-get_manual_dedup_list <- function(matched_pairs_with_ids, true_pairs, pairs){
-
-  # get likely pairs which need manual assessment
-  maybe_pairs <- pairs %>%
-    filter(record_id1 %in% matched_pairs_with_ids$record_id &
-             record_id2 %in% matched_pairs_with_ids$record_id) %>%
-    filter(doi > 0.99 |
-             title>0.85 & author>0.75 |
-             title>0.80 & abstract>0.80 |
-             title>0.80 & isbn>0.99 |
-             title>0.80 & journal>0.80)
-
-  # get pairs required for manual dedup which are not in true pairs
-  maybe_pairs <- anti_join(maybe_pairs, true_pairs, by = c("record_id1", "record_id2"))
-  maybe_pairs <- unique(maybe_pairs)
-
-}
 
 #' This function generates a duplicate ID for sets of matching citations
 #' @param true_pairs citation matches which are true duplicates'
 #' @param formatted_citations formatted citation data
 #' @return Dataframe of formatted citation data with duplicate id
+#' @import dplyr
 generate_dup_id <- function(true_pairs, formatted_citations){
 
   # generate duplicate IDs
@@ -366,6 +352,7 @@ generate_dup_id <- function(true_pairs, formatted_citations){
 #' @param matched_pairs_with_ids citation data with duplicate ids
 #' @param raw_citations original citation data with ids
 #' @return Dataframe of citation data with duplicate citation rows removed
+#' @import dplyr
 keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep_source, keep_label){
 
   duplicate_id <- matched_pairs_with_ids %>%
