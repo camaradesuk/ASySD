@@ -12,8 +12,8 @@ load_search <-function(path, method){
   if(method == "endnote"){
 
 
-        newdat<- xmlParse(path)
-        x <-  getNodeSet(newdat,'//record')
+        newdat<- XML::xmlParse(path)
+        x <-  XML::getNodeSet(newdat,'//record')
 
         xpath2 <-function(x, ...){
           y <- xpathSApply(x, ...)
