@@ -4,7 +4,12 @@
 \alias{keep_one_unique_citation}
 \title{This function retains one citation in a set of matching records}
 \usage{
-keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source)
+keep_one_unique_citation(
+  raw_citations,
+  matched_pairs_with_ids,
+  keep_source,
+  keep_label
+)
 }
 \arguments{
 \item{raw_citations}{original citation data with ids}
