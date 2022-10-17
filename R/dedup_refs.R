@@ -576,7 +576,6 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
   #' This function deduplicates citation data
   #' @export
   #' @import dplyr
-  #' @import plyr
   #' @param raw_citations A dataframe containing duplicate ciations
   #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
   #' @param merge_citations Logical value. Do you want to merge matching citations?
