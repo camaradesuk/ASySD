@@ -16,6 +16,7 @@ add_id_citations <- function(raw_citations){
 #' @param raw_citations Citation dataframe with relevant columns and id column
 #' @return Dataframe of ordered citations with id
 #' @import dplyr
+#' @import utf8
 order_citations <- function(raw_citations){
 # arrange by Year and presence of an Abstract - we want to keep newer records and records with an abstract preferentially
 
@@ -45,7 +46,9 @@ format_citations <- function(raw_citations){
   raw_citations <- raw_citations %>%
     mutate(author = ifelse(author=="", "Unknown", author)) %>%
     mutate(author = ifelse(is.na(author), "Unknown", author)) %>%
-    mutate(author = ifelse(author=="Anonymous", "Unknown", author))
+    mutate(author = ifelse(author=="Anonymous", "Unknown", author)) %>%
+    dplyr::mutate_if(is.character, utf8::utf8_encode) # make sure utf8
+
 
   # Make all upper case
   formatted_citations <- as.data.frame(sapply(raw_citations, toupper))
@@ -97,6 +100,7 @@ format_citations <- function(raw_citations){
 #' @param formatted_citations Formatted citation dataframe with relevant columns and id column
 #' @return Dataframe of citation pairs
 #' @import RecordLinkage
+#' @import parallel
 match_citations <- function(formatted_citations){
 
   # ROUND 1: run compare.dedup function and block by title&pages OR title&author OR title&abstract OR doi
@@ -572,6 +576,7 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
   #' This function deduplicates citation data
   #' @export
   #' @import dplyr
+  #' @import plyr
   #' @param raw_citations A dataframe containing duplicate ciations
   #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
   #' @param merge_citations Logical value. Do you want to merge matching citations?
