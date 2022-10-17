@@ -19,16 +19,13 @@ dedup_citations(
 
 \item{merge_citations}{Logical value. Do you want to merge matching citations?}
 
-\item{keep_source}{Selected citation label to preferentially retain in the dataset as the unique record}
+\item{keep_source}{Character vector. Selected citation source to preferentially retain in the dataset as the unique record}
+
+\item{keep_label}{Selected citation label to preferentially retain in the dataset as the unique record}
 }
 \value{
 A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 }
 \description{
 This function deduplicates citation data
-}
-\examples{
-
-result <- dedup_citations(data, keep_source = "pubmed")
-unique_citations <- result$unique
 }

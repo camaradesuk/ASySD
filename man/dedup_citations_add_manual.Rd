@@ -12,7 +12,7 @@ dedup_citations_add_manual(
 )
 }
 \arguments{
-\item{raw_citations}{A dataframe containing duplicate ciations}
+\item{raw_citations}{A dataframe containing duplicate citations}
 
 \item{merge_citations}{Logical value. Do you want to merge matching citations?}
 
@@ -22,12 +22,8 @@ dedup_citations_add_manual(
 }
 \value{
 A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
+e
 }
 \description{
 This function deduplicates citation data
-}
-\examples{
-
-result <- dedup_citations(data, keep_source = "pubmed")
-unique_citations <- result$unique
 }

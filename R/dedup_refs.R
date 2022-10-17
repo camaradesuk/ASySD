@@ -1,3 +1,11 @@
+utils::globalVariables(c("author", "title", "year", "journal", "abstract", "doi",
+                         "number", "pages", "volume", "isbn", "record_id", "label",
+                         "source", "author1", "title1", "year1", "journal1", "abstract1",
+                         "doi1", "number1", "pages1", "volume1", "isbn1", "record_id1",
+                         "label1", "source1", "author2", "title2", "year2", "journal2",
+                         "abstract2", "doi2", "number2", "pages2", "volume2", "isbn2",
+                         "record_id2", "label2", "source2", "id1", "id2"))
+
 ####------ Assign id ------ ####
 
 #' This function adds an id to citation data if missing
@@ -449,13 +457,8 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
   #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
   #' @param merge_citations Logical value. Do you want to merge matching citations?
   #' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
-  #' @param keep_source Selected citation label to preferentially retain in the dataset as the unique record
+  #' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
   #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
-  #' @examples
-  #'
-  #' result <- dedup_citations(data, keep_source = "pubmed")
-  #' unique_citations <- result$unique
-
   dedup_citations <- function(raw_citations, manual_dedup = TRUE,
                               merge_citations=FALSE, keep_source=NULL, keep_label=NULL) {
 
@@ -576,16 +579,13 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
   #' This function deduplicates citation data
   #' @export
   #' @import dplyr
-  #' @param raw_citations A dataframe containing duplicate ciations
+  #' @param raw_citations A dataframe containing duplicate citations
   #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
   #' @param merge_citations Logical value. Do you want to merge matching citations?
   #' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
   #' @param keep_source Selected citation label to preferentially retain in the dataset as the unique record
   #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
-  #' @examples
-  #'
-  #' result <- dedup_citations(data, keep_source = "pubmed")
-  #' unique_citations <- result$unique
+  #' e
   dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, preferred_source=NULL, additional_pairs){
 
     print("formatting data...")
