@@ -344,6 +344,8 @@ generate_dup_id <- function(true_pairs, formatted_citations){
   # extra merging is required
   # record A = record B, record B = record C, BUT if no link to indicate A=C, need to ensure that A,B,C are all part of the same group (gets complicated quickly)
   matched_pairs_with_ids <- matched_pairs_with_ids %>%
+    mutate(record_id = as.character(record_id)) %>%
+    mutate(duplicate_id = as.character(duplicate_id)) %>%
     group_by(record_id) %>%
     arrange(duplicate_id) %>%
     add_count() # get count of duplicate ids assigned to a single record ID (happens when A = B, A = C, A = D for example, duplicate ID for A could be both D and B
