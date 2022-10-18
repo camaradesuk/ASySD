@@ -6,7 +6,8 @@
 \usage{
 write_citations(
   citations,
-  type = c("ris", "endnote-tab", "syrf-csv", "csv", "bibtex")
+  type = c("ris", "endnote-tab", "syrf-csv", "csv", "bibtex"),
+  filename
 )
 }
 \arguments{
