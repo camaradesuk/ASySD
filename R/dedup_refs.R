@@ -587,7 +587,6 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
   #' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
   #' @param keep_source Selected citation label to preferentially retain in the dataset as the unique record
   #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
-  #' e
   dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, preferred_source=NULL, additional_pairs){
 
     print("formatting data...")

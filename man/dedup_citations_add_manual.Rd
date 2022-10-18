@@ -22,7 +22,6 @@ dedup_citations_add_manual(
 }
 \value{
 A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
-e
 }
 \description{
 This function deduplicates citation data
