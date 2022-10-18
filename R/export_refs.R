@@ -5,7 +5,7 @@
 #' @param citations A dataframe containing citations - usually post-deduplication
 #' @param type export type
 #' @return file export
-write_citations <- function(citations, type=c("ris", "endnote-tab", "syrf-csv", "csv", "bibtex")){
+write_citations <- function(citations, type=c("ris", "endnote-tab", "syrf-csv", "csv", "bibtex"), filename){
 
   if(type == "endnote-tab"){
 
@@ -29,8 +29,7 @@ write_citations <- function(citations, type=c("ris", "endnote-tab", "syrf-csv", 
            "Custom 1", "ISBN", "Label") %>%
     mutate(Abstract = gsub("\\r\\n|\\r|\\n", "", Abstract))
 
-  file <- paste0("citations_endnote", ".txt", sep="")
-  write.table(refs, file, sep="\t",
+  write.table(refs, filename, sep="\t",
               col.names=TRUE, row.names = F, quote=FALSE, na="")
 
   } else if(type == "syrf-csv"){
@@ -62,8 +61,7 @@ write_citations <- function(citations, type=c("ris", "endnote-tab", "syrf-csv", 
              Keywords,
              PdfRelativePath)
 
-    file <- paste0("citations_syrf", ".csv", sep="")
-    write.csv(refs, file,
+    write.csv(refs, filename,
               col.names=TRUE, row.names = F, quote=FALSE, na="")
 
   } else if(type == "ris"){
