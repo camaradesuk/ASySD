@@ -24,6 +24,7 @@ Imports:
     RCurl,
     dplyr,
     roxygen2,
+    synthesisr,
     snakecase,
     utf8
 Suggests: 
