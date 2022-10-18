@@ -69,12 +69,12 @@ write_citations <- function(citations, type=c("ris", "endnote-tab", "syrf-csv", 
     citations <- as.data.frame(citations)
     synthesisr::write_refs(citations,
                format = "ris",
-               file = TRUE
+               file = filename
     )
   } else if(type == "bibtex"){
 
     citations <- as.data.frame(citations)
     refs <- synthesisr::write_refs(citations, format = "bib",
-                                   file = TRUE)
+                                   file = filename)
   }
 }
