@@ -1,0 +1,28 @@
+citHeader("To cite ASySD in publications use:")
+
+citEntry(entry = "Article",
+         title        = "The Automated Systematic Search Deduplicator (ASySD): a rapid, open-source,
+         interoperable tool to remove duplicate citations in biomedical systematic reviews.",
+         author       = personList(as.person("Kaitlyn Hair"),
+                                   as.person("Zsanett Bahor"),
+                                   as.person("Malcolm Macleod"),
+                                   as.person("Jing Liao"),
+                                   as.person("Emily S Sena")),
+         journal      = "bioRxiv",
+         publisher    = "Cold Spring Harbor Laboratory",
+
+         volume       = "",
+         number       = "",
+         pages        = "",
+         year         = 2021,
+         doi          = "10.1101/2021.05.04.442412",
+
+         textVersion  =
+           paste("Kaitlyn Hair, Zsanett Bahor, Malcolm Macleod,
+           Jing Liao, Emily S. Sena. (2021)",
+                 "The Automated Systematic Search Deduplicator (ASySD):
+                 a rapid, open-source, interoperable tool to remove
+                 duplicate citations in biomedical systematic reviews.",
+                 "bioRxiv.",
+                 "DOI 10.1101/2021.05.04.442412")
+)
