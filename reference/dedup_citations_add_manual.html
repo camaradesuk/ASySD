@@ -45,7 +45,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dedup_citations_add_manual</span><span class="op">(</span></span>
 <span>  <span class="va">raw_citations</span>,</span>
 <span>  merge_citations <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  preferred_source <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  keep_source <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  keep_label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">additional_pairs</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -60,12 +61,16 @@
 <dd><p>Logical value. Do you want to merge matching citations?</p></dd>
 
 
+<dt>keep_source</dt>
+<dd><p>Character vector. Selected citation source to preferentially retain in the dataset as the unique record</p></dd>
+
+
+<dt>keep_label</dt>
+<dd><p>Selected citation label to preferentially retain in the dataset as the unique record</p></dd>
+
+
 <dt>manual_dedup</dt>
 <dd><p>Logical value. Do you want to retrieve dataframe for manual deduplication?</p></dd>
-
-
-<dt>keep_source</dt>
-<dd><p>Selected citation label to preferentially retain in the dataset as the unique record</p></dd>
 
 </dl></div>
     <div class="section level2">
