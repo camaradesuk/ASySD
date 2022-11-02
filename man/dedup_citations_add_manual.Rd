@@ -7,7 +7,8 @@
 dedup_citations_add_manual(
   raw_citations,
   merge_citations = FALSE,
-  preferred_source = NULL,
+  keep_source = NULL,
+  keep_label = NULL,
   additional_pairs
 )
 }
@@ -16,9 +17,11 @@ dedup_citations_add_manual(
 
 \item{merge_citations}{Logical value. Do you want to merge matching citations?}
 
-\item{manual_dedup}{Logical value. Do you want to retrieve dataframe for manual deduplication?}
+\item{keep_source}{Character vector. Selected citation source to preferentially retain in the dataset as the unique record}
 
-\item{keep_source}{Selected citation label to preferentially retain in the dataset as the unique record}
+\item{keep_label}{Selected citation label to preferentially retain in the dataset as the unique record}
+
+\item{manual_dedup}{Logical value. Do you want to retrieve dataframe for manual deduplication?}
 }
 \value{
 A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
