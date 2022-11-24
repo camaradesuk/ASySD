@@ -36,17 +36,16 @@ load_search <-function(path, method){
           secondary_title = sapply(x, xpath2, ".//titles/secondary-title", xmlValue),
           "PDF Relative Path" = sapply(x, xpath2, ".//urls/pdf-urls", xmlValue),
           url = sapply(x, xpath2, ".//urls/related-urls", xmlValue),
-          label = sapply(x, xpath2, ".//label", xmlValue)
+          label = sapply(x, xpath2, ".//label", xmlValue),
+          source = sapply(x, xpath2, ".//remote-database-provider", xmlValue)
         )
 
-        newdat <- newdat %>%
-          mutate(label = ifelse(is.na(label), "NA", paste(label)))
         return(newdat)
   }
 
   if(method == "csv"){
 
-        cols <- c("label","isbn")
+        cols <- c("label","isbn", "source")
         newdat <- read.csv(path)
         newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
@@ -62,10 +61,8 @@ load_search <-function(path, method){
                  abstract,
                  record_id,
                  isbn,
-                 label) %>%
-          mutate(label = ifelse(is.na(label), "NA", paste(label))) %>%
-          mutate(isbn = ifelse(is.na(isbn), "NA", paste(isbn)))
-
+                 label,
+                 source)
 
         return(newdat)
 }
@@ -73,7 +70,7 @@ load_search <-function(path, method){
 
 if(method == "txt"){
 
-  cols <- c("label","isbn")
+  cols <- c("label","isbn","source")
   newdat <- read.table(path)
   newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
@@ -89,11 +86,8 @@ if(method == "txt"){
                  abstract,
                  record_id,
                  isbn,
-                 label)
-
-        newdat <- newdat %>%
-          mutate(label = ifelse(is.na(label), "NA", paste(label))) %>%
-          mutate(isbn = ifelse(is.na(isbn), "NA", paste(isbn)))
+                 label,
+                 source)
 
         return(newdat)
 }
