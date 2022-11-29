@@ -59,7 +59,8 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
              DOI,
              ReferenceType,
              Keywords,
-             PdfRelativePath)
+             PdfRelativePath,
+             CustomId)
 
     write.csv(refs, filename,
               col.names=TRUE, row.names = F, quote=FALSE, na="")
