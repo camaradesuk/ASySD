@@ -37,8 +37,8 @@ load_search <-function(path, method){
           "PDF Relative Path" = sapply(x, xpath2, ".//urls/pdf-urls", xmlValue),
           url = sapply(x, xpath2, ".//urls/related-urls", xmlValue),
           label = sapply(x, xpath2, ".//label", xmlValue),
-          source = sapply(x, xpath2, ".//remote-database-provider", xmlValue)
-        )
+          source = sapply(x, xpath2, ".//remote-database-provider", xmlValue)) %>%
+          mutate(journal = ifelse(is.na(journal), secondary_title, journal))
 
         return(newdat)
   }
