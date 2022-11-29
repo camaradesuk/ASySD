@@ -4,11 +4,7 @@
 \alias{write_citations}
 \title{This function writes citation data to disk in different formats}
 \usage{
-write_citations(
-  citations,
-  type = c("ris", "endnote-tab", "syrf-csv", "csv", "bibtex"),
-  filename
-)
+write_citations(citations, type = c("ris", "txt", "csv", "bib"), filename)
 }
 \arguments{
 \item{citations}{A dataframe containing citations - usually post-deduplication}

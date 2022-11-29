@@ -5,34 +5,34 @@
 #' @param citations A dataframe containing citations - usually post-deduplication
 #' @param type export type
 #' @return file export
-write_citations <- function(citations, type=c("ris", "endnote-tab", "syrf-csv", "csv", "bibtex"), filename){
+write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filename){
 
-  if(type == "endnote-tab"){
+  if(type == "txt"){
 
-  refs <- citations %>%
-    mutate("Reference Type" = "Journal Article") %>%
-    mutate(ISBN = gsub("\\r\\n|\\r|\\n", "", isbn)) %>%
-    rename("Custom 1" = duplicate_id,
-           "Author" = author,
-           "Title" = title,
-           "Volume" = volume,
-           "Number" = number,
-           "Label" = label,
-           "Year" = year,
-           "Abstract" = abstract,
-           "Pages" = pages,
-           "DOI" = doi,
-           "Secondary Title" = journal) %>%
-    select("Reference Type", "Author", "Year",
-           "Secondary Title", "DOI", "Title",
-           "Pages", "Volume", "Number", "Abstract",
-           "Custom 1", "ISBN", "Label") %>%
-    mutate(Abstract = gsub("\\r\\n|\\r|\\n", "", Abstract))
+    refs <- citations %>%
+      mutate("Reference Type" = "Journal Article") %>%
+      mutate(ISBN = gsub("\\r\\n|\\r|\\n", "", isbn)) %>%
+      rename("Custom 1" = duplicate_id,
+             "Author" = author,
+             "Title" = title,
+             "Volume" = volume,
+             "Number" = number,
+             "Label" = label,
+             "Year" = year,
+             "Abstract" = abstract,
+             "Pages" = pages,
+             "DOI" = doi,
+             "Secondary Title" = journal) %>%
+      select("Reference Type", "Author", "Year",
+             "Secondary Title", "DOI", "Title",
+             "Pages", "Volume", "Number", "Abstract",
+             "Custom 1", "ISBN", "Label") %>%
+      mutate(Abstract = gsub("\\r\\n|\\r|\\n", "", Abstract))
 
-  write.table(refs, filename, sep="\t",
-              col.names=TRUE, row.names = F, quote=FALSE, na="")
+    write.table(refs, filename, sep="\t",
+                col.names=TRUE, row.names = F, quote=FALSE, na="")
 
-  } else if(type == "syrf-csv"){
+  } else if(type == "csv"){
 
     refs <- citations %>%
       rename(Authors = author,
@@ -68,10 +68,10 @@ write_citations <- function(citations, type=c("ris", "endnote-tab", "syrf-csv", 
 
     citations <- as.data.frame(citations)
     synthesisr::write_refs(citations,
-               format = "ris",
-               file = filename
+                           format = "ris",
+                           file = filename
     )
-  } else if(type == "bibtex"){
+  } else if(type == "bib"){
 
     citations <- as.data.frame(citations)
     refs <- synthesisr::write_refs(citations, format = "bib",
