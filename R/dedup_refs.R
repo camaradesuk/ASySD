@@ -187,6 +187,7 @@ match_citations <- function(formatted_citations){
   try(pairs$title <- mapply(jarowinkler, pairs$title1, pairs$title2), silent = TRUE)
   try(pairs$abstract <- parallel::mcmapply(jarowinkler, pairs$abstract1, pairs$abstract2, mc.cores = numCores), silent = TRUE)
   try(pairs$year <- mapply(jarowinkler, pairs$year1, pairs$year2), silent = TRUE)
+  try(pairs$pages <- mapply(jarowinkler, pairs$pages1, pairs$pages2), silent = TRUE)
   try(pairs$number <- mapply(jarowinkler, pairs$number1, pairs$number2), silent = TRUE)
   try(pairs$volume <- mapply(jarowinkler, pairs$volume1, pairs$volume2), silent = TRUE)
   try(pairs$journal <- mapply(jarowinkler, pairs$journal1, pairs$journal2), silent = TRUE)
@@ -280,12 +281,11 @@ identify_true_matches <- function(pairs){
 
   # Get potential duplicates for manual deduplication
   maybe_pairs <- pairs %>%
-    filter(doi > 0.99 & title > 0.8 |
-             title>0.85 & author>0.75 |
+    filter(title>0.85 & author>0.75 |
              title>0.80 & abstract>0.80 |
              title>0.80 & isbn>0.99 |
              title>0.80 & journal>0.80) %>%
-    filter(doi > 0.95 | doi == 0 | is.na(doi)) %>%
+    filter(doi > 0.99 | doi == 0 | is.na(doi)) %>%
     filter(!(as.numeric(year1) - as.numeric(year2) >1)) %>%
     filter(!(as.numeric(year2) - as.numeric(year1) >1))
 
