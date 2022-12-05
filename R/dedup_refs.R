@@ -58,8 +58,15 @@ format_citations <- function(raw_citations){
     dplyr::mutate_if(is.character, utf8::utf8_encode) # make sure utf8
 
 
-  # Make all upper case
-  formatted_citations <- as.data.frame(sapply(raw_citations[,c(-"record_id", -"source", -"label")], toupper))
+  # Make all upper case by selecting cols in order and formatting all metadata to upper
+  # Note that source, label and record id are retained - important for joining later
+  formatted_citations <- raw_citations %>%
+    select(everything(), source, label, record_id)
+
+  ncol(formatted_citations)
+  to_col <- ncol(formatted_citations) - 3
+
+  formatted_citations[,1:to_col] = toupper(formatted_citations[,1:to_col])
 
   # get rid of punctuation and differnces in doi formatting
   formatted_citations["doi"] <- sapply(formatted_citations["doi"], function(x) gsub("%28", "(", x))
