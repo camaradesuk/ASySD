@@ -66,7 +66,7 @@ format_citations <- function(raw_citations){
   ncol(formatted_citations)
   to_col <- ncol(formatted_citations) - 3
 
-  formatted_citations[,1:to_col] = toupper(formatted_citations[,1:to_col])
+  formatted_citations[,1:to_col] <- as.data.frame(sapply(formatted_citations[,1:to_col], toupper))
 
   # get rid of punctuation and differnces in doi formatting
   formatted_citations["doi"] <- sapply(formatted_citations["doi"], function(x) gsub("%28", "(", x))
