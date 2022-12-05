@@ -59,7 +59,7 @@ format_citations <- function(raw_citations){
 
 
   # Make all upper case
-  formatted_citations <- as.data.frame(sapply(raw_citations, toupper))
+  formatted_citations <- as.data.frame(sapply(raw_citations[,c(-"record_id", -"source", -"label")], toupper))
 
   # get rid of punctuation and differnces in doi formatting
   formatted_citations["doi"] <- sapply(formatted_citations["doi"], function(x) gsub("%28", "(", x))
@@ -183,16 +183,16 @@ match_citations <- function(formatted_citations){
   numCores <- parallel::detectCores()
   numCores
 
-  try(pairs$author <- mapply(jarowinkler, pairs$author1, pairs$author2), silent = TRUE)
-  try(pairs$title <- mapply(jarowinkler, pairs$title1, pairs$title2), silent = TRUE)
+  try(pairs$author <- parallel::mcmapply(jarowinkler, pairs$author1, pairs$author2, mc.cores = numCores), silent = TRUE)
+  try(pairs$title <- parallel::mcmapply(jarowinkler, pairs$title1, pairs$title2, mc.cores = numCores), silent = TRUE)
   try(pairs$abstract <- parallel::mcmapply(jarowinkler, pairs$abstract1, pairs$abstract2, mc.cores = numCores), silent = TRUE)
   try(pairs$year <- mapply(jarowinkler, pairs$year1, pairs$year2), silent = TRUE)
   try(pairs$pages <- mapply(jarowinkler, pairs$pages1, pairs$pages2), silent = TRUE)
   try(pairs$number <- mapply(jarowinkler, pairs$number1, pairs$number2), silent = TRUE)
   try(pairs$volume <- mapply(jarowinkler, pairs$volume1, pairs$volume2), silent = TRUE)
-  try(pairs$journal <- mapply(jarowinkler, pairs$journal1, pairs$journal2), silent = TRUE)
-  try(pairs$isbn <- mapply(jarowinkler, pairs$isbn1, pairs$isbn2), silent = TRUE)
-  try(pairs$doi <- mapply(jarowinkler, pairs$doi1, pairs$doi2), silent = TRUE)
+  try(pairs$journal <- parallel::mcmapply(jarowinkler, pairs$journal1, pairs$journal2, mc.cores = numCores), silent = TRUE)
+  try(pairs$isbn <- parallel::mcmapply(jarowinkler, pairs$isbn1, pairs$isbn2, mc.cores = numCores), silent = TRUE)
+  try(pairs$doi <- parallel::mcmapply(jarowinkler, pairs$doi1, pairs$doi2, mc.cores = numCores), silent = TRUE)
 
   pairs <- pairs %>%
     mutate(abstract = ifelse(is.na(abstract1) & is.na(abstract2), 0, abstract)) %>%
