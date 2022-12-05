@@ -2,7 +2,7 @@ pandoc: 2.19.2
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles: {}
-last_built: 2022-11-29T15:51Z
+last_built: 2022-12-05T10:47Z
 urls:
   reference: https://camaradesuk.github.io/ASySD/reference
   article: https://camaradesuk.github.io/ASySD/articles
