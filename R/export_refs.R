@@ -11,7 +11,7 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
 
     refs <- citations %>%
       mutate("Reference Type" = "Journal Article") %>%
-      mutate(ISBN = gsub("\\r\\n|\\r|\\n", "", isbn)) %>%
+      mutate("ISBN/ISSN" = gsub("\\r\\n|\\r|\\n", "", isbn)) %>%
       rename("Custom 1" = duplicate_id,
              "Author" = author,
              "Title" = title,
@@ -26,7 +26,7 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
       select("Reference Type", "Author", "Year",
              "Secondary Title", "DOI", "Title",
              "Pages", "Volume", "Number", "Abstract",
-             "Custom 1", "ISBN", "Label") %>%
+             "Custom 1", "ISBN/ISSN", "Label") %>%
       mutate(Abstract = gsub("\\r\\n|\\r|\\n", "", Abstract))
 
     write.table(refs, filename, sep="\t",
