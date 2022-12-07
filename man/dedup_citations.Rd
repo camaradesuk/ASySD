@@ -2,7 +2,7 @@
 % Please edit documentation in R/dedup_refs.R, R/dedup_refs_new.R
 \name{dedup_citations}
 \alias{dedup_citations}
-\title{Deduplicate citations}
+\title{This function deduplicates citation data}
 \usage{
 dedup_citations(
   raw_citations,
@@ -37,7 +37,5 @@ A list of 2 dataframes - unique citations and citations to be manually deduplica
 A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 }
 \description{
-This function deduplicates citation data
-
 This function deduplicates citation data
 }

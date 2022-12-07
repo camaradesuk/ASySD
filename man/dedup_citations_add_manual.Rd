@@ -2,7 +2,7 @@
 % Please edit documentation in R/dedup_refs.R, R/dedup_refs_new.R
 \name{dedup_citations_add_manual}
 \alias{dedup_citations_add_manual}
-\title{Deduplicate citations with manual pairs added}
+\title{This function deduplicates citation data}
 \usage{
 dedup_citations_add_manual(
   raw_citations,
@@ -39,7 +39,5 @@ Unique citations post added manual deduplication
 A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 }
 \description{
-This function deduplicates citation data
-
 This function deduplicates citation data
 }
