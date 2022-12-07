@@ -257,12 +257,13 @@ identify_true_matches <- function(pairs){
 
   # Find papers with low matching dois - often indicates FALSE positive matches
   true_pairs_mismatch_doi <- true_pairs %>%
-    filter(!(is.na(doi)| doi ==0 | doi > 0.99)) %>%
-    filter(!(title > 0.9 & abstract > 0.9 & (journal|isbn > 0.9)))
+    filter(!(is.na(doi)| doi ==0 | doi > 0.99) | abstract >0 & abstract <0.75) %>%
+    filter(!(title > 0.95 & abstract > 0.95 & journal >0.95 & pages >0.95))
 
   # Remove papers with low matching dois from filtered matched
   true_pairs <- true_pairs %>%
-    filter(is.na(doi)| doi > 0.99 | doi == 0 | (title > 0.9 & abstract>0.9 & (journal|isbn > 0.9)))
+    filter(is.na(doi)| doi > 0.99 | doi == 0 | (title > 0.95 & abstract>0.95 & pages>0.95 & (journal|isbn > 0.9))) %>%
+    filter(!(abstract > 0 & abstract < 0.75) | is.na(abstract))
 
   true_pairs <- unique(true_pairs)
 
@@ -497,6 +498,7 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
       raw_citations <- add_id_citations(raw_citations)
     }
 
+    raw_citations$record_id <- as.character(raw_citations$record_id)
     ordered_citations <- order_citations(raw_citations)
     formatted_citations <- format_citations(ordered_citations)
 
