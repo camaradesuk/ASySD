@@ -258,13 +258,12 @@ identify_true_matches <- function(pairs){
 
   # Find papers with low matching dois - often indicates FALSE positive matches
   true_pairs_mismatch_doi <- true_pairs %>%
-    filter(!(is.na(doi)| doi ==0 | doi > 0.99) | abstract >0 & abstract <0.75) %>%
-    filter(!(title > 0.95 & abstract > 0.95 & journal >0.95 & pages >0.95))
+    filter(!(is.na(doi)| doi ==0 | doi > 0.99)) %>%
+    filter(!(title > 0.9 & abstract > 0.9 & (journal|isbn > 0.9)))
 
   # Remove papers with low matching dois from filtered matched
   true_pairs <- true_pairs %>%
-    filter(is.na(doi)| doi > 0.99 | doi == 0 | (title > 0.95 & abstract>0.95 & pages>0.95 & (journal|isbn > 0.9))) %>%
-    filter(!(abstract > 0 & abstract < 0.75) | is.na(abstract))
+    filter(is.na(doi)| doi > 0.99 | doi == 0 | (title > 0.9 & abstract>0.9 & (journal|isbn > 0.9)))
 
   true_pairs <- unique(true_pairs)
 
