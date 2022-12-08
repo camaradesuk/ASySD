@@ -1,5 +1,7 @@
 library(osfr)
 source("~/Projects/ASySD/validation/calculate_performance_function.R")
+library(readr)
+library(dplyr)
 
 # get labelled duplicate sets
 asysd_validation_project <- osf_retrieve_node("https://osf.io/2b8uq/")
@@ -22,3 +24,10 @@ calculate_performance(Depression_duplicates_labelled)
 calculate_performance(Diabetes_duplicates_labelled)
 
 
+test <- original_merged_with_dup_ids %>%
+  group_by(duplicate_id) %>%
+  mutate(label = if_else(row_number() == 1, "Unique", "Duplicate")) %>%
+  ungroup() %>%
+  select(-duplicate_id)
+
+calculate_performance(test)

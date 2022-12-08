@@ -5,6 +5,7 @@ calculate_performance <- function(data){
 
   unique_to_match <- unique %>%
     rename(asysd_label = label) %>%
+    mutate(asysd_label = "Unique") %>%
     select(asysd_label, record_id)
 
   check <- left_join(data, unique_to_match, by="record_id")
