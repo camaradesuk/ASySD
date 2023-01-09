@@ -29,7 +29,7 @@ order_citations <- function(raw_citations){
 # arrange by Year and presence of an Abstract - we want to keep newer records and records with an abstract preferentially
 
 ordered_citations <- raw_citations %>%
-  arrange(desc(year), desc(abstract)) %>%
+  arrange(year, abstract)) %>%
   dplyr::mutate_if(is.character, utf8::utf8_encode) # make sure utf8
 
 # select relevant columns
@@ -408,7 +408,7 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
     citations_with_dup_id_pick <- all_metadata_with_duplicate_id %>%
       mutate_all(~replace(., .=='NA', NA)) %>%
       group_by(duplicate_id) %>%
-      arrange(desc(doi), desc(abstract)) %>%
+      arrange(doi, abstract)) %>%
       mutate(Order = ifelse(label == keep_label, 1, 2)) %>%
       arrange(Order) %>%
       select(-Order) %>%
