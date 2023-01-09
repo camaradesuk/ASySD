@@ -430,7 +430,7 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
 #' @param raw_citations  original citation data with unique ids
 #' @return Dataframe of formatted citation data with duplicate id
 #' @import dplyr
-  merge_metadata <- function(raw_citations, matched_pairs_with_ids){
+  merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source){
 
     # get df of duplicate ids and record ids
     duplicate_id <- matched_pairs_with_ids %>%
@@ -460,7 +460,32 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
       select(-record_id) %>%
       ungroup()
 
+    if(!is.null(keep_source)){
 
+      corrected_dup_id <- all_metadata_with_duplicate_id %>%
+        filter(grepl(keep_source, .$source)) %>%
+        select(duplicate_id, record_ids, source) %>%
+        tidyr::separate_rows(c(source, record_ids), sep=", ") %>%
+        mutate(dup_id_correct = ifelse(source == keep_source, paste(record_ids), NA)) %>%
+        select(duplicate_id, dup_id_correct, everything()) %>%
+        group_by(duplicate_id) %>%
+        arrange(dup_id_correct) %>%
+        mutate(dup_id_correct = first(dup_id_correct)) %>%
+        select(dup_id_correct, duplicate_id) %>%
+        ungroup() %>%
+        unique()
+
+      corrected_dup_id <- left_join(corrected_dup_id, all_metadata_with_duplicate_id, by="duplicate_id")
+      corrected_dup_id <- corrected_dup_id %>%
+        select(-duplicate_id) %>%
+        rename(duplicate_id = dup_id_correct)
+
+      all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
+        filter(!grepl(keep_source, .$source))
+
+      all_metadata_with_duplicate_id <- rbind(all_metadata_with_duplicate_id, corrected_dup_id)
+
+    }
   }
 
   ####------ Deduplicate citations function ------ ####
@@ -581,7 +606,7 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
 
     if(merge_citations == TRUE){
 
-      unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids)
+      unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source)
     } else{
       unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
 
