@@ -29,7 +29,7 @@ order_citations <- function(raw_citations){
 # arrange by Year and presence of an Abstract - we want to keep newer records and records with an abstract preferentially
 
 ordered_citations <- raw_citations %>%
-  arrange(year, abstract)) %>%
+  arrange(year, abstract) %>%
   dplyr::mutate_if(is.character, utf8::utf8_encode) # make sure utf8
 
 # select relevant columns
