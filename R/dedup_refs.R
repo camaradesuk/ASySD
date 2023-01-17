@@ -408,7 +408,7 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
     citations_with_dup_id_pick <- all_metadata_with_duplicate_id %>%
       mutate_all(~replace(., .=='NA', NA)) %>%
       group_by(duplicate_id) %>%
-      arrange(doi, abstract)) %>%
+      arrange(doi, abstract) %>%
       mutate(Order = ifelse(label == keep_label, 1, 2)) %>%
       arrange(Order) %>%
       select(-Order) %>%
