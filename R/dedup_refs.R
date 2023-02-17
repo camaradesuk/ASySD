@@ -26,17 +26,17 @@ add_id_citations <- function(raw_citations){
 #' @import dplyr
 #' @import utf8
 order_citations <- function(raw_citations){
-# arrange by Year and presence of an Abstract - we want to keep newer records and records with an abstract preferentially
+  # arrange by Year and presence of an Abstract - we want to keep newer records and records with an abstract preferentially
 
-ordered_citations <- raw_citations %>%
-  arrange(year, abstract) %>%
-  dplyr::mutate_if(is.character, utf8::utf8_encode) # make sure utf8
+  ordered_citations <- raw_citations %>%
+    arrange(year, abstract) %>%
+    dplyr::mutate_if(is.character, utf8::utf8_encode) # make sure utf8
 
-# select relevant columns
-ordered_citations <- ordered_citations  %>%
-  select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label, source)
+  # select relevant columns
+  ordered_citations <- ordered_citations  %>%
+    select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label, source)
 
-return(ordered_citations)
+  return(ordered_citations)
 }
 
 ####------ Format citation data ------ ####
@@ -104,6 +104,8 @@ format_citations <- function(raw_citations){
 
   formatted_citations<- formatted_citations %>%
     select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, source, label)
+
+  formatted_citations$record_id <- as.character(formatted_citations$record_id)
 
   return(formatted_citations)
 
@@ -284,9 +286,6 @@ identify_true_matches <- function(pairs){
 
   true_pairs <- unique(true_pairs)
 
-  true_pairs$record_id1 <- as.character(true_pairs$record_id1)
-  true_pairs$record_id2 <- as.character(true_pairs$record_id2)
-
   # Get potential duplicates for manual deduplication
   maybe_pairs <- pairs %>%
     filter(title>0.85 & author>0.75 |
@@ -296,6 +295,11 @@ identify_true_matches <- function(pairs){
     filter(doi > 0.99 | doi == 0 | is.na(doi)) %>%
     filter(!(as.numeric(year1) - as.numeric(year2) >1)) %>%
     filter(!(as.numeric(year2) - as.numeric(year1) >1))
+
+  maybe_pairs$record_id1 <- as.character(maybe_pairs$record_id1)
+  maybe_pairs$record_id2 <- as.character(maybe_pairs$record_id2)
+  true_pairs$record_id1 <- as.character(true_pairs$record_id1)
+  true_pairs$record_id2 <- as.character(true_pairs$record_id2)
 
   # get pairs required for manual dedup which are not in true pairs
   maybe_pairs <- anti_join(maybe_pairs, true_pairs, by = c("record_id1", "record_id2"))
@@ -393,14 +397,14 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
 
   if(!is.null(keep_source)){
 
-  citations_with_dup_id_pick <- all_metadata_with_duplicate_id %>%
-    mutate_all(~replace(., .=='NA', NA)) %>%
-    group_by(duplicate_id) %>%
-    arrange(doi, abstract) %>%
-    mutate(Order = ifelse(source == keep_source, 1, 2)) %>%
-    arrange(Order) %>%
-    select(-Order) %>%
-    slice_head()
+    citations_with_dup_id_pick <- all_metadata_with_duplicate_id %>%
+      mutate_all(~replace(., .=='NA', NA)) %>%
+      group_by(duplicate_id) %>%
+      arrange(doi, abstract) %>%
+      mutate(Order = ifelse(source == keep_source, 1, 2)) %>%
+      arrange(Order) %>%
+      select(-Order) %>%
+      slice_head()
   }
 
   else if(!is.null(keep_label)){
@@ -430,230 +434,261 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
 #' @param raw_citations  original citation data with unique ids
 #' @return Dataframe of formatted citation data with duplicate id
 #' @import dplyr
-  merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source){
+merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, keep_label){
 
-    # get df of duplicate ids and record ids
-    duplicate_id <- matched_pairs_with_ids %>%
-      select(duplicate_id, record_id) %>%
+  # get df of duplicate ids and record ids
+  duplicate_id <- matched_pairs_with_ids %>%
+    select(duplicate_id, record_id) %>%
+    unique()
+
+  raw_citations <- raw_citations %>%
+    mutate(record_id = as.character(record_id))
+
+  # make character
+  duplicate_id$record_id <- as.character(duplicate_id$record_id)
+
+  # join duplicate id to raw citation metadata (e.g. title, author, journal)
+  all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations, by="record_id")
+
+  all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
+    mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
+    mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
+    group_by(duplicate_id) %>% # group by duplicate id
+    summarise(across(everything(), ~trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
+    mutate(across(c(everything(), -label, -source, -record_id), gsub, pattern = ";;;.*", replacement = "")) %>% #remove extra values in each col, keep first one only
+    mutate(across(label, gsub, pattern = ";;;", replacement = ", ")) %>%
+    mutate(across(source, gsub, pattern = ";;;", replacement = ", ")) %>%
+    mutate(across(record_id, gsub, pattern = ";;;", replacement = ", ")) %>% #replace separator to comma
+    ungroup() %>%
+    mutate(record_ids = record_id) %>%
+    select(-record_id) %>%
+    ungroup()
+
+  if(!is.null(keep_source)){
+
+    corrected_dup_id <- all_metadata_with_duplicate_id %>%
+      filter(grepl(keep_source, .$source)) %>%
+      select(duplicate_id, record_ids, source) %>%
+      tidyr::separate_rows(c(source, record_ids), sep=", ") %>%
+      mutate(dup_id_correct = ifelse(source == keep_source, paste(record_ids), NA)) %>%
+      select(duplicate_id, dup_id_correct, everything()) %>%
+      group_by(duplicate_id) %>%
+      arrange(dup_id_correct) %>%
+      mutate(dup_id_correct = first(dup_id_correct)) %>%
+      select(dup_id_correct, duplicate_id) %>%
+      ungroup() %>%
       unique()
 
-    raw_citations <- raw_citations %>%
-      mutate(record_id = as.character(record_id))
-
-    # make character
-    duplicate_id$record_id <- as.character(duplicate_id$record_id)
-
-    # join duplicate id to raw citation metadata (e.g. title, author, journal)
-    all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations, by="record_id")
+    corrected_dup_id <- left_join(corrected_dup_id, all_metadata_with_duplicate_id, by="duplicate_id")
+    corrected_dup_id <- corrected_dup_id %>%
+      select(-duplicate_id) %>%
+      rename(duplicate_id = dup_id_correct)
 
     all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
-      mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
-      mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
-      group_by(duplicate_id) %>% # group by duplicate id
-      summarise(across(everything(), ~trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
-      mutate(across(c(everything(), -label, -source, -record_id), gsub, pattern = ";;;.*", replacement = "")) %>% #remove extra values in each col, keep first one only
-      mutate(across(label, gsub, pattern = ";;;", replacement = ", ")) %>%
-      mutate(across(source, gsub, pattern = ";;;", replacement = ", ")) %>%
-      mutate(across(record_id, gsub, pattern = ";;;", replacement = ", ")) %>% #replace separator to comma
-      ungroup() %>%
-      mutate(record_ids = record_id) %>%
-      select(-record_id) %>%
-      ungroup()
+      filter(!grepl(keep_source, .$source))
 
-    if(!is.null(keep_source)){
+    all_metadata_with_duplicate_id <- rbind(all_metadata_with_duplicate_id, corrected_dup_id)
 
-      corrected_dup_id <- all_metadata_with_duplicate_id %>%
-        filter(grepl(keep_source, .$source)) %>%
-        select(duplicate_id, record_ids, source) %>%
-        tidyr::separate_rows(c(source, record_ids), sep=", ") %>%
-        mutate(dup_id_correct = ifelse(source == keep_source, paste(record_ids), NA)) %>%
-        select(duplicate_id, dup_id_correct, everything()) %>%
-        group_by(duplicate_id) %>%
-        arrange(dup_id_correct) %>%
-        mutate(dup_id_correct = first(dup_id_correct)) %>%
-        select(dup_id_correct, duplicate_id) %>%
-        ungroup() %>%
-        unique()
-
-      corrected_dup_id <- left_join(corrected_dup_id, all_metadata_with_duplicate_id, by="duplicate_id")
-      corrected_dup_id <- corrected_dup_id %>%
-        select(-duplicate_id) %>%
-        rename(duplicate_id = dup_id_correct)
-
-      all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
-        filter(!grepl(keep_source, .$source))
-
-      all_metadata_with_duplicate_id <- rbind(all_metadata_with_duplicate_id, corrected_dup_id)
-
-    }
   }
 
-  ####------ Deduplicate citations function ------ ####
+  else if(!is.null(keep_label)){
 
-  #'
-  #' This function deduplicates citation data
-  #' @export
-  #' @import dplyr
-  #' @param raw_citations A dataframe containing duplicate ciations
-  #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
-  #' @param merge_citations Logical value. Do you want to merge matching citations?
-  #' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
-  #' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
-  #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
-  dedup_citations <- function(raw_citations, manual_dedup = TRUE,
-                              merge_citations=FALSE, keep_source=NULL, keep_label=NULL) {
+    corrected_dup_id <- all_metadata_with_duplicate_id %>%
+      filter(grepl(keep_label, .$label)) %>%
+      select(duplicate_id, record_ids, label) %>%
+      tidyr::separate_rows(c(label, record_ids), sep=", ") %>%
+      mutate(dup_id_correct = ifelse(label == keep_label, paste(record_ids), NA)) %>%
+      select(duplicate_id, dup_id_correct, everything()) %>%
+      group_by(duplicate_id) %>%
+      arrange(dup_id_correct) %>%
+      mutate(dup_id_correct = first(dup_id_correct)) %>%
+      select(dup_id_correct, duplicate_id) %>%
+      ungroup() %>%
+      unique()
 
-    print("formatting data...")
+    corrected_dup_id <- left_join(corrected_dup_id, all_metadata_with_duplicate_id, by="duplicate_id")
+    corrected_dup_id <- corrected_dup_id %>%
+      select(-duplicate_id) %>%
+      rename(duplicate_id = dup_id_correct)
 
-    # add warning for no record id
-    if(!"record_id" %in% names(raw_citations)){
-      warning("Search does not contain a record_id column. A record_id will be created using row names")
+    all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
+      filter(!grepl(keep_label, .$label))
 
-       # add record id using row number
-       raw_citations <- add_id_citations(raw_citations)
-    }
+    all_metadata_with_duplicate_id <- rbind(all_metadata_with_duplicate_id, corrected_dup_id)
 
-    # add warning for any missing record id
-    else if(any(is.na(raw_citations$record_id) | raw_citations$record_id=="")){
+  } else{
+
+    return(all_metadata_with_duplicate_id)
+  }
+}
+
+####------ Deduplicate citations function ------ ####
+
+#'
+#' This function deduplicates citation data
+#' @export
+#' @import dplyr
+#' @param raw_citations A dataframe containing duplicate ciations
+#' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
+#' @param merge_citations Logical value. Do you want to merge matching citations?
+#' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
+#' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
+#' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
+dedup_citations <- function(raw_citations, manual_dedup = TRUE,
+                            merge_citations=FALSE, keep_source=NULL, keep_label=NULL) {
+
+  print("formatting data...")
+
+  # add warning for no record id
+  if(!"record_id" %in% names(raw_citations)){
+    warning("Search does not contain a record_id column. A record_id will be created using row names")
+
+    # add record id using row number
+    raw_citations <- add_id_citations(raw_citations)
+  }
+
+  # add warning for any missing record id
+  else if(any(is.na(raw_citations$record_id) | raw_citations$record_id=="")){
     warning("Search contains missing values for the record_id column. A record_id will be created using row names")
 
-      # add record id using row number
-      raw_citations <- add_id_citations(raw_citations)
-    }
-
-    # add warning for non unique ids
-    else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
-    warning("The record_id column is not unique. A record_id will be created using row names")
-
-      # add record id using row number
-      raw_citations <- add_id_citations(raw_citations)
-    }
-
-    raw_citations$record_id <- as.character(raw_citations$record_id)
-    ordered_citations <- order_citations(raw_citations)
-    formatted_citations <- format_citations(ordered_citations)
-
-    print("identifying potential duplicates...")
-
-    # find matching pairs
-    pairs <- match_citations(formatted_citations)
-
-    # warning if no duplicates
-    if(is.null(pairs)) {
-      warning("No duplicates detected!")
-      return(raw_citations)
-    }
-
-    pair_types <- identify_true_matches(pairs)
-    true_pairs <- pair_types$true_pairs
-
-    # warning if no duplicates
-    if(is.null(true_pairs)) {
-      warning("No duplicates detected!")
-      return(raw_citations)
-    }
-
-    print("identified duplicates!")
-
-    matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
-
-      if(manual_dedup == TRUE){
-
-        print("flagging potential pairs for manual dedup...")
-
-        maybe_pairs <- pair_types$maybe_pairs
-
-        maybe_pairs <- maybe_pairs  %>%
-          mutate(author1 =ordered_citations$author[id1]) %>%
-          mutate(author2 =ordered_citations$author[id2]) %>%
-          mutate(title1 =ordered_citations$title[id1]) %>%
-          mutate(title2 =ordered_citations$title[id2]) %>%
-          mutate(abstract1 =ordered_citations$abstract[id1]) %>%
-          mutate(abstract2 =ordered_citations$abstract[id2]) %>%
-          mutate(doi1= ordered_citations$doi[id1]) %>%
-          mutate(doi2 =ordered_citations$doi[id2]) %>%
-          mutate(year1=ordered_citations$year[id1]) %>%
-          mutate(year2=ordered_citations$year[id2]) %>%
-          mutate(number1 =ordered_citations$number[id1]) %>%
-          mutate(number2 =ordered_citations$number[id2]) %>%
-          mutate(pages1 =ordered_citations$pages[id1]) %>%
-          mutate(pages2 =ordered_citations$pages[id2]) %>%
-          mutate(volume1 =ordered_citations$volume[id1]) %>%
-          mutate(volume2 =ordered_citations$volume[id2]) %>%
-          mutate(journal1 =ordered_citations$journal[id1]) %>%
-          mutate(journal2 =ordered_citations$journal[id2]) %>%
-          mutate(isbn1 =ordered_citations$isbn[id1]) %>%
-          mutate(isbn2 =ordered_citations$isbn[id2]) %>%
-          mutate(record_id1=ordered_citations$record_id[id1]) %>%
-          mutate(record_id2 =ordered_citations$record_id[id2]) %>%
-          mutate(label1 =ordered_citations$label[id1]) %>%
-          mutate(label2 =ordered_citations$label[id2]) %>%
-          mutate(source1 =ordered_citations$source[id1]) %>%
-          mutate(source2 =ordered_citations$source[id2]) %>%
-          select(author1, author2, author, title1,
-                 title2, title, abstract1, abstract2, abstract, year1,
-                 year2, year, number1, number2, number, pages1, pages2,
-                 pages, volume1, volume2, volume, journal1, journal2,
-                 journal, isbn, isbn1, isbn2, doi1, doi2, doi,
-                 record_id1, record_id2, label1,
-                 label2, source1, source2)
-
-        manual_dedup <- maybe_pairs
-      }
-
-      print("merging citations...")
-
-
-    if(merge_citations == TRUE){
-
-      unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source)
-    } else{
-      unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
-
-    }
-
-    return(list("unique" = unique_citations_with_metadata,
-                "manual_dedup" = manual_dedup))
+    # add record id using row number
+    raw_citations <- add_id_citations(raw_citations)
   }
 
-  ####------ Deduplicate citations WITH manual dups added function ------ ####
-  #'
-  #' This function deduplicates citation data
-  #' @export
-  #' @import dplyr
-  #' @param raw_citations A dataframe containing duplicate citations
-  #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
-  #' @param merge_citations Logical value. Do you want to merge matching citations?
-  #' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
-  #' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
-  #' @param additional_pairs dataframe of citations with manual pairs, a subset of the manual pairs export
-  #' @return Unique citations post added manual deduplication
-  dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, keep_source=NULL, keep_label=NULL, additional_pairs){
+  # add warning for non unique ids
+  else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
+    warning("The record_id column is not unique. A record_id will be created using row names")
 
-    print("formatting data...")
-    # add warning for no record id
-    if(!"record_id" %in% names(raw_citations)){
-      warning("Search does not contain a record_id column. A record_id will be created using row names")
+    # add record id using row number
+    raw_citations <- add_id_citations(raw_citations)
+  }
 
-      # add record id using row number
-      raw_citations <- add_id_citations(raw_citations)
-    }
+  raw_citations$record_id <- as.character(raw_citations$record_id)
+  ordered_citations <- order_citations(raw_citations)
+  formatted_citations <- format_citations(ordered_citations)
 
-    # add warning for any missing record id
-    else if(any(is.na(raw_citations$record_id) | raw_citations$record_id=="")){
-      warning("Search contains missing values for the record_id column. A record_id will be created using row names")
+  print("identifying potential duplicates...")
 
-      # add record id using row number
-      raw_citations <- add_id_citations(raw_citations)
-    }
+  # find matching pairs
+  pairs <- match_citations(formatted_citations)
 
-    # add warning for non unique ids
-    else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
-      warning("The record_id column is not unique. A record_id will be created using row names")
+  # warning if no duplicates
+  if(is.null(pairs)) {
+    warning("No duplicates detected!")
+    return(raw_citations)
+  }
 
-      # add record id using row number
-      raw_citations <- add_id_citations(raw_citations)
-    }
+  pair_types <- identify_true_matches(pairs)
+  true_pairs <- pair_types$true_pairs
+
+  # warning if no duplicates
+  if(is.null(true_pairs)) {
+    warning("No duplicates detected!")
+    return(raw_citations)
+  }
+
+  print("identified duplicates!")
+
+  matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
+
+  if(manual_dedup == TRUE){
+
+    print("flagging potential pairs for manual dedup...")
+
+    maybe_pairs <- pair_types$maybe_pairs
+
+    maybe_pairs <- maybe_pairs  %>%
+      mutate(author1 =ordered_citations$author[id1]) %>%
+      mutate(author2 =ordered_citations$author[id2]) %>%
+      mutate(title1 =ordered_citations$title[id1]) %>%
+      mutate(title2 =ordered_citations$title[id2]) %>%
+      mutate(abstract1 =ordered_citations$abstract[id1]) %>%
+      mutate(abstract2 =ordered_citations$abstract[id2]) %>%
+      mutate(doi1= ordered_citations$doi[id1]) %>%
+      mutate(doi2 =ordered_citations$doi[id2]) %>%
+      mutate(year1=ordered_citations$year[id1]) %>%
+      mutate(year2=ordered_citations$year[id2]) %>%
+      mutate(number1 =ordered_citations$number[id1]) %>%
+      mutate(number2 =ordered_citations$number[id2]) %>%
+      mutate(pages1 =ordered_citations$pages[id1]) %>%
+      mutate(pages2 =ordered_citations$pages[id2]) %>%
+      mutate(volume1 =ordered_citations$volume[id1]) %>%
+      mutate(volume2 =ordered_citations$volume[id2]) %>%
+      mutate(journal1 =ordered_citations$journal[id1]) %>%
+      mutate(journal2 =ordered_citations$journal[id2]) %>%
+      mutate(isbn1 =ordered_citations$isbn[id1]) %>%
+      mutate(isbn2 =ordered_citations$isbn[id2]) %>%
+      mutate(record_id1=ordered_citations$record_id[id1]) %>%
+      mutate(record_id2 =ordered_citations$record_id[id2]) %>%
+      mutate(label1 =ordered_citations$label[id1]) %>%
+      mutate(label2 =ordered_citations$label[id2]) %>%
+      mutate(source1 =ordered_citations$source[id1]) %>%
+      mutate(source2 =ordered_citations$source[id2]) %>%
+      select(author1, author2, author, title1,
+             title2, title, abstract1, abstract2, abstract, year1,
+             year2, year, number1, number2, number, pages1, pages2,
+             pages, volume1, volume2, volume, journal1, journal2,
+             journal, isbn, isbn1, isbn2, doi1, doi2, doi,
+             record_id1, record_id2, label1,
+             label2, source1, source2)
+
+    manual_dedup <- maybe_pairs
+  }
+
+  print("merging citations...")
+
+
+  if(merge_citations == TRUE){
+
+    unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
+  } else{
+    unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
+
+  }
+
+  return(list("unique" = unique_citations_with_metadata,
+              "manual_dedup" = manual_dedup))
+}
+
+####------ Deduplicate citations WITH manual dups added function ------ ####
+#'
+#' This function deduplicates citation data
+#' @export
+#' @import dplyr
+#' @param raw_citations A dataframe containing duplicate citations
+#' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
+#' @param merge_citations Logical value. Do you want to merge matching citations?
+#' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
+#' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
+#' @param additional_pairs dataframe of citations with manual pairs, a subset of the manual pairs export
+#' @return Unique citations post added manual deduplication
+dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, keep_source=NULL, keep_label=NULL, additional_pairs){
+
+  print("formatting data...")
+  # add warning for no record id
+  if(!"record_id" %in% names(raw_citations)){
+    warning("Search does not contain a record_id column. A record_id will be created using row names")
+
+    # add record id using row number
+    raw_citations <- add_id_citations(raw_citations)
+  }
+
+  # add warning for any missing record id
+  else if(any(is.na(raw_citations$record_id) | raw_citations$record_id=="")){
+    warning("Search contains missing values for the record_id column. A record_id will be created using row names")
+
+    # add record id using row number
+    raw_citations <- add_id_citations(raw_citations)
+  }
+
+  # add warning for non unique ids
+  else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
+    warning("The record_id column is not unique. A record_id will be created using row names")
+
+    # add record id using row number
+    raw_citations <- add_id_citations(raw_citations)
+
+  } else{
 
     ordered_citations <- order_citations(raw_citations)
     formatted_citations <- format_citations(ordered_citations)
@@ -668,9 +703,10 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
 
     if(merge_citations == TRUE){
 
-      unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids)
+      unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
     }  else{
       unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
 
     }
   }
+}
