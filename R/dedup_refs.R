@@ -393,7 +393,7 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
   raw_citations <- raw_citations %>%
     mutate(record_id = as.character(record_id))
 
-  all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations)
+  all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations, by = "record_id")
 
   if(!is.null(keep_source)){
 
@@ -533,7 +533,7 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
 dedup_citations <- function(raw_citations, manual_dedup = TRUE,
                             merge_citations=FALSE, keep_source=NULL, keep_label=NULL) {
 
-  print("formatting data...")
+  message("formatting data...")
 
   # add warning for no record id
   if(!"record_id" %in% names(raw_citations)){
@@ -561,7 +561,7 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
   ordered_citations <- order_citations(raw_citations)
   formatted_citations <- format_citations(ordered_citations)
 
-  print("identifying potential duplicates...")
+  message("identifying potential duplicates...")
 
   # find matching pairs
   pairs <- match_citations(formatted_citations)
@@ -581,13 +581,13 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     return(raw_citations)
   }
 
-  print("identified duplicates!")
+  message("identified duplicates!")
 
   matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
 
   if(manual_dedup == TRUE){
 
-    print("flagging potential pairs for manual dedup...")
+    message("flagging potential pairs for manual dedup...")
 
     maybe_pairs <- pair_types$maybe_pairs
 
@@ -629,8 +629,6 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     manual_dedup <- maybe_pairs
   }
 
-  print("merging citations...")
-
 
   if(merge_citations == TRUE){
 
@@ -639,6 +637,20 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
 
   }
+
+
+  # make sure data is returned ungrouped
+  unique_citations_with_metadata <- unique_citations_with_metadata %>%
+    ungroup()
+
+
+  n_unique <- length(unique(unique_citations_with_metadata$duplicate_id))
+  n_start <- length(unique(formatted_citations$record_id))
+  n_dups <- n_start - n_unique
+
+
+  message(paste("from a total of", n_start, "citations,", n_dups, " duplicate citations identified and removed."))
+  message(paste(n_unique, "unique citations remaining."))
 
   return(list("unique" = unique_citations_with_metadata,
               "manual_dedup" = manual_dedup))
@@ -658,7 +670,7 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 #' @return Unique citations post added manual deduplication
 dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, keep_source=NULL, keep_label=NULL, additional_pairs){
 
-  print("formatting data...")
+  message("formatting data...")
   # add warning for no record id
   if(!"record_id" %in% names(raw_citations)){
     warning("Search does not contain a record_id column. A record_id will be created using row names")
@@ -687,12 +699,12 @@ dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, kee
     ordered_citations <- order_citations(raw_citations)
     formatted_citations <- format_citations(ordered_citations)
 
-    print("identifying potential duplicates...")
+    message("identifying potential duplicates...")
     pairs <- match_citations(formatted_citations)
     pair_types <- identify_true_matches(pairs)
     true_pairs <- plyr::rbind.fill(pair_types$true_pairs, additional_pairs)
 
-    print("identified duplicates!")
+    message("identified duplicates!")
     matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
 
     if(merge_citations == TRUE){
@@ -702,5 +714,16 @@ dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, kee
       unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
 
     }
+
+    # make sure data is returned ungrouped
+    unique_citations_with_metadata <- unique_citations_with_metadata %>%
+      ungroup()
+
+    n_unique <- length(unique(unique_citations_with_metadata$duplicate_id))
+    n_start <- length(unique(formatted_citations$record_id))
+    n_dups <- n_start - n_unique
+
+    message(paste("from a total of", n_start, "citations,", n_dups, " duplicate citations identified and removed."))
+    message(paste(n_unique, "unique citations remaining."))
   }
 }
