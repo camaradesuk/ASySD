@@ -550,7 +550,7 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     raw_citations <- add_id_citations(raw_citations)
 
     # add warning for non unique ids
-  } else{
+  }  else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
     warning("The record_id column is not unique. A record_id will be created using row names")
 
     # add record id using row number
