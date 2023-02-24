@@ -489,9 +489,7 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
 
     all_metadata_with_duplicate_id <- rbind(all_metadata_with_duplicate_id, corrected_dup_id)
 
-  }
-
-  else if(!is.null(keep_label)){
+  } else if(!is.null(keep_label)){
 
     corrected_dup_id <- all_metadata_with_duplicate_id %>%
       filter(grepl(keep_label, .$label)) %>%
@@ -516,9 +514,7 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
 
     all_metadata_with_duplicate_id <- rbind(all_metadata_with_duplicate_id, corrected_dup_id)
 
-  } else{
-
-    return(all_metadata_with_duplicate_id)
+  } else{  return(all_metadata_with_duplicate_id)
   }
 }
 
@@ -545,18 +541,16 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
     # add record id using row number
     raw_citations <- add_id_citations(raw_citations)
-  }
 
-  # add warning for any missing record id
-  else if(any(is.na(raw_citations$record_id) | raw_citations$record_id=="")){
+    # add warning for any missing record id
+  } else if(any(is.na(raw_citations$record_id)) | any(raw_citations$record_id=="")){
     warning("Search contains missing values for the record_id column. A record_id will be created using row names")
 
     # add record id using row number
     raw_citations <- add_id_citations(raw_citations)
-  }
 
-  # add warning for non unique ids
-  else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
+    # add warning for non unique ids
+  } else{
     warning("The record_id column is not unique. A record_id will be created using row names")
 
     # add record id using row number
