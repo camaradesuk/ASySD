@@ -649,8 +649,9 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
   n_dups <- n_start - n_unique
 
 
-  message(paste("from a total of", n_start, "citations,", n_dups, " duplicate citations identified and removed."))
-  message(paste(n_unique, "unique citations remaining."))
+  message(paste(n_start, "citations loaded..."))
+  message(paste(n_dups, "duplicate citations removed..."))
+  message(paste(n_unique, "unique citations remaining!"))
 
   return(list("unique" = unique_citations_with_metadata,
               "manual_dedup" = manual_dedup))
@@ -723,7 +724,9 @@ dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, kee
     n_start <- length(unique(formatted_citations$record_id))
     n_dups <- n_start - n_unique
 
-    message(paste("from a total of", n_start, "citations,", n_dups, " duplicate citations identified and removed."))
-    message(paste(n_unique, "unique citations remaining."))
+    message(paste(n_start, "citations loaded..."))
+    message(paste(n_dups, "duplicate citations removed..."))
+    message(paste(n_unique, "unique citations remaining!"))
+
   }
 }
