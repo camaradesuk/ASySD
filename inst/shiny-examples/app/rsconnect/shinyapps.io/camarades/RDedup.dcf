@@ -1,0 +1,14 @@
+name: RDedup
+title: RDedup
+username:
+account: camarades
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2553621
+bundleId: 6889257
+url: https://camarades.shinyapps.io/RDedup/
+when: 1677417615.61146
+lastSyncTime: 1677417615.61149
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: dev.R|LICENSE|README.md|test.RData
