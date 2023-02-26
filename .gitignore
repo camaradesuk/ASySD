@@ -1,6 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
+.Ruserdata
 docs
 inst/shiny-examples/app/google-analytics.html
 packrat/lib*/
