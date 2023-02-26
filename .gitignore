@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 docs
+inst/shiny-examples/ASySD_shiny/google-analytics.html
+packrat/lib*/
