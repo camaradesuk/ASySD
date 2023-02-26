@@ -1,0 +1,62 @@
+---
+title: "Deduplicating Systematic Searches"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{basic-deduplication}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Load the ASySD package.
+
+```{r setup}
+#devtools::install_github("camaradesuk/ASySD")
+library(ASySD)
+```
+
+Load citations from an Endnote XML file using the `load_search()` funciton. You can change the *method* argument to upload alternative file types such as .csv files.
+
+```{r}
+citations <- load_search("systematic_search.xml", method="endnote")
+```
+
+### Automated deduplication
+
+Remove duplicate citations automatically using the `dedup_citations` function.
+
+```{r}
+results <- dedup_citations(citations)
+```
+
+The `dedup_citations` function returns a list of two dataframes by default. The first contains unique citations after duplicates were removed automatically by ASySD. In most cases, this will remove the vast majority of duplicates. There will likely be some duplicates remaining which need manual review by a human (see next step).
+
+```{r}
+unique_citations <- results$unique
+```
+
+### Manual deduplication
+
+To check for additional duplicates, get the dataframe of citations for manual review. You can review within R or export as a csv / excel file to go through each row of pairs.
+
+```{r}
+potential_duplicates <- results$manual_dedup
+```
+
+After reviewing the pairs, create a dataframe contianing **only the true duplicate pairs.** Here, for simplicity, I have retained a subset of the potential_duplicates dataframe. If you exported to a file, you could remove the rows which are not duplicates and re-upload the rows with true duplicates.
+
+```{r}
+true_duplicates <- potential_duplicates[1:16,]
+```
+
+Now, to get the final deduplication results, use the `dedup_citations_add_manual()`function. To account for additional duplicates you have reviewed, add them into the *additional_pairs* argument.
+
+```{r}
+final_results <- dedup_citations_add_manual(citations, additional_pairs = true_duplicates)
+```
