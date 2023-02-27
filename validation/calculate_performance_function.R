@@ -36,9 +36,9 @@ calculate_performance_1 <- function(data){
   sensitivity <- true_pos / (true_pos + false_neg) * 100
   specificity <- true_neg / (true_neg + false_pos) * 100
 
-  data.frame(Measure= c("True_neg", "True_pos", "False_neg", "False_pos", "Sensitivity", "Specificity"),
-   Result = c(true_neg, true_pos, false_neg, false_pos, sensitivity, specificity))
-
+  df <- data.frame(Measure= c("True_neg", "True_pos", "False_neg", "False_pos", "Sensitivity", "Specificity"),
+                   Result = c(true_neg, true_pos, false_neg, false_pos, sensitivity, specificity))
+  gt::gt(df)
   }
 
 calculate_performance_2 <- function(data){
@@ -81,7 +81,9 @@ calculate_performance_2 <- function(data){
   sensitivity <- true_pos / (true_pos + false_neg) * 100
   specificity <- true_neg / (true_neg + false_pos) * 100
 
-  data.frame(Measure= c("True_neg", "True_pos", "False_neg", "False_pos", "Sensitivity", "Specificity"),
+  df <- data.frame(Measure= c("True_neg", "True_pos", "False_neg", "False_pos", "Sensitivity", "Specificity"),
              Result = c(true_neg, true_pos, false_neg, false_pos, sensitivity, specificity))
+
+  gt::gt(df)
 
 }
