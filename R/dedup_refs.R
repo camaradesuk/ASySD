@@ -57,6 +57,8 @@ format_citations <- function(raw_citations){
     mutate(author = ifelse(author=="Anonymous", "Unknown", author)) %>%
     dplyr::mutate_if(is.character, utf8::utf8_encode) # make sure utf8
 
+  # Fix page formatting
+  formatted_citations$pages <- lapply(formatted_citations$pages, function(x) gsub("--", "-", x))
 
   # Make all upper case by selecting cols in order and formatting all metadata to upper
   # Note that source, label and record id are retained - important for joining later
