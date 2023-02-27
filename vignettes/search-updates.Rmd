@@ -16,4 +16,68 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(ASySD)
+library(dplyr)
 ```
+
+Load citations from an existing search file using the `load_search()` function. In this example, we use a csv format. You can change the *method* argument to upload alternative file types. 
+
+```{r}
+existing_search <- load_search("old_sr_search.csv", method="csv")
+```
+
+Load citations from a new systematic search. 
+```{r}
+new_search <- load_search("new_sr_search.csv", method="csv")
+```
+
+### Combine citations 
+
+Before deduplication, we must bind the citations into one dataframe. First, give each search a different source so that we can specify which citations to retain.
+```{r}
+existing_search$source <- "existing_citation"
+new_search$source <- "new"
+
+all_citations <- rbind(existing_search, new_search)
+```
+
+### Automated deduplication
+
+Remove duplicate citations automatically using the `dedup_citations` function.
+
+```{r}
+results <- dedup_citations(all_citations, merge=TRUE, keep_source = "existing_citations")
+```
+
+The `dedup_citations` function returns a list of two dataframes by default. The first contains unique citations after duplicates were removed automatically by ASySD. In most cases, this will remove the vast majority of duplicates. There will likely be some duplicates remaining which need manual review by a human (see next step).
+
+```{r}
+unique_citations <- results$unique
+```
+
+### Manual deduplication
+
+To check for additional duplicates, get the dataframe of citations for manual review. You can review within R or export as a csv / excel file to go through each row of pairs.
+
+```{r}
+potential_duplicates <- results$manual_dedup
+```
+
+After reviewing the pairs, create a dataframe contianing **only the true duplicate pairs.** Here, all the suggested duplicates look like REAL duplicates. If you exported to a file, you could remove the rows which are not duplicates and re-upload the rows with true duplicates.
+
+```{r}
+true_duplicates <- potential_duplicates
+```
+
+Now, to get the final deduplication results, use the `dedup_citations_add_manual()`function. To account for additional duplicates you have reviewed, add them into the *additional_pairs* argument.
+
+```{r}
+final_results <- dedup_citations_add_manual(all_citations, additional_pairs = true_duplicates)
+```
+Now we have a final set of unique citations, how can we find the new citations we added with our latest systematic search?
+```{r}
+new_citations <- final_results %>%
+  filter(source == "new") 
+
+gt(head(new_citations))
+```
+
