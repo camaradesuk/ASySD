@@ -95,7 +95,6 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
   if(type == "txt"){
 
 
-    citations$`Custom 1` <- citations$duplicate_id
     citations$`Custom 2` <- ""
 
     if("flag" %in% colnames(citations))
