@@ -215,6 +215,26 @@ ui <- navbarPage(
              choiceValues = c("txt", "ris", "csv"),
              status="success"),
 
+
+           h5("Customise output - labels"),
+
+           uiOutput("filterLabel"),
+           materialSwitch(
+             inputId = "filterLabelOnly",
+             label = "Only retain citations which are unique to this label",
+             value = FALSE,
+             status = "success"
+           ),
+
+           h5("Customise output - sources"),
+           uiOutput("filterSource"),
+           materialSwitch(
+             inputId = "filterSourceOnly",
+             label = "Only retain citations which are unique to this source",
+             value = FALSE,
+             status = "success"
+           ),
+
            downloadBttn(
              "download",
              label = "Download citations",
@@ -227,8 +247,14 @@ ui <- navbarPage(
 
            uiOutput("ASySD_download_type"),
            br(),
-           uiOutput("ASySD_pre_download")
-
+           uiOutput("ASySD_pre_download"),
+           br(),
+           HTML(paste("<b>", "Customising output - labels and sources", "</b>",
+                      "<br>", "You may choose to only download citations with a specific label - for example
+           to indicate citations obtained from a more recent systematic search. You can use the filters on the
+           right to do this. If a citation is present across several labels e.g. in the old search and the new search,
+           you may want to only keep the citations which are UNIQUE to the new search i.e. the NEW citations to add to your review.
+           To do this, switch on the option for 'Only retain citations which are unique to this label'. This works for sources too.", "<br>"))
   ))),
 
   tabPanel("About",
@@ -243,7 +269,7 @@ ui <- navbarPage(
              p("This tool was developed in the CAMARADES group by", tags$a(href="https://www.researchgate.net/profile/Kaitlyn_Hair", "Kaitlyn Hair."),
              "If you have any questions about the tool, please raise an issue on the GitHub (see below) or email her at kaitlyn.hair@ed.ac.uk"),
              p("The record matching function underlying this tool uses the", tags$a(href="https://rdrr.io/cran/RecordLinkage/", "RecordLinkage"), "package, created by Murat Sariyar and Andreas Borg"),
-             p("The code underlying this application is available on", tags$a(href="https://github.com/kaitlynhair/ASySD", "GitHub")),
+             p("The code underlying this application is available on", tags$a(href="https://github.com/camaradesuk/ASySD", "GitHub")),
              p(strong("If you want to use this application for your systematic review, please cite:                          "),
                em("Hair K, Bahor Z, Macleod M, Liao J, Sena ES. The Automated Systematic Search Deduplicator (ASySD):
              a rapid, open-source, interoperable tool to remove duplicate citations in biomedical systematic reviews. bioRxiv; 2021. DOI: 10.1101/2021.05.04.442412."))
@@ -450,13 +476,14 @@ server <- function(input, output, session){
     if (input$export_format == "txt") {
 
       str1 <- paste("Export format notes:")
-      str2 <- paste("Custom 1 = flags for potential duplicates (if this option was selected in manual deduplication).")
+      str2 <- paste("Custom 1 = duplicate_id")
+      str3 <- paste("Custom 2 = flags for potential duplicates (if this option was selected in manual deduplication).")
+      str4 <- paste("Database name = source(s)")
+      str5 <- paste("Label = label(s)")
+      str6 <- paste("To import into Endnote, make sure to select the Tab Delimited input option")
 
-      str3 <- paste("Custom 2 = duplicate_id")
-
-      str4 <- paste("To import into Endnote, make sure to select the Tab Delimited input option")
-
-      HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>", str3, "<br>", str4))
+      HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>", str3, "<br>", str4,
+                 "<br>", str5, "<br>", str6))
 
     }
 
@@ -500,7 +527,6 @@ remove duplicates.")
     id_col <- enquo(id_col)
 
     citations <- RefData() %>%
-      mutate(source = label) %>%
       mutate(record_id = !!id_col)
 
   })
@@ -747,14 +773,59 @@ remove duplicates.")
         ungroup() %>%
         select(duplicate_id, record_ids) %>%
         rename(record_id = record_ids) %>%
-        tidyr::separate_rows(record_id)
+        tidyr::separate_rows(record_id, sep=", ")
       }
 
       final <- left_join(citations_to_dedup(), final, by="record_id")
     }
 
+    if(input$filterLabelOnly == TRUE){
+
+    final <- final %>%
+      filter(label %in% input$filterLabel)
+
+    } else{
+
+      final <- final %>%
+        filter(grepl(paste0("\\b", paste(input$filterLabel,collapse = "\\b|\\b"), "\\b"), label))
+    }
+
+
+    if(input$filterSourceOnly == TRUE){
+
+      final <- final %>%
+        filter(source %in% input$filterSource)
+
+    } else{
+
+      final <- final %>%
+        filter(grepl(paste0("\\b", paste(input$filterSource,collapse = "\\b|\\b"), "\\b"), source))
+    }
     return(final)
   })
+
+  # when citations uploaded, get list of labels and filter by this in output
+  output$filterLabel <- renderUI({
+
+    selectInput(inputId = "filterLabel",
+                  label = "Citations with these labels will be exported",
+                  choices = unique(RefData()$label),
+                  selected = unique(RefData()$label),
+                  multiple = TRUE)
+  })
+
+  # when citations uploaded, get list of sources and filter by this in output
+  output$filterSource <- renderUI({
+
+    selectInput(inputId = "filterSource",
+                label = "Citations with these sources will be exported",
+                choices = unique(RefData()$source),
+                selected = unique(RefData()$source),
+                multiple = TRUE)
+  })
+
+
+
 
     # output: download unique citations - endnote
     output$download<- downloadHandler(
