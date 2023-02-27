@@ -22,12 +22,15 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
              "Abstract" = abstract,
              "Pages" = pages,
              "DOI" = doi,
+             "Name of Database" = source,
              "Secondary Title" = journal) %>%
       select("Reference Type", "Author", "Year",
              "Secondary Title", "DOI", "Title",
              "Pages", "Volume", "Number", "Abstract",
-             "Custom 1", "ISBN/ISSN", "Label") %>%
+             "Custom 1", "ISBN/ISSN", "Label", "Name of Database") %>%
       mutate(Abstract = gsub("\\r\\n|\\r|\\n", "", Abstract))
+
+    refs[] <- lapply(refs, function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
     write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
@@ -103,7 +106,8 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 
     refs <- citations %>%
       mutate("Reference Type" = "Journal Article") %>%
-      rename("ISBN/ISSN" = isbn,
+      mutate("ISBN/ISSN" = gsub("\\r\\n|\\r|\\n", "", isbn)) %>%
+      rename("Custom 1" = duplicate_id,
              "Author" = author,
              "Title" = title,
              "Volume" = volume,
@@ -113,12 +117,17 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
              "Abstract" = abstract,
              "Pages" = pages,
              "DOI" = doi,
+             "Name of Database" = source,
              "Secondary Title" = journal) %>%
-      ungroup() %>%
       select("Reference Type", "Author", "Year",
              "Secondary Title", "DOI", "Title",
              "Pages", "Volume", "Number", "Abstract",
-             "Custom 1", "Custom 2","ISBN/ISSN", "Label")
+             "Custom 1", "ISBN/ISSN", "Label", "Name of Database") %>%
+      mutate(Abstract = gsub("\\r\\n|\\r|\\n", "", Abstract))
+
+    write.table(refs, filename, sep="\t",
+                col.names=TRUE, row.names = F, quote=FALSE, na="")
+
 
     refs[] <- lapply(refs, function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
