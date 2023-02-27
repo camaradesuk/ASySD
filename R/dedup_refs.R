@@ -212,7 +212,6 @@ match_citations <- function(formatted_citations){
     mutate(number = ifelse(is.na(number1) & is.na(number2), 1, number)) %>%
     mutate(doi = ifelse(is.na(doi1) & is.na(doi2), 0, doi)) %>%
     mutate(isbn = ifelse(is.na(isbn1) & is.na(isbn2), 0, isbn))
-
 }
 
 ####------ Identify true duplicate pairs ------ ####
@@ -730,5 +729,6 @@ dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, kee
     message(paste(n_dups, "duplicate citations removed..."))
     message(paste(n_unique, "unique citations remaining!"))
 
+    return(unique_citations_with_metadata)
   }
 }
