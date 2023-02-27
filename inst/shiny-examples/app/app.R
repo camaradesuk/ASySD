@@ -325,7 +325,9 @@ server <- function(input, output, session){
 
       shinyWidgets::prettyRadioButtons(
         inputId = "Keep_citation_picker",
-        label = "If duplicates exist, which citation should be preferentially retained?",
+        label = "If you uploaded citations with a unique record_id, one of these will be chosen as the duplicate_id for each group of duplicates. If you select a certain preference below, this record_id will be chosen over others.
+        These identifiers are helpful for maintaining good records of citations throughout a systematic review.
+        Note that ASySD merges records to retain meta-data (e.g. DOIs present in one citation and not the other) where possible.",
         choices = c("Citation with abstract", "Citation with a specific label", "Citation from a specific source"),
         selected = c("Citation with abstract"),
         status="primary")
@@ -614,7 +616,7 @@ remove duplicates.")
     manualrefs <- as.numeric(length(manualrefs$record_id1))
 
     paste(manualrefs, "pairs of citations require manual deduplication. Review the pairs in the table
-        below. You can scroll right to see all citation metadata and hover over any cell to see truncaed text. Identical and very similar fields are highlighted in green.
+        below. You can scroll right to see all citation metadata and hover over any cell to see truncaed text. Identical and near-identical fields are highlighted in green.
         Select all rows which contain duplicate pairs and click the button below to remove extra
         duplicates.")
 
@@ -650,7 +652,7 @@ remove duplicates.")
   # Output: manual dedup datatable -----
   output$manual_dedup_dt <- renderDT(
     datatable(auto_dedup_result()$manual,
-              options = list(dom = 't',
+              options = list(dom = 'tp',
                              pageLength = 10,
                              fixedColumns = TRUE,
                              scrollX = TRUE,
@@ -668,13 +670,13 @@ remove duplicates.")
           'pages1', 'number1', 'year1', 'abstract1', 'journal1', 'isbn1'),
         c('title', 'author', 'doi', 'volume',
           'pages', 'number', 'year', 'abstract', 'journal', 'isbn'),
-        backgroundColor = styleInterval(c(0.95, 1), c('lightgray', '#82d173', '#82d173'))) %>%
+        backgroundColor = styleInterval(c(0.95, 1), c('white', '#82d173', '#82d173'))) %>%
       formatStyle(
         c('title2', 'author2', 'doi2', 'volume2',
           'pages2', 'number2', 'year2', 'abstract2', 'journal2', 'isbn2'),
         c('title', 'author', 'doi', 'volume',
           'pages', 'number', 'year', 'abstract', 'journal', 'isbn'),
-        backgroundColor = styleInterval(c(0.95, 1), c('lightgray', '#82d173', '#82d173')))
+        backgroundColor = styleInterval(c(0.95, 1), c('white', '#82d173', '#82d173')))
   )
 
 
@@ -756,9 +758,9 @@ remove duplicates.")
 
 
     final <- auto_dedup_result()$unique
-    try(final <- manual_dedup_result(), silent = TRUE)
     try(final <- manual_dedup_result_flagged(), silent = TRUE)
     try(final <- manual_dedup_result_flagged_all(), silent = TRUE)
+    try(final <- manual_dedup_result(), silent = TRUE)
 
     if(input$export_type == "all_citations_export"){
 
