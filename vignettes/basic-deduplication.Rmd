@@ -2,7 +2,7 @@
 title: "Simple Deduplication"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{basic-deduplication}
+  %\VignetteIndexEntry{Simple Deduplication}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
