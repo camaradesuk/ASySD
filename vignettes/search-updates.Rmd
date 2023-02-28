@@ -1,5 +1,5 @@
 ---
-title: "search-updates"
+title: "Updating a Systematic Search"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{search-updates}
@@ -19,22 +19,24 @@ library(ASySD)
 library(dplyr)
 ```
 
-Load citations from an existing search file using the `load_search()` function. In this example, we use a csv format. You can change the *method* argument to upload alternative file types. 
+Load citations from an existing search file using the `load_search()` function. In this example, we use a csv format. You can change the *method* argument to upload alternative file types.
 
 ```{r}
 existing_search <- load_search("old_sr_search.csv", method="csv")
 ```
 
-Load citations from a new systematic search. 
+Load citations from a new systematic search.
+
 ```{r}
 new_search <- load_search("new_sr_search.csv", method="csv")
 ```
 
-### Combine citations 
+### Combine citations
 
 Before deduplication, we must bind the citations into one dataframe. First, give each search a different source so that we can specify which citations to retain.
+
 ```{r}
-existing_search$source <- "existing_citation"
+existing_search$source <- "old"
 new_search$source <- "new"
 
 all_citations <- rbind(existing_search, new_search)
@@ -42,10 +44,10 @@ all_citations <- rbind(existing_search, new_search)
 
 ### Automated deduplication
 
-Remove duplicate citations automatically using the `dedup_citations` function.
+Remove duplicate citations automatically using the `dedup_citations` function. Here we have specified the argument `merge=TRUE` to indicate that we want to merge duplicate records and have a record of which citations have been merged into one. We have specified in the `keep_source` argument that we wish to preferentially retain old citations. In practice, this means that the duplicate_id chosen for a set of records will preferentially be the record_id of a citation in the OLD systematic search. This is to facilitate easy record linkage - see later.
 
 ```{r}
-results <- dedup_citations(all_citations, merge=TRUE, keep_source = "existing_citations")
+results <- dedup_citations(all_citations, merge=TRUE, keep_source = "old")
 ```
 
 The `dedup_citations` function returns a list of two dataframes by default. The first contains unique citations after duplicates were removed automatically by ASySD. In most cases, this will remove the vast majority of duplicates. There will likely be some duplicates remaining which need manual review by a human (see next step).
@@ -71,13 +73,50 @@ true_duplicates <- potential_duplicates
 Now, to get the final deduplication results, use the `dedup_citations_add_manual()`function. To account for additional duplicates you have reviewed, add them into the *additional_pairs* argument.
 
 ```{r}
-final_results <- dedup_citations_add_manual(all_citations, additional_pairs = true_duplicates)
+final_results <- dedup_citations_add_manual(all_citations, additional_pairs = true_duplicates, merge_citations = TRUE, keep_source = "old")
 ```
+
 Now we have a final set of unique citations, how can we find the new citations we added with our latest systematic search?
+
 ```{r}
 new_citations <- final_results %>%
   filter(source == "new") 
 
-gt(head(new_citations))
+new_citations %>%
+   tail(3) %>%
+   gt::gt() %>%
+   gt::cols_hide(c(abstract))
 ```
 
+Lets also have a look at the citations identified in both searches by removing citations with a single source.
+
+```{r}
+crossover <- final_results %>%
+  filter(!source == "new") %>%
+  filter(!source == "old") 
+
+crossover %>%
+   tail(3) %>%
+   gt::gt() %>%
+   gt::cols_hide(c(abstract))
+```
+
+To keep good records, we don't want to lose track of identifiers for studies we have already included in a review. This is why specifying the citation to keep was important! To illustrate this, look specifically at the citations present in the old search.
+
+```{r}
+old_citations <- final_results %>%
+  filter(grepl("old", source)) # find all citations in old search
+
+```
+
+We can check that the duplicate ids here refer to the original record id in the existing_citations dataframe we imported. As you can see, they are all present. In the record_ids column you can see the different record_ids that have merged into a single citation. In case you make a mistake or don't specify the record_id to keep as the duplicate_id, you can use these to trace back your citations to the original dataframes. 
+
+```{r}
+old_citations_check <- old_citations %>%
+  filter(duplicate_id %in% existing_search$record_id) #check that all citations use the OLD record_id as the duplicate_id
+
+crossover %>%
+   tail(3) %>%
+   gt::gt() %>%
+   gt::cols_hide(c(abstract))
+```
