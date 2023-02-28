@@ -10,6 +10,10 @@ merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
 \item{raw_citations}{original citation data with unique ids}
 
 \item{matched_pairs_with_ids}{citation data with duplicate ids}
+
+\item{keep_source}{Character vector. Selected citation source to preferentially retain in the dataset as the unique record}
+
+\item{keep_label}{Selected citation label to preferentially retain in the dataset as the unique record}
 }
 \value{
 Dataframe of formatted citation data with duplicate id

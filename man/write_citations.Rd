@@ -10,6 +10,8 @@ write_citations(citations, type = c("ris", "txt", "csv", "bib"), filename)
 \item{citations}{A dataframe containing citations - usually post-deduplication}
 
 \item{type}{export type}
+
+\item{filename}{output file name}
 }
 \value{
 file export

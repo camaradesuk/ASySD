@@ -22,8 +22,6 @@ dedup_citations_add_manual(
 \item{keep_label}{Selected citation label to preferentially retain in the dataset as the unique record}
 
 \item{additional_pairs}{dataframe of citations with manual pairs, a subset of the manual pairs export}
-
-\item{manual_dedup}{Logical value. Do you want to retrieve dataframe for manual deduplication?}
 }
 \value{
 Unique citations post added manual deduplication

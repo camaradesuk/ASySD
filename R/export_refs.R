@@ -4,6 +4,7 @@
 #' @import synthesisr
 #' @param citations A dataframe containing citations - usually post-deduplication
 #' @param type export type
+#' @param filename output file name
 #' @return file export
 write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filename){
 
@@ -89,6 +90,7 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
 #' @import synthesisr
 #' @param citations A dataframe containing citations - usually post-deduplication
 #' @param type export type
+#' @param filename output file name
 #' @return file export
 write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), filename){
 

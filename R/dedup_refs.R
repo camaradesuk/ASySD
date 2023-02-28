@@ -433,6 +433,8 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
 #' This function generates a duplicate ID for sets of matching citations
 #' @param matched_pairs_with_ids citation data with duplicate ids
 #' @param raw_citations  original citation data with unique ids
+#' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
+#' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
 #' @return Dataframe of formatted citation data with duplicate id
 #' @import dplyr
 merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, keep_label){
@@ -664,7 +666,6 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 #' @export
 #' @import dplyr
 #' @param raw_citations A dataframe containing duplicate citations
-#' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
 #' @param merge_citations Logical value. Do you want to merge matching citations?
 #' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
 #' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
