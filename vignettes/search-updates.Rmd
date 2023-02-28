@@ -2,7 +2,7 @@
 title: "Updating a Systematic Search"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{search-updates}
+  %\VignetteIndexEntry{Updating a Systematic Search}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
