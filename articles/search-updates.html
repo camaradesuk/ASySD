@@ -6,12 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="ASySD">
-<title>search-updates • ASySD</title>
+<title>Updating a Systematic Search • ASySD</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="search-updates">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Updating a Systematic Search">
 <meta property="og:description" content="ASySD">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -41,8 +41,8 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/basic-deduplication.html">Deduplicating Systematic Searches</a>
-    <a class="dropdown-item" href="../articles/search-updates.html">search-updates</a>
+    <a class="dropdown-item" href="../articles/basic-deduplication.html">Simple Deduplication</a>
+    <a class="dropdown-item" href="../articles/search-updates.html">Updating a Systematic Search</a>
   </div>
 </li>
       </ul>
@@ -62,7 +62,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>search-updates</h1>
+      <img src="" class="logo" alt=""><h1>Updating a Systematic Search</h1>
             
       
       
@@ -72,8 +72,1568 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://camaradesuk.github.io/ASySD/">ASySD</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://camaradesuk.github.io/ASySD/">ASySD</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span></code></pre></div>
+<p>Load citations from an existing search file using the
+<code><a href="../reference/load_search.html">load_search()</a></code> function. In this example, we use a csv
+format. You can change the <em>method</em> argument to upload
+alternative file types.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">existing_search</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_search.html">load_search</a></span><span class="op">(</span><span class="st">"old_sr_search.csv"</span>, method<span class="op">=</span><span class="st">"csv"</span><span class="op">)</span></span></code></pre></div>
+<p>Load citations from a new systematic search.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">new_search</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_search.html">load_search</a></span><span class="op">(</span><span class="st">"new_sr_search.csv"</span>, method<span class="op">=</span><span class="st">"csv"</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="combine-citations">Combine citations<a class="anchor" aria-label="anchor" href="#combine-citations"></a>
+</h3>
+<p>Before deduplication, we must bind the citations into one dataframe.
+First, give each search a different source so that we can specify which
+citations to retain.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">existing_search</span><span class="op">$</span><span class="va">source</span> <span class="op">&lt;-</span> <span class="st">"old"</span></span>
+<span><span class="va">new_search</span><span class="op">$</span><span class="va">source</span> <span class="op">&lt;-</span> <span class="st">"new"</span></span>
+<span></span>
+<span><span class="va">all_citations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">existing_search</span>, <span class="va">new_search</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="automated-deduplication">Automated deduplication<a class="anchor" aria-label="anchor" href="#automated-deduplication"></a>
+</h3>
+<p>Remove duplicate citations automatically using the
+<code>dedup_citations</code> function. Here we have specified the
+argument <code>merge=TRUE</code> to indicate that we want to merge
+duplicate records and have a record of which citations have been merged
+into one. We have specified in the <code>keep_source</code> argument
+that we wish to preferentially retain old citations. In practice, this
+means that the duplicate_id chosen for a set of records will
+preferentially be the record_id of a citation in the OLD systematic
+search. This is to facilitate easy record linkage - see later.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dedup_citations.html">dedup_citations</a></span><span class="op">(</span><span class="va">all_citations</span>, merge<span class="op">=</span><span class="cn">TRUE</span>, keep_source <span class="op">=</span> <span class="st">"old"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; formatting data...</span></span>
+<span><span class="co">#&gt; identifying potential duplicates...</span></span>
+<span><span class="co">#&gt; identified duplicates!</span></span>
+<span><span class="co">#&gt; flagging potential pairs for manual dedup...</span></span>
+<span><span class="co">#&gt; 8972 citations loaded...</span></span>
+<span><span class="co">#&gt; 472 duplicate citations removed...</span></span>
+<span><span class="co">#&gt; 8500 unique citations remaining!</span></span></code></pre></div>
+<p>The <code>dedup_citations</code> function returns a list of two
+dataframes by default. The first contains unique citations after
+duplicates were removed automatically by ASySD. In most cases, this will
+remove the vast majority of duplicates. There will likely be some
+duplicates remaining which need manual review by a human (see next
+step).</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">unique_citations</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">$</span><span class="va">unique</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="manual-deduplication">Manual deduplication<a class="anchor" aria-label="anchor" href="#manual-deduplication"></a>
+</h3>
+<p>To check for additional duplicates, get the dataframe of citations
+for manual review. You can review within R or export as a csv / excel
+file to go through each row of pairs.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">potential_duplicates</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">$</span><span class="va">manual_dedup</span></span></code></pre></div>
+<p>After reviewing the pairs, create a dataframe contianing <strong>only
+the true duplicate pairs.</strong> Here, all the suggested duplicates
+look like REAL duplicates. If you exported to a file, you could remove
+the rows which are not duplicates and re-upload the rows with true
+duplicates.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">true_duplicates</span> <span class="op">&lt;-</span> <span class="va">potential_duplicates</span></span></code></pre></div>
+<p>Now, to get the final deduplication results, use the
+<code><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual()</a></code>function. To account for
+additional duplicates you have reviewed, add them into the
+<em>additional_pairs</em> argument.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">final_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual</a></span><span class="op">(</span><span class="va">all_citations</span>, additional_pairs <span class="op">=</span> <span class="va">true_duplicates</span>, merge_citations <span class="op">=</span> <span class="cn">TRUE</span>, keep_source <span class="op">=</span> <span class="st">"old"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; formatting data...</span></span>
+<span><span class="co">#&gt; identifying potential duplicates...</span></span>
+<span><span class="co">#&gt; identified duplicates!</span></span>
+<span><span class="co">#&gt; 8972 citations loaded...</span></span>
+<span><span class="co">#&gt; 489 duplicate citations removed...</span></span>
+<span><span class="co">#&gt; 8483 unique citations remaining!</span></span></code></pre></div>
+<p>Now we have a final set of unique citations, how can we find the new
+citations we added with our latest systematic search?</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">new_citations</span> <span class="op">&lt;-</span> <span class="va">final_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">source</span> <span class="op">==</span> <span class="st">"new"</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">new_citations</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div id="dmmqoubtme" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#dmmqoubtme .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#dmmqoubtme .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dmmqoubtme .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#dmmqoubtme .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dmmqoubtme .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dmmqoubtme .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dmmqoubtme .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dmmqoubtme .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#dmmqoubtme .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#dmmqoubtme .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#dmmqoubtme .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#dmmqoubtme .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#dmmqoubtme .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#dmmqoubtme .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dmmqoubtme .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dmmqoubtme .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dmmqoubtme .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#dmmqoubtme .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dmmqoubtme .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#dmmqoubtme .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#dmmqoubtme .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dmmqoubtme .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#dmmqoubtme .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#dmmqoubtme .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dmmqoubtme .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dmmqoubtme .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#dmmqoubtme .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#dmmqoubtme .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dmmqoubtme .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dmmqoubtme .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dmmqoubtme .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dmmqoubtme .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dmmqoubtme .gt_left {
+  text-align: left;
+}
+
+#dmmqoubtme .gt_center {
+  text-align: center;
+}
+
+#dmmqoubtme .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dmmqoubtme .gt_font_normal {
+  font-weight: normal;
+}
+
+#dmmqoubtme .gt_font_bold {
+  font-weight: bold;
+}
+
+#dmmqoubtme .gt_font_italic {
+  font-style: italic;
+}
+
+#dmmqoubtme .gt_super {
+  font-size: 65%;
+}
+
+#dmmqoubtme .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#dmmqoubtme .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#dmmqoubtme .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#dmmqoubtme .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#dmmqoubtme .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#dmmqoubtme .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#dmmqoubtme .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="table gt_table">
+<thead class="gt_col_headings"><tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="duplicate_id">duplicate_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="author">author</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="journal">journal</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="doi">doi</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="title">title</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pages">pages</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="volume">volume</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="number">number</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="isbn">isbn</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="label">label</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="source">source</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="record_ids">record_ids</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="duplicate_id" class="gt_row gt_left">wos:000931052000002</td>
+<td headers="author" class="gt_row gt_left">Lipton, Stuart A.</td>
+<td headers="year" class="gt_row gt_right">2022</td>
+<td headers="journal" class="gt_row gt_left">FREE RADICAL BIOLOGY AND MEDICINE</td>
+<td headers="doi" class="gt_row gt_left">10.1016/j.freeradbiomed.2022.10.272</td>
+<td headers="title" class="gt_row gt_left">Hidden networks of aberrant protein transnitrosylation contribute to synapse loss in Alzheimer's disease</td>
+<td headers="pages" class="gt_row gt_right">171-176</td>
+<td headers="volume" class="gt_row gt_right">193</td>
+<td headers="number" class="gt_row gt_right"></td>
+<td headers="isbn" class="gt_row gt_right"></td>
+<td headers="label" class="gt_row gt_right">270223</td>
+<td headers="source" class="gt_row gt_left">new</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000931052000002</td>
+</tr>
+<tr>
+<td headers="duplicate_id" class="gt_row gt_left">wos:000931426100001</td>
+<td headers="author" class="gt_row gt_left">Marini, Sandro; Chung, Jaeyoon; Han, Xudong; Sun, Xinyu; Parodi, Livia; Farrer, Lindsay A.; Rosand, Jonathan; Romero, Jose Rafael; Anderson, Christopher D.</td>
+<td headers="year" class="gt_row gt_right">2023</td>
+<td headers="journal" class="gt_row gt_left">INTERNATIONAL JOURNAL OF STROKE</td>
+<td headers="doi" class="gt_row gt_left">10.1177/17474930231155816</td>
+<td headers="title" class="gt_row gt_left">Pleiotropy analysis between lobar intracerebral hemorrhage and CSF beta-amyloid highlights new and established associations</td>
+<td headers="pages" class="gt_row gt_right"></td>
+<td headers="volume" class="gt_row gt_right"></td>
+<td headers="number" class="gt_row gt_right"></td>
+<td headers="isbn" class="gt_row gt_right"></td>
+<td headers="label" class="gt_row gt_right">270223</td>
+<td headers="source" class="gt_row gt_left">new</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000931426100001</td>
+</tr>
+<tr>
+<td headers="duplicate_id" class="gt_row gt_left">wos:000932018500001</td>
+<td headers="author" class="gt_row gt_left">Walker, Keenan A.; Duggan, Michael R.; Gong, Zhaoyuan; Dark, Heather E.; Laporte, John P.; Faulkner, Mary E.; An, Yang; Lewis, Alexandria; Moghekar, Abhay R.; Resnick, Susan M.; Bouhrara, Mustapha</td>
+<td headers="year" class="gt_row gt_right">2023</td>
+<td headers="journal" class="gt_row gt_left">ANNALS OF CLINICAL AND TRANSLATIONAL NEUROLOGY</td>
+<td headers="doi" class="gt_row gt_left">10.1002/acn3.51730</td>
+<td headers="title" class="gt_row gt_left">Kidney and lung crosstalk during critical illness: large-scale cohort study (FEB, 10.1007/s40620-023-01594-z, 2023)</td>
+<td headers="pages" class="gt_row gt_right"></td>
+<td headers="volume" class="gt_row gt_right"></td>
+<td headers="number" class="gt_row gt_right"></td>
+<td headers="isbn" class="gt_row gt_right"></td>
+<td headers="label" class="gt_row gt_right">270223</td>
+<td headers="source" class="gt_row gt_left">new</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000932018500001</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Lets also have a look at the citations identified in both searches by
+removing citations with a single source.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">crossover</span> <span class="op">&lt;-</span> <span class="va">final_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">source</span> <span class="op">==</span> <span class="st">"new"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">source</span> <span class="op">==</span> <span class="st">"old"</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">crossover</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div id="vhnkqursaf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#vhnkqursaf .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#vhnkqursaf .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vhnkqursaf .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#vhnkqursaf .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#vhnkqursaf .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#vhnkqursaf .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vhnkqursaf .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vhnkqursaf .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#vhnkqursaf .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#vhnkqursaf .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#vhnkqursaf .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#vhnkqursaf .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#vhnkqursaf .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#vhnkqursaf .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#vhnkqursaf .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#vhnkqursaf .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#vhnkqursaf .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#vhnkqursaf .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vhnkqursaf .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#vhnkqursaf .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#vhnkqursaf .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vhnkqursaf .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#vhnkqursaf .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#vhnkqursaf .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vhnkqursaf .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vhnkqursaf .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#vhnkqursaf .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#vhnkqursaf .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vhnkqursaf .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vhnkqursaf .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vhnkqursaf .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vhnkqursaf .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vhnkqursaf .gt_left {
+  text-align: left;
+}
+
+#vhnkqursaf .gt_center {
+  text-align: center;
+}
+
+#vhnkqursaf .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#vhnkqursaf .gt_font_normal {
+  font-weight: normal;
+}
+
+#vhnkqursaf .gt_font_bold {
+  font-weight: bold;
+}
+
+#vhnkqursaf .gt_font_italic {
+  font-style: italic;
+}
+
+#vhnkqursaf .gt_super {
+  font-size: 65%;
+}
+
+#vhnkqursaf .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#vhnkqursaf .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#vhnkqursaf .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#vhnkqursaf .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#vhnkqursaf .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#vhnkqursaf .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#vhnkqursaf .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="table gt_table">
+<thead class="gt_col_headings"><tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="duplicate_id">duplicate_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="author">author</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="journal">journal</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="doi">doi</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="title">title</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pages">pages</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="volume">volume</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="number">number</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="isbn">isbn</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="label">label</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="source">source</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="record_ids">record_ids</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="duplicate_id" class="gt_row gt_left">wos:000912315500006</td>
+<td headers="author" class="gt_row gt_left">Walsh, Sebastian; Merrick, Richard; Richard, Edo; Nurock, Shirley; Brayne, Carol</td>
+<td headers="year" class="gt_row gt_right">2022</td>
+<td headers="journal" class="gt_row gt_left">BMJ-BRITISH MEDICAL JOURNAL</td>
+<td headers="doi" class="gt_row gt_left">10.1136/bmj.o3010</td>
+<td headers="title" class="gt_row gt_left">Lecanemab for Alzheimer's disease</td>
+<td headers="pages" class="gt_row gt_right"></td>
+<td headers="volume" class="gt_row gt_right">379</td>
+<td headers="number" class="gt_row gt_right"></td>
+<td headers="isbn" class="gt_row gt_right"></td>
+<td headers="label" class="gt_row gt_right">140223, 270223</td>
+<td headers="source" class="gt_row gt_left">old, new</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000912315500006, wos:000923362600016</td>
+</tr>
+<tr>
+<td headers="duplicate_id" class="gt_row gt_left">wos:000912550500001</td>
+<td headers="author" class="gt_row gt_left">Lee H.Y.; Baek S.; Cha M.; Yang S.H.; Cho I.; Shin H.; Lee S.; Kim H.Y.; Shin J.; Lee D.; Kim K.; Park I.W.; Yoon S.; Kim J.; Park S.J.; Kim S.M.; Kim K.E.; Kim H.J.; Oh M.S.; Lee G.H.; Yu B.Y.; Kannan P.; Park K.; Kim Y.S.</td>
+<td headers="year" class="gt_row gt_right">2023</td>
+<td headers="journal" class="gt_row gt_left">Angewandte Chemie - International Edition</td>
+<td headers="doi" class="gt_row gt_left">10.1002/anie.202210209</td>
+<td headers="title" class="gt_row gt_left">Amyloid Against Amyloid: Dimeric Amyloid Fragment Ameliorates Cognitive Impairments by Direct Clearance of Oligomers and Plaques</td>
+<td headers="pages" class="gt_row gt_right"></td>
+<td headers="volume" class="gt_row gt_right">62</td>
+<td headers="number" class="gt_row gt_right"></td>
+<td headers="isbn" class="gt_row gt_right"></td>
+<td headers="label" class="gt_row gt_right">270223, 140223</td>
+<td headers="source" class="gt_row gt_left">new, old</td>
+<td headers="record_ids" class="gt_row gt_left">scopus-2-s2.0-85146065750, wos:000912550500001</td>
+</tr>
+<tr>
+<td headers="duplicate_id" class="gt_row gt_left">wos:000913655200001</td>
+<td headers="author" class="gt_row gt_left">Koops, Elouise A.; Jacobs, Heidi I. L.</td>
+<td headers="year" class="gt_row gt_right">2022</td>
+<td headers="journal" class="gt_row gt_left">BRAIN</td>
+<td headers="doi" class="gt_row gt_left">10.1093/brain/awac493</td>
+<td headers="title" class="gt_row gt_left">Untangling white matter fibre changes in Alzheimer's disease and small vessel disease</td>
+<td headers="pages" class="gt_row gt_right">413-415</td>
+<td headers="volume" class="gt_row gt_right">146</td>
+<td headers="number" class="gt_row gt_right"></td>
+<td headers="isbn" class="gt_row gt_right"></td>
+<td headers="label" class="gt_row gt_right">140223, 270223</td>
+<td headers="source" class="gt_row gt_left">old, new</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000913655200001, scopus-2-s2.0-85148113154</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To keep good records, we don’t want to lose track of identifiers for
+studies we have already included in a review. This is why specifying the
+citation to keep was important! To illustrate this, look specifically at
+the citations present in the old search.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">old_citations</span> <span class="op">&lt;-</span> <span class="va">final_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"old"</span>, <span class="va">source</span><span class="op">)</span><span class="op">)</span> <span class="co"># find all citations in old search</span></span></code></pre></div>
+<p>We can check that the duplicate ids here refer to the original record
+id in the existing_citations dataframe we imported. As you can see, they
+are all present. In the record_ids column you can see the different
+record_ids that have merged into a single citation. In case you make a
+mistake or don’t specify the record_id to keep as the duplicate_id, you
+can use these to trace back your citations to the original
+dataframes.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">old_citations_check</span> <span class="op">&lt;-</span> <span class="va">old_citations</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">duplicate_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">existing_search</span><span class="op">$</span><span class="va">record_id</span><span class="op">)</span> <span class="co">#check that all citations use the OLD record_id as the duplicate_id</span></span>
+<span></span>
+<span><span class="va">crossover</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div id="mcgfjhuvok" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#mcgfjhuvok .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#mcgfjhuvok .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mcgfjhuvok .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#mcgfjhuvok .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#mcgfjhuvok .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#mcgfjhuvok .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mcgfjhuvok .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mcgfjhuvok .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#mcgfjhuvok .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#mcgfjhuvok .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#mcgfjhuvok .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#mcgfjhuvok .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#mcgfjhuvok .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#mcgfjhuvok .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#mcgfjhuvok .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#mcgfjhuvok .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#mcgfjhuvok .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#mcgfjhuvok .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mcgfjhuvok .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#mcgfjhuvok .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#mcgfjhuvok .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mcgfjhuvok .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#mcgfjhuvok .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#mcgfjhuvok .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mcgfjhuvok .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mcgfjhuvok .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#mcgfjhuvok .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#mcgfjhuvok .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mcgfjhuvok .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mcgfjhuvok .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mcgfjhuvok .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mcgfjhuvok .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mcgfjhuvok .gt_left {
+  text-align: left;
+}
+
+#mcgfjhuvok .gt_center {
+  text-align: center;
+}
+
+#mcgfjhuvok .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#mcgfjhuvok .gt_font_normal {
+  font-weight: normal;
+}
+
+#mcgfjhuvok .gt_font_bold {
+  font-weight: bold;
+}
+
+#mcgfjhuvok .gt_font_italic {
+  font-style: italic;
+}
+
+#mcgfjhuvok .gt_super {
+  font-size: 65%;
+}
+
+#mcgfjhuvok .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#mcgfjhuvok .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#mcgfjhuvok .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#mcgfjhuvok .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#mcgfjhuvok .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#mcgfjhuvok .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#mcgfjhuvok .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="table gt_table">
+<thead class="gt_col_headings"><tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="duplicate_id">duplicate_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="author">author</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="journal">journal</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="doi">doi</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="title">title</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pages">pages</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="volume">volume</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="number">number</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="isbn">isbn</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="label">label</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="source">source</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="record_ids">record_ids</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="duplicate_id" class="gt_row gt_left">wos:000912315500006</td>
+<td headers="author" class="gt_row gt_left">Walsh, Sebastian; Merrick, Richard; Richard, Edo; Nurock, Shirley; Brayne, Carol</td>
+<td headers="year" class="gt_row gt_right">2022</td>
+<td headers="journal" class="gt_row gt_left">BMJ-BRITISH MEDICAL JOURNAL</td>
+<td headers="doi" class="gt_row gt_left">10.1136/bmj.o3010</td>
+<td headers="title" class="gt_row gt_left">Lecanemab for Alzheimer's disease</td>
+<td headers="pages" class="gt_row gt_right"></td>
+<td headers="volume" class="gt_row gt_right">379</td>
+<td headers="number" class="gt_row gt_right"></td>
+<td headers="isbn" class="gt_row gt_right"></td>
+<td headers="label" class="gt_row gt_right">140223, 270223</td>
+<td headers="source" class="gt_row gt_left">old, new</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000912315500006, wos:000923362600016</td>
+</tr>
+<tr>
+<td headers="duplicate_id" class="gt_row gt_left">wos:000912550500001</td>
+<td headers="author" class="gt_row gt_left">Lee H.Y.; Baek S.; Cha M.; Yang S.H.; Cho I.; Shin H.; Lee S.; Kim H.Y.; Shin J.; Lee D.; Kim K.; Park I.W.; Yoon S.; Kim J.; Park S.J.; Kim S.M.; Kim K.E.; Kim H.J.; Oh M.S.; Lee G.H.; Yu B.Y.; Kannan P.; Park K.; Kim Y.S.</td>
+<td headers="year" class="gt_row gt_right">2023</td>
+<td headers="journal" class="gt_row gt_left">Angewandte Chemie - International Edition</td>
+<td headers="doi" class="gt_row gt_left">10.1002/anie.202210209</td>
+<td headers="title" class="gt_row gt_left">Amyloid Against Amyloid: Dimeric Amyloid Fragment Ameliorates Cognitive Impairments by Direct Clearance of Oligomers and Plaques</td>
+<td headers="pages" class="gt_row gt_right"></td>
+<td headers="volume" class="gt_row gt_right">62</td>
+<td headers="number" class="gt_row gt_right"></td>
+<td headers="isbn" class="gt_row gt_right"></td>
+<td headers="label" class="gt_row gt_right">270223, 140223</td>
+<td headers="source" class="gt_row gt_left">new, old</td>
+<td headers="record_ids" class="gt_row gt_left">scopus-2-s2.0-85146065750, wos:000912550500001</td>
+</tr>
+<tr>
+<td headers="duplicate_id" class="gt_row gt_left">wos:000913655200001</td>
+<td headers="author" class="gt_row gt_left">Koops, Elouise A.; Jacobs, Heidi I. L.</td>
+<td headers="year" class="gt_row gt_right">2022</td>
+<td headers="journal" class="gt_row gt_left">BRAIN</td>
+<td headers="doi" class="gt_row gt_left">10.1093/brain/awac493</td>
+<td headers="title" class="gt_row gt_left">Untangling white matter fibre changes in Alzheimer's disease and small vessel disease</td>
+<td headers="pages" class="gt_row gt_right">413-415</td>
+<td headers="volume" class="gt_row gt_right">146</td>
+<td headers="number" class="gt_row gt_right"></td>
+<td headers="isbn" class="gt_row gt_right"></td>
+<td headers="label" class="gt_row gt_right">140223, 270223</td>
+<td headers="source" class="gt_row gt_left">old, new</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000913655200001, scopus-2-s2.0-85148113154</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
