@@ -429,8 +429,8 @@ server <- function(input, output, session){
       str1 <- paste("Formatting requirements:")
       str2 <- paste("Within excel or another program, ensure your data has the following columns:
       author, year, journal, doi, title, pages, volume, number,
-      abstract, record_id, isbn, label. The column order does not matter. It also does not matter if some
-      columns are blank.")
+      abstract, record_id, isbn, label. The column order does not matter. Some columns can be blank,
+      but as much metadata as possible will aid deduplication")
 
       HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>"))
     }
