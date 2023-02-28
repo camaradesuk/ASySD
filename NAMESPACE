@@ -11,3 +11,5 @@ import(dplyr)
 import(parallel)
 import(synthesisr)
 import(utf8)
+importFrom("utils", "read.csv", "read.table", "write.csv",
+               "write.table")

@@ -15,15 +15,11 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports:
-    readr,
-    magrittr,
-    stringr,
     parallel,
     RecordLinkage,
     XML,
     RCurl,
     dplyr,
-    roxygen2,
     synthesisr,
     snakecase,
     utf8,
@@ -31,6 +27,13 @@ Imports:
     tidyr
 Suggests: 
     knitr,
+    utils,
+    gt,
+    readr,
+    magrittr,
+    roxygen2,
+    snakecase,
+    stringr,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
