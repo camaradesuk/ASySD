@@ -814,8 +814,15 @@ remove duplicates.")
 
     } else{
 
-      final <- final %>%
+      if(all(input$filterLabel==" ")){
+
+        final <- final
+
+      } else{
+
+        final <- final %>%
         filter(grepl(paste0("\\b", paste(input$filterLabel,collapse = "\\b|\\b"), "\\b"), label))
+      }
     }
 
 
@@ -827,8 +834,15 @@ remove duplicates.")
 
     } else{
 
+      if(all(input$filterSource==" ")){
+
+        final <- final
+
+      } else{
+
       final <- final %>%
         filter(grepl(paste0("\\b", paste(input$filterSource,collapse = "\\b|\\b"), "\\b"), source))
+      }
     }
     return(final)
   })
