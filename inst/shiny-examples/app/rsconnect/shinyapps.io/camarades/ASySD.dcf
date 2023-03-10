@@ -1,0 +1,13 @@
+name: ASySD
+title: ASySD
+username:
+account: camarades
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8433915
+bundleId: 6897748
+url: https://camarades.shinyapps.io/ASySD/
+when: 1677595565.46336
+lastSyncTime: 1677595565.46338
+asMultiple: FALSE
+asStatic: FALSE

@@ -8,7 +8,7 @@ library(networkD3)
 library(rsconnect)
 library(RCurl)
 library(shiny)
-library(ASySD)
+#library(ASySD)
 library(shinythemes)
 library(shinycssloaders)
 library(htmlwidgets)
@@ -48,7 +48,7 @@ ui <- navbarPage(
 
                shinyWidgets::prettyRadioButtons(
                  inputId = "fileType",
-                 label = "Chose a file type",
+                 label = "Choose a file type",
                  inline = TRUE,
                  choices = c("Endnote XML",
                              "CSV", "Tab delimited"),
@@ -757,33 +757,59 @@ remove duplicates.")
   final_results <- reactive({
 
 
-    final <- auto_dedup_result()$unique
-    try(final <- manual_dedup_result_flagged(), silent = TRUE)
-    try(final <- manual_dedup_result_flagged_all(), silent = TRUE)
-    try(final <- manual_dedup_result(), silent = TRUE)
+    unique <- auto_dedup_result()$unique
+    try(unique <- manual_dedup_result_flagged(), silent = TRUE)
+    try(unique <- manual_dedup_result_flagged_all(), silent = TRUE)
+    try(unique <- manual_dedup_result(), silent = TRUE)
 
     if(input$export_type == "all_citations_export"){
 
-      if("flag" %in% colnames(final)){
-        final <- final %>%
+      if("flag" %in% colnames(unique)){
+        final <- unique %>%
           select(flag, duplicate_id, record_ids) %>%
           rename(record_id = record_ids) %>%
           tidyr::separate_rows(record_id)
+
+        final <- left_join(final, citations_to_dedup(), by="record_id")
       } else {
 
-      final <- final %>%
-        ungroup() %>%
-        select(duplicate_id, record_ids) %>%
-        rename(record_id = record_ids) %>%
-        tidyr::separate_rows(record_id, sep=", ")
-      }
+        final <- unique %>%
+          ungroup() %>%
+          select(duplicate_id, record_ids) %>%
+          rename(record_id = record_ids) %>%
+          tidyr::separate_rows(record_id, sep=", ")
 
-      final <- left_join(citations_to_dedup(), final, by="record_id")
-    }
+        final <- left_join(final, citations_to_dedup(), by="record_id")
+
+      }}
+
+      else{
+
+        if("flag" %in% colnames(unique)){
+          final <- unique %>%
+            select(flag, duplicate_id) %>%
+            mutate(record_id = duplicate_id)
+
+        } else {
+
+          final <- unique %>%
+            select(duplicate_id) %>%
+            mutate(record_id = duplicate_id)
+        }
+
+        unique <- unique %>%
+          select(duplicate_id, source, label)
+        final <- left_join(final, citations_to_dedup(), by="record_id")
+        final <- final %>%
+          select(-source, -label)
+
+        final <- left_join(unique, final, by="duplicate_id")
+      }
 
     if(input$filterLabelOnly == TRUE){
 
     final <- final %>%
+      mutate(label = ifelse(is.na(label), "NA", label)) %>%
       filter(label %in% input$filterLabel)
 
     } else{
@@ -796,6 +822,7 @@ remove duplicates.")
     if(input$filterSourceOnly == TRUE){
 
       final <- final %>%
+        mutate(source = ifelse(is.na(source), "NA", source)) %>%
         filter(source %in% input$filterSource)
 
     } else{
