@@ -538,6 +538,15 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
   message("formatting data...")
 
+  # add source if missing
+  raw_citations <- raw_citations  %>%
+    mutate(label = ifelse(is.na(label), "unknown", paste(label))) %>%
+    mutate(source = ifelse(is.na(source), "unknown", paste(source))) %>%
+    mutate(label = ifelse(label=="", "unknown", paste(label))) %>%
+    mutate(source = ifelse(source == " ", "unknown", paste(source))) %>%
+    mutate(label = ifelse(label==" ", "unknown", paste(label))) %>%
+    mutate(source = ifelse(source=="", "unknown", paste(source)))
+
   # add warning for no record id
   if(!"record_id" %in% names(raw_citations)){
     warning("Search does not contain a record_id column. A record_id will be created using row names")
