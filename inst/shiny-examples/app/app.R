@@ -19,7 +19,7 @@ options(shiny.maxRequestSize=1000*1024^2, timeout = 40000000)
 # UI ----
 ui <- navbarPage(
 
-  #tags$head(includeHTML(("google-analytics.html"))),
+  tags$head(includeHTML(("google-analytics.html"))),
 
   title="ASySD",
 
@@ -616,7 +616,7 @@ remove duplicates.")
     manualrefs <- as.numeric(length(manualrefs$record_id1))
 
     paste(manualrefs, "pairs of citations require manual deduplication. Review the pairs in the table
-        below. You can scroll right to see all citation metadata and hover over any cell to see truncaed text. Identical and near-identical fields are highlighted in green.
+        below. You can scroll right to see all citation metadata and hover over any cell to see truncated text. Identical and near-identical fields are highlighted in green.
         Select all rows which contain duplicate pairs and click the button below to remove extra
         duplicates.")
 
