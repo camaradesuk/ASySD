@@ -137,6 +137,8 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 
   } else if(type == "csv"){
 
+    citations[] <- lapply(citations, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
     refs <- citations %>%
       rename(Authors = author,
              Title = title,
@@ -170,6 +172,8 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 
   } else if(type == "ris"){
 
+    citations[] <- lapply(citations, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
     citations <- as.data.frame(citations)
     citations$database <- citations$duplicate_id
     citations$notes <- ""
@@ -184,6 +188,8 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
                            file = filename
     )
   } else if(type == "bib"){
+
+    citations[] <- lapply(citations, function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
     citations <- as.data.frame(citations)
     citations$database <- citations$duplicate_id
