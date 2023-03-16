@@ -19,7 +19,7 @@ options(shiny.maxRequestSize=1000*1024^2, timeout = 40000000)
 # UI ----
 ui <- navbarPage(
 
-  tags$head(includeHTML(("google-analytics.html"))),
+  #tags$head(includeHTML(("google-analytics.html"))),
 
   title="ASySD",
 
@@ -818,7 +818,15 @@ remove duplicates.")
 
         final <- final
 
-      } else{
+      }
+
+      else if(all(input$filterLabel=="NA")){
+
+        final <- final
+
+      }
+
+    else{
 
         final <- final %>%
         filter(grepl(paste0("\\b", paste(input$filterLabel,collapse = "\\b|\\b"), "\\b"), label))
@@ -835,6 +843,10 @@ remove duplicates.")
     } else{
 
       if(all(input$filterSource==" ")){
+
+        final <- final
+
+      }  else if(all(input$filterSource=="NA")){
 
         final <- final
 
