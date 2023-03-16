@@ -4,6 +4,7 @@ require(readr)
 require(DT)
 require(stringr)
 require(dplyr)
+library(shinyalert)
 library(networkD3)
 library(rsconnect)
 library(RCurl)
@@ -566,12 +567,17 @@ remove duplicates.")
 
     duplicates <- removeManual[input$manual_dedup_dt_rows_selected,]
 
+    if(nrow(duplicates) < 1){
+      shinyalert("Oops!", "You haven't selected any duplicate pairs to remove.", type = "error")
+
+      return()
+    }
+
     unique_citations <- auto_dedup_result()$unique
     after <- dedup_citations_add_manual(citations_to_dedup(),
                                         merge_citations = TRUE,
                                         additional_pairs = duplicates)
   })
-
 
   manual_dedup_result_flagged <- eventReactive(input$manualdedupflag,{
 
@@ -828,8 +834,8 @@ remove duplicates.")
 
     else{
 
-        final <- final %>%
-        filter(grepl(paste0("\\b", paste(input$filterLabel,collapse = "\\b|\\b"), "\\b"), label))
+      final <- final %>%
+        filter(grepl(paste0("\\b", paste(input$filterLabel,collapse = "\\b|\\b"), "\\b|\\bunknown\\b"), source))
       }
     }
 
@@ -853,7 +859,7 @@ remove duplicates.")
       } else{
 
       final <- final %>%
-        filter(grepl(paste0("\\b", paste(input$filterSource,collapse = "\\b|\\b"), "\\b"), source))
+        filter(grepl(paste0("\\b", paste(input$filterSource,collapse = "\\b|\\b"), "\\b|\\bunknown\\b"), source))
       }
     }
     return(final)
