@@ -40,6 +40,8 @@ load_search <-function(path, method){
           source = sapply(x, xpath2, ".//remote-database-name", xmlValue)) %>%
           mutate(journal = ifelse(is.na(journal), secondary_title, journal))
 
+        newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
         return(newdat)
   }
 
@@ -63,6 +65,8 @@ load_search <-function(path, method){
                  isbn,
                  label,
                  source)
+
+        newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
         return(newdat)
 }
@@ -88,6 +92,8 @@ if(method == "txt"){
                  isbn,
                  label,
                  source)
+
+        newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
         return(newdat)
 }
