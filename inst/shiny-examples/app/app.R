@@ -532,6 +532,11 @@ remove duplicates.")
     citations <- RefData() %>%
       mutate(record_id = !!id_col)
 
+    citations <- citations %>%
+      mutate(record_id = ifelse(record_id == "", as.character(row_number()+1000), record_id)) %>%
+      mutate(record_id = ifelse(is.na(record_id), as.character(row_number()+1000), record_id))
+
+
   })
 
   # Action: ASySD auto dedup ----
