@@ -167,8 +167,7 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
              PdfRelativePath,
              CustomId)
 
-    write.csv(refs, filename,
-              col.names=TRUE, row.names = F, quote=FALSE, na="")
+    write.csv(refs, filename, row.names = F, quote=TRUE, na="")
 
   } else if(type == "ris"){
 
