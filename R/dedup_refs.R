@@ -339,11 +339,11 @@ generate_dup_id <- function(true_pairs, formatted_citations){
     select(record_id1, record_id2, duplicate_id) %>%
     unique()
 
-  citations_with_dup_id1 <- inner_join(formatted_citations, dup_ids, by=c("record_id"="record_id1")) %>%
+  citations_with_dup_id1 <- inner_join(formatted_citations, dup_ids, by=c("record_id"="record_id1"), multiple="all") %>%
     select(-record_id2) %>%
     unique()
 
-  citations_with_dup_id2 <- inner_join(formatted_citations, dup_ids, by=c("record_id"="record_id2")) %>%
+  citations_with_dup_id2 <- inner_join(formatted_citations, dup_ids, by=c("record_id"="record_id2"), multiple="all") %>%
     select(-record_id1) %>%
     unique()
 
@@ -394,7 +394,7 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
   raw_citations <- raw_citations %>%
     mutate(record_id = as.character(record_id))
 
-  all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations, by = "record_id")
+  all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations, by = "record_id", multiple = "all")
 
   if(!is.null(keep_source)){
 
@@ -451,17 +451,17 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
   duplicate_id$record_id <- as.character(duplicate_id$record_id)
 
   # join duplicate id to raw citation metadata (e.g. title, author, journal)
-  all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations, by="record_id")
+  all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations, by="record_id", multiple = "all")
 
   all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
     mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
     mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
     group_by(duplicate_id) %>% # group by duplicate id
-    summarise(across(everything(), ~trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
-    mutate(across(c(everything(), -label, -source, -record_id), gsub, pattern = ";;;.*", replacement = "")) %>% #remove extra values in each col, keep first one only
-    mutate(across(label, gsub, pattern = ";;;", replacement = ", ")) %>%
-    mutate(across(source, gsub, pattern = ";;;", replacement = ", ")) %>%
-    mutate(across(record_id, gsub, pattern = ";;;", replacement = ", ")) %>% #replace separator to comma
+    summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
+    mutate(across(author:isbn, ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
+    mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+    mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+    mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
     ungroup() %>%
     mutate(record_ids = record_id) %>%
     select(-record_id) %>%
@@ -482,7 +482,7 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
       ungroup() %>%
       unique()
 
-    corrected_dup_id <- left_join(corrected_dup_id, all_metadata_with_duplicate_id, by="duplicate_id")
+    corrected_dup_id <- left_join(corrected_dup_id, all_metadata_with_duplicate_id, by="duplicate_id", multiple = "all")
     corrected_dup_id <- corrected_dup_id %>%
       select(-duplicate_id) %>%
       rename(duplicate_id = dup_id_correct)
@@ -507,7 +507,7 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
       ungroup() %>%
       unique()
 
-    corrected_dup_id <- left_join(corrected_dup_id, all_metadata_with_duplicate_id, by="duplicate_id")
+    corrected_dup_id <- left_join(corrected_dup_id, all_metadata_with_duplicate_id, by="duplicate_id", multiple = "all")
     corrected_dup_id <- corrected_dup_id %>%
       select(-duplicate_id) %>%
       rename(duplicate_id = dup_id_correct)
