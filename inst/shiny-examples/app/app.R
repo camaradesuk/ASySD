@@ -305,6 +305,18 @@ server <- function(input, output, session){
         citations <- ASySD::load_search(input$uploadfile$datapath, method="txt")
       }
     )
+
+
+    if(length(unique(citations$record_id)) != nrow(citations)){
+
+    shinyalert("Unique identifier generated!",
+                 "The record_id column within uploaded citations was not unique. ASySD has generated a unique record_id for each citation. You can preview this in the table.", type = "warning")
+
+    citations <- citations %>%
+      mutate(record_id =  as.character(row_number()+1000))
+
+    }
+
   })
 
   # Get ref ID choice
@@ -531,11 +543,6 @@ remove duplicates.")
 
     citations <- RefData() %>%
       mutate(record_id = !!id_col)
-
-    citations <- citations %>%
-      mutate(record_id = ifelse(record_id == "", as.character(row_number()+1000), record_id)) %>%
-      mutate(record_id = ifelse(is.na(record_id), as.character(row_number()+1000), record_id))
-
 
   })
 
