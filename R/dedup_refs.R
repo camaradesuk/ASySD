@@ -458,7 +458,7 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
     mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
     group_by(duplicate_id) %>% # group by duplicate id
     summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
-    mutate(across(author:isbn, ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
+    mutate(across(c(everything(), -c(label, source, record_id)), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
     mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
     mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
     mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
