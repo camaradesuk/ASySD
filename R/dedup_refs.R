@@ -191,7 +191,7 @@ match_citations <- function(formatted_citations){
   pairs <- pairs %>%
     select(id1, id2, author1, author2, author, title1, title2, title, abstract1, abstract2, abstract, year1, year2, year, number1, number2, number, pages1, pages2, pages, volume1, volume2, volume, journal1, journal2, journal, isbn, isbn1, isbn2, doi1, doi2, doi, record_id1, record_id2, label1, label2, source1, source2)
 
-  numCores <- parallel::detectCores()
+  numCores <- parallelly::availableCores()
   numCores
 
   try(pairs$author <- parallel::mcmapply(jarowinkler, pairs$author1, pairs$author2, mc.cores = numCores), silent = TRUE)
