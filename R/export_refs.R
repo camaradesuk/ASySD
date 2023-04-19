@@ -1,3 +1,5 @@
+utils::globalVariables(c("record_ids", "."))
+
 #' This function writes citation data to disk in different formats
 #' @export
 #' @import dplyr
@@ -13,22 +15,22 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
     refs <- citations %>%
       mutate("Reference Type" = "Journal Article") %>%
       mutate("ISBN/ISSN" = gsub("\\r\\n|\\r|\\n", "", isbn)) %>%
-      rename("Custom 1" = duplicate_id,
-             "Author" = author,
-             "Title" = title,
-             "Volume" = volume,
-             "Number" = number,
-             "Label" = label,
-             "Year" = year,
-             "Abstract" = abstract,
-             "Pages" = pages,
-             "DOI" = doi,
-             "Name of Database" = source,
-             "Secondary Title" = journal) %>%
-      select("Reference Type", "Author", "Year",
-             "Secondary Title", "DOI", "Title",
-             "Pages", "Volume", "Number", "Abstract",
-             "Custom 1", "ISBN/ISSN", "Label", "Name of Database") %>%
+      rename(`Custom 1` = duplicate_id,
+             Author = author,
+             Title = title,
+             Volume = volume,
+             Number = number,
+             Label = label,
+             Year = year,
+             Abstract = abstract,
+             Pages = pages,
+             DOI = doi,
+             `Name of Database` = source,
+             `Secondary Title` = journal) %>%
+      select(`Reference Type`, Author, Year,
+             `Secondary Title`, DOI, Title,
+              Pages, Volume, Number, Abstract,
+             `Custom 1`, `ISBN/ISSN`, Label, `Name of Database`) %>%
       mutate(Abstract = gsub("\\r\\n|\\r|\\n", "", Abstract))
 
     refs[] <- lapply(refs, function(x) gsub("\\r\\n|\\r|\\n", "", x))

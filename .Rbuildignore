@@ -1,6 +1,7 @@
 ^ASySD\.Rproj$
 ^\.Rproj\.user$
 ^_pkgdown\.yml$
-^docs$
+^bin$
+^validation$
 ^pkgdown$
 ^\.github$

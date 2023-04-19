@@ -4,7 +4,8 @@ utils::globalVariables(c("author", "title", "year", "journal", "abstract", "doi"
                          "doi1", "number1", "pages1", "volume1", "isbn1", "record_id1",
                          "label1", "source1", "author2", "title2", "year2", "journal2",
                          "abstract2", "doi2", "number2", "pages2", "volume2", "isbn2",
-                         "record_id2", "label2", "source2", "id1", "id2"))
+                         "record_id2", "label2", "source2", "id1", "id2",
+                         "duplicate_id", "dup_id_correct", "Order"))
 
 ####------ Assign id ------ ####
 
@@ -120,6 +121,7 @@ format_citations <- function(raw_citations){
 #' @return Dataframe of citation pairs
 #' @import RecordLinkage
 #' @import parallel
+#' @import parallelly
 match_citations <- function(formatted_citations){
 
   # ROUND 1: run compare.dedup function and block by title&pages OR title&author OR title&abstract OR doi
@@ -480,8 +482,7 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
     mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
     mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
     ungroup() %>%
-    mutate(record_ids = record_id) %>%
-    select(-record_id) %>%
+    rename(record_ids = record_id) %>%
     ungroup()
 
   if(!is.null(keep_source)){

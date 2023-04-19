@@ -1,3 +1,9 @@
+utils::globalVariables(c("Abstract", "AlternateName", "Author", "AuthorAddress", "Authors", "Custom 1",
+                         "CustomId", "DOI", "ISBN/ISSN", "Keywords", "Label", "Name of Database",
+                         "Number", "Pages", "PdfRelativePath", "PublicationName", "Reference Type",
+                         "ReferenceType", "Secondary Title", "Title", "Url", "Volume", "Year",
+                         "record_ids"))
+
 #' Load in citations for deduplication
 #'
 #' This function loads in an Endnote XML file OR csv OR text.
@@ -7,6 +13,7 @@
 #' @return A dataframe of the Endnote references
 #' @export
 #' @import XML
+#' @import utils
 load_search <-function(path, method){
 
   if(method == "endnote"){
@@ -38,7 +45,7 @@ load_search <-function(path, method){
           url = sapply(x, xpath2, ".//urls/related-urls", xmlValue),
           label = sapply(x, xpath2, ".//label", xmlValue),
           source = sapply(x, xpath2, ".//remote-database-name", xmlValue)) %>%
-          mutate(journal = ifelse(is.na(journal), secondary_title, journal))
+          mutate(journal = ifelse(is.na(journal), .data$secondary_title, journal))
 
         newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
