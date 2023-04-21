@@ -74,6 +74,8 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
   } else if(type == "ris"){
 
     citations <- as.data.frame(citations)
+    citations$source_type <- "JOUR" #for RIS import to work
+    citations <- citations %>% select(source_type , everything())
     synthesisr::write_refs(citations,
                            format = "ris",
                            file = filename
@@ -183,6 +185,9 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
     {
       citations$notes <- citations$flag
     }
+
+    citations$source_type <- "JOUR" #for RIS import to work
+    citations <- citations %>% select(source_type , everything())
 
     synthesisr::write_refs(citations,
                            format = "ris",
