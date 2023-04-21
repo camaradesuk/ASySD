@@ -10,8 +10,12 @@ load_search(path, method)
 \item{path}{File path to the input file}
 
 \item{method}{Loading citations methoddepending on file format}
+
+\item{paths}{File path to the input file or files}
 }
 \value{
+A dataframe of the Endnote references
+
 A dataframe of the Endnote references
 }
 \description{

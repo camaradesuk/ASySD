@@ -1,20 +1,136 @@
 utils::globalVariables(c("Abstract", "AlternateName", "Author", "AuthorAddress", "Authors", "Custom 1",
                          "CustomId", "DOI", "ISBN/ISSN", "Keywords", "Label", "Name of Database",
-                         "Number", "Pages", "PdfRelativePath", "PublicationName", "Reference Type",
-                         "ReferenceType", "Secondary Title", "Title", "Url", "Volume", "Year",
+                         "Number", "Pages", "PublicationName", "Reference Type",
+                         "ReferenceType", "Secondary Title", "Title", "Volume", "Year",
                          "record_ids"))
 
 #' Load in citations for deduplication
 #'
 #' This function loads in an Endnote XML file OR csv OR text.
 #'
-#' @param path File path to the input file
+#' @param paths File path to the input file or files
 #' @param method  Loading citations methoddepending on file format
 #' @return A dataframe of the Endnote references
 #' @export
 #' @import XML
-#' @import utils
-load_search <-function(path, method){
+
+load_multi_search <-function(paths, names, method){
+
+  df_list <- list()
+
+  for (i in 1:length(paths)) {
+
+    path <- paths[i]
+    name <- names[i]
+
+  if(method == "bib"){
+
+    newdat <- RefManageR::ReadBib(path, check =FALSE)
+    newdat <- as.data.frame(newdat)
+
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    newdat[cols[!(cols %in% colnames(newdat))]] = NA
+    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
+    newdat <- newdat %>%
+    dplyr::select(author,
+                  year,
+                  journal,
+                  doi,
+                  title,
+                  pages,
+                  volume,
+                  number,
+                  abstract,
+                  record_id,
+                  isbn,
+                  label,
+                  source)
+    newdat$file_name <- name
+    df_list[[i]] <- newdat
+  }
+
+  if(method == "zotero_csv"){
+
+    newdat <- read.csv(path)
+    names(newdat) <- tolower(names(newdat))
+    newdat <- newdat %>%
+      dplyr::rename(record_id = key,
+                    year = `Publication Year`,
+                    journal = `Publication Title`)
+
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    newdat[cols[!(cols %in% colnames(newdat))]] = NA
+    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
+    newdat <- newdat %>%
+      dplyr::select(author,
+                    year,
+                    journal,
+                    doi,
+                    title,
+                    pages,
+                    volume,
+                    number,
+                    abstract,
+                    record_id,
+                    isbn,
+                    label,
+                    source)
+
+    newdat$file_name <- name
+    df_list[[i]] <- newdat
+  }
+
+  if(method == "ris"){
+
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+
+    newdat <- synthesisr::read_refs(path)
+    if ("booktitle" %in% colnames(newdat)) {
+      newdat <-newdat %>%
+        tidyr::unite(title, title, booktitle, na.rm = TRUE)
+    }
+
+    if ("start_page" %in% colnames(newdat) &
+        "pages" %in% colnames(newdat)) {
+      newdat <- newdat %>%
+        tidyr::unite(pages, pages, start_page, end_page, sep="-", na.rm=TRUE) %>%
+        select(-start_page, -end_page)
+    }
+
+     if ("start_page" %in% colnames(newdat) &
+         "end_page" %in% colnames(newdat)) {
+      newdat <- newdat %>%
+        tidyr::unite(pages, start_page, end_page, sep="-", na.rm=TRUE)
+    }
+
+    if (!"journal" %in% colnames(newdat)){
+      newdat <- newdat %>%
+        rename(journal = source)
+    }
+
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    newdat[cols[!(cols %in% colnames(newdat))]] = NA
+    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
+    newdat <- newdat %>%
+      dplyr::select(author,
+                    year,
+                    journal,
+                    doi,
+                    title,
+                    pages,
+                    volume,
+                    number,
+                    abstract,
+                    record_id,
+                    isbn,
+                    label,
+                    source)
+    newdat$file_name <- name
+    df_list[[i]] <- newdat
+  }
 
   if(method == "endnote"){
 
@@ -41,15 +157,15 @@ load_search <-function(path, method){
           record_id = sapply(x, xpath2, ".//rec-number", xmlValue),
           isbn = sapply(x, xpath2, ".//isbn", xmlValue),
           secondary_title = sapply(x, xpath2, ".//titles/secondary-title", xmlValue),
-          "PDF Relative Path" = sapply(x, xpath2, ".//urls/pdf-urls", xmlValue),
-          url = sapply(x, xpath2, ".//urls/related-urls", xmlValue),
           label = sapply(x, xpath2, ".//label", xmlValue),
           source = sapply(x, xpath2, ".//remote-database-name", xmlValue)) %>%
           mutate(journal = ifelse(is.na(journal), .data$secondary_title, journal))
 
+        cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+        newdat[cols[!(cols %in% colnames(newdat))]] = NA
         newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
-
-        return(newdat)
+        newdat$file_name <- name
+        df_list[[i]] <- newdat
   }
 
   if(method == "csv"){
@@ -74,8 +190,8 @@ load_search <-function(path, method){
                  source)
 
         newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
-
-        return(newdat)
+        newdat$file_name <- name
+        df_list[[i]] <- newdat
 }
 
 
@@ -101,7 +217,229 @@ if(method == "txt"){
                  source)
 
         newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
-
-        return(newdat)
+        newdat$file_name <- name
+        df_list[[i]] <- newdat
 }
+  }
+
+  newdat <- dplyr::bind_rows(df_list)
+  return(newdat)
+
+}
+
+
+#' Load in citations for deduplication
+#'
+#' This function loads in an Endnote XML file OR csv OR text.
+#'
+#' @param path File path to the input file
+#' @param method  Loading citations methoddepending on file format
+#' @return A dataframe of the Endnote references
+#' @export
+#' @import XML
+#' @import utils
+load_search <-function(path, method){
+
+  if(method == "endnote"){
+
+
+    newdat<- XML::xmlParse(path)
+    x <-  XML::getNodeSet(newdat,'//record')
+
+    xpath2 <-function(x, ...){
+      y <- XML::xpathSApply(x, ...)
+      y <- gsub(",", "", y)  # remove commas if using comma separator
+      ifelse(length(y) == 0, NA,  paste(y, collapse=", "))
+    }
+
+    newdat <- data.frame(
+      author = sapply(x, xpath2, ".//contributors/authors", xmlValue),
+      year   = sapply(x, xpath2, ".//dates/year", xmlValue),
+      journal = sapply(x, xpath2, ".//periodical/full-title", xmlValue),
+      doi = sapply(x, xpath2, ".//electronic-resource-num", xmlValue),
+      title = sapply(x, xpath2, ".//titles/title", xmlValue),
+      pages = sapply(x, xpath2, ".//pages", xmlValue),
+      volume = sapply(x, xpath2, ".//volume", xmlValue),
+      number = sapply(x, xpath2, ".//number", xmlValue),
+      abstract = sapply(x, xpath2, ".//abstract", xmlValue),
+      record_id = sapply(x, xpath2, ".//rec-number", xmlValue),
+      isbn = sapply(x, xpath2, ".//isbn", xmlValue),
+      secondary_title = sapply(x, xpath2, ".//titles/secondary-title", xmlValue),
+      label = sapply(x, xpath2, ".//label", xmlValue),
+      source = sapply(x, xpath2, ".//remote-database-name", xmlValue)) %>%
+      mutate(journal = ifelse(is.na(journal), .data$secondary_title, journal))
+
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    newdat[cols[!(cols %in% colnames(newdat))]] = NA
+    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+    return(newdat)
+  }
+
+  if(method == "csv"){
+
+    cols <- c("label","isbn", "source")
+    newdat <- read.csv(path)
+    newdat[cols[!(cols %in% colnames(newdat))]] = NA
+
+    newdat <- newdat %>%
+      dplyr::select(author,
+                    year,
+                    journal,
+                    doi,
+                    title,
+                    pages,
+                    volume,
+                    number,
+                    abstract,
+                    record_id,
+                    isbn,
+                    label,
+                    source)
+
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    newdat[cols[!(cols %in% colnames(newdat))]] = NA
+    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+    return(newdat)
+  }
+
+
+  if(method == "txt"){
+
+    cols <- c("label","isbn","source")
+    newdat <- read.table(path)
+    newdat[cols[!(cols %in% colnames(newdat))]] = NA
+
+    newdat <- newdat %>%
+      dplyr::select(author,
+                    year,
+                    journal,
+                    doi,
+                    title,
+                    pages,
+                    volume,
+                    number,
+                    abstract,
+                    record_id,
+                    isbn,
+                    label,
+                    source)
+
+    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+    return(newdat)
+  }
+
+
+  if(method == "bib"){
+
+    newdat <- RefManageR::ReadBib(path, check =FALSE)
+    newdat <- as.data.frame(newdat)
+
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    newdat[cols[!(cols %in% colnames(newdat))]] = NA
+
+    newdat <- newdat %>%
+      dplyr::select(author,
+                    year,
+                    journal,
+                    doi,
+                    title,
+                    pages,
+                    volume,
+                    number,
+                    abstract,
+                    record_id,
+                    isbn,
+                    label,
+                    source)
+
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    newdat[cols[!(cols %in% colnames(newdat))]] = NA
+    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
+  }
+
+  if(method == "zotero_csv"){
+
+    newdat <- read.csv(path)
+    names(newdat) <- tolower(names(newdat))
+    newdat <- newdat %>%
+      dplyr::rename(record_id = key,
+                    year = `Publication Year`,
+                    journal = `Publication Title`)
+
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    newdat[cols[!(cols %in% colnames(newdat))]] = NA
+
+    newdat <- newdat %>%
+      dplyr::select(author,
+                    year,
+                    journal,
+                    doi,
+                    title,
+                    pages,
+                    volume,
+                    number,
+                    abstract,
+                    record_id,
+                    isbn,
+                    label,
+                    source)
+
+    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
+  }
+
+  if(method == "ris"){
+
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+
+    newdat <- synthesisr::read_refs(path)
+    if ("booktitle" %in% colnames(newdat)) {
+      newdat <-newdat %>%
+        tidyr::unite(title, title, booktitle, na.rm = TRUE)
+    }
+
+    if ("start_page" %in% colnames(newdat) &
+        "pages" %in% colnames(newdat)) {
+      newdat <- newdat %>%
+        tidyr::unite(pages, pages, start_page, end_page, sep="-", na.rm=TRUE) %>%
+        select(-start_page, -end_page)
+    }
+
+    if ("start_page" %in% colnames(newdat) &
+        "end_page" %in% colnames(newdat)) {
+      newdat <- newdat %>%
+        tidyr::unite(pages, start_page, end_page, sep="-", na.rm=TRUE)
+    }
+
+    if (!"journal" %in% colnames(newdat)){
+      newdat <- newdat %>%
+        rename(journal = source)
+    }
+
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    newdat[cols[!(cols %in% colnames(newdat))]] = NA
+    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
+    newdat <- newdat %>%
+      dplyr::select(author,
+                    year,
+                    journal,
+                    doi,
+                    title,
+                    pages,
+                    volume,
+                    number,
+                    abstract,
+                    record_id,
+                    isbn,
+                    label,
+                    source)
+
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    newdat[cols[!(cols %in% colnames(newdat))]] = NA
+    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
+  }
+
 }
