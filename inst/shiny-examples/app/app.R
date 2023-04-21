@@ -11,12 +11,14 @@ library(RCurl)
 library(shiny)
 library(ASySD)
 library(shinythemes)
+library(knitr)
 library(shinycssloaders)
 library(htmlwidgets)
 library(shinyWidgets)
 library(bslib)
 
 options(shiny.maxRequestSize=1000*1024^2, timeout = 40000000)
+
 # UI ----
 ui <- navbarPage(
 
@@ -37,6 +39,12 @@ ui <- navbarPage(
 
 
   # UI side panel ----
+
+  tabPanel("Getting started",
+
+           uiOutput("instructions")
+  ),
+
   tabPanel("Upload",
 
            sidebarLayout(
@@ -291,8 +299,18 @@ ui <- navbarPage(
 
            )))
 
+# addResourcePath("tmpuser", getwd())
+
 server <- function(input, output, session){
 
+  output$instructions <- renderUI({
+    tags$iframe(
+      seamless = "seamless",
+      src = "instructions.html",
+      width = "100%",
+      height = 800
+    )
+  })
   # Reactive values from upload ----
   rv <- shiny::reactiveValues()
   rv$refdata <- NULL
@@ -496,7 +514,7 @@ server <- function(input, output, session){
     )
   })
 
-  # ASySD user text ----
+  # ASySD r text ----
   output$Post_upload_text <- renderText({
 
 
@@ -587,14 +605,24 @@ server <- function(input, output, session){
 
     else if (input$export_format == "ris") {
 
-      str1 <- paste("Export format notes:")
+      str1 <- paste("Formatting notes for RIS import to Endnote:")
       str2 <- paste("Notes = flags for potential duplicates (if this option was selected in manual deduplication).")
       str3 <- paste("Database Name = duplicate_id")
 
-      HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>", str3))
+      str4 <- paste("Formatting notes for RIS import to Zotero:")
+      str5 <- paste("Notes = flags for potential duplicates (if this option was selected in manual deduplication).")
+      str6 <- paste("Archive = duplicate_id")
+
+      str7 <- paste("Formatting notes for RIS import to Mendeley:")
+      str8 <- paste("Unfortunately, duplicate identifiers and flags for potential duplicates are not imported
+      into Mendeley. If there is enough demand, we will aim to work on a solution for this")
+
+      HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>", str3),
+           paste("<b>", str4, "</b>", "<br>", str5, "<br>", str6),
+           paste("<b>", str7, "</b>", "<br>", str8, "<br>"))
+
     }
     else if (input$export_format == "csv") {
-
       str1 <- paste("Export format notes:")
       str2 <- paste("At present this export does not contain any custom fields to retain potential duplicate flags as this is intended for direct input into SyRF (you should only upload unique citations lists).")
 
