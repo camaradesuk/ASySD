@@ -50,7 +50,7 @@ Welcome to the the **Automated Systematic Search Deduplicator** app! This free t
 ASySD uses the following metadata to identify duplicates:
 
 | **Name**              | **Definition**                                                                                                                         |
-|:------------------------|:---------------------------------------------|
+|:-------------------------|:---------------------------------------------|
 | **author**            | The author(s) of the publication                                                                                                       |
 | **year**              | The year the publication was published                                                                                                 |
 | **journal**           | The name of the journal in which the publication appeared                                                                              |
@@ -134,7 +134,7 @@ Within Zotero or Endnote, you can identify citations with a flag and go through 
 -   After deduplication is complete, you can navigate to the *Download* page to export your citations
 -   You can either export **all citations** or only the **unique citations**
 
-### Exporting sources and labels 
+### Exporting sources and labels
 
 If we have citations from three sources, our export file will look something like this:
 
@@ -166,3 +166,8 @@ Turn on this switch if you want to retain citations which only have the specifie
 ## ASySD video tutorial
 
 We recently presented ASySD at ESMARConf 2023! Please check out the ASySD [Tutorial on YouTube](https://www.youtube.com/watch?v=oCR1A_heFcs).
+
+```{r setup,  echo=FALSE}
+knitr::include_url("https://www.youtube.com/embed/oCR1A_heFcs")
+
+```
