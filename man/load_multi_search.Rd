@@ -7,13 +7,15 @@
 load_multi_search(paths, names, method)
 }
 \arguments{
-\item{paths}{File path to the input file or files}
+\item{method}{Import method}
 
-\item{method}{Loading citations methoddepending on file format}
+\item{path}{Relative path to the citations file}
+
+\item{name}{File name of input file or files}
 }
 \value{
-A dataframe of the Endnote references
+A dataframe of the citations
 }
 \description{
-This function loads in an Endnote XML file OR csv OR text.
+This function loads in a citation file within the shiny app
 }
