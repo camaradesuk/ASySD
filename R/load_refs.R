@@ -6,13 +6,14 @@ utils::globalVariables(c("Abstract", "AlternateName", "Author", "AuthorAddress",
 
 #' Load in citations for deduplication
 #'
-#' This function loads in an Endnote XML file OR csv OR text.
+#' This function loads in a citation file within the shiny app
 #'
-#' @param paths File path to the input file or files
+#' @param paths upload path to the input file or files
+#' @param name file name to input file or files
 #' @param method  Loading citations methoddepending on file format
 #' @return A dataframe of the Endnote references
-#' @export
 #' @import XML
+#' @import RefManageR
 
 load_multi_search <-function(paths, names, method){
 
@@ -237,6 +238,7 @@ if(method == "txt"){
 #' @return A dataframe of the Endnote references
 #' @export
 #' @import XML
+#' @import RefManageR
 #' @import utils
 load_search <-function(path, method){
 
