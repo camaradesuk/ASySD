@@ -73,13 +73,22 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
 
   } else if(type == "ris"){
 
-    citations <- as.data.frame(citations)
     citations$source_type <- "JOUR" #for RIS import to work
-    citations <- citations %>% select(source_type , everything())
+    citations <- citations %>% select(source_type , everything()) %>%
+      rename(issue = number) %>%
+      select(-isbn)
+    citations <- tidyr::separate(citations, pages, into = c("start_page", "end_page"), sep = "-", convert = TRUE)
     synthesisr::write_refs(citations,
                            format = "ris",
                            file = filename
     )
+  } else if(type == "csv"){
+
+    citations[] <- lapply(citations, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
+
+    write.csv(citations, filename, row.names = F, quote=TRUE, na="")
+
   } else if(type == "bib"){
 
     citations <- as.data.frame(citations)
@@ -97,6 +106,9 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
 #' @param filename output file name
 #' @return file export
 write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), filename){
+
+  citations <- citations %>%
+    select(-file_name)
 
   if(type == "txt"){
 
@@ -139,7 +151,7 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
     write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
 
-  } else if(type == "csv"){
+  } else if(type == "syrf_csv"){
 
     citations[] <- lapply(citations, function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
@@ -173,7 +185,17 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 
     write.csv(refs, filename, row.names = F, quote=TRUE, na="")
 
-  } else if(type == "ris"){
+  }
+  else if(type == "csv"){
+
+    citations[] <- lapply(citations, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
+
+    write.csv(citations, filename, row.names = F, quote=TRUE, na="")
+
+  }
+
+  else if(type == "ris"){
 
     citations[] <- lapply(citations, function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
@@ -187,8 +209,10 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
     }
 
     citations$source_type <- "JOUR" #for RIS import to work
-    citations <- citations %>% select(source_type , everything())
-
+    citations <- citations %>% select(source_type , everything()) %>%
+      rename(issue = number) %>%
+      select(-isbn)
+    citations <- tidyr::separate(citations, pages, into = c("start_page", "end_page"), sep = "-", convert = TRUE)
     synthesisr::write_refs(citations,
                            format = "ris",
                            file = filename
