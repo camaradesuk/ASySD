@@ -235,9 +235,16 @@ ui <- navbarPage(
            shinyWidgets::prettyRadioButtons(
              inputId = "export_format",
              label = "Choose an export format",
-             choiceNames = c("Endnote tab delimited", "RIS", "SyRF CSV"),
-             choiceValues = c("txt", "ris", "csv"),
+             choiceNames = c("Endnote tab delimited", "RIS", "SyRF CSV", "CSV"),
+             choiceValues = c("txt", "ris", "syrf_csv", "csv"),
              status="success"),
+
+           materialSwitch("show_advanced", "Show advanced options",
+                          value = FALSE),
+
+
+           conditionalPanel(
+             condition = "input.show_advanced == true",
 
            h5("Customise output - labels"),
 
@@ -245,7 +252,7 @@ ui <- navbarPage(
            materialSwitch(
              inputId = "filterLabelOnly",
              label = "Only retain citations which are unique to this label",
-             value = FALSE,
+
              status = "success"
            ),
 
@@ -256,7 +263,7 @@ ui <- navbarPage(
              label = "Only retain citations which are unique to this source",
              value = FALSE,
              status = "success"
-           ),
+           )),
 
            downloadBttn(
              "download",
@@ -272,7 +279,7 @@ ui <- navbarPage(
            br(),
            uiOutput("ASySD_pre_download"),
            br(),
-           HTML(paste("<b>", "Customising output - labels and sources", "</b>",
+           HTML(paste("<b>", "Advanced options: filtering by labels and sources", "</b>",
                       "<br>", "You may choose to only download citations with a specific label - for example
            to indicate citations obtained from a more recent systematic search. You can use the filters on the
            right to do this. If a citation is present across several labels e.g. in the old search and the new search,
@@ -606,25 +613,32 @@ server <- function(input, output, session){
     else if (input$export_format == "ris") {
 
       str1 <- paste("Formatting notes for RIS import to Endnote:")
-      str2 <- paste("Notes = flags for potential duplicates (if this option was selected in manual deduplication).")
-      str3 <- paste("Database Name = duplicate_id")
+      str2 <- paste("Notes = flags for potential duplicates (if this option was selected in manual deduplication).\n")
+      str3 <- paste("Database Name = duplicate_id\n")
 
       str4 <- paste("Formatting notes for RIS import to Zotero:")
-      str5 <- paste("Notes = flags for potential duplicates (if this option was selected in manual deduplication).")
-      str6 <- paste("Archive = duplicate_id")
+      str5 <- paste("Notes = flags for potential duplicates (if this option was selected in manual deduplication).\n")
+      str6 <- paste("Archive = duplicate_id\n")
 
       str7 <- paste("Formatting notes for RIS import to Mendeley:")
-      str8 <- paste("Unfortunately, duplicate identifiers and flags for potential duplicates are not imported
-      into Mendeley. If there is enough demand, we will aim to work on a solution for this")
+      str8 <- paste("Unfortunately, duplicate identifiers and flags for potential duplicates are not imported into Mendeley. If there is enough demand, we will aim to work on a solution for this.\n")
 
-      HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>", str3),
-           paste("<b>", str4, "</b>", "<br>", str5, "<br>", str6),
-           paste("<b>", str7, "</b>", "<br>", str8, "<br>"))
+      HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>", str3, "<br>", "<br>",
+                 "<b>", str4, "</b>", "<br>", str5, "<br>", str6, "<br>", "<br>",
+                 "<b>", str7, "</b>", "<br>", str8, "<br>"))
 
     }
-    else if (input$export_format == "csv") {
+    else if (input$export_format == "syrf_csv") {
       str1 <- paste("Export format notes:")
       str2 <- paste("At present this export does not contain any custom fields to retain potential duplicate flags as this is intended for direct input into SyRF (you should only upload unique citations lists).")
+
+      HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>"))
+    }
+
+    else if (input$export_format == "csv") {
+      str1 <- paste("Export format notes:")
+      str2 <- paste("This is a basic export with all field names. This is useful for understanding the data structure
+                    and output from ASySD.")
 
       HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>"))
     }
