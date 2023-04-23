@@ -336,29 +336,29 @@ server <- function(input, output, session){
 
       if(input$fileType=="Endnote XML"){
 
-        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="endnote")
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="endnote")
 
       }  else if(input$fileType == "CSV"){
 
-        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="csv")
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="csv")
 
       }  else if(input$fileType == "Zotero CSV"){
 
-        citations <- ASySD::load_multi_search(input$uploadfile$datapath,  input$uploadfile$name, method="zotero_csv")
+        citations <- load_multi_search(input$uploadfile$datapath,  input$uploadfile$name, method="zotero_csv")
 
       }
       else if(input$fileType == "RIS"){
 
-        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="ris")
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="ris")
       }
 
       else if(input$fileType == "BIB"){
 
-        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="bib")
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="bib")
 
       }  else{
 
-        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="txt")
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="txt")
       }
     )
 
