@@ -85,6 +85,11 @@ ui <- navbarPage(
                # Output: datatable of citations uploaded ----
                DT::dataTableOutput("citation_table") %>% withSpinner(color="#754E9B", type=7)
            ),
+
+             tabPanel("Check metadata",
+
+                      DT::dataTableOutput("missing_data_table") %>% withSpinner(color="#754E9B", type=7)),
+
            tabPanel("Add labels/sources",
 
               br(),
@@ -505,6 +510,49 @@ server <- function(input, output, session){
                   rownames = FALSE,
                   class = "display")
 
+  })
+
+
+  output$missing_data_table <- renderDT({
+
+
+    shiny::validate(
+      shiny::need(!is.null(rv$refdata), ""))
+
+     check_cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "isbn", "label", "source")
+     subset_data <- subset(rv$refdata, select = check_cols)
+     missing_percentages <- colSums(is.na(subset_data)) / nrow(subset_data) * 100
+     # Create a data frame with the missing percentages for each column
+     missing_table <- data.frame(
+       field = names(missing_percentages),
+       percentage_missing = round(missing_percentages, 1))
+
+     DT::datatable(missing_table,
+                   options = list(
+                     searching = FALSE,
+                     lengthChange = FALSE,
+                     pageLength = 20
+                   ),
+                   rownames = FALSE
+     ) %>%
+       formatStyle(
+         "percentage_missing",
+         target = "cell",
+         backgroundColor = styleInterval(
+           c(0, 25, 50, 75),
+           c("yellowgreen", "yellowgreen", "orange", "orange", "red")
+         ),
+         color = "white",
+         fontWeight = "bold",
+         borderRadius = "2px",
+         border = "2px solid",
+         borderColor = styleInterval(
+           c(0, 25, 50, 75),
+           c("yellowgreen", "yellowgreen", "orange", "orange", "red")
+         ),
+         padding = "3px",
+         display = "flex"
+       )
   })
 
 
