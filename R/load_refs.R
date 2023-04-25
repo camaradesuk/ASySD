@@ -31,22 +31,8 @@ load_multi_search <-function(paths, names, method){
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
-    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
-    newdat <- newdat %>%
-    dplyr::select(author,
-                  year,
-                  journal,
-                  doi,
-                  title,
-                  pages,
-                  volume,
-                  number,
-                  abstract,
-                  record_id,
-                  isbn,
-                  label,
-                  source)
+
     newdat$file_name <- name
     df_list[[i]] <- newdat
   }
@@ -54,30 +40,16 @@ load_multi_search <-function(paths, names, method){
   if(method == "zotero_csv"){
 
     newdat <- read.csv(path)
-    names(newdat) <- tolower(names(newdat))
     newdat <- newdat %>%
-      dplyr::rename(record_id = key,
-                    year = `Publication Year`,
-                    journal = `Publication Title`)
+      dplyr::rename(record_id = Key,
+                    year = Publication.Year,
+                    journal = Publication.Title,
+                    keywords = Manual.Tags )
+
+    names(newdat) <- tolower(names(newdat))
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
-    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
-
-    newdat <- newdat %>%
-      dplyr::select(author,
-                    year,
-                    journal,
-                    doi,
-                    title,
-                    pages,
-                    volume,
-                    number,
-                    abstract,
-                    record_id,
-                    isbn,
-                    label,
-                    source)
 
     newdat$file_name <- name
     df_list[[i]] <- newdat
@@ -113,22 +85,7 @@ load_multi_search <-function(paths, names, method){
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
-    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
-    newdat <- newdat %>%
-      dplyr::select(author,
-                    year,
-                    journal,
-                    doi,
-                    title,
-                    pages,
-                    volume,
-                    number,
-                    abstract,
-                    record_id,
-                    isbn,
-                    label,
-                    source)
     newdat$file_name <- name
     df_list[[i]] <- newdat
   }
@@ -158,13 +115,17 @@ load_multi_search <-function(paths, names, method){
           record_id = sapply(x, xpath2, ".//rec-number", xmlValue),
           isbn = sapply(x, xpath2, ".//isbn", xmlValue),
           secondary_title = sapply(x, xpath2, ".//titles/secondary-title", xmlValue),
+          accession_number = sapply(x, xpath2, ".//accession-num", xmlValue),
+          keywords = sapply(x, xpath2, ".//keywords", xmlValue),
+          type = sapply(x, xpath2, ".//ref-type", xmlValue),
           label = sapply(x, xpath2, ".//label", xmlValue),
-          source = sapply(x, xpath2, ".//remote-database-name", xmlValue)) %>%
+          source = sapply(x, xpath2, ".//remote-database-name", xmlValue),
+          database = sapply(x, xpath2, ".//remote-database-name", xmlValue)) %>%
           mutate(journal = ifelse(is.na(journal), .data$secondary_title, journal))
 
         cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
         newdat[cols[!(cols %in% colnames(newdat))]] = NA
-        newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
         newdat$file_name <- name
         df_list[[i]] <- newdat
   }
@@ -175,22 +136,6 @@ load_multi_search <-function(paths, names, method){
         newdat <- read.csv(path)
         newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
-        newdat <- newdat %>%
-          dplyr::select(author,
-                 year,
-                 journal,
-                 doi,
-                 title,
-                 pages,
-                 volume,
-                 number,
-                 abstract,
-                 record_id,
-                 isbn,
-                 label,
-                 source)
-
-        newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
         newdat$file_name <- name
         df_list[[i]] <- newdat
 }
@@ -202,28 +147,16 @@ if(method == "txt"){
   newdat <- read.table(path)
   newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
-        newdat <- newdat %>%
-          dplyr::select(author,
-                 year,
-                 journal,
-                 doi,
-                 title,
-                 pages,
-                 volume,
-                 number,
-                 abstract,
-                 record_id,
-                 isbn,
-                 label,
-                 source)
-
-        newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
         newdat$file_name <- name
         df_list[[i]] <- newdat
 }
   }
 
   newdat <- dplyr::bind_rows(df_list)
+
+  cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source')
+  newdat[cols_to_modify] <- lapply(newdat[cols_to_modify], function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
   return(newdat)
 
 }
@@ -273,8 +206,6 @@ load_search <-function(path, method){
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
-    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
-    return(newdat)
   }
 
   if(method == "csv"){
@@ -283,25 +214,8 @@ load_search <-function(path, method){
     newdat <- read.csv(path)
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
-    newdat <- newdat %>%
-      dplyr::select(author,
-                    year,
-                    journal,
-                    doi,
-                    title,
-                    pages,
-                    volume,
-                    number,
-                    abstract,
-                    record_id,
-                    isbn,
-                    label,
-                    source)
-
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
-    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
-    return(newdat)
   }
 
 
@@ -311,22 +225,6 @@ load_search <-function(path, method){
     newdat <- read.table(path)
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
-    newdat <- newdat %>%
-      dplyr::select(author,
-                    year,
-                    journal,
-                    doi,
-                    title,
-                    pages,
-                    volume,
-                    number,
-                    abstract,
-                    record_id,
-                    isbn,
-                    label,
-                    source)
-
-    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
     return(newdat)
   }
 
@@ -339,56 +237,23 @@ load_search <-function(path, method){
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
-    newdat <- newdat %>%
-      dplyr::select(author,
-                    year,
-                    journal,
-                    doi,
-                    title,
-                    pages,
-                    volume,
-                    number,
-                    abstract,
-                    record_id,
-                    isbn,
-                    label,
-                    source)
-
-    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
-    newdat[cols[!(cols %in% colnames(newdat))]] = NA
-    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
   }
 
   if(method == "zotero_csv"){
 
+
     newdat <- read.csv(path)
-    names(newdat) <- tolower(names(newdat))
     newdat <- newdat %>%
-      dplyr::rename(record_id = key,
-                    year = `Publication Year`,
-                    journal = `Publication Title`)
+      dplyr::rename(record_id = Key,
+                    year = Publication.Year,
+                    journal = Publication.Title,
+                    keywords = Manual.Tags )
+
+    names(newdat) <- tolower(names(newdat))
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
-
-    newdat <- newdat %>%
-      dplyr::select(author,
-                    year,
-                    journal,
-                    doi,
-                    title,
-                    pages,
-                    volume,
-                    number,
-                    abstract,
-                    record_id,
-                    isbn,
-                    label,
-                    source)
-
-    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
-
   }
 
   if(method == "ris"){
@@ -418,30 +283,13 @@ load_search <-function(path, method){
       newdat <- newdat %>%
         rename(journal = source)
     }
-
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
-    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
-
-    newdat <- newdat %>%
-      dplyr::select(author,
-                    year,
-                    journal,
-                    doi,
-                    title,
-                    pages,
-                    volume,
-                    number,
-                    abstract,
-                    record_id,
-                    isbn,
-                    label,
-                    source)
-
-    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
-    newdat[cols[!(cols %in% colnames(newdat))]] = NA
-    newdat[] <- lapply(newdat, function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
   }
+
+  cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source')
+  newdat[cols_to_modify] <- lapply(newdat[cols_to_modify], function(x) gsub("\\r\\n|\\r|\\n", "", x))
+  return(newdat)
 
 }
