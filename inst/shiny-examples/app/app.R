@@ -22,6 +22,8 @@ options(shiny.maxRequestSize=1000*1024^2, timeout = 40000000)
 # UI ----
 ui <- navbarPage(
 
+  shinyjs::useShinyjs(),
+
   tags$head(includeHTML(("google-analytics.html"))),
 
   title="ASySD",
@@ -339,39 +341,47 @@ server <- function(input, output, session){
 
     isolate(
 
-      if(input$fileType=="Endnote XML"){
+      if(input$fileType=="Endnote XML" & grepl(".xml$", input$uploadfile$name)){
 
         citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="endnote")
 
-      }  else if(input$fileType == "CSV"){
+      }  else if(input$fileType == "CSV" & grepl(".csv$", input$uploadfile$name)){
 
         citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="csv")
 
-      }  else if(input$fileType == "Zotero CSV"){
+      }  else if(input$fileType == "Zotero CSV" & grepl(".csv$", input$uploadfile$name)){
 
         citations <- load_multi_search(input$uploadfile$datapath,  input$uploadfile$name, method="zotero_csv")
 
       }
-      else if(input$fileType == "RIS"){
+      else if(input$fileType == "RIS" & grepl(".ris$", input$uploadfile$name)){
 
         citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="ris")
       }
 
-      else if(input$fileType == "BIB"){
+      else if(input$fileType == "BIB" & grepl(".bib$", input$uploadfile$name)){
 
         citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="bib")
 
-      }  else{
+      }
+
+      else if(input$fileType == "Tab delimited"){
 
         citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="txt")
       }
-    )
 
+      else{
+        shinyalert("Wrong file type selected",
+        "The file extension doesn't match the selected upload format", type = "warning")
+        shinyjs::reset(id = "uploadfile", asis = FALSE)
+        return()
+        }
+    )
 
     if(length(unique(citations$record_id)) != nrow(citations)){
 
       shinyalert("Unique identifier generated!",
-                 "The record_id column within uploaded citations was not unique. ASySD has generated a unique record_id for each citation. You can preview this in the table.", type = "warning")
+                 "The record_id column within uploaded citations was not unique. ASySD has generated a unique record_id for each citation. You can preview this in the table.", type = "info")
 
       citations <-  citations %>%
         mutate(record_id =  as.character(row_number()+1000))
@@ -572,8 +582,12 @@ server <- function(input, output, session){
   # ASySD r text ----
   output$Post_upload_text <- renderText({
 
-
     original_refs_n <- as.numeric(nrow(rv$refdata))
+
+    shiny::validate(
+      shiny::need(!length(original_refs_n) == 0, "")
+    )
+
     paste("You have uploaded", original_refs_n, "citations. Preview them below.")
 
   })
