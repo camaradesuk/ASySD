@@ -1,0 +1,41 @@
+---
+title: 
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+bibliography: references.bib
+---
+
+```{=html}
+<style>
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #754E9B;
+}
+</style>
+```
+# About
+
+<img src="updated_logo.png" align="right" width="142"/>
+
+ASySD was developed in the [CAMARADES](https://www.ed.ac.uk/clinical-brain-sciences/research/camarades/about-camarades) research group at the University of Edinburgh by Kaitlyn Hair. By comparing metadata fields in existing in-house systematic search datasets, rule-based match criteria were iteratively developed to identify duplicate citations with a high degree of accuracy. Once developed, ASySD was evaluated on 5 unseen biomedical systematic review datasets of varying sizes (\~1800 to \~80,000 citations). Using ASySD's automated deduplication approach was highly sensitive, capturing over 95% of citations, and highly specific with a very low false positive rate of \<0.2%.
+
+# Packages ASySD uses
+
+The data import functionality within ASySD uses the [synthesisr](https://github.com/mjwestgate/synthesisr) package, created by Martin Westgate and the [RefManageR](https://docs.ropensci.org/RefManageR/authors.html#citation) package, created by Mathew W. McLean. The record matching function underlying this tool uses the [**RecordLinkage**](https://rdrr.io/cran/RecordLinkage/) package, created by Murat Sariyar and Andreas Borg.
+
+# Packages using ASySD
+
+[![](https://user-images.githubusercontent.com/89118428/155393065-780381a0-ff77-45d3-b2ee-40332ef72064.png){width="95"}](CiteSource/index.html)
+
+# Issues and feature requests
+
+If you have any questions about the tool or come across a problem when trying to use it, please raise an issue on the [GitHub Repository](https://github.com/camaradesuk/ASySD) or send an email to [kaitlyn.hair\@ed.ac.uk](mailto:kaitlyn.hair@ed.ac.uk).
+
+# Citation
+
+If you want to use this application for your systematic review, please cite:
+
+Hair K, Bahor Z, Macleod M, Liao J, Sena ES. The Automated Systematic Search Deduplicator (ASySD): a rapid, open-source, interoperable tool to remove duplicate citations in biomedical systematic reviews. bioRxiv; 2021. DOI: 10.1101/2021.05.04.442412.
+
+# News

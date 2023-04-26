@@ -296,22 +296,8 @@ ui <- navbarPage(
 
   tabPanel("About",
 
-           fluidPage(
-
-             p("The", strong("Automated Systematic Search Deduplication tool (AsySD)"), "allows users to input a dataset and remove duplicate publications."),
-
-             tags$img(class = "img-responsive img-rounded center-block",
-                      src="updated_logo.png",height=150,width=150, align="center"),
-
-             p("This tool was developed in the CAMARADES group by", tags$a(href="https://www.researchgate.net/profile/Kaitlyn_Hair", "Kaitlyn Hair."),
-             "If you have any questions about the tool, please raise an issue on the GitHub (see below) or email her at kaitlyn.hair@ed.ac.uk"),
-             p("The record matching function underlying this tool uses the", tags$a(href="https://rdrr.io/cran/RecordLinkage/", "RecordLinkage"), "package, created by Murat Sariyar and Andreas Borg"),
-             p("The code underlying this application is available on", tags$a(href="https://github.com/camaradesuk/ASySD", "GitHub")),
-             p(strong("If you want to use this application for your systematic review, please cite:                          "),
-               em("Hair K, Bahor Z, Macleod M, Liao J, Sena ES. The Automated Systematic Search Deduplicator (ASySD):
-             a rapid, open-source, interoperable tool to remove duplicate citations in biomedical systematic reviews. bioRxiv; 2021. DOI: 10.1101/2021.05.04.442412."))
-
-           )))
+                    uiOutput("about")
+           ))
 
 # addResourcePath("tmpuser", getwd())
 
@@ -321,6 +307,15 @@ server <- function(input, output, session){
     tags$iframe(
       seamless = "seamless",
       src = "instructions.html",
+      width = "100%",
+      height = 800
+    )
+  })
+
+  output$about <- renderUI({
+    tags$iframe(
+      seamless = "seamless",
+      src = "about.html",
       width = "100%",
       height = 800
     )

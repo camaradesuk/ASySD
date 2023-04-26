@@ -6,41 +6,13 @@ output:
     toc_float: true
 ---
 
-```{css, echo=FALSE}
-/* Customize the style of the TOC float */
-#toc_float {
-  position: fixed;
-  top: 100px;
-  right: 50px;
-  max-width: 300px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  overflow-y: auto;
-  max-height: calc(100vh - 200px);
-}
-
-/* Customize the style of the TOC links */
-#toc_float a {
-  color: #337ab7;
-  text-decoration: none;
-}
-
-/* Highlight the active section in the TOC */
-#toc_float a.active {
-  font-weight: bold;
-}
-
+```{=html}
 <style>
-  table {
-    border-collapse: collapse;
-  }
-  td, th {
-    padding: 5px;
-  }
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #754E9B;
+}
 </style>
 ```
-
 ## Overview
 
 <img src="updated_logo.png" align="right" width="142"/>
@@ -50,7 +22,7 @@ Welcome to the the **Automated Systematic Search Deduplicator** app! This free t
 ASySD uses the following metadata to identify duplicates:
 
 | **Name**              | **Definition**                                                                                                                         |
-|:-------------------------|:---------------------------------------------|
+|:----------------|:------------------------------------------------------|
 | **author**            | The author(s) of the publication                                                                                                       |
 | **year**              | The year the publication was published                                                                                                 |
 | **journal**           | The name of the journal in which the publication appeared                                                                              |
@@ -59,7 +31,7 @@ ASySD uses the following metadata to identify duplicates:
 | **pages**             | The page numbers of the publication                                                                                                    |
 | **volume**            | The volume number of the publication (if applicable)                                                                                   |
 | **number**            | The issue number of the publication (if applicable)                                                                                    |
-| **abstract**          | A summary or brief description of the publication                                                                                      |
+| **abstract**          | Abstract of publication                                                                                                                |
 | **record_id**         | A unique identifier for the publication. If this is not obtained from the citation file, ASySD will genereate an id for each citation. |
 | **isbn**              | The International Standard Book Number (ISBN) assigned to the publication (if applicable)                                              |
 | **label (optional)**  | A label or tag assigned to the publication (if applicable) - for example, **new search** or **old search**                             |
@@ -75,7 +47,9 @@ ASySD uses the following metadata to identify duplicates:
 
 4.  Once upload is complete, you can preview the citations in the table to the right
 
-5.  If you want to assign a label or source to individual files, you can do so by going to the *add labels/sources* tab
+5.  Go to the *Check Metadata* tab to evaluate missing metadata across different fields - note that the performance of ASySD may vary significantly if key metadata such as pages and DOIs are not present in the citations
+
+6.  If you want to assign a label or source to individual files, you can do so by going to the *add labels/sources* tab
 
     [Note]{.underline}: we recommend using the **Endnote generated XML** upload format where possible as this has undergone the most user testing. Note that this export format should be possible from Endnote, Zotero, and Mendeley.
 
@@ -103,7 +77,7 @@ If you have no preference, please leave this at the default option.
 
 2.  Depending on the number of potential duplicates identified, you may want to manually review them via the app, or flag them for later review in a reference manager or other software.
 
-### **Removing in app**
+### Removing in app
 
 -   Pairs of citations which require manual deduplication are shown in a table.
 
@@ -123,7 +97,7 @@ For example, you may class all 5 rows above as duplicates. ASySD will retain one
 
 The the pairs you deem as true duplicates will be passed to the ASySD algorithm and the citations will go through the entire deduplication process again. This is to avoid erroneous removal of citations and to ensure that only one unique citation is retained for each group of duplicates.
 
-### **Flagging for review**
+### Flagging for review
 
 If you prefer to flag for later review, click specific rows and click the *flag selected pairs* button, or alternatively click *flag all pairs* to flag every possible duplicate pair.
 
@@ -139,13 +113,13 @@ Within Zotero or Endnote, you can identify citations with a flag and go through 
 If we have citations from three sources, our export file will look something like this:
 
 | duplicate_id | title                                                        | source              |
-|:-----------------|:----------------------|:------------------------------|
+|:----------------|:--------------------------------------|:----------------|
 | 111          | *An example article*                                         | wos, pubmed         |
 | 112          | *Another example which was only in wos*                      | wos                 |
 | 113          | *Yet another example which was only in pubmed*               | pubmed              |
 | 114          | *Another example paper which was present across all sources* | pubmed, wos, scopus |
 
-IAs you can see, when a citation was present across multiple sources this is indicated in the source output. This is because of the way ASySD merges duplicate citations together.
+As you can see, when a citation was present across multiple sources this is indicated in the source output. This is because of the way ASySD merges duplicate citations together.
 
 ### Exporting all citations
 
