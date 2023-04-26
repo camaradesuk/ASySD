@@ -92,7 +92,6 @@ load_multi_search <-function(paths, names, method){
 
   if(method == "endnote"){
 
-
         newdat<- XML::xmlParse(path)
         x <-  XML::getNodeSet(newdat,'//record')
 
@@ -103,7 +102,7 @@ load_multi_search <-function(paths, names, method){
         }
 
         newdat <- data.frame(
-          author = sapply(x, xpath2, ".//contributors/authors", xmlValue),
+          author = sapply(x, xpath2, ".//author", xmlValue),
           year   = sapply(x, xpath2, ".//dates/year", xmlValue),
           journal = sapply(x, xpath2, ".//periodical/full-title", xmlValue),
           doi = sapply(x, xpath2, ".//electronic-resource-num", xmlValue),
@@ -177,7 +176,6 @@ load_search <-function(path, method){
 
   if(method == "endnote"){
 
-
     newdat<- XML::xmlParse(path)
     x <-  XML::getNodeSet(newdat,'//record')
 
@@ -188,7 +186,7 @@ load_search <-function(path, method){
     }
 
     newdat <- data.frame(
-      author = sapply(x, xpath2, ".//contributors/authors", xmlValue),
+      author = sapply(x, xpath2, ".//author", xmlValue),
       year   = sapply(x, xpath2, ".//dates/year", xmlValue),
       journal = sapply(x, xpath2, ".//periodical/full-title", xmlValue),
       doi = sapply(x, xpath2, ".//electronic-resource-num", xmlValue),
@@ -293,3 +291,5 @@ load_search <-function(path, method){
   return(newdat)
 
 }
+
+
