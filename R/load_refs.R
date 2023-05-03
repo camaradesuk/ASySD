@@ -8,9 +8,9 @@ utils::globalVariables(c("Abstract", "AlternateName", "Author", "AuthorAddress",
 #'
 #' This function loads in a citation file within the shiny app
 #'
-#' @param path Relative path to the citations file
+#' @param paths Relative paths to the citations file or files
 #' @param method  Import method
-#' @param name File name of input file or files
+#' @param names File names of input file or files
 #' @return A dataframe of the citations
 #' @import XML
 #' @import RefManageR

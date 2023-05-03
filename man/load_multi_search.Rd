@@ -7,11 +7,11 @@
 load_multi_search(paths, names, method)
 }
 \arguments{
+\item{paths}{Relative paths to the citations file or files}
+
+\item{names}{File names of input file or files}
+
 \item{method}{Import method}
-
-\item{path}{Relative path to the citations file}
-
-\item{name}{File name of input file or files}
 }
 \value{
 A dataframe of the citations
