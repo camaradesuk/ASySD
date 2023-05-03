@@ -101,7 +101,7 @@ citations to retain.</p>
 <code class="sourceCode R"><span><span class="va">existing_search</span><span class="op">$</span><span class="va">source</span> <span class="op">&lt;-</span> <span class="st">"old"</span></span>
 <span><span class="va">new_search</span><span class="op">$</span><span class="va">source</span> <span class="op">&lt;-</span> <span class="st">"new"</span></span>
 <span></span>
-<span><span class="va">all_citations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">existing_search</span>, <span class="va">new_search</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">all_citations</span> <span class="op">&lt;-</span> <span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/rbind.fill.html" class="external-link">rbind.fill</a></span><span class="op">(</span><span class="va">existing_search</span>, <span class="va">new_search</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="automated-deduplication">Automated deduplication<a class="anchor" aria-label="anchor" href="#automated-deduplication"></a>
@@ -170,23 +170,23 @@ citations we added with our latest systematic search?</p>
 <span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="wkptlkycxr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wkptlkycxr table {
+<div id="lurbcqgnzz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lurbcqgnzz table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wkptlkycxr thead, #wkptlkycxr tbody, #wkptlkycxr tfoot, #wkptlkycxr tr, #wkptlkycxr td, #wkptlkycxr th {
+#lurbcqgnzz thead, #lurbcqgnzz tbody, #lurbcqgnzz tfoot, #lurbcqgnzz tr, #lurbcqgnzz td, #lurbcqgnzz th {
   border-style: none;
 }
 
-#wkptlkycxr p {
+#lurbcqgnzz p {
   margin: 0;
   padding: 0;
 }
 
-#wkptlkycxr .gt_table {
+#lurbcqgnzz .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -212,12 +212,12 @@ citations we added with our latest systematic search?</p>
   border-left-color: #D3D3D3;
 }
 
-#wkptlkycxr .gt_caption {
+#lurbcqgnzz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wkptlkycxr .gt_title {
+#lurbcqgnzz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -229,7 +229,7 @@ citations we added with our latest systematic search?</p>
   border-bottom-width: 0;
 }
 
-#wkptlkycxr .gt_subtitle {
+#lurbcqgnzz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -241,7 +241,7 @@ citations we added with our latest systematic search?</p>
   border-top-width: 0;
 }
 
-#wkptlkycxr .gt_heading {
+#lurbcqgnzz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -253,13 +253,13 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#wkptlkycxr .gt_bottom_border {
+#lurbcqgnzz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wkptlkycxr .gt_col_headings {
+#lurbcqgnzz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -274,7 +274,7 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#wkptlkycxr .gt_col_heading {
+#lurbcqgnzz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -294,7 +294,7 @@ citations we added with our latest systematic search?</p>
   overflow-x: hidden;
 }
 
-#wkptlkycxr .gt_column_spanner_outer {
+#lurbcqgnzz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -306,15 +306,15 @@ citations we added with our latest systematic search?</p>
   padding-right: 4px;
 }
 
-#wkptlkycxr .gt_column_spanner_outer:first-child {
+#lurbcqgnzz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wkptlkycxr .gt_column_spanner_outer:last-child {
+#lurbcqgnzz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wkptlkycxr .gt_column_spanner {
+#lurbcqgnzz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -326,11 +326,11 @@ citations we added with our latest systematic search?</p>
   width: 100%;
 }
 
-#wkptlkycxr .gt_spanner_row {
+#lurbcqgnzz .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wkptlkycxr .gt_group_heading {
+#lurbcqgnzz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -356,7 +356,7 @@ citations we added with our latest systematic search?</p>
   text-align: left;
 }
 
-#wkptlkycxr .gt_empty_group_heading {
+#lurbcqgnzz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -371,15 +371,15 @@ citations we added with our latest systematic search?</p>
   vertical-align: middle;
 }
 
-#wkptlkycxr .gt_from_md > :first-child {
+#lurbcqgnzz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wkptlkycxr .gt_from_md > :last-child {
+#lurbcqgnzz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wkptlkycxr .gt_row {
+#lurbcqgnzz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -398,7 +398,7 @@ citations we added with our latest systematic search?</p>
   overflow-x: hidden;
 }
 
-#wkptlkycxr .gt_stub {
+#lurbcqgnzz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -411,7 +411,7 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#wkptlkycxr .gt_stub_row_group {
+#lurbcqgnzz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -425,15 +425,15 @@ citations we added with our latest systematic search?</p>
   vertical-align: top;
 }
 
-#wkptlkycxr .gt_row_group_first td {
+#lurbcqgnzz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wkptlkycxr .gt_row_group_first th {
+#lurbcqgnzz .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wkptlkycxr .gt_summary_row {
+#lurbcqgnzz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -443,16 +443,16 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#wkptlkycxr .gt_first_summary_row {
+#lurbcqgnzz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wkptlkycxr .gt_first_summary_row.thick {
+#lurbcqgnzz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wkptlkycxr .gt_last_summary_row {
+#lurbcqgnzz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -462,7 +462,7 @@ citations we added with our latest systematic search?</p>
   border-bottom-color: #D3D3D3;
 }
 
-#wkptlkycxr .gt_grand_summary_row {
+#lurbcqgnzz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -472,7 +472,7 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#wkptlkycxr .gt_first_grand_summary_row {
+#lurbcqgnzz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -482,7 +482,7 @@ citations we added with our latest systematic search?</p>
   border-top-color: #D3D3D3;
 }
 
-#wkptlkycxr .gt_last_grand_summary_row_top {
+#lurbcqgnzz .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -492,11 +492,11 @@ citations we added with our latest systematic search?</p>
   border-bottom-color: #D3D3D3;
 }
 
-#wkptlkycxr .gt_striped {
+#lurbcqgnzz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wkptlkycxr .gt_table_body {
+#lurbcqgnzz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -505,7 +505,7 @@ citations we added with our latest systematic search?</p>
   border-bottom-color: #D3D3D3;
 }
 
-#wkptlkycxr .gt_footnotes {
+#lurbcqgnzz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -519,7 +519,7 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#wkptlkycxr .gt_footnote {
+#lurbcqgnzz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -528,7 +528,7 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#wkptlkycxr .gt_sourcenotes {
+#lurbcqgnzz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -542,7 +542,7 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#wkptlkycxr .gt_sourcenote {
+#lurbcqgnzz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -550,69 +550,70 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#wkptlkycxr .gt_left {
+#lurbcqgnzz .gt_left {
   text-align: left;
 }
 
-#wkptlkycxr .gt_center {
+#lurbcqgnzz .gt_center {
   text-align: center;
 }
 
-#wkptlkycxr .gt_right {
+#lurbcqgnzz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wkptlkycxr .gt_font_normal {
+#lurbcqgnzz .gt_font_normal {
   font-weight: normal;
 }
 
-#wkptlkycxr .gt_font_bold {
+#lurbcqgnzz .gt_font_bold {
   font-weight: bold;
 }
 
-#wkptlkycxr .gt_font_italic {
+#lurbcqgnzz .gt_font_italic {
   font-style: italic;
 }
 
-#wkptlkycxr .gt_super {
+#lurbcqgnzz .gt_super {
   font-size: 65%;
 }
 
-#wkptlkycxr .gt_footnote_marks {
+#lurbcqgnzz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wkptlkycxr .gt_asterisk {
+#lurbcqgnzz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wkptlkycxr .gt_indent_1 {
+#lurbcqgnzz .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wkptlkycxr .gt_indent_2 {
+#lurbcqgnzz .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wkptlkycxr .gt_indent_3 {
+#lurbcqgnzz .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wkptlkycxr .gt_indent_4 {
+#lurbcqgnzz .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wkptlkycxr .gt_indent_5 {
+#lurbcqgnzz .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead><tr class="gt_col_headings">
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="duplicate_id">duplicate_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="record_ids">record_ids</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="author">author</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="journal">journal</th>
@@ -624,11 +625,21 @@ citations we added with our latest systematic search?</p>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="isbn">isbn</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="label">label</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="source">source</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="record_ids">record_ids</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="...1">...1</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="uid">uid</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="keywords">keywords</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="secondarytitle">secondarytitle</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="url">url</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="issn">issn</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pmid">pmid</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ptype">ptype</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="author_country">author_country</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="author_affiliation">author_affiliation</th>
     </tr></thead>
 <tbody class="gt_table_body">
 <tr>
 <td headers="duplicate_id" class="gt_row gt_left">wos:000931052000002</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000931052000002</td>
 <td headers="author" class="gt_row gt_left">Lipton, Stuart A.</td>
 <td headers="year" class="gt_row gt_right">2022</td>
 <td headers="journal" class="gt_row gt_left">FREE RADICAL BIOLOGY AND MEDICINE</td>
@@ -640,10 +651,20 @@ citations we added with our latest systematic search?</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223</td>
 <td headers="source" class="gt_row gt_left">new</td>
-<td headers="record_ids" class="gt_row gt_left">wos:000931052000002</td>
+<td headers="...1" class="gt_row gt_right">5561</td>
+<td headers="uid" class="gt_row gt_left">wos:000931052000002</td>
+<td headers="keywords" class="gt_row gt_left"></td>
+<td headers="secondarytitle" class="gt_row gt_right"></td>
+<td headers="url" class="gt_row gt_right"></td>
+<td headers="issn" class="gt_row gt_right">0891-5849</td>
+<td headers="pmid" class="gt_row gt_right"></td>
+<td headers="ptype" class="gt_row gt_right"></td>
+<td headers="author_country" class="gt_row gt_right"></td>
+<td headers="author_affiliation" class="gt_row gt_right"></td>
 </tr>
 <tr>
 <td headers="duplicate_id" class="gt_row gt_left">wos:000931426100001</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000931426100001</td>
 <td headers="author" class="gt_row gt_left">Marini, Sandro; Chung, Jaeyoon; Han, Xudong; Sun, Xinyu; Parodi, Livia; Farrer, Lindsay A.; Rosand, Jonathan; Romero, Jose Rafael; Anderson, Christopher D.</td>
 <td headers="year" class="gt_row gt_right">2023</td>
 <td headers="journal" class="gt_row gt_left">INTERNATIONAL JOURNAL OF STROKE</td>
@@ -655,10 +676,20 @@ citations we added with our latest systematic search?</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223</td>
 <td headers="source" class="gt_row gt_left">new</td>
-<td headers="record_ids" class="gt_row gt_left">wos:000931426100001</td>
+<td headers="...1" class="gt_row gt_right">9861</td>
+<td headers="uid" class="gt_row gt_left">wos:000931426100001</td>
+<td headers="keywords" class="gt_row gt_left">ICH | beta-amyloid | pleiotropy | genetic epidemiology | cadherin | cerebral amyloid angiopathy</td>
+<td headers="secondarytitle" class="gt_row gt_right"></td>
+<td headers="url" class="gt_row gt_right"></td>
+<td headers="issn" class="gt_row gt_right">1747-4930</td>
+<td headers="pmid" class="gt_row gt_right"></td>
+<td headers="ptype" class="gt_row gt_right"></td>
+<td headers="author_country" class="gt_row gt_right"></td>
+<td headers="author_affiliation" class="gt_row gt_right"></td>
 </tr>
 <tr>
 <td headers="duplicate_id" class="gt_row gt_left">wos:000932018500001</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000932018500001</td>
 <td headers="author" class="gt_row gt_left">Walker, Keenan A.; Duggan, Michael R.; Gong, Zhaoyuan; Dark, Heather E.; Laporte, John P.; Faulkner, Mary E.; An, Yang; Lewis, Alexandria; Moghekar, Abhay R.; Resnick, Susan M.; Bouhrara, Mustapha</td>
 <td headers="year" class="gt_row gt_right">2023</td>
 <td headers="journal" class="gt_row gt_left">ANNALS OF CLINICAL AND TRANSLATIONAL NEUROLOGY</td>
@@ -670,7 +701,16 @@ citations we added with our latest systematic search?</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223</td>
 <td headers="source" class="gt_row gt_left">new</td>
-<td headers="record_ids" class="gt_row gt_left">wos:000932018500001</td>
+<td headers="...1" class="gt_row gt_right">6501</td>
+<td headers="uid" class="gt_row gt_left">wos:000932018500001</td>
+<td headers="keywords" class="gt_row gt_left"></td>
+<td headers="secondarytitle" class="gt_row gt_right"></td>
+<td headers="url" class="gt_row gt_right"></td>
+<td headers="issn" class="gt_row gt_right">2328-9503</td>
+<td headers="pmid" class="gt_row gt_right"></td>
+<td headers="ptype" class="gt_row gt_right"></td>
+<td headers="author_country" class="gt_row gt_right"></td>
+<td headers="author_affiliation" class="gt_row gt_right"></td>
 </tr>
 </tbody>
 </table>
@@ -686,23 +726,23 @@ removing citations with a single source.</p>
 <span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="wvycbqpier" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wvycbqpier table {
+<div id="kdafpbhqnk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kdafpbhqnk table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wvycbqpier thead, #wvycbqpier tbody, #wvycbqpier tfoot, #wvycbqpier tr, #wvycbqpier td, #wvycbqpier th {
+#kdafpbhqnk thead, #kdafpbhqnk tbody, #kdafpbhqnk tfoot, #kdafpbhqnk tr, #kdafpbhqnk td, #kdafpbhqnk th {
   border-style: none;
 }
 
-#wvycbqpier p {
+#kdafpbhqnk p {
   margin: 0;
   padding: 0;
 }
 
-#wvycbqpier .gt_table {
+#kdafpbhqnk .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -728,12 +768,12 @@ removing citations with a single source.</p>
   border-left-color: #D3D3D3;
 }
 
-#wvycbqpier .gt_caption {
+#kdafpbhqnk .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wvycbqpier .gt_title {
+#kdafpbhqnk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -745,7 +785,7 @@ removing citations with a single source.</p>
   border-bottom-width: 0;
 }
 
-#wvycbqpier .gt_subtitle {
+#kdafpbhqnk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -757,7 +797,7 @@ removing citations with a single source.</p>
   border-top-width: 0;
 }
 
-#wvycbqpier .gt_heading {
+#kdafpbhqnk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -769,13 +809,13 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#wvycbqpier .gt_bottom_border {
+#kdafpbhqnk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wvycbqpier .gt_col_headings {
+#kdafpbhqnk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -790,7 +830,7 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#wvycbqpier .gt_col_heading {
+#kdafpbhqnk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -810,7 +850,7 @@ removing citations with a single source.</p>
   overflow-x: hidden;
 }
 
-#wvycbqpier .gt_column_spanner_outer {
+#kdafpbhqnk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -822,15 +862,15 @@ removing citations with a single source.</p>
   padding-right: 4px;
 }
 
-#wvycbqpier .gt_column_spanner_outer:first-child {
+#kdafpbhqnk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wvycbqpier .gt_column_spanner_outer:last-child {
+#kdafpbhqnk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wvycbqpier .gt_column_spanner {
+#kdafpbhqnk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -842,11 +882,11 @@ removing citations with a single source.</p>
   width: 100%;
 }
 
-#wvycbqpier .gt_spanner_row {
+#kdafpbhqnk .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wvycbqpier .gt_group_heading {
+#kdafpbhqnk .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -872,7 +912,7 @@ removing citations with a single source.</p>
   text-align: left;
 }
 
-#wvycbqpier .gt_empty_group_heading {
+#kdafpbhqnk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -887,15 +927,15 @@ removing citations with a single source.</p>
   vertical-align: middle;
 }
 
-#wvycbqpier .gt_from_md > :first-child {
+#kdafpbhqnk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wvycbqpier .gt_from_md > :last-child {
+#kdafpbhqnk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wvycbqpier .gt_row {
+#kdafpbhqnk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -914,7 +954,7 @@ removing citations with a single source.</p>
   overflow-x: hidden;
 }
 
-#wvycbqpier .gt_stub {
+#kdafpbhqnk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -927,7 +967,7 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#wvycbqpier .gt_stub_row_group {
+#kdafpbhqnk .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -941,15 +981,15 @@ removing citations with a single source.</p>
   vertical-align: top;
 }
 
-#wvycbqpier .gt_row_group_first td {
+#kdafpbhqnk .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wvycbqpier .gt_row_group_first th {
+#kdafpbhqnk .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wvycbqpier .gt_summary_row {
+#kdafpbhqnk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -959,16 +999,16 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#wvycbqpier .gt_first_summary_row {
+#kdafpbhqnk .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wvycbqpier .gt_first_summary_row.thick {
+#kdafpbhqnk .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wvycbqpier .gt_last_summary_row {
+#kdafpbhqnk .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -978,7 +1018,7 @@ removing citations with a single source.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#wvycbqpier .gt_grand_summary_row {
+#kdafpbhqnk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -988,7 +1028,7 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#wvycbqpier .gt_first_grand_summary_row {
+#kdafpbhqnk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -998,7 +1038,7 @@ removing citations with a single source.</p>
   border-top-color: #D3D3D3;
 }
 
-#wvycbqpier .gt_last_grand_summary_row_top {
+#kdafpbhqnk .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1008,11 +1048,11 @@ removing citations with a single source.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#wvycbqpier .gt_striped {
+#kdafpbhqnk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wvycbqpier .gt_table_body {
+#kdafpbhqnk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1021,7 +1061,7 @@ removing citations with a single source.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#wvycbqpier .gt_footnotes {
+#kdafpbhqnk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1035,7 +1075,7 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#wvycbqpier .gt_footnote {
+#kdafpbhqnk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1044,7 +1084,7 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#wvycbqpier .gt_sourcenotes {
+#kdafpbhqnk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1058,7 +1098,7 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#wvycbqpier .gt_sourcenote {
+#kdafpbhqnk .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1066,69 +1106,70 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#wvycbqpier .gt_left {
+#kdafpbhqnk .gt_left {
   text-align: left;
 }
 
-#wvycbqpier .gt_center {
+#kdafpbhqnk .gt_center {
   text-align: center;
 }
 
-#wvycbqpier .gt_right {
+#kdafpbhqnk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wvycbqpier .gt_font_normal {
+#kdafpbhqnk .gt_font_normal {
   font-weight: normal;
 }
 
-#wvycbqpier .gt_font_bold {
+#kdafpbhqnk .gt_font_bold {
   font-weight: bold;
 }
 
-#wvycbqpier .gt_font_italic {
+#kdafpbhqnk .gt_font_italic {
   font-style: italic;
 }
 
-#wvycbqpier .gt_super {
+#kdafpbhqnk .gt_super {
   font-size: 65%;
 }
 
-#wvycbqpier .gt_footnote_marks {
+#kdafpbhqnk .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wvycbqpier .gt_asterisk {
+#kdafpbhqnk .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wvycbqpier .gt_indent_1 {
+#kdafpbhqnk .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wvycbqpier .gt_indent_2 {
+#kdafpbhqnk .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wvycbqpier .gt_indent_3 {
+#kdafpbhqnk .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wvycbqpier .gt_indent_4 {
+#kdafpbhqnk .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wvycbqpier .gt_indent_5 {
+#kdafpbhqnk .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead><tr class="gt_col_headings">
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="duplicate_id">duplicate_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="record_ids">record_ids</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="author">author</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="journal">journal</th>
@@ -1140,11 +1181,21 @@ removing citations with a single source.</p>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="isbn">isbn</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="label">label</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="source">source</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="record_ids">record_ids</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="...1">...1</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="uid">uid</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="keywords">keywords</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="secondarytitle">secondarytitle</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="url">url</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="issn">issn</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pmid">pmid</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="ptype">ptype</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="author_country">author_country</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="author_affiliation">author_affiliation</th>
     </tr></thead>
 <tbody class="gt_table_body">
 <tr>
 <td headers="duplicate_id" class="gt_row gt_left">wos:000912315500006</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000912315500006, wos:000923362600016</td>
 <td headers="author" class="gt_row gt_left">Walsh, Sebastian; Merrick, Richard; Richard, Edo; Nurock, Shirley; Brayne, Carol</td>
 <td headers="year" class="gt_row gt_right">2022</td>
 <td headers="journal" class="gt_row gt_left">BMJ-BRITISH MEDICAL JOURNAL</td>
@@ -1156,10 +1207,20 @@ removing citations with a single source.</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">140223, 270223</td>
 <td headers="source" class="gt_row gt_left">old, new</td>
-<td headers="record_ids" class="gt_row gt_left">wos:000912315500006, wos:000923362600016</td>
+<td headers="...1" class="gt_row gt_right">3011</td>
+<td headers="uid" class="gt_row gt_left">wos:000923362600016</td>
+<td headers="keywords" class="gt_row gt_left"></td>
+<td headers="secondarytitle" class="gt_row gt_right"></td>
+<td headers="url" class="gt_row gt_right"></td>
+<td headers="issn" class="gt_row gt_left">0959-535X</td>
+<td headers="pmid" class="gt_row gt_right"></td>
+<td headers="ptype" class="gt_row gt_left"></td>
+<td headers="author_country" class="gt_row gt_left"></td>
+<td headers="author_affiliation" class="gt_row gt_left"></td>
 </tr>
 <tr>
 <td headers="duplicate_id" class="gt_row gt_left">wos:000912550500001</td>
+<td headers="record_ids" class="gt_row gt_left">scopus-2-s2.0-85146065750, wos:000912550500001</td>
 <td headers="author" class="gt_row gt_left">Lee H.Y.; Baek S.; Cha M.; Yang S.H.; Cho I.; Shin H.; Lee S.; Kim H.Y.; Shin J.; Lee D.; Kim K.; Park I.W.; Yoon S.; Kim J.; Park S.J.; Kim S.M.; Kim K.E.; Kim H.J.; Oh M.S.; Lee G.H.; Yu B.Y.; Kannan P.; Park K.; Kim Y.S.</td>
 <td headers="year" class="gt_row gt_right">2023</td>
 <td headers="journal" class="gt_row gt_left">Angewandte Chemie - International Edition</td>
@@ -1171,10 +1232,20 @@ removing citations with a single source.</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223, 140223</td>
 <td headers="source" class="gt_row gt_left">new, old</td>
-<td headers="record_ids" class="gt_row gt_left">scopus-2-s2.0-85146065750, wos:000912550500001</td>
+<td headers="...1" class="gt_row gt_right">1282</td>
+<td headers="uid" class="gt_row gt_left">scopus-2-s2.0-85146065750</td>
+<td headers="keywords" class="gt_row gt_left">Alzheimer's Disease (AD)|Amyloid-β (Aβ)|Peptide Drug</td>
+<td headers="secondarytitle" class="gt_row gt_right"></td>
+<td headers="url" class="gt_row gt_right"></td>
+<td headers="issn" class="gt_row gt_left"></td>
+<td headers="pmid" class="gt_row gt_right">36316282</td>
+<td headers="ptype" class="gt_row gt_left">Article</td>
+<td headers="author_country" class="gt_row gt_left">South Korea</td>
+<td headers="author_affiliation" class="gt_row gt_left">Korea Institute of Science and Technology|Gangneung-Wonju National University|Yonsei University|Dongguk University, Seoul|Konkuk University|Amyloid Solution</td>
 </tr>
 <tr>
 <td headers="duplicate_id" class="gt_row gt_left">wos:000913655200001</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000913655200001, scopus-2-s2.0-85148113154</td>
 <td headers="author" class="gt_row gt_left">Koops, Elouise A.; Jacobs, Heidi I. L.</td>
 <td headers="year" class="gt_row gt_right">2022</td>
 <td headers="journal" class="gt_row gt_left">BRAIN</td>
@@ -1186,7 +1257,16 @@ removing citations with a single source.</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">140223, 270223</td>
 <td headers="source" class="gt_row gt_left">old, new</td>
-<td headers="record_ids" class="gt_row gt_left">wos:000913655200001, scopus-2-s2.0-85148113154</td>
+<td headers="...1" class="gt_row gt_right">10161</td>
+<td headers="uid" class="gt_row gt_left">scopus-2-s2.0-85148113154</td>
+<td headers="keywords" class="gt_row gt_left"></td>
+<td headers="secondarytitle" class="gt_row gt_right"></td>
+<td headers="url" class="gt_row gt_right"></td>
+<td headers="issn" class="gt_row gt_left"></td>
+<td headers="pmid" class="gt_row gt_right">36567494</td>
+<td headers="ptype" class="gt_row gt_left">Editorial</td>
+<td headers="author_country" class="gt_row gt_left">United States</td>
+<td headers="author_affiliation" class="gt_row gt_left">Harvard Medical School</td>
 </tr>
 </tbody>
 </table>
@@ -1213,23 +1293,23 @@ dataframes.</p>
 <span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="ydlndpxjtu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ydlndpxjtu table {
+<div id="vlgudvqylj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vlgudvqylj table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ydlndpxjtu thead, #ydlndpxjtu tbody, #ydlndpxjtu tfoot, #ydlndpxjtu tr, #ydlndpxjtu td, #ydlndpxjtu th {
+#vlgudvqylj thead, #vlgudvqylj tbody, #vlgudvqylj tfoot, #vlgudvqylj tr, #vlgudvqylj td, #vlgudvqylj th {
   border-style: none;
 }
 
-#ydlndpxjtu p {
+#vlgudvqylj p {
   margin: 0;
   padding: 0;
 }
 
-#ydlndpxjtu .gt_table {
+#vlgudvqylj .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1255,12 +1335,12 @@ dataframes.</p>
   border-left-color: #D3D3D3;
 }
 
-#ydlndpxjtu .gt_caption {
+#vlgudvqylj .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ydlndpxjtu .gt_title {
+#vlgudvqylj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1272,7 +1352,7 @@ dataframes.</p>
   border-bottom-width: 0;
 }
 
-#ydlndpxjtu .gt_subtitle {
+#vlgudvqylj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1284,7 +1364,7 @@ dataframes.</p>
   border-top-width: 0;
 }
 
-#ydlndpxjtu .gt_heading {
+#vlgudvqylj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1296,13 +1376,13 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#ydlndpxjtu .gt_bottom_border {
+#vlgudvqylj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ydlndpxjtu .gt_col_headings {
+#vlgudvqylj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1317,7 +1397,7 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#ydlndpxjtu .gt_col_heading {
+#vlgudvqylj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1337,7 +1417,7 @@ dataframes.</p>
   overflow-x: hidden;
 }
 
-#ydlndpxjtu .gt_column_spanner_outer {
+#vlgudvqylj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1349,15 +1429,15 @@ dataframes.</p>
   padding-right: 4px;
 }
 
-#ydlndpxjtu .gt_column_spanner_outer:first-child {
+#vlgudvqylj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ydlndpxjtu .gt_column_spanner_outer:last-child {
+#vlgudvqylj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ydlndpxjtu .gt_column_spanner {
+#vlgudvqylj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1369,11 +1449,11 @@ dataframes.</p>
   width: 100%;
 }
 
-#ydlndpxjtu .gt_spanner_row {
+#vlgudvqylj .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ydlndpxjtu .gt_group_heading {
+#vlgudvqylj .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1399,7 +1479,7 @@ dataframes.</p>
   text-align: left;
 }
 
-#ydlndpxjtu .gt_empty_group_heading {
+#vlgudvqylj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1414,15 +1494,15 @@ dataframes.</p>
   vertical-align: middle;
 }
 
-#ydlndpxjtu .gt_from_md > :first-child {
+#vlgudvqylj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ydlndpxjtu .gt_from_md > :last-child {
+#vlgudvqylj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ydlndpxjtu .gt_row {
+#vlgudvqylj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1441,7 +1521,7 @@ dataframes.</p>
   overflow-x: hidden;
 }
 
-#ydlndpxjtu .gt_stub {
+#vlgudvqylj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1454,7 +1534,7 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#ydlndpxjtu .gt_stub_row_group {
+#vlgudvqylj .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1468,15 +1548,15 @@ dataframes.</p>
   vertical-align: top;
 }
 
-#ydlndpxjtu .gt_row_group_first td {
+#vlgudvqylj .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ydlndpxjtu .gt_row_group_first th {
+#vlgudvqylj .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ydlndpxjtu .gt_summary_row {
+#vlgudvqylj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1486,16 +1566,16 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#ydlndpxjtu .gt_first_summary_row {
+#vlgudvqylj .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ydlndpxjtu .gt_first_summary_row.thick {
+#vlgudvqylj .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ydlndpxjtu .gt_last_summary_row {
+#vlgudvqylj .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1505,7 +1585,7 @@ dataframes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#ydlndpxjtu .gt_grand_summary_row {
+#vlgudvqylj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1515,7 +1595,7 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#ydlndpxjtu .gt_first_grand_summary_row {
+#vlgudvqylj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1525,7 +1605,7 @@ dataframes.</p>
   border-top-color: #D3D3D3;
 }
 
-#ydlndpxjtu .gt_last_grand_summary_row_top {
+#vlgudvqylj .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1535,11 +1615,11 @@ dataframes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#ydlndpxjtu .gt_striped {
+#vlgudvqylj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ydlndpxjtu .gt_table_body {
+#vlgudvqylj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1548,7 +1628,7 @@ dataframes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#ydlndpxjtu .gt_footnotes {
+#vlgudvqylj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1562,7 +1642,7 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#ydlndpxjtu .gt_footnote {
+#vlgudvqylj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1571,7 +1651,7 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#ydlndpxjtu .gt_sourcenotes {
+#vlgudvqylj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1585,7 +1665,7 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#ydlndpxjtu .gt_sourcenote {
+#vlgudvqylj .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1593,69 +1673,70 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#ydlndpxjtu .gt_left {
+#vlgudvqylj .gt_left {
   text-align: left;
 }
 
-#ydlndpxjtu .gt_center {
+#vlgudvqylj .gt_center {
   text-align: center;
 }
 
-#ydlndpxjtu .gt_right {
+#vlgudvqylj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ydlndpxjtu .gt_font_normal {
+#vlgudvqylj .gt_font_normal {
   font-weight: normal;
 }
 
-#ydlndpxjtu .gt_font_bold {
+#vlgudvqylj .gt_font_bold {
   font-weight: bold;
 }
 
-#ydlndpxjtu .gt_font_italic {
+#vlgudvqylj .gt_font_italic {
   font-style: italic;
 }
 
-#ydlndpxjtu .gt_super {
+#vlgudvqylj .gt_super {
   font-size: 65%;
 }
 
-#ydlndpxjtu .gt_footnote_marks {
+#vlgudvqylj .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ydlndpxjtu .gt_asterisk {
+#vlgudvqylj .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ydlndpxjtu .gt_indent_1 {
+#vlgudvqylj .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ydlndpxjtu .gt_indent_2 {
+#vlgudvqylj .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ydlndpxjtu .gt_indent_3 {
+#vlgudvqylj .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ydlndpxjtu .gt_indent_4 {
+#vlgudvqylj .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ydlndpxjtu .gt_indent_5 {
+#vlgudvqylj .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead><tr class="gt_col_headings">
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="duplicate_id">duplicate_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="record_ids">record_ids</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="author">author</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="journal">journal</th>
@@ -1667,11 +1748,21 @@ dataframes.</p>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="isbn">isbn</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="label">label</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="source">source</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="record_ids">record_ids</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="...1">...1</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="uid">uid</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="keywords">keywords</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="secondarytitle">secondarytitle</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="url">url</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="issn">issn</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pmid">pmid</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="ptype">ptype</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="author_country">author_country</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="author_affiliation">author_affiliation</th>
     </tr></thead>
 <tbody class="gt_table_body">
 <tr>
 <td headers="duplicate_id" class="gt_row gt_left">wos:000912315500006</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000912315500006, wos:000923362600016</td>
 <td headers="author" class="gt_row gt_left">Walsh, Sebastian; Merrick, Richard; Richard, Edo; Nurock, Shirley; Brayne, Carol</td>
 <td headers="year" class="gt_row gt_right">2022</td>
 <td headers="journal" class="gt_row gt_left">BMJ-BRITISH MEDICAL JOURNAL</td>
@@ -1683,10 +1774,20 @@ dataframes.</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">140223, 270223</td>
 <td headers="source" class="gt_row gt_left">old, new</td>
-<td headers="record_ids" class="gt_row gt_left">wos:000912315500006, wos:000923362600016</td>
+<td headers="...1" class="gt_row gt_right">3011</td>
+<td headers="uid" class="gt_row gt_left">wos:000923362600016</td>
+<td headers="keywords" class="gt_row gt_left"></td>
+<td headers="secondarytitle" class="gt_row gt_right"></td>
+<td headers="url" class="gt_row gt_right"></td>
+<td headers="issn" class="gt_row gt_left">0959-535X</td>
+<td headers="pmid" class="gt_row gt_right"></td>
+<td headers="ptype" class="gt_row gt_left"></td>
+<td headers="author_country" class="gt_row gt_left"></td>
+<td headers="author_affiliation" class="gt_row gt_left"></td>
 </tr>
 <tr>
 <td headers="duplicate_id" class="gt_row gt_left">wos:000912550500001</td>
+<td headers="record_ids" class="gt_row gt_left">scopus-2-s2.0-85146065750, wos:000912550500001</td>
 <td headers="author" class="gt_row gt_left">Lee H.Y.; Baek S.; Cha M.; Yang S.H.; Cho I.; Shin H.; Lee S.; Kim H.Y.; Shin J.; Lee D.; Kim K.; Park I.W.; Yoon S.; Kim J.; Park S.J.; Kim S.M.; Kim K.E.; Kim H.J.; Oh M.S.; Lee G.H.; Yu B.Y.; Kannan P.; Park K.; Kim Y.S.</td>
 <td headers="year" class="gt_row gt_right">2023</td>
 <td headers="journal" class="gt_row gt_left">Angewandte Chemie - International Edition</td>
@@ -1698,10 +1799,20 @@ dataframes.</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223, 140223</td>
 <td headers="source" class="gt_row gt_left">new, old</td>
-<td headers="record_ids" class="gt_row gt_left">scopus-2-s2.0-85146065750, wos:000912550500001</td>
+<td headers="...1" class="gt_row gt_right">1282</td>
+<td headers="uid" class="gt_row gt_left">scopus-2-s2.0-85146065750</td>
+<td headers="keywords" class="gt_row gt_left">Alzheimer's Disease (AD)|Amyloid-β (Aβ)|Peptide Drug</td>
+<td headers="secondarytitle" class="gt_row gt_right"></td>
+<td headers="url" class="gt_row gt_right"></td>
+<td headers="issn" class="gt_row gt_left"></td>
+<td headers="pmid" class="gt_row gt_right">36316282</td>
+<td headers="ptype" class="gt_row gt_left">Article</td>
+<td headers="author_country" class="gt_row gt_left">South Korea</td>
+<td headers="author_affiliation" class="gt_row gt_left">Korea Institute of Science and Technology|Gangneung-Wonju National University|Yonsei University|Dongguk University, Seoul|Konkuk University|Amyloid Solution</td>
 </tr>
 <tr>
 <td headers="duplicate_id" class="gt_row gt_left">wos:000913655200001</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000913655200001, scopus-2-s2.0-85148113154</td>
 <td headers="author" class="gt_row gt_left">Koops, Elouise A.; Jacobs, Heidi I. L.</td>
 <td headers="year" class="gt_row gt_right">2022</td>
 <td headers="journal" class="gt_row gt_left">BRAIN</td>
@@ -1713,7 +1824,16 @@ dataframes.</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">140223, 270223</td>
 <td headers="source" class="gt_row gt_left">old, new</td>
-<td headers="record_ids" class="gt_row gt_left">wos:000913655200001, scopus-2-s2.0-85148113154</td>
+<td headers="...1" class="gt_row gt_right">10161</td>
+<td headers="uid" class="gt_row gt_left">scopus-2-s2.0-85148113154</td>
+<td headers="keywords" class="gt_row gt_left"></td>
+<td headers="secondarytitle" class="gt_row gt_right"></td>
+<td headers="url" class="gt_row gt_right"></td>
+<td headers="issn" class="gt_row gt_left"></td>
+<td headers="pmid" class="gt_row gt_right">36567494</td>
+<td headers="ptype" class="gt_row gt_left">Editorial</td>
+<td headers="author_country" class="gt_row gt_left">United States</td>
+<td headers="author_affiliation" class="gt_row gt_left">Harvard Medical School</td>
 </tr>
 </tbody>
 </table>
