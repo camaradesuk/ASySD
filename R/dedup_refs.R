@@ -37,6 +37,8 @@ order_citations <- function(raw_citations){
   ordered_citations <- ordered_citations  %>%
     select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label, source)
 
+
+
   return(ordered_citations)
 }
 
@@ -210,16 +212,16 @@ match_citations <- function(formatted_citations){
 
   } else{
 
-    try(pairs$author <- parallel::mcmapply(jarowinkler, pairs$author1, pairs$author2, mc.cores = numCores), silent = TRUE)
-    try(pairs$title <- parallel::mcmapply(jarowinkler, pairs$title1, pairs$title2, mc.cores = numCores), silent = TRUE)
-    try(pairs$abstract <- parallel::mcmapply(jarowinkler, pairs$abstract1, pairs$abstract2, mc.cores = numCores), silent = TRUE)
-    try(pairs$year <- mapply(jarowinkler, pairs$year1, pairs$year2), silent = TRUE)
-    try(pairs$pages <- mapply(jarowinkler, pairs$pages1, pairs$pages2), silent = TRUE)
-    try(pairs$number <- mapply(jarowinkler, pairs$number1, pairs$number2), silent = TRUE)
-    try(pairs$volume <- mapply(jarowinkler, pairs$volume1, pairs$volume2), silent = TRUE)
-    try(pairs$journal <- parallel::mcmapply(jarowinkler, pairs$journal1, pairs$journal2, mc.cores = numCores), silent = TRUE)
-    try(pairs$isbn <- parallel::mcmapply(jarowinkler, pairs$isbn1, pairs$isbn2, mc.cores = numCores), silent = TRUE)
-    try(pairs$doi <- parallel::mcmapply(jarowinkler, pairs$doi1, pairs$doi2, mc.cores = numCores), silent = TRUE)
+    suppressWarnings(try(pairs$author <- parallel::mcmapply(jarowinkler, pairs$author1, pairs$author2, mc.cores = numCores), silent = TRUE))
+    suppressWarnings(try(pairs$title <- parallel::mcmapply(jarowinkler, pairs$title1, pairs$title2, mc.cores = numCores), silent = TRUE))
+    suppressWarnings(try(pairs$abstract <- parallel::mcmapply(jarowinkler, pairs$abstract1, pairs$abstract2, mc.cores = numCores), silent = TRUE))
+    suppressWarnings(try(pairs$year <- mapply(jarowinkler, pairs$year1, pairs$year2), silent = TRUE))
+    suppressWarnings(try(pairs$pages <- mapply(jarowinkler, pairs$pages1, pairs$pages2), silent = TRUE))
+    suppressWarnings(try(pairs$number <- mapply(jarowinkler, pairs$number1, pairs$number2), silent = TRUE))
+    suppressWarnings(try(pairs$volume <- mapply(jarowinkler, pairs$volume1, pairs$volume2), silent = TRUE))
+    suppressWarnings(try(pairs$journal <- parallel::mcmapply(jarowinkler, pairs$journal1, pairs$journal2, mc.cores = numCores), silent = TRUE))
+    suppressWarnings(try(pairs$isbn <- parallel::mcmapply(jarowinkler, pairs$isbn1, pairs$isbn2, mc.cores = numCores), silent = TRUE))
+    suppressWarnings(try(pairs$doi <- parallel::mcmapply(jarowinkler, pairs$doi1, pairs$doi2, mc.cores = numCores), silent = TRUE))
 
   }
 
@@ -586,6 +588,14 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     # add record id using row number
     raw_citations <- add_id_citations(raw_citations)
   }
+
+  cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+  missing_cols <- cols[!(cols %in% colnames(raw_citations))] # find missing columns
+  if (length(missing_cols) > 0) {
+    warning(paste0("The following columns are missing: ", paste(missing_cols, collapse = ", "), "\n"))
+    message(paste0("Setting missing cols to NA"))
+  }
+  raw_citations[missing_cols] <- NA # set missing columns to NA
 
   raw_citations$record_id <- as.character(raw_citations$record_id)
   ordered_citations <- order_citations(raw_citations)
