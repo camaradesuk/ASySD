@@ -39,7 +39,7 @@ Before deduplication, we must bind the citations into one dataframe. First, give
 existing_search$source <- "old"
 new_search$source <- "new"
 
-all_citations <- rbind(existing_search, new_search)
+all_citations <- plyr::rbind.fill(existing_search, new_search)
 ```
 
 ### Automated deduplication
