@@ -4,7 +4,8 @@ utils::globalVariables(c("author", "title", "year", "journal", "abstract", "doi"
                          "doi1", "number1", "pages1", "volume1", "isbn1", "record_id1",
                          "label1", "source1", "author2", "title2", "year2", "journal2",
                          "abstract2", "doi2", "number2", "pages2", "volume2", "isbn2",
-                         "record_id2", "label2", "source2", "id1", "id2"))
+                         "record_id2", "label2", "source2", "id1", "id2",
+                         "duplicate_id", "dup_id_correct", "Order"))
 
 ####------ Assign id ------ ####
 
@@ -29,12 +30,14 @@ order_citations <- function(raw_citations){
   # arrange by Year and presence of an Abstract - we want to keep newer records and records with an abstract preferentially
 
   ordered_citations <- raw_citations %>%
-    arrange(year, abstract) %>%
+    arrange(abstract, year) %>%
     dplyr::mutate_if(is.character, utf8::utf8_encode) # make sure utf8
 
   # select relevant columns
   ordered_citations <- ordered_citations  %>%
     select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label, source)
+
+
 
   return(ordered_citations)
 }
@@ -120,6 +123,7 @@ format_citations <- function(raw_citations){
 #' @return Dataframe of citation pairs
 #' @import RecordLinkage
 #' @import parallel
+#' @import parallelly
 match_citations <- function(formatted_citations){
 
   # ROUND 1: run compare.dedup function and block by title&pages OR title&author OR title&abstract OR doi
@@ -191,19 +195,35 @@ match_citations <- function(formatted_citations){
   pairs <- pairs %>%
     select(id1, id2, author1, author2, author, title1, title2, title, abstract1, abstract2, abstract, year1, year2, year, number1, number2, number, pages1, pages2, pages, volume1, volume2, volume, journal1, journal2, journal, isbn, isbn1, isbn2, doi1, doi2, doi, record_id1, record_id2, label1, label2, source1, source2)
 
-  numCores <- parallel::detectCores()
+  numCores <- parallelly::availableCores()
   numCores
 
-  try(pairs$author <- parallel::mcmapply(jarowinkler, pairs$author1, pairs$author2, mc.cores = numCores), silent = TRUE)
-  try(pairs$title <- parallel::mcmapply(jarowinkler, pairs$title1, pairs$title2, mc.cores = numCores), silent = TRUE)
-  try(pairs$abstract <- parallel::mcmapply(jarowinkler, pairs$abstract1, pairs$abstract2, mc.cores = numCores), silent = TRUE)
-  try(pairs$year <- mapply(jarowinkler, pairs$year1, pairs$year2), silent = TRUE)
-  try(pairs$pages <- mapply(jarowinkler, pairs$pages1, pairs$pages2), silent = TRUE)
-  try(pairs$number <- mapply(jarowinkler, pairs$number1, pairs$number2), silent = TRUE)
-  try(pairs$volume <- mapply(jarowinkler, pairs$volume1, pairs$volume2), silent = TRUE)
-  try(pairs$journal <- parallel::mcmapply(jarowinkler, pairs$journal1, pairs$journal2, mc.cores = numCores), silent = TRUE)
-  try(pairs$isbn <- parallel::mcmapply(jarowinkler, pairs$isbn1, pairs$isbn2, mc.cores = numCores), silent = TRUE)
-  try(pairs$doi <- parallel::mcmapply(jarowinkler, pairs$doi1, pairs$doi2, mc.cores = numCores), silent = TRUE)
+  if (.Platform$OS.type != "unix") {
+    try(pairs$author <- mapply(jarowinkler, pairs$author1, pairs$author2), silent = TRUE)
+    try(pairs$title <-mapply(jarowinkler, pairs$title1, pairs$title2), silent = TRUE)
+    try(pairs$abstract <- mapply(jarowinkler, pairs$abstract1, pairs$abstract2), silent = TRUE)
+    try(pairs$year <- mapply(jarowinkler, pairs$year1, pairs$year2), silent = TRUE)
+    try(pairs$pages <- mapply(jarowinkler, pairs$pages1, pairs$pages2), silent = TRUE)
+    try(pairs$number <- mapply(jarowinkler, pairs$number1, pairs$number2), silent = TRUE)
+    try(pairs$volume <- mapply(jarowinkler, pairs$volume1, pairs$volume2), silent = TRUE)
+    try(pairs$journal <- mapply(jarowinkler, pairs$journal1, pairs$journal2), silent = TRUE)
+    try(pairs$isbn <- mapply(jarowinkler, pairs$isbn1, pairs$isbn2), silent = TRUE)
+    try(pairs$doi <- mapply(jarowinkler, pairs$doi1, pairs$doi2), silent = TRUE)
+
+  } else{
+
+    suppressWarnings(try(pairs$author <- parallel::mcmapply(jarowinkler, pairs$author1, pairs$author2, mc.cores = numCores), silent = TRUE))
+    suppressWarnings(try(pairs$title <- parallel::mcmapply(jarowinkler, pairs$title1, pairs$title2, mc.cores = numCores), silent = TRUE))
+    suppressWarnings(try(pairs$abstract <- parallel::mcmapply(jarowinkler, pairs$abstract1, pairs$abstract2, mc.cores = numCores), silent = TRUE))
+    suppressWarnings(try(pairs$year <- mapply(jarowinkler, pairs$year1, pairs$year2), silent = TRUE))
+    suppressWarnings(try(pairs$pages <- mapply(jarowinkler, pairs$pages1, pairs$pages2), silent = TRUE))
+    suppressWarnings(try(pairs$number <- mapply(jarowinkler, pairs$number1, pairs$number2), silent = TRUE))
+    suppressWarnings(try(pairs$volume <- mapply(jarowinkler, pairs$volume1, pairs$volume2), silent = TRUE))
+    suppressWarnings(try(pairs$journal <- parallel::mcmapply(jarowinkler, pairs$journal1, pairs$journal2, mc.cores = numCores), silent = TRUE))
+    suppressWarnings(try(pairs$isbn <- parallel::mcmapply(jarowinkler, pairs$isbn1, pairs$isbn2, mc.cores = numCores), silent = TRUE))
+    suppressWarnings(try(pairs$doi <- parallel::mcmapply(jarowinkler, pairs$doi1, pairs$doi2, mc.cores = numCores), silent = TRUE))
+
+  }
 
   pairs <- pairs %>%
     mutate(abstract = ifelse(is.na(abstract1) & is.na(abstract2), 0, abstract)) %>%
@@ -212,6 +232,7 @@ match_citations <- function(formatted_citations){
     mutate(number = ifelse(is.na(number1) & is.na(number2), 1, number)) %>%
     mutate(doi = ifelse(is.na(doi1) & is.na(doi2), 0, doi)) %>%
     mutate(isbn = ifelse(is.na(isbn1) & is.na(isbn2), 0, isbn))
+
 }
 
 ####------ Identify true duplicate pairs ------ ####
@@ -463,8 +484,7 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
     mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
     mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
     ungroup() %>%
-    mutate(record_ids = record_id) %>%
-    select(-record_id) %>%
+    rename(record_ids = record_id) %>%
     ungroup()
 
   if(!is.null(keep_source)){
@@ -568,6 +588,14 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     # add record id using row number
     raw_citations <- add_id_citations(raw_citations)
   }
+
+  cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+  missing_cols <- cols[!(cols %in% colnames(raw_citations))] # find missing columns
+  if (length(missing_cols) > 0) {
+    warning(paste0("The following columns are missing: ", paste(missing_cols, collapse = ", "), "\n"))
+    message(paste0("Setting missing cols to NA"))
+  }
+  raw_citations[missing_cols] <- NA # set missing columns to NA
 
   raw_citations$record_id <- as.character(raw_citations$record_id)
   ordered_citations <- order_citations(raw_citations)

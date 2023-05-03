@@ -7,13 +7,13 @@
 load_search(path, method)
 }
 \arguments{
-\item{path}{File path to the input file}
+\item{path}{File path to the citations file}
 
-\item{method}{Loading citations methoddepending on file format}
+\item{method}{Import method}
 }
 \value{
-A dataframe of the Endnote references
+A dataframe of the citations
 }
 \description{
-This function loads in an Endnote XML file OR csv OR text.
+This function loads in an citations file.
 }

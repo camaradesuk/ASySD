@@ -16,23 +16,22 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports:
     parallel,
+    parallelly,
     RecordLinkage,
     XML,
-    RCurl,
-    dplyr,
     synthesisr,
-    snakecase,
     utf8,
+    utils,
+    tidyr,
     plyr,
-    tidyr
+    RefManageR,
+    dplyr
 Suggests: 
     knitr,
-    utils,
     gt,
     readr,
     magrittr,
     roxygen2,
-    snakecase,
     stringr,
     rmarkdown,
     testthat (>= 3.0.0)

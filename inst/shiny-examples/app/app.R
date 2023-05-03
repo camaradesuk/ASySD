@@ -11,14 +11,18 @@ library(RCurl)
 library(shiny)
 library(ASySD)
 library(shinythemes)
+library(knitr)
 library(shinycssloaders)
 library(htmlwidgets)
 library(shinyWidgets)
 library(bslib)
 
 options(shiny.maxRequestSize=1000*1024^2, timeout = 40000000)
+
 # UI ----
 ui <- navbarPage(
+
+  shinyjs::useShinyjs(),
 
   tags$head(includeHTML(("google-analytics.html"))),
 
@@ -37,11 +41,17 @@ ui <- navbarPage(
 
 
   # UI side panel ----
+
+  tabPanel("Getting started",
+
+           uiOutput("instructions")
+  ),
+
   tabPanel("Upload",
 
            sidebarLayout(
 
-             sidebarPanel(
+             sidebarPanel(width=3,
 
 
                # Input: select an input type  ----
@@ -52,28 +62,48 @@ ui <- navbarPage(
                  label = "Choose a file type",
                  inline = TRUE,
                  choices = c("Endnote XML",
-                             "CSV", "Tab delimited"),
+                             "CSV", "BIB", "RIS", "Zotero CSV", "Tab delimited"),
                  status="primary"),
 
                uiOutput("ASySD_pre_upload"),
                br(),
 
                # Input: select a file to upload----
-               fileInput("uploadfile", "Choose a file to upload",
-                         multiple = FALSE,
+               fileInput("uploadfile", "Choose file(s) to upload",
+                         multiple = TRUE,
                          placeholder = "No file selected")
              ),
 
              # UI main panel -----
              mainPanel(
 
-               h4("Preview citations"),
+               tabsetPanel(
+                 tabPanel("Preview citations",
 
+               br(),
                textOutput("Post_upload_text"),
+               br(),
 
                # Output: datatable of citations uploaded ----
-               DT::dataTableOutput("citation_table") %>% withSpinner(color="#754E9B", type=7))
-           )),
+               DT::dataTableOutput("citation_table") %>% withSpinner(color="#754E9B", type=7)
+           ),
+
+             tabPanel("Check metadata",
+
+                      DT::dataTableOutput("missing_data_table") %>% withSpinner(color="#754E9B", type=7)),
+
+           tabPanel("Add labels/sources",
+
+              br(),
+              p("If you have uploaded citation files separately - for example an old search and a new
+                search, you can edit labels and sources here if they are not already specified in the file. Note that this
+                will give every citation within an upload the"), p(strong("same label or source.")),
+              p("If there are multiple sources / labels within a file, below it will indicate this. We advise leaving these if you have tagged these in a reference manager before uploading, as it is not possible to change
+                the source/labels of individual citations within a single file.
+                To edit, double click on the relevant cell in the table below. You can preview the citations again to check that the intended change has been applied."),
+              br(),
+              DT::dataTableOutput("summary_table") %>% withSpinner(color="#754E9B", type=7)
+           ))))),
 
 
   # UI auto deduplication page  ----
@@ -212,10 +242,16 @@ ui <- navbarPage(
            shinyWidgets::prettyRadioButtons(
              inputId = "export_format",
              label = "Choose an export format",
-             choiceNames = c("Endnote tab delimited", "RIS", "SyRF CSV"),
-             choiceValues = c("txt", "ris", "csv"),
+             choiceNames = c("Endnote tab delimited", "RIS", "SyRF CSV", "CSV"),
+             choiceValues = c("txt", "ris", "syrf_csv", "csv"),
              status="success"),
 
+           materialSwitch("show_advanced", "Show advanced options",
+                          value = FALSE),
+
+
+           conditionalPanel(
+             condition = "input.show_advanced == true",
 
            h5("Customise output - labels"),
 
@@ -223,7 +259,7 @@ ui <- navbarPage(
            materialSwitch(
              inputId = "filterLabelOnly",
              label = "Only retain citations which are unique to this label",
-             value = FALSE,
+
              status = "success"
            ),
 
@@ -234,7 +270,7 @@ ui <- navbarPage(
              label = "Only retain citations which are unique to this source",
              value = FALSE,
              status = "success"
-           ),
+           )),
 
            downloadBttn(
              "download",
@@ -250,7 +286,7 @@ ui <- navbarPage(
            br(),
            uiOutput("ASySD_pre_download"),
            br(),
-           HTML(paste("<b>", "Customising output - labels and sources", "</b>",
+           HTML(paste("<b>", "Advanced options: filtering by labels and sources", "</b>",
                       "<br>", "You may choose to only download citations with a specific label - for example
            to indicate citations obtained from a more recent systematic search. You can use the filters on the
            right to do this. If a citation is present across several labels e.g. in the old search and the new search,
@@ -260,64 +296,130 @@ ui <- navbarPage(
 
   tabPanel("About",
 
-           fluidPage(
+                    uiOutput("about")
+           ))
 
-             p("The", strong("Automated Systematic Search Deduplication tool (AsySD)"), "allows users to input a dataset and remove duplicate publications."),
-
-             tags$img(class = "img-responsive img-rounded center-block",
-                      src="updated_logo.png",height=150,width=150, align="center"),
-
-             p("This tool was developed in the CAMARADES group by", tags$a(href="https://www.researchgate.net/profile/Kaitlyn_Hair", "Kaitlyn Hair."),
-             "If you have any questions about the tool, please raise an issue on the GitHub (see below) or email her at kaitlyn.hair@ed.ac.uk"),
-             p("The record matching function underlying this tool uses the", tags$a(href="https://rdrr.io/cran/RecordLinkage/", "RecordLinkage"), "package, created by Murat Sariyar and Andreas Borg"),
-             p("The code underlying this application is available on", tags$a(href="https://github.com/camaradesuk/ASySD", "GitHub")),
-             p(strong("If you want to use this application for your systematic review, please cite:                          "),
-               em("Hair K, Bahor Z, Macleod M, Liao J, Sena ES. The Automated Systematic Search Deduplicator (ASySD):
-             a rapid, open-source, interoperable tool to remove duplicate citations in biomedical systematic reviews. bioRxiv; 2021. DOI: 10.1101/2021.05.04.442412."))
-
-           )))
+# addResourcePath("tmpuser", getwd())
 
 server <- function(input, output, session){
 
-
-  # Citations uploaded - reactive
-  RefData <- reactive({
-
-    shiny::validate(
-      shiny::need(input$uploadfile != "",
-                  "No citations uploaded yet")
+  output$instructions <- renderUI({
+    tags$iframe(
+      seamless = "seamless",
+      src = "instructions.html",
+      width = "100%",
+      height = 800
     )
+  })
+
+  output$about <- renderUI({
+    tags$iframe(
+      seamless = "seamless",
+      src = "about.html",
+      width = "100%",
+      height = 800
+    )
+  })
+  # Reactive values from upload ----
+  rv <- shiny::reactiveValues()
+  rv$refdata <- NULL
+  rv$citation_summary <- data.frame()
+
+    shiny::observeEvent(input$uploadfile,{
+      shiny::validate(need(input$uploadfile != "", "Select your citation file to upload..."))
+
+      if (is.null(input$uploadfile)) {
+        return(NULL)
+      } else {
 
     input$uploadfile
 
     isolate(
 
-      if(input$fileType=="Endnote XML"){
+      if(input$fileType=="Endnote XML" & grepl(".xml$", input$uploadfile$name)){
 
-        citations <- ASySD::load_search(input$uploadfile$datapath, method="endnote")
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="endnote")
 
-      }  else if(input$fileType == "CSV"){
+      }  else if(input$fileType == "CSV" & grepl(".csv$", input$uploadfile$name)){
 
-        citations <- ASySD::load_search(input$uploadfile$datapath, method="csv")
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="csv")
 
-      }   else{
+      }  else if(input$fileType == "Zotero CSV" & grepl(".csv$", input$uploadfile$name)){
 
-        citations <- ASySD::load_search(input$uploadfile$datapath, method="txt")
+        citations <- load_multi_search(input$uploadfile$datapath,  input$uploadfile$name, method="zotero_csv")
+
       }
-    )
+      else if(input$fileType == "RIS" & grepl(".ris$", input$uploadfile$name)){
 
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="ris")
+      }
+
+      else if(input$fileType == "BIB" & grepl(".bib$", input$uploadfile$name)){
+
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="bib")
+
+      }
+
+      else if(input$fileType == "Tab delimited"){
+
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="txt")
+      }
+
+      else{
+        shinyalert("Wrong file type selected",
+        "The file extension doesn't match the selected upload format", type = "warning")
+        shinyjs::reset(id = "uploadfile", asis = FALSE)
+        return()
+        }
+    )
 
     if(length(unique(citations$record_id)) != nrow(citations)){
 
-    shinyalert("Unique identifier generated!",
-                 "The record_id column within uploaded citations was not unique. ASySD has generated a unique record_id for each citation. You can preview this in the table.", type = "warning")
+      shinyalert("Unique identifier generated!",
+                 "The record_id column within uploaded citations was not unique. ASySD has generated a unique record_id for each citation. You can preview this in the table.", type = "info")
 
-    citations <- citations %>%
-      mutate(record_id =  as.character(row_number()+1000))
+      citations <-  citations %>%
+        mutate(record_id =  as.character(row_number()+1000))
 
+      rv$refdata <- citations
+    } else{
+      rv$refdata <- citations
     }
 
-  })
+    citation_summary <- rv$refdata  %>%
+      select(source, label, file_name) %>%
+      group_by(file_name) %>%
+      add_count(name = "number_of_citations") %>%
+      group_by(file_name, number_of_citations) %>%
+      distinct() %>%
+      summarise(source = ifelse(all(is.na(source)), "", paste(ifelse(!is.na(source) | source != "", source, NA), collapse = ", ")),
+                label = ifelse(all(is.na(label)), "", paste(ifelse(!is.na(label) | label != "", label, NA), collapse = ", "))) %>%
+      mutate(source = ifelse(str_length(source) > 10, "multiple", source),
+             label = ifelse(str_length(label) > 10, "multiple", label)) %>%
+      select(file_name, number_of_citations, label, source)
+
+    rv$citation_summary <- citation_summary
+
+    }
+})
+
+    # when file upload table is edited, edit reactive value upload df
+    observeEvent(input$summary_table_cell_edit, {
+        row  <- input$summary_table_cell_edit$row
+        clmn <- input$summary_table_cell_edit$col + 1
+
+        file_to_change <- rv$citation_summary[row, 1][[1]]
+        value_to_change <- rv$citation_summary[row, clmn][[1]]
+        col_to_change <- names(rv$citation_summary[row, clmn])
+        rv$citation_summary[row, clmn] <- input$summary_table_cell_edit$value
+
+        df <- rv$refdata
+
+        df[[col_to_change]][df$file_name == file_to_change] <- input$summary_table_cell_edit$value
+
+        rv$refdata <- df
+    })
+
 
   # Get ref ID choice
   output$Id_col_picker <- renderUI({
@@ -325,7 +427,7 @@ server <- function(input, output, session){
     selectInput(
       inputId = "Id_col_picker",
       label = "Select a column which contains the unique ID for each citation",
-      choices = (unique(names(RefData()))), # col names in ref data
+      choices = (unique(names(rv$refdata))), # col names in ref data
       selected = "record_id"
     )
   })
@@ -361,8 +463,8 @@ server <- function(input, output, session){
 
       selectInput(inputId = "keepLabel",
                   label = "Specify labelled references to keep in the dataset",
-                  choices = unique(RefData()$label),
-                  selected = RefData()$label[1],
+                  choices = unique(rv$refdata$label),
+                  selected = rv$refdata$label[1],
                   multiple = FALSE)
     }
   })
@@ -381,24 +483,25 @@ server <- function(input, output, session){
 
       selectInput(inputId = "keepSource",
                   label = "Specify source to keep in the dataset",
-                  choices = unique(RefData()$source),
-                  selected = RefData()$source[1],
+                  choices = unique(rv$refdata$source),
+                  selected = rv$refdata$source[1],
                   multiple = FALSE)
     }
   })
 
 
-  # Datatable of input data ---
+  # Datatable summarising upload ----
   output$citation_table <- renderDT({
 
-    preview_10 <- RefData()[c(1:10),]
+    shiny::validate(
+      shiny::need(!is.null(rv$refdata), ""))
 
-    preview_10 <- preview_10 %>%
+    preview <-  rv$refdata %>%
       dplyr::select(record_id, author, title, year, journal, abstract, doi, number, pages, volume, isbn, label, source)
 
-    DT::datatable(preview_10,
-                  options = list(dom = 't',
-                                 scrollX = TRUE,
+    DT::datatable(rv$refdata,
+                  options = list(scrollX = TRUE,
+                                 pageLength = 10,
                                  fixedColumns = TRUE,
                                  columnDefs = list(list(
                                    targets = "_all",
@@ -411,14 +514,76 @@ server <- function(input, output, session){
 
                   rownames = FALSE,
                   class = "display")
+
   })
 
-  # ASySD user text ----
+
+  output$missing_data_table <- renderDT({
+
+
+    shiny::validate(
+      shiny::need(!is.null(rv$refdata), ""))
+
+     check_cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "isbn", "label", "source")
+     subset_data <- subset(rv$refdata, select = check_cols)
+     missing_percentages <- colSums(is.na(subset_data)) / nrow(subset_data) * 100
+     # Create a data frame with the missing percentages for each column
+     missing_table <- data.frame(
+       field = names(missing_percentages),
+       percentage_missing = round(missing_percentages, 1))
+
+     DT::datatable(missing_table,
+                   options = list(
+                     searching = FALSE,
+                     lengthChange = FALSE,
+                     pageLength = 20
+                   ),
+                   rownames = FALSE
+     ) %>%
+       formatStyle(
+         "percentage_missing",
+         target = "cell",
+         backgroundColor = styleInterval(
+           c(0, 25, 50, 75),
+           c("yellowgreen", "yellowgreen", "orange", "orange", "red")
+         ),
+         color = "white",
+         fontWeight = "bold",
+         borderRadius = "2px",
+         border = "2px solid",
+         borderColor = styleInterval(
+           c(0, 25, 50, 75),
+           c("yellowgreen", "yellowgreen", "orange", "orange", "red")
+         ),
+         padding = "3px",
+         display = "flex"
+       )
+  })
+
+
+  output$summary_table <- renderDT({
+
+    DT::datatable(rv$citation_summary,
+                  options = list(
+                    searching = FALSE,
+                    lengthChange = FALSE
+                  ),
+                  rownames = FALSE,
+                  class = "display",
+                  editable = TRUE
+    )
+  })
+
+  # ASySD r text ----
   output$Post_upload_text <- renderText({
 
-    original_refs_n <- as.numeric(nrow(RefData()))
+    original_refs_n <- as.numeric(nrow(rv$refdata))
 
-    paste("You have uploaded", original_refs_n, "citations. Preview the first 10 below.")
+    shiny::validate(
+      shiny::need(!length(original_refs_n) == 0, "")
+    )
+
+    paste("You have uploaded", original_refs_n, "citations. Preview them below.")
 
   })
 
@@ -431,7 +596,7 @@ server <- function(input, output, session){
     if (input$fileType == "Endnote XML") {
 
       str1 <- paste("Formatting requirements:")
-      str2 <- paste("From Endnote, select references and export to an XML file")
+      str2 <- paste("From Endnote or Zotero, select references and export to an XML file")
 
       HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>"))
 
@@ -504,16 +669,33 @@ server <- function(input, output, session){
 
     else if (input$export_format == "ris") {
 
-      str1 <- paste("Export format notes:")
-      str2 <- paste("Notes = flags for potential duplicates (if this option was selected in manual deduplication).")
-      str3 <- paste("Database Name = duplicate_id")
+      str1 <- paste("Formatting notes for RIS import to Endnote:")
+      str2 <- paste("Notes = flags for potential duplicates (if this option was selected in manual deduplication).\n")
+      str3 <- paste("Database Name = duplicate_id\n")
 
-      HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>", str3))
+      str4 <- paste("Formatting notes for RIS import to Zotero:")
+      str5 <- paste("Notes = flags for potential duplicates (if this option was selected in manual deduplication).\n")
+      str6 <- paste("Archive = duplicate_id\n")
+
+      str7 <- paste("Formatting notes for RIS import to Mendeley:")
+      str8 <- paste("Unfortunately, duplicate identifiers and flags for potential duplicates are not imported into Mendeley. If there is enough demand, we will aim to work on a solution for this.\n")
+
+      HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>", str3, "<br>", "<br>",
+                 "<b>", str4, "</b>", "<br>", str5, "<br>", str6, "<br>", "<br>",
+                 "<b>", str7, "</b>", "<br>", str8, "<br>"))
+
     }
-    else if (input$export_format == "csv") {
-
+    else if (input$export_format == "syrf_csv") {
       str1 <- paste("Export format notes:")
       str2 <- paste("At present this export does not contain any custom fields to retain potential duplicate flags as this is intended for direct input into SyRF (you should only upload unique citations lists).")
+
+      HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>"))
+    }
+
+    else if (input$export_format == "csv") {
+      str1 <- paste("Export format notes:")
+      str2 <- paste("This is a basic export with all field names. This is useful for understanding the data structure
+                    and output from ASySD.")
 
       HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>"))
     }
@@ -541,7 +723,7 @@ remove duplicates.")
     id_col <- sym(input$Id_col_picker)
     id_col <- enquo(id_col)
 
-    citations <- RefData() %>%
+    citations <- rv$refdata %>%
       mutate(record_id = !!id_col)
 
   })
@@ -561,7 +743,7 @@ remove duplicates.")
   output$ASySD_results <- renderText({
 
     uniquerefs_n <- as.numeric(length(auto_dedup_result()$unique$duplicate_id))
-    original_refs_n <- as.numeric(nrow(RefData()))
+    original_refs_n <- as.numeric(nrow(rv$refdata))
     removed_n <- original_refs_n - uniquerefs_n
     manual_pairs_n <- as.numeric(length(auto_dedup_result()$manual$record_id1))
 
@@ -702,7 +884,7 @@ remove duplicates.")
   # Output: sankey diagram ---
   output$sankey <- renderSankeyNetwork({
 
-    n_search <- original_refs_n <- as.numeric(nrow(RefData()))
+    n_search <- original_refs_n <- as.numeric(nrow(rv$refdata))
     n_unique_auto <- as.numeric(length(auto_dedup_result()$unique$duplicate_id))
     try(n_unique_manual <- as.numeric(length(manual_dedup_result()$duplicate_id)), silent=TRUE)
 
@@ -882,8 +1064,8 @@ remove duplicates.")
 
     selectInput(inputId = "filterLabel",
                   label = "Citations with these labels will be exported",
-                  choices = unique(RefData()$label),
-                  selected = unique(RefData()$label),
+                  choices = unique(rv$refdata$label),
+                  selected = unique(rv$refdata$label),
                   multiple = TRUE)
   })
 
@@ -892,8 +1074,8 @@ remove duplicates.")
 
     selectInput(inputId = "filterSource",
                 label = "Citations with these sources will be exported",
-                choices = unique(RefData()$source),
-                selected = unique(RefData()$source),
+                choices = unique(rv$refdata$source),
+                selected = unique(rv$refdata$source),
                 multiple = TRUE)
   })
 

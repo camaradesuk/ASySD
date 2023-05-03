@@ -1,3 +1,5 @@
+utils::globalVariables(c("record_ids", "."))
+
 #' This function writes citation data to disk in different formats
 #' @export
 #' @import dplyr
@@ -8,30 +10,30 @@
 #' @return file export
 write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filename){
 
+  cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source')
+  citations[cols_to_modify] <- lapply(citations[cols_to_modify], function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
   if(type == "txt"){
 
     refs <- citations %>%
       mutate("Reference Type" = "Journal Article") %>%
-      mutate("ISBN/ISSN" = gsub("\\r\\n|\\r|\\n", "", isbn)) %>%
-      rename("Custom 1" = duplicate_id,
-             "Author" = author,
-             "Title" = title,
-             "Volume" = volume,
-             "Number" = number,
-             "Label" = label,
-             "Year" = year,
-             "Abstract" = abstract,
-             "Pages" = pages,
-             "DOI" = doi,
-             "Name of Database" = source,
-             "Secondary Title" = journal) %>%
-      select("Reference Type", "Author", "Year",
-             "Secondary Title", "DOI", "Title",
-             "Pages", "Volume", "Number", "Abstract",
-             "Custom 1", "ISBN/ISSN", "Label", "Name of Database") %>%
-      mutate(Abstract = gsub("\\r\\n|\\r|\\n", "", Abstract))
-
-    refs[] <- lapply(refs, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+      mutate("ISBN/ISSN" =  isbn) %>%
+      rename(`Custom 1` = duplicate_id,
+             Author = author,
+             Title = title,
+             Volume = volume,
+             Number = number,
+             Label = label,
+             Year = year,
+             Abstract = abstract,
+             Pages = pages,
+             DOI = doi,
+             `Name of Database` = source,
+             `Secondary Title` = journal) %>%
+      select(`Reference Type`, Author, Year,
+             `Secondary Title`, DOI, Title,
+              Pages, Volume, Number, Abstract,
+             `Custom 1`, `ISBN/ISSN`, Label, `Name of Database`)
 
     write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
@@ -71,11 +73,19 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
 
   } else if(type == "ris"){
 
-    citations <- as.data.frame(citations)
+    citations$source_type <- "JOUR" #for RIS import to work
+    citations <- citations %>% select(source_type , everything()) %>%
+      rename(issue = number) %>%
+      select(-isbn)
+    citations <- tidyr::separate(citations, pages, into = c("start_page", "end_page"), sep = "-", convert = TRUE)
     synthesisr::write_refs(citations,
                            format = "ris",
                            file = filename
     )
+  } else if(type == "csv"){
+
+    write.csv(citations, filename, row.names = F, quote=TRUE, na="")
+
   } else if(type == "bib"){
 
     citations <- as.data.frame(citations)
@@ -94,6 +104,13 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
 #' @return file export
 write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), filename){
 
+  cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source')
+  citations[cols_to_modify] <- lapply(citations[cols_to_modify], function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
+
+  citations <- citations %>%
+    select(-file_name)
+
   if(type == "txt"){
 
 
@@ -107,7 +124,7 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 
     refs <- citations %>%
       mutate("Reference Type" = "Journal Article") %>%
-      mutate("ISBN/ISSN" = gsub("\\r\\n|\\r|\\n", "", isbn)) %>%
+      mutate("ISBN/ISSN" = isbn) %>%
       rename("Custom 1" = duplicate_id,
              "Author" = author,
              "Title" = title,
@@ -123,21 +140,15 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
       select("Reference Type", "Author", "Year",
              "Secondary Title", "DOI", "Title",
              "Pages", "Volume", "Number", "Abstract",
-             "Custom 1", "ISBN/ISSN", "Label", "Name of Database") %>%
-      mutate(Abstract = gsub("\\r\\n|\\r|\\n", "", Abstract))
+             "Custom 1", "ISBN/ISSN", "Label", "Name of Database")
 
     write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
 
-
-    refs[] <- lapply(refs, function(x) gsub("\\r\\n|\\r|\\n", "", x))
-
     write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
 
-  } else if(type == "csv"){
-
-    citations[] <- lapply(citations, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+  } else if(type == "syrf_csv"){
 
     refs <- citations %>%
       rename(Authors = author,
@@ -169,9 +180,14 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 
     write.csv(refs, filename, row.names = F, quote=TRUE, na="")
 
-  } else if(type == "ris"){
+  }
+  else if(type == "csv"){
 
-    citations[] <- lapply(citations, function(x) gsub("\\r\\n|\\r|\\n", "", x))
+    write.csv(citations, filename, row.names = F, quote=TRUE, na="")
+
+  }
+
+  else if(type == "ris"){
 
     citations <- as.data.frame(citations)
     citations$database <- citations$duplicate_id
@@ -182,13 +198,18 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
       citations$notes <- citations$flag
     }
 
+    citations$source_type <- "JOUR" #for RIS import to work
+    citations <- citations %>% select(source_type , everything()) %>%
+      rename(issue = number) %>%
+      select(-isbn)
+    citations <- tidyr::separate(citations, pages, into = c("start_page", "end_page"), sep = "-", convert = TRUE)
+    citations$accession_number <- citations$accession
+
     synthesisr::write_refs(citations,
                            format = "ris",
                            file = filename
     )
   } else if(type == "bib"){
-
-    citations[] <- lapply(citations, function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
     citations <- as.data.frame(citations)
     citations$database <- citations$duplicate_id

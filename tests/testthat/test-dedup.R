@@ -10,4 +10,13 @@ test_that("dedup_check", {
   expect_warning(
     a <- dedup_citations(test_citations_nodups, merge_citations = TRUE), "No duplicates detected!")
 
-})
+  expect_warning(
+    a <- dedup_citations(test_citations_nodups, merge_citations), "No duplicates detected!")
+
+
+  # check deduplication performing as normal
+  res <- dedup_citations(test_citations)
+
+  expect_equal(
+    length(res$unique$duplicate_id), 586)
+  })
