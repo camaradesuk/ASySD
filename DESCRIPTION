@@ -24,6 +24,7 @@ Imports:
     utils,
     tidyr,
     plyr,
+    RefManageR,
     dplyr
 Suggests: 
     knitr,
