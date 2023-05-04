@@ -9,7 +9,8 @@ dedup_citations(
   manual_dedup = TRUE,
   merge_citations = FALSE,
   keep_source = NULL,
-  keep_label = NULL
+  keep_label = NULL,
+  extra_merge_fields = NULL
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ dedup_citations(
 \item{keep_source}{Character vector. Selected citation source to preferentially retain in the dataset as the unique record}
 
 \item{keep_label}{Selected citation label to preferentially retain in the dataset as the unique record}
+
+\item{extra_merge_fields}{Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value}
 }
 \value{
 A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected

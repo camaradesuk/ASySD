@@ -456,9 +456,10 @@ keep_one_unique_citation <- function(raw_citations, matched_pairs_with_ids, keep
 #' @param raw_citations  original citation data with unique ids
 #' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
 #' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
+#' @param extra_merge_fields Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value
 #' @return Dataframe of formatted citation data with duplicate id
 #' @import dplyr
-merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, keep_label){
+merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, keep_label, extra_merge_fields){
 
   # get df of duplicate ids and record ids
   duplicate_id <- matched_pairs_with_ids %>%
@@ -474,18 +475,38 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
   # join duplicate id to raw citation metadata (e.g. title, author, journal)
   all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations, by="record_id", multiple = "all")
 
+  if(!is.null(extra_merge_fields)){
+
   all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
     mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
     mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
     group_by(duplicate_id) %>% # group by duplicate id
     summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
-    mutate(across(c(everything(), -c(label, source, record_id)), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
+    mutate(across(c(everything(), -c(label, source, record_id, {{extra_merge_fields}})), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
     mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+    mutate(across({{extra_merge_fields}}, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
     mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
     mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
     ungroup() %>%
     rename(record_ids = record_id) %>%
     ungroup()
+
+  } else {
+
+    all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
+      mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
+      mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
+      group_by(duplicate_id) %>% # group by duplicate id
+      summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
+      mutate(across(c(everything(), -c(label, source, record_id)), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
+      mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+      mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+      mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
+      ungroup() %>%
+      rename(record_ids = record_id) %>%
+      ungroup()
+
+  }
 
   if(!is.null(keep_source)){
 
@@ -552,9 +573,10 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
 #' @param merge_citations Logical value. Do you want to merge matching citations?
 #' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
 #' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
+#' @param extra_merge_fields Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value
 #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 dedup_citations <- function(raw_citations, manual_dedup = TRUE,
-                            merge_citations=FALSE, keep_source=NULL, keep_label=NULL) {
+                            merge_citations=FALSE, keep_source=NULL, keep_label=NULL, extra_merge_fields = NULL) {
 
   message("formatting data...")
 
@@ -672,7 +694,7 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
   if(merge_citations == TRUE){
 
-    unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
+    unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label, extra_merge_fields)
   } else{
     unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
 
