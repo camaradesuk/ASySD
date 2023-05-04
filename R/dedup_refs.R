@@ -729,8 +729,9 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 #' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
 #' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
 #' @param additional_pairs dataframe of citations with manual pairs, a subset of the manual pairs export
+#' @param extra_merge_fields Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value
 #' @return Unique citations post added manual deduplication
-dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, keep_source=NULL, keep_label=NULL, additional_pairs){
+dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, keep_source=NULL, keep_label=NULL, additional_pairs, extra_merge_fields = NULL){
 
   message("formatting data...")
   # add warning for no record id
@@ -771,7 +772,7 @@ dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, kee
 
     if(merge_citations == TRUE){
 
-      unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
+      unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label, extra_merge_fields)
     }  else{
       unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
 

@@ -9,7 +9,8 @@ dedup_citations_add_manual(
   merge_citations = FALSE,
   keep_source = NULL,
   keep_label = NULL,
-  additional_pairs
+  additional_pairs,
+  extra_merge_fields = NULL
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ dedup_citations_add_manual(
 \item{keep_label}{Selected citation label to preferentially retain in the dataset as the unique record}
 
 \item{additional_pairs}{dataframe of citations with manual pairs, a subset of the manual pairs export}
+
+\item{extra_merge_fields}{Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value}
 }
 \value{
 Unique citations post added manual deduplication
