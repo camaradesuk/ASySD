@@ -57,7 +57,8 @@
 <span>  manual_dedup <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  merge_citations <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  keep_source <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  keep_label <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  keep_label <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  extra_merge_fields <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -81,6 +82,10 @@
 
 <dt>keep_label</dt>
 <dd><p>Selected citation label to preferentially retain in the dataset as the unique record</p></dd>
+
+
+<dt>extra_merge_fields</dt>
+<dd><p>Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value</p></dd>
 
 </dl></div>
     <div class="section level2">
