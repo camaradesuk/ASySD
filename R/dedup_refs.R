@@ -477,19 +477,19 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
 
   if(!is.null(extra_merge_fields)){
 
-  all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
-    mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
-    mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
-    group_by(duplicate_id) %>% # group by duplicate id
-    summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
-    mutate(across(c(everything(), -c(label, source, record_id, {{extra_merge_fields}})), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
-    mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-    mutate(across({{extra_merge_fields}}, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-    mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-    mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
-    ungroup() %>%
-    rename(record_ids = record_id) %>%
-    ungroup()
+    all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
+      mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
+      mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
+      group_by(duplicate_id) %>% # group by duplicate id
+      summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
+      mutate(across(c(everything(), -c(label, source, record_id, {{extra_merge_fields}})), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
+      mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+      mutate(across({{extra_merge_fields}}, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+      mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+      mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
+      ungroup() %>%
+      rename(record_ids = record_id) %>%
+      ungroup()
 
   } else {
 
@@ -580,14 +580,15 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
   message("formatting data...")
 
-  # add source if missing
+  browser()
+
+  # add unknowns for blanks and NAs
   raw_citations <- raw_citations  %>%
+    mutate(across(where(is.character), ~ na_if(.,""))) %>%
     mutate(label = ifelse(is.na(label), "unknown", paste(label))) %>%
     mutate(source = ifelse(is.na(source), "unknown", paste(source))) %>%
-    mutate(label = ifelse(label=="", "unknown", paste(label))) %>%
-    mutate(source = ifelse(source == " ", "unknown", paste(source))) %>%
-    mutate(label = ifelse(label==" ", "unknown", paste(label))) %>%
-    mutate(source = ifelse(source=="", "unknown", paste(source)))
+    mutate(across({{extra_merge_fields}}, ~ replace(., is.na(.), "unknown")))
+
 
   # add warning for no record id
   if(!"record_id" %in% names(raw_citations)){
