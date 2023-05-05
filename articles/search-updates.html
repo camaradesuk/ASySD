@@ -121,139 +121,12 @@ search. This is to facilitate easy record linkage - see later.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dedup_citations.html">dedup_citations</a></span><span class="op">(</span><span class="va">all_citations</span>, merge<span class="op">=</span><span class="cn">TRUE</span>, keep_source <span class="op">=</span> <span class="st">"old"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; formatting data...</span></span>
-<span><span class="co">#&gt; Called from: dedup_citations(all_citations, merge = TRUE, keep_source = "old")</span></span>
-<span><span class="co">#&gt; debug: raw_citations &lt;- raw_citations %&gt;% mutate(across(where(is.character), </span></span>
-<span><span class="co">#&gt;     ~na_if(., ""))) %&gt;% mutate(label = ifelse(is.na(label), "unknown", </span></span>
-<span><span class="co">#&gt;     paste(label))) %&gt;% mutate(source = ifelse(is.na(source), </span></span>
-<span><span class="co">#&gt;     "unknown", paste(source))) %&gt;% mutate(across({</span></span>
-<span><span class="co">#&gt;     {</span></span>
-<span><span class="co">#&gt;         extra_merge_fields</span></span>
-<span><span class="co">#&gt;     }</span></span>
-<span><span class="co">#&gt; }, ~replace(., is.na(.), "unknown")))</span></span>
-<span><span class="co">#&gt; debug: if (!"record_id" %in% names(raw_citations)) {</span></span>
-<span><span class="co">#&gt;     warning("Search does not contain a record_id column. A record_id will be created using row names")</span></span>
-<span><span class="co">#&gt;     raw_citations &lt;- add_id_citations(raw_citations)</span></span>
-<span><span class="co">#&gt; } else if (any(is.na(raw_citations$record_id)) | any(raw_citations$record_id == </span></span>
-<span><span class="co">#&gt;     "")) {</span></span>
-<span><span class="co">#&gt;     warning("Search contains missing values for the record_id column. A record_id will be created using row names")</span></span>
-<span><span class="co">#&gt;     raw_citations &lt;- add_id_citations(raw_citations)</span></span>
-<span><span class="co">#&gt; } else if (length(unique(raw_citations$record_id)) != nrow(raw_citations)) {</span></span>
-<span><span class="co">#&gt;     warning("The record_id column is not unique. A record_id will be created using row names")</span></span>
-<span><span class="co">#&gt;     raw_citations &lt;- add_id_citations(raw_citations)</span></span>
-<span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; debug: if (any(is.na(raw_citations$record_id)) | any(raw_citations$record_id == </span></span>
-<span><span class="co">#&gt;     "")) {</span></span>
-<span><span class="co">#&gt;     warning("Search contains missing values for the record_id column. A record_id will be created using row names")</span></span>
-<span><span class="co">#&gt;     raw_citations &lt;- add_id_citations(raw_citations)</span></span>
-<span><span class="co">#&gt; } else if (length(unique(raw_citations$record_id)) != nrow(raw_citations)) {</span></span>
-<span><span class="co">#&gt;     warning("The record_id column is not unique. A record_id will be created using row names")</span></span>
-<span><span class="co">#&gt;     raw_citations &lt;- add_id_citations(raw_citations)</span></span>
-<span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; debug: if (length(unique(raw_citations$record_id)) != nrow(raw_citations)) {</span></span>
-<span><span class="co">#&gt;     warning("The record_id column is not unique. A record_id will be created using row names")</span></span>
-<span><span class="co">#&gt;     raw_citations &lt;- add_id_citations(raw_citations)</span></span>
-<span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; debug: cols &lt;- c("author", "year", "journal", "doi", "title", "pages", </span></span>
-<span><span class="co">#&gt;     "volume", "number", "abstract", "record_id", "isbn", "label", </span></span>
-<span><span class="co">#&gt;     "source")</span></span>
-<span><span class="co">#&gt; debug: missing_cols &lt;- cols[!(cols %in% colnames(raw_citations))]</span></span>
-<span><span class="co">#&gt; debug: if (length(missing_cols) &gt; 0) {</span></span>
-<span><span class="co">#&gt;     warning(paste0("The following columns are missing: ", paste(missing_cols, </span></span>
-<span><span class="co">#&gt;         collapse = ", "), "\n"))</span></span>
-<span><span class="co">#&gt;     message(paste0("Setting missing cols to NA"))</span></span>
-<span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; debug: raw_citations[missing_cols] &lt;- NA</span></span>
-<span><span class="co">#&gt; debug: raw_citations$record_id &lt;- as.character(raw_citations$record_id)</span></span>
-<span><span class="co">#&gt; debug: ordered_citations &lt;- order_citations(raw_citations)</span></span>
-<span><span class="co">#&gt; debug: formatted_citations &lt;- format_citations(ordered_citations)</span></span>
-<span><span class="co">#&gt; debug: message("identifying potential duplicates...")</span></span>
 <span><span class="co">#&gt; identifying potential duplicates...</span></span>
-<span><span class="co">#&gt; debug: pairs &lt;- match_citations(formatted_citations)</span></span>
-<span><span class="co">#&gt; debug: if (is.null(pairs)) {</span></span>
-<span><span class="co">#&gt;     warning("No duplicates detected!")</span></span>
-<span><span class="co">#&gt;     return(raw_citations)</span></span>
-<span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; debug: pair_types &lt;- identify_true_matches(pairs)</span></span>
-<span><span class="co">#&gt; debug: true_pairs &lt;- pair_types$true_pairs</span></span>
-<span><span class="co">#&gt; debug: if (is.null(true_pairs)) {</span></span>
-<span><span class="co">#&gt;     warning("No duplicates detected!")</span></span>
-<span><span class="co">#&gt;     return(raw_citations)</span></span>
-<span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; debug: message("identified duplicates!")</span></span>
 <span><span class="co">#&gt; identified duplicates!</span></span>
-<span><span class="co">#&gt; debug: matched_pairs_with_ids &lt;- generate_dup_id(true_pairs, formatted_citations)</span></span>
-<span><span class="co">#&gt; debug: if (manual_dedup == TRUE) {</span></span>
-<span><span class="co">#&gt;     message("flagging potential pairs for manual dedup...")</span></span>
-<span><span class="co">#&gt;     maybe_pairs &lt;- pair_types$maybe_pairs</span></span>
-<span><span class="co">#&gt;     maybe_pairs &lt;- maybe_pairs %&gt;% mutate(author1 = ordered_citations$author[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(author2 = ordered_citations$author[id2]) %&gt;% mutate(title1 = ordered_citations$title[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(title2 = ordered_citations$title[id2]) %&gt;% mutate(abstract1 = ordered_citations$abstract[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(abstract2 = ordered_citations$abstract[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(doi1 = ordered_citations$doi[id1]) %&gt;% mutate(doi2 = ordered_citations$doi[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(year1 = ordered_citations$year[id1]) %&gt;% mutate(year2 = ordered_citations$year[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(number1 = ordered_citations$number[id1]) %&gt;% mutate(number2 = ordered_citations$number[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(pages1 = ordered_citations$pages[id1]) %&gt;% mutate(pages2 = ordered_citations$pages[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(volume1 = ordered_citations$volume[id1]) %&gt;% mutate(volume2 = ordered_citations$volume[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(journal1 = ordered_citations$journal[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(journal2 = ordered_citations$journal[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(isbn1 = ordered_citations$isbn[id1]) %&gt;% mutate(isbn2 = ordered_citations$isbn[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(record_id1 = ordered_citations$record_id[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(record_id2 = ordered_citations$record_id[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(label1 = ordered_citations$label[id1]) %&gt;% mutate(label2 = ordered_citations$label[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;         mutate(source1 = ordered_citations$source[id1]) %&gt;% mutate(source2 = ordered_citations$source[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;         select(author1, author2, author, title1, title2, title, </span></span>
-<span><span class="co">#&gt;             abstract1, abstract2, abstract, year1, year2, year, </span></span>
-<span><span class="co">#&gt;             number1, number2, number, pages1, pages2, pages, </span></span>
-<span><span class="co">#&gt;             volume1, volume2, volume, journal1, journal2, journal, </span></span>
-<span><span class="co">#&gt;             isbn, isbn1, isbn2, doi1, doi2, doi, record_id1, </span></span>
-<span><span class="co">#&gt;             record_id2, label1, label2, source1, source2)</span></span>
-<span><span class="co">#&gt;     manual_dedup &lt;- maybe_pairs</span></span>
-<span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; debug: message("flagging potential pairs for manual dedup...")</span></span>
 <span><span class="co">#&gt; flagging potential pairs for manual dedup...</span></span>
-<span><span class="co">#&gt; debug: maybe_pairs &lt;- pair_types$maybe_pairs</span></span>
-<span><span class="co">#&gt; debug: maybe_pairs &lt;- maybe_pairs %&gt;% mutate(author1 = ordered_citations$author[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;     mutate(author2 = ordered_citations$author[id2]) %&gt;% mutate(title1 = ordered_citations$title[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;     mutate(title2 = ordered_citations$title[id2]) %&gt;% mutate(abstract1 = ordered_citations$abstract[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;     mutate(abstract2 = ordered_citations$abstract[id2]) %&gt;% mutate(doi1 = ordered_citations$doi[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;     mutate(doi2 = ordered_citations$doi[id2]) %&gt;% mutate(year1 = ordered_citations$year[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;     mutate(year2 = ordered_citations$year[id2]) %&gt;% mutate(number1 = ordered_citations$number[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;     mutate(number2 = ordered_citations$number[id2]) %&gt;% mutate(pages1 = ordered_citations$pages[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;     mutate(pages2 = ordered_citations$pages[id2]) %&gt;% mutate(volume1 = ordered_citations$volume[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;     mutate(volume2 = ordered_citations$volume[id2]) %&gt;% mutate(journal1 = ordered_citations$journal[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;     mutate(journal2 = ordered_citations$journal[id2]) %&gt;% mutate(isbn1 = ordered_citations$isbn[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;     mutate(isbn2 = ordered_citations$isbn[id2]) %&gt;% mutate(record_id1 = ordered_citations$record_id[id1]) %&gt;% </span></span>
-<span><span class="co">#&gt;     mutate(record_id2 = ordered_citations$record_id[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;     mutate(label1 = ordered_citations$label[id1]) %&gt;% mutate(label2 = ordered_citations$label[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;     mutate(source1 = ordered_citations$source[id1]) %&gt;% mutate(source2 = ordered_citations$source[id2]) %&gt;% </span></span>
-<span><span class="co">#&gt;     select(author1, author2, author, title1, title2, title, abstract1, </span></span>
-<span><span class="co">#&gt;         abstract2, abstract, year1, year2, year, number1, number2, </span></span>
-<span><span class="co">#&gt;         number, pages1, pages2, pages, volume1, volume2, volume, </span></span>
-<span><span class="co">#&gt;         journal1, journal2, journal, isbn, isbn1, isbn2, doi1, </span></span>
-<span><span class="co">#&gt;         doi2, doi, record_id1, record_id2, label1, label2, source1, </span></span>
-<span><span class="co">#&gt;         source2)</span></span>
-<span><span class="co">#&gt; debug: manual_dedup &lt;- maybe_pairs</span></span>
-<span><span class="co">#&gt; debug: if (merge_citations == TRUE) {</span></span>
-<span><span class="co">#&gt;     unique_citations_with_metadata &lt;- merge_metadata(raw_citations, </span></span>
-<span><span class="co">#&gt;         matched_pairs_with_ids, keep_source, keep_label, extra_merge_fields)</span></span>
-<span><span class="co">#&gt; } else {</span></span>
-<span><span class="co">#&gt;     unique_citations_with_metadata &lt;- keep_one_unique_citation(raw_citations, </span></span>
-<span><span class="co">#&gt;         matched_pairs_with_ids, keep_source, keep_label)</span></span>
-<span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; debug: unique_citations_with_metadata &lt;- merge_metadata(raw_citations, </span></span>
-<span><span class="co">#&gt;     matched_pairs_with_ids, keep_source, keep_label, extra_merge_fields)</span></span>
-<span><span class="co">#&gt; debug: unique_citations_with_metadata &lt;- unique_citations_with_metadata %&gt;% </span></span>
-<span><span class="co">#&gt;     ungroup()</span></span>
-<span><span class="co">#&gt; debug: n_unique &lt;- length(unique(unique_citations_with_metadata$duplicate_id))</span></span>
-<span><span class="co">#&gt; debug: n_start &lt;- length(unique(formatted_citations$record_id))</span></span>
-<span><span class="co">#&gt; debug: n_dups &lt;- n_start - n_unique</span></span>
-<span><span class="co">#&gt; debug: message(paste(n_start, "citations loaded..."))</span></span>
 <span><span class="co">#&gt; 8972 citations loaded...</span></span>
-<span><span class="co">#&gt; debug: message(paste(n_dups, "duplicate citations removed..."))</span></span>
 <span><span class="co">#&gt; 472 duplicate citations removed...</span></span>
-<span><span class="co">#&gt; debug: message(paste(n_unique, "unique citations remaining!"))</span></span>
-<span><span class="co">#&gt; 8500 unique citations remaining!</span></span>
-<span><span class="co">#&gt; debug: return(list(unique = unique_citations_with_metadata, manual_dedup = manual_dedup))</span></span></code></pre></div>
+<span><span class="co">#&gt; 8500 unique citations remaining!</span></span></code></pre></div>
 <p>The <code>dedup_citations</code> function returns a list of two
 dataframes by default. The first contains unique citations after
 duplicates were removed automatically by ASySD. In most cases, this will
@@ -300,23 +173,23 @@ citations we added with our latest systematic search?</p>
 <span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="odzameslku" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#odzameslku table {
+<div id="cluoskkxnw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#cluoskkxnw table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#odzameslku thead, #odzameslku tbody, #odzameslku tfoot, #odzameslku tr, #odzameslku td, #odzameslku th {
+#cluoskkxnw thead, #cluoskkxnw tbody, #cluoskkxnw tfoot, #cluoskkxnw tr, #cluoskkxnw td, #cluoskkxnw th {
   border-style: none;
 }
 
-#odzameslku p {
+#cluoskkxnw p {
   margin: 0;
   padding: 0;
 }
 
-#odzameslku .gt_table {
+#cluoskkxnw .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -342,12 +215,12 @@ citations we added with our latest systematic search?</p>
   border-left-color: #D3D3D3;
 }
 
-#odzameslku .gt_caption {
+#cluoskkxnw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#odzameslku .gt_title {
+#cluoskkxnw .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -359,7 +232,7 @@ citations we added with our latest systematic search?</p>
   border-bottom-width: 0;
 }
 
-#odzameslku .gt_subtitle {
+#cluoskkxnw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -371,7 +244,7 @@ citations we added with our latest systematic search?</p>
   border-top-width: 0;
 }
 
-#odzameslku .gt_heading {
+#cluoskkxnw .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -383,13 +256,13 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#odzameslku .gt_bottom_border {
+#cluoskkxnw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#odzameslku .gt_col_headings {
+#cluoskkxnw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -404,7 +277,7 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#odzameslku .gt_col_heading {
+#cluoskkxnw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -424,7 +297,7 @@ citations we added with our latest systematic search?</p>
   overflow-x: hidden;
 }
 
-#odzameslku .gt_column_spanner_outer {
+#cluoskkxnw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -436,15 +309,15 @@ citations we added with our latest systematic search?</p>
   padding-right: 4px;
 }
 
-#odzameslku .gt_column_spanner_outer:first-child {
+#cluoskkxnw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#odzameslku .gt_column_spanner_outer:last-child {
+#cluoskkxnw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#odzameslku .gt_column_spanner {
+#cluoskkxnw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -456,11 +329,11 @@ citations we added with our latest systematic search?</p>
   width: 100%;
 }
 
-#odzameslku .gt_spanner_row {
+#cluoskkxnw .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#odzameslku .gt_group_heading {
+#cluoskkxnw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -486,7 +359,7 @@ citations we added with our latest systematic search?</p>
   text-align: left;
 }
 
-#odzameslku .gt_empty_group_heading {
+#cluoskkxnw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -501,15 +374,15 @@ citations we added with our latest systematic search?</p>
   vertical-align: middle;
 }
 
-#odzameslku .gt_from_md > :first-child {
+#cluoskkxnw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#odzameslku .gt_from_md > :last-child {
+#cluoskkxnw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#odzameslku .gt_row {
+#cluoskkxnw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -528,7 +401,7 @@ citations we added with our latest systematic search?</p>
   overflow-x: hidden;
 }
 
-#odzameslku .gt_stub {
+#cluoskkxnw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -541,7 +414,7 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#odzameslku .gt_stub_row_group {
+#cluoskkxnw .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -555,15 +428,15 @@ citations we added with our latest systematic search?</p>
   vertical-align: top;
 }
 
-#odzameslku .gt_row_group_first td {
+#cluoskkxnw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#odzameslku .gt_row_group_first th {
+#cluoskkxnw .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#odzameslku .gt_summary_row {
+#cluoskkxnw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -573,16 +446,16 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#odzameslku .gt_first_summary_row {
+#cluoskkxnw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#odzameslku .gt_first_summary_row.thick {
+#cluoskkxnw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#odzameslku .gt_last_summary_row {
+#cluoskkxnw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -592,7 +465,7 @@ citations we added with our latest systematic search?</p>
   border-bottom-color: #D3D3D3;
 }
 
-#odzameslku .gt_grand_summary_row {
+#cluoskkxnw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -602,7 +475,7 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#odzameslku .gt_first_grand_summary_row {
+#cluoskkxnw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -612,7 +485,7 @@ citations we added with our latest systematic search?</p>
   border-top-color: #D3D3D3;
 }
 
-#odzameslku .gt_last_grand_summary_row_top {
+#cluoskkxnw .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -622,11 +495,11 @@ citations we added with our latest systematic search?</p>
   border-bottom-color: #D3D3D3;
 }
 
-#odzameslku .gt_striped {
+#cluoskkxnw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#odzameslku .gt_table_body {
+#cluoskkxnw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -635,7 +508,7 @@ citations we added with our latest systematic search?</p>
   border-bottom-color: #D3D3D3;
 }
 
-#odzameslku .gt_footnotes {
+#cluoskkxnw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -649,7 +522,7 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#odzameslku .gt_footnote {
+#cluoskkxnw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -658,7 +531,7 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#odzameslku .gt_sourcenotes {
+#cluoskkxnw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -672,7 +545,7 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#odzameslku .gt_sourcenote {
+#cluoskkxnw .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -680,63 +553,63 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#odzameslku .gt_left {
+#cluoskkxnw .gt_left {
   text-align: left;
 }
 
-#odzameslku .gt_center {
+#cluoskkxnw .gt_center {
   text-align: center;
 }
 
-#odzameslku .gt_right {
+#cluoskkxnw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#odzameslku .gt_font_normal {
+#cluoskkxnw .gt_font_normal {
   font-weight: normal;
 }
 
-#odzameslku .gt_font_bold {
+#cluoskkxnw .gt_font_bold {
   font-weight: bold;
 }
 
-#odzameslku .gt_font_italic {
+#cluoskkxnw .gt_font_italic {
   font-style: italic;
 }
 
-#odzameslku .gt_super {
+#cluoskkxnw .gt_super {
   font-size: 65%;
 }
 
-#odzameslku .gt_footnote_marks {
+#cluoskkxnw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#odzameslku .gt_asterisk {
+#cluoskkxnw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#odzameslku .gt_indent_1 {
+#cluoskkxnw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#odzameslku .gt_indent_2 {
+#cluoskkxnw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#odzameslku .gt_indent_3 {
+#cluoskkxnw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#odzameslku .gt_indent_4 {
+#cluoskkxnw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#odzameslku .gt_indent_5 {
+#cluoskkxnw .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -856,23 +729,23 @@ removing citations with a single source.</p>
 <span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="qobpxcizbz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qobpxcizbz table {
+<div id="zbhfskeytc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zbhfskeytc table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qobpxcizbz thead, #qobpxcizbz tbody, #qobpxcizbz tfoot, #qobpxcizbz tr, #qobpxcizbz td, #qobpxcizbz th {
+#zbhfskeytc thead, #zbhfskeytc tbody, #zbhfskeytc tfoot, #zbhfskeytc tr, #zbhfskeytc td, #zbhfskeytc th {
   border-style: none;
 }
 
-#qobpxcizbz p {
+#zbhfskeytc p {
   margin: 0;
   padding: 0;
 }
 
-#qobpxcizbz .gt_table {
+#zbhfskeytc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -898,12 +771,12 @@ removing citations with a single source.</p>
   border-left-color: #D3D3D3;
 }
 
-#qobpxcizbz .gt_caption {
+#zbhfskeytc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qobpxcizbz .gt_title {
+#zbhfskeytc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -915,7 +788,7 @@ removing citations with a single source.</p>
   border-bottom-width: 0;
 }
 
-#qobpxcizbz .gt_subtitle {
+#zbhfskeytc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -927,7 +800,7 @@ removing citations with a single source.</p>
   border-top-width: 0;
 }
 
-#qobpxcizbz .gt_heading {
+#zbhfskeytc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -939,13 +812,13 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#qobpxcizbz .gt_bottom_border {
+#zbhfskeytc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qobpxcizbz .gt_col_headings {
+#zbhfskeytc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -960,7 +833,7 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#qobpxcizbz .gt_col_heading {
+#zbhfskeytc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -980,7 +853,7 @@ removing citations with a single source.</p>
   overflow-x: hidden;
 }
 
-#qobpxcizbz .gt_column_spanner_outer {
+#zbhfskeytc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -992,15 +865,15 @@ removing citations with a single source.</p>
   padding-right: 4px;
 }
 
-#qobpxcizbz .gt_column_spanner_outer:first-child {
+#zbhfskeytc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qobpxcizbz .gt_column_spanner_outer:last-child {
+#zbhfskeytc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qobpxcizbz .gt_column_spanner {
+#zbhfskeytc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1012,11 +885,11 @@ removing citations with a single source.</p>
   width: 100%;
 }
 
-#qobpxcizbz .gt_spanner_row {
+#zbhfskeytc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qobpxcizbz .gt_group_heading {
+#zbhfskeytc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1042,7 +915,7 @@ removing citations with a single source.</p>
   text-align: left;
 }
 
-#qobpxcizbz .gt_empty_group_heading {
+#zbhfskeytc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1057,15 +930,15 @@ removing citations with a single source.</p>
   vertical-align: middle;
 }
 
-#qobpxcizbz .gt_from_md > :first-child {
+#zbhfskeytc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qobpxcizbz .gt_from_md > :last-child {
+#zbhfskeytc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qobpxcizbz .gt_row {
+#zbhfskeytc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1084,7 +957,7 @@ removing citations with a single source.</p>
   overflow-x: hidden;
 }
 
-#qobpxcizbz .gt_stub {
+#zbhfskeytc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1097,7 +970,7 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#qobpxcizbz .gt_stub_row_group {
+#zbhfskeytc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1111,15 +984,15 @@ removing citations with a single source.</p>
   vertical-align: top;
 }
 
-#qobpxcizbz .gt_row_group_first td {
+#zbhfskeytc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qobpxcizbz .gt_row_group_first th {
+#zbhfskeytc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qobpxcizbz .gt_summary_row {
+#zbhfskeytc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1129,16 +1002,16 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#qobpxcizbz .gt_first_summary_row {
+#zbhfskeytc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qobpxcizbz .gt_first_summary_row.thick {
+#zbhfskeytc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qobpxcizbz .gt_last_summary_row {
+#zbhfskeytc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1148,7 +1021,7 @@ removing citations with a single source.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#qobpxcizbz .gt_grand_summary_row {
+#zbhfskeytc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1158,7 +1031,7 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#qobpxcizbz .gt_first_grand_summary_row {
+#zbhfskeytc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1168,7 +1041,7 @@ removing citations with a single source.</p>
   border-top-color: #D3D3D3;
 }
 
-#qobpxcizbz .gt_last_grand_summary_row_top {
+#zbhfskeytc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1178,11 +1051,11 @@ removing citations with a single source.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#qobpxcizbz .gt_striped {
+#zbhfskeytc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qobpxcizbz .gt_table_body {
+#zbhfskeytc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1191,7 +1064,7 @@ removing citations with a single source.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#qobpxcizbz .gt_footnotes {
+#zbhfskeytc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1205,7 +1078,7 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#qobpxcizbz .gt_footnote {
+#zbhfskeytc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1214,7 +1087,7 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#qobpxcizbz .gt_sourcenotes {
+#zbhfskeytc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1228,7 +1101,7 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#qobpxcizbz .gt_sourcenote {
+#zbhfskeytc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1236,63 +1109,63 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#qobpxcizbz .gt_left {
+#zbhfskeytc .gt_left {
   text-align: left;
 }
 
-#qobpxcizbz .gt_center {
+#zbhfskeytc .gt_center {
   text-align: center;
 }
 
-#qobpxcizbz .gt_right {
+#zbhfskeytc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qobpxcizbz .gt_font_normal {
+#zbhfskeytc .gt_font_normal {
   font-weight: normal;
 }
 
-#qobpxcizbz .gt_font_bold {
+#zbhfskeytc .gt_font_bold {
   font-weight: bold;
 }
 
-#qobpxcizbz .gt_font_italic {
+#zbhfskeytc .gt_font_italic {
   font-style: italic;
 }
 
-#qobpxcizbz .gt_super {
+#zbhfskeytc .gt_super {
   font-size: 65%;
 }
 
-#qobpxcizbz .gt_footnote_marks {
+#zbhfskeytc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qobpxcizbz .gt_asterisk {
+#zbhfskeytc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qobpxcizbz .gt_indent_1 {
+#zbhfskeytc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qobpxcizbz .gt_indent_2 {
+#zbhfskeytc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qobpxcizbz .gt_indent_3 {
+#zbhfskeytc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qobpxcizbz .gt_indent_4 {
+#zbhfskeytc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qobpxcizbz .gt_indent_5 {
+#zbhfskeytc .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1423,23 +1296,23 @@ dataframes.</p>
 <span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="qerennaaah" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qerennaaah table {
+<div id="nkcxemfrju" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nkcxemfrju table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qerennaaah thead, #qerennaaah tbody, #qerennaaah tfoot, #qerennaaah tr, #qerennaaah td, #qerennaaah th {
+#nkcxemfrju thead, #nkcxemfrju tbody, #nkcxemfrju tfoot, #nkcxemfrju tr, #nkcxemfrju td, #nkcxemfrju th {
   border-style: none;
 }
 
-#qerennaaah p {
+#nkcxemfrju p {
   margin: 0;
   padding: 0;
 }
 
-#qerennaaah .gt_table {
+#nkcxemfrju .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1465,12 +1338,12 @@ dataframes.</p>
   border-left-color: #D3D3D3;
 }
 
-#qerennaaah .gt_caption {
+#nkcxemfrju .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qerennaaah .gt_title {
+#nkcxemfrju .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1482,7 +1355,7 @@ dataframes.</p>
   border-bottom-width: 0;
 }
 
-#qerennaaah .gt_subtitle {
+#nkcxemfrju .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1494,7 +1367,7 @@ dataframes.</p>
   border-top-width: 0;
 }
 
-#qerennaaah .gt_heading {
+#nkcxemfrju .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1506,13 +1379,13 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#qerennaaah .gt_bottom_border {
+#nkcxemfrju .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qerennaaah .gt_col_headings {
+#nkcxemfrju .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1527,7 +1400,7 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#qerennaaah .gt_col_heading {
+#nkcxemfrju .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1547,7 +1420,7 @@ dataframes.</p>
   overflow-x: hidden;
 }
 
-#qerennaaah .gt_column_spanner_outer {
+#nkcxemfrju .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1559,15 +1432,15 @@ dataframes.</p>
   padding-right: 4px;
 }
 
-#qerennaaah .gt_column_spanner_outer:first-child {
+#nkcxemfrju .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qerennaaah .gt_column_spanner_outer:last-child {
+#nkcxemfrju .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qerennaaah .gt_column_spanner {
+#nkcxemfrju .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1579,11 +1452,11 @@ dataframes.</p>
   width: 100%;
 }
 
-#qerennaaah .gt_spanner_row {
+#nkcxemfrju .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qerennaaah .gt_group_heading {
+#nkcxemfrju .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1609,7 +1482,7 @@ dataframes.</p>
   text-align: left;
 }
 
-#qerennaaah .gt_empty_group_heading {
+#nkcxemfrju .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1624,15 +1497,15 @@ dataframes.</p>
   vertical-align: middle;
 }
 
-#qerennaaah .gt_from_md > :first-child {
+#nkcxemfrju .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qerennaaah .gt_from_md > :last-child {
+#nkcxemfrju .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qerennaaah .gt_row {
+#nkcxemfrju .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1651,7 +1524,7 @@ dataframes.</p>
   overflow-x: hidden;
 }
 
-#qerennaaah .gt_stub {
+#nkcxemfrju .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1664,7 +1537,7 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#qerennaaah .gt_stub_row_group {
+#nkcxemfrju .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1678,15 +1551,15 @@ dataframes.</p>
   vertical-align: top;
 }
 
-#qerennaaah .gt_row_group_first td {
+#nkcxemfrju .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qerennaaah .gt_row_group_first th {
+#nkcxemfrju .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qerennaaah .gt_summary_row {
+#nkcxemfrju .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1696,16 +1569,16 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#qerennaaah .gt_first_summary_row {
+#nkcxemfrju .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qerennaaah .gt_first_summary_row.thick {
+#nkcxemfrju .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qerennaaah .gt_last_summary_row {
+#nkcxemfrju .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1715,7 +1588,7 @@ dataframes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#qerennaaah .gt_grand_summary_row {
+#nkcxemfrju .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1725,7 +1598,7 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#qerennaaah .gt_first_grand_summary_row {
+#nkcxemfrju .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1735,7 +1608,7 @@ dataframes.</p>
   border-top-color: #D3D3D3;
 }
 
-#qerennaaah .gt_last_grand_summary_row_top {
+#nkcxemfrju .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1745,11 +1618,11 @@ dataframes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#qerennaaah .gt_striped {
+#nkcxemfrju .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qerennaaah .gt_table_body {
+#nkcxemfrju .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1758,7 +1631,7 @@ dataframes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#qerennaaah .gt_footnotes {
+#nkcxemfrju .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1772,7 +1645,7 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#qerennaaah .gt_footnote {
+#nkcxemfrju .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1781,7 +1654,7 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#qerennaaah .gt_sourcenotes {
+#nkcxemfrju .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1795,7 +1668,7 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#qerennaaah .gt_sourcenote {
+#nkcxemfrju .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1803,63 +1676,63 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#qerennaaah .gt_left {
+#nkcxemfrju .gt_left {
   text-align: left;
 }
 
-#qerennaaah .gt_center {
+#nkcxemfrju .gt_center {
   text-align: center;
 }
 
-#qerennaaah .gt_right {
+#nkcxemfrju .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qerennaaah .gt_font_normal {
+#nkcxemfrju .gt_font_normal {
   font-weight: normal;
 }
 
-#qerennaaah .gt_font_bold {
+#nkcxemfrju .gt_font_bold {
   font-weight: bold;
 }
 
-#qerennaaah .gt_font_italic {
+#nkcxemfrju .gt_font_italic {
   font-style: italic;
 }
 
-#qerennaaah .gt_super {
+#nkcxemfrju .gt_super {
   font-size: 65%;
 }
 
-#qerennaaah .gt_footnote_marks {
+#nkcxemfrju .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qerennaaah .gt_asterisk {
+#nkcxemfrju .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qerennaaah .gt_indent_1 {
+#nkcxemfrju .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qerennaaah .gt_indent_2 {
+#nkcxemfrju .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qerennaaah .gt_indent_3 {
+#nkcxemfrju .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qerennaaah .gt_indent_4 {
+#nkcxemfrju .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qerennaaah .gt_indent_5 {
+#nkcxemfrju .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
