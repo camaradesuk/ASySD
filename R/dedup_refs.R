@@ -580,8 +580,6 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
   message("formatting data...")
 
-  browser()
-
   # add unknowns for blanks and NAs
   raw_citations <- raw_citations  %>%
     mutate(across(where(is.character), ~ na_if(.,""))) %>%
