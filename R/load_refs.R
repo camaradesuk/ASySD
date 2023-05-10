@@ -12,6 +12,7 @@ utils::globalVariables(c("Abstract", "AlternateName", "Author", "AuthorAddress",
 #' @param method  Import method
 #' @param names File names of input file or files
 #' @return A dataframe of the citations
+#' @export
 #' @import XML
 #' @import RefManageR
 

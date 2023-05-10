@@ -338,31 +338,31 @@ server <- function(input, output, session){
 
       if(input$fileType=="Endnote XML" & grepl(".xml$", input$uploadfile$name)){
 
-        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="endnote")
+        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="endnote")
 
       }  else if(input$fileType == "CSV" & grepl(".csv$", input$uploadfile$name)){
 
-        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="csv")
+        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="csv")
 
       }  else if(input$fileType == "Zotero CSV" & grepl(".csv$", input$uploadfile$name)){
 
-        citations <- load_multi_search(input$uploadfile$datapath,  input$uploadfile$name, method="zotero_csv")
+        citations <- ASySD::load_multi_search(input$uploadfile$datapath,  input$uploadfile$name, method="zotero_csv")
 
       }
       else if(input$fileType == "RIS" & grepl(".ris$", input$uploadfile$name)){
 
-        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="ris")
+        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="ris")
       }
 
       else if(input$fileType == "BIB" & grepl(".bib$", input$uploadfile$name)){
 
-        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="bib")
+        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="bib")
 
       }
 
       else if(input$fileType == "Tab delimited"){
 
-        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="txt")
+        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="txt")
       }
 
       else{
