@@ -1,4 +1,7 @@
 # ASySD 0.1.1
+* Added shiny_progress argument to allow loading bar on shiny app
+* Bug fixes for multiple uploads to shiny app
+* Bug fixes in RIS import
 
 # ASySD 0.1.0
 
