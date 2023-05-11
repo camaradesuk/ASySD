@@ -35,8 +35,7 @@ order_citations <- function(raw_citations){
 
   # select relevant columns
   ordered_citations <- ordered_citations  %>%
-    select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label, source)
-
+    dplyr::select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label, source)
 
 
   return(ordered_citations)
@@ -568,154 +567,309 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
 #' This function deduplicates citation data
 #' @export
 #' @import dplyr
+#' @import progressr
 #' @param raw_citations A dataframe containing duplicate ciations
 #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
 #' @param merge_citations Logical value. Do you want to merge matching citations?
 #' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
 #' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
 #' @param extra_merge_fields Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value
+#' @param shiny_progress Switch on progress indicators for shiny applications
 #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 dedup_citations <- function(raw_citations, manual_dedup = TRUE,
-                            merge_citations=FALSE, keep_source=NULL, keep_label=NULL, extra_merge_fields = NULL) {
+                            merge_citations=FALSE, keep_source=NULL, keep_label=NULL, extra_merge_fields = NULL, shiny_progress=FALSE) {
 
-  message("formatting data...")
+  if(shiny_progress == TRUE){
 
-  # add unknowns for blanks and NAs
-  raw_citations <- raw_citations  %>%
-    mutate(across(where(is.character), ~ na_if(.,""))) %>%
-    mutate(label = ifelse(is.na(label), "unknown", paste(label))) %>%
-    mutate(source = ifelse(is.na(source), "unknown", paste(source))) %>%
-    mutate(across({{extra_merge_fields}}, ~ replace(., is.na(.), "unknown")))
+    withProgress(message = "formatting data...", value = 0, {
+
+      # add unknowns for blanks and NAs
+      raw_citations <- raw_citations  %>%
+        mutate(across(where(is.character), ~ na_if(.,""))) %>%
+        mutate(label = ifelse(is.na(label), "unknown", paste(label))) %>%
+        mutate(source = ifelse(is.na(source), "unknown", paste(source))) %>%
+        mutate(across({{extra_merge_fields}}, ~ replace(., is.na(.), "unknown")))
 
 
-  # add warning for no record id
-  if(!"record_id" %in% names(raw_citations)){
-    warning("Search does not contain a record_id column. A record_id will be created using row names")
+      # add warning for no record id
+      if(!"record_id" %in% names(raw_citations)){
+        warning("Search does not contain a record_id column. A record_id will be created using row names")
 
-    # add record id using row number
-    raw_citations <- add_id_citations(raw_citations)
+        # add record id using row number
+        raw_citations <- add_id_citations(raw_citations)
 
-    # add warning for any missing record id
-  } else if(any(is.na(raw_citations$record_id)) | any(raw_citations$record_id=="")){
-    warning("Search contains missing values for the record_id column. A record_id will be created using row names")
+        # add warning for any missing record id
+      } else if(any(is.na(raw_citations$record_id)) | any(raw_citations$record_id=="")){
+        warning("Search contains missing values for the record_id column. A record_id will be created using row names")
 
-    # add record id using row number
-    raw_citations <- add_id_citations(raw_citations)
+        # add record id using row number
+        raw_citations <- add_id_citations(raw_citations)
 
-    # add warning for non unique ids
-  }  else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
-    warning("The record_id column is not unique. A record_id will be created using row names")
+        # add warning for non unique ids
+      }  else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
+        warning("The record_id column is not unique. A record_id will be created using row names")
 
-    # add record id using row number
-    raw_citations <- add_id_citations(raw_citations)
+        # add record id using row number
+        raw_citations <- add_id_citations(raw_citations)
+      }
+
+      cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+      missing_cols <- cols[!(cols %in% colnames(raw_citations))] # find missing columns
+      if (length(missing_cols) > 0) {
+        warning(paste0("The following columns are missing: ", paste(missing_cols, collapse = ", "), "\n"))
+        message(paste0("Setting missing cols to NA"))
+      }
+      raw_citations[missing_cols] <- NA # set missing columns to NA
+
+      raw_citations$record_id <- as.character(raw_citations$record_id)
+      ordered_citations <- order_citations(raw_citations)
+      formatted_citations <- format_citations(ordered_citations)
+
+      incProgress(0.2/1, message = "identifying potential duplicates...")
+
+      # find matching pairs
+      pairs <- match_citations(formatted_citations)
+
+      incProgress(0.4/1)
+
+
+      # warning if no duplicates
+      if(is.null(pairs)) {
+        warning("No duplicates detected!")
+        return(raw_citations)
+      }
+
+      pair_types <- identify_true_matches(pairs)
+      true_pairs <- pair_types$true_pairs
+
+      incProgress(0.5/1)
+
+
+      # warning if no duplicates
+      if(is.null(true_pairs)) {
+        warning("No duplicates detected!")
+        return(raw_citations)
+      }
+
+      incProgress(0.6/1, message = "merging duplicate citations...")
+
+      matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
+
+      if(manual_dedup == TRUE){
+
+        incProgress(0.8/1, message = "flagging potential pairs for manual dedup...")
+
+        maybe_pairs <- pair_types$maybe_pairs
+
+        maybe_pairs <- maybe_pairs  %>%
+          mutate(author1 =ordered_citations$author[id1]) %>%
+          mutate(author2 =ordered_citations$author[id2]) %>%
+          mutate(title1 =ordered_citations$title[id1]) %>%
+          mutate(title2 =ordered_citations$title[id2]) %>%
+          mutate(abstract1 =ordered_citations$abstract[id1]) %>%
+          mutate(abstract2 =ordered_citations$abstract[id2]) %>%
+          mutate(doi1= ordered_citations$doi[id1]) %>%
+          mutate(doi2 =ordered_citations$doi[id2]) %>%
+          mutate(year1=ordered_citations$year[id1]) %>%
+          mutate(year2=ordered_citations$year[id2]) %>%
+          mutate(number1 =ordered_citations$number[id1]) %>%
+          mutate(number2 =ordered_citations$number[id2]) %>%
+          mutate(pages1 =ordered_citations$pages[id1]) %>%
+          mutate(pages2 =ordered_citations$pages[id2]) %>%
+          mutate(volume1 =ordered_citations$volume[id1]) %>%
+          mutate(volume2 =ordered_citations$volume[id2]) %>%
+          mutate(journal1 =ordered_citations$journal[id1]) %>%
+          mutate(journal2 =ordered_citations$journal[id2]) %>%
+          mutate(isbn1 =ordered_citations$isbn[id1]) %>%
+          mutate(isbn2 =ordered_citations$isbn[id2]) %>%
+          mutate(record_id1=ordered_citations$record_id[id1]) %>%
+          mutate(record_id2 =ordered_citations$record_id[id2]) %>%
+          mutate(label1 =ordered_citations$label[id1]) %>%
+          mutate(label2 =ordered_citations$label[id2]) %>%
+          mutate(source1 =ordered_citations$source[id1]) %>%
+          mutate(source2 =ordered_citations$source[id2]) %>%
+          select(author1, author2, author, title1,
+                 title2, title, abstract1, abstract2, abstract, year1,
+                 year2, year, number1, number2, number, pages1, pages2,
+                 pages, volume1, volume2, volume, journal1, journal2,
+                 journal, isbn, isbn1, isbn2, doi1, doi2, doi,
+                 record_id1, record_id2, label1,
+                 label2, source1, source2)
+
+        manual_dedup <- maybe_pairs
+      }
+
+
+      if(merge_citations == TRUE){
+
+        unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label, extra_merge_fields)
+      } else{
+        unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
+
+      }
+
+
+      # make sure data is returned ungrouped
+      unique_citations_with_metadata <- unique_citations_with_metadata %>%
+        ungroup()
+
+
+      n_unique <- length(unique(unique_citations_with_metadata$duplicate_id))
+      n_start <- length(unique(formatted_citations$record_id))
+      n_dups <- n_start - n_unique
+
+
+      message(paste(n_start, "citations loaded..."))
+      message(paste(n_dups, "duplicate citations removed..."))
+      message(paste(n_unique, "unique citations remaining!"))
+
+      incProgress(1/1) # Increase progress bar to 100%
+    })
+
+    return(list("unique" = unique_citations_with_metadata,
+                "manual_dedup" = manual_dedup))
+  } else {
+
+    message("formatting data...")
+
+    # add unknowns for blanks and NAs
+    raw_citations <- raw_citations  %>%
+      mutate(across(where(is.character), ~ na_if(.,""))) %>%
+      mutate(label = ifelse(is.na(label), "unknown", paste(label))) %>%
+      mutate(source = ifelse(is.na(source), "unknown", paste(source))) %>%
+      mutate(across({{extra_merge_fields}}, ~ replace(., is.na(.), "unknown")))
+
+
+    # add warning for no record id
+    if(!"record_id" %in% names(raw_citations)){
+      warning("Search does not contain a record_id column. A record_id will be created using row names")
+
+      # add record id using row number
+      raw_citations <- add_id_citations(raw_citations)
+
+      # add warning for any missing record id
+    } else if(any(is.na(raw_citations$record_id)) | any(raw_citations$record_id=="")){
+      warning("Search contains missing values for the record_id column. A record_id will be created using row names")
+
+      # add record id using row number
+      raw_citations <- add_id_citations(raw_citations)
+
+      # add warning for non unique ids
+    }  else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
+      warning("The record_id column is not unique. A record_id will be created using row names")
+
+      # add record id using row number
+      raw_citations <- add_id_citations(raw_citations)
+    }
+
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    missing_cols <- cols[!(cols %in% colnames(raw_citations))] # find missing columns
+    if (length(missing_cols) > 0) {
+      warning(paste0("The following columns are missing: ", paste(missing_cols, collapse = ", "), "\n"))
+      message(paste0("Setting missing cols to NA"))
+    }
+    raw_citations[missing_cols] <- NA # set missing columns to NA
+
+    raw_citations$record_id <- as.character(raw_citations$record_id)
+    ordered_citations <- order_citations(raw_citations)
+    formatted_citations <- format_citations(ordered_citations)
+
+    message("identifying potential duplicates...")
+
+    # find matching pairs
+    pairs <- match_citations(formatted_citations)
+
+    # warning if no duplicates
+    if(is.null(pairs)) {
+      warning("No duplicates detected!")
+      return(raw_citations)
+    }
+
+    pair_types <- identify_true_matches(pairs)
+    true_pairs <- pair_types$true_pairs
+
+    # warning if no duplicates
+    if(is.null(true_pairs)) {
+      warning("No duplicates detected!")
+      return(raw_citations)
+    }
+
+    message("identified duplicates!")
+
+    matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
+
+    if(manual_dedup == TRUE){
+
+      message("flagging potential pairs for manual dedup...")
+
+      maybe_pairs <- pair_types$maybe_pairs
+
+      maybe_pairs <- maybe_pairs  %>%
+        mutate(author1 =ordered_citations$author[id1]) %>%
+        mutate(author2 =ordered_citations$author[id2]) %>%
+        mutate(title1 =ordered_citations$title[id1]) %>%
+        mutate(title2 =ordered_citations$title[id2]) %>%
+        mutate(abstract1 =ordered_citations$abstract[id1]) %>%
+        mutate(abstract2 =ordered_citations$abstract[id2]) %>%
+        mutate(doi1= ordered_citations$doi[id1]) %>%
+        mutate(doi2 =ordered_citations$doi[id2]) %>%
+        mutate(year1=ordered_citations$year[id1]) %>%
+        mutate(year2=ordered_citations$year[id2]) %>%
+        mutate(number1 =ordered_citations$number[id1]) %>%
+        mutate(number2 =ordered_citations$number[id2]) %>%
+        mutate(pages1 =ordered_citations$pages[id1]) %>%
+        mutate(pages2 =ordered_citations$pages[id2]) %>%
+        mutate(volume1 =ordered_citations$volume[id1]) %>%
+        mutate(volume2 =ordered_citations$volume[id2]) %>%
+        mutate(journal1 =ordered_citations$journal[id1]) %>%
+        mutate(journal2 =ordered_citations$journal[id2]) %>%
+        mutate(isbn1 =ordered_citations$isbn[id1]) %>%
+        mutate(isbn2 =ordered_citations$isbn[id2]) %>%
+        mutate(record_id1=ordered_citations$record_id[id1]) %>%
+        mutate(record_id2 =ordered_citations$record_id[id2]) %>%
+        mutate(label1 =ordered_citations$label[id1]) %>%
+        mutate(label2 =ordered_citations$label[id2]) %>%
+        mutate(source1 =ordered_citations$source[id1]) %>%
+        mutate(source2 =ordered_citations$source[id2]) %>%
+        select(author1, author2, author, title1,
+               title2, title, abstract1, abstract2, abstract, year1,
+               year2, year, number1, number2, number, pages1, pages2,
+               pages, volume1, volume2, volume, journal1, journal2,
+               journal, isbn, isbn1, isbn2, doi1, doi2, doi,
+               record_id1, record_id2, label1,
+               label2, source1, source2)
+
+      manual_dedup <- maybe_pairs
+    }
+
+
+    if(merge_citations == TRUE){
+
+      unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label, extra_merge_fields)
+    } else{
+      unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
+
+    }
+
+
+    # make sure data is returned ungrouped
+    unique_citations_with_metadata <- unique_citations_with_metadata %>%
+      ungroup()
+
+
+    n_unique <- length(unique(unique_citations_with_metadata$duplicate_id))
+    n_start <- length(unique(formatted_citations$record_id))
+    n_dups <- n_start - n_unique
+
+
+    message(paste(n_start, "citations loaded..."))
+    message(paste(n_dups, "duplicate citations removed..."))
+    message(paste(n_unique, "unique citations remaining!"))
+
+    return(list("unique" = unique_citations_with_metadata,
+                "manual_dedup" = manual_dedup))
   }
 
-  cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
-  missing_cols <- cols[!(cols %in% colnames(raw_citations))] # find missing columns
-  if (length(missing_cols) > 0) {
-    warning(paste0("The following columns are missing: ", paste(missing_cols, collapse = ", "), "\n"))
-    message(paste0("Setting missing cols to NA"))
-  }
-  raw_citations[missing_cols] <- NA # set missing columns to NA
-
-  raw_citations$record_id <- as.character(raw_citations$record_id)
-  ordered_citations <- order_citations(raw_citations)
-  formatted_citations <- format_citations(ordered_citations)
-
-  message("identifying potential duplicates...")
-
-  # find matching pairs
-  pairs <- match_citations(formatted_citations)
-
-  # warning if no duplicates
-  if(is.null(pairs)) {
-    warning("No duplicates detected!")
-    return(raw_citations)
-  }
-
-  pair_types <- identify_true_matches(pairs)
-  true_pairs <- pair_types$true_pairs
-
-  # warning if no duplicates
-  if(is.null(true_pairs)) {
-    warning("No duplicates detected!")
-    return(raw_citations)
-  }
-
-  message("identified duplicates!")
-
-  matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
-
-  if(manual_dedup == TRUE){
-
-    message("flagging potential pairs for manual dedup...")
-
-    maybe_pairs <- pair_types$maybe_pairs
-
-    maybe_pairs <- maybe_pairs  %>%
-      mutate(author1 =ordered_citations$author[id1]) %>%
-      mutate(author2 =ordered_citations$author[id2]) %>%
-      mutate(title1 =ordered_citations$title[id1]) %>%
-      mutate(title2 =ordered_citations$title[id2]) %>%
-      mutate(abstract1 =ordered_citations$abstract[id1]) %>%
-      mutate(abstract2 =ordered_citations$abstract[id2]) %>%
-      mutate(doi1= ordered_citations$doi[id1]) %>%
-      mutate(doi2 =ordered_citations$doi[id2]) %>%
-      mutate(year1=ordered_citations$year[id1]) %>%
-      mutate(year2=ordered_citations$year[id2]) %>%
-      mutate(number1 =ordered_citations$number[id1]) %>%
-      mutate(number2 =ordered_citations$number[id2]) %>%
-      mutate(pages1 =ordered_citations$pages[id1]) %>%
-      mutate(pages2 =ordered_citations$pages[id2]) %>%
-      mutate(volume1 =ordered_citations$volume[id1]) %>%
-      mutate(volume2 =ordered_citations$volume[id2]) %>%
-      mutate(journal1 =ordered_citations$journal[id1]) %>%
-      mutate(journal2 =ordered_citations$journal[id2]) %>%
-      mutate(isbn1 =ordered_citations$isbn[id1]) %>%
-      mutate(isbn2 =ordered_citations$isbn[id2]) %>%
-      mutate(record_id1=ordered_citations$record_id[id1]) %>%
-      mutate(record_id2 =ordered_citations$record_id[id2]) %>%
-      mutate(label1 =ordered_citations$label[id1]) %>%
-      mutate(label2 =ordered_citations$label[id2]) %>%
-      mutate(source1 =ordered_citations$source[id1]) %>%
-      mutate(source2 =ordered_citations$source[id2]) %>%
-      select(author1, author2, author, title1,
-             title2, title, abstract1, abstract2, abstract, year1,
-             year2, year, number1, number2, number, pages1, pages2,
-             pages, volume1, volume2, volume, journal1, journal2,
-             journal, isbn, isbn1, isbn2, doi1, doi2, doi,
-             record_id1, record_id2, label1,
-             label2, source1, source2)
-
-    manual_dedup <- maybe_pairs
-  }
-
-
-  if(merge_citations == TRUE){
-
-    unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label, extra_merge_fields)
-  } else{
-    unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
-
-  }
-
-
-  # make sure data is returned ungrouped
-  unique_citations_with_metadata <- unique_citations_with_metadata %>%
-    ungroup()
-
-
-  n_unique <- length(unique(unique_citations_with_metadata$duplicate_id))
-  n_start <- length(unique(formatted_citations$record_id))
-  n_dups <- n_start - n_unique
-
-
-  message(paste(n_start, "citations loaded..."))
-  message(paste(n_dups, "duplicate citations removed..."))
-  message(paste(n_unique, "unique citations remaining!"))
-
-  return(list("unique" = unique_citations_with_metadata,
-              "manual_dedup" = manual_dedup))
 }
 
 ####------ Deduplicate citations WITH manual dups added function ------ ####

@@ -5,6 +5,7 @@ require(DT)
 require(stringr)
 require(dplyr)
 library(shinyalert)
+library(progressr)
 library(networkD3)
 library(rsconnect)
 library(RCurl)
@@ -336,25 +337,25 @@ server <- function(input, output, session){
 
     isolate(
 
-      if(input$fileType=="Endnote XML" & grepl(".xml$", input$uploadfile$name)){
+      if(input$fileType=="Endnote XML" & all(grepl(".xml$", input$uploadfile$name))){
 
         citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="endnote")
 
-      }  else if(input$fileType == "CSV" & grepl(".csv$", input$uploadfile$name)){
+      }  else if(input$fileType == "CSV" & all(grepl(".csv$", input$uploadfile$name))){
 
         citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="csv")
 
-      }  else if(input$fileType == "Zotero CSV" & grepl(".csv$", input$uploadfile$name)){
+      }  else if(input$fileType == "Zotero CSV" & all(grepl(".csv$", input$uploadfile$name))){
 
         citations <- ASySD::load_multi_search(input$uploadfile$datapath,  input$uploadfile$name, method="zotero_csv")
 
       }
-      else if(input$fileType == "RIS" & grepl(".ris$", input$uploadfile$name)){
+      else if(input$fileType == "RIS" & all(grepl(".ris$", input$uploadfile$name))){
 
         citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="ris")
       }
 
-      else if(input$fileType == "BIB" & grepl(".bib$", input$uploadfile$name)){
+      else if(input$fileType == "BIB" & all(grepl(".bib$", input$uploadfile$name))){
 
         citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="bib")
 

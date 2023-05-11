@@ -25,7 +25,8 @@ Imports:
     tidyr,
     plyr,
     RefManageR,
-    dplyr
+    dplyr,
+    progressr
 Suggests: 
     knitr,
     gt,
