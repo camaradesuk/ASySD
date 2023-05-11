@@ -19,4 +19,10 @@ test_that("dedup_check", {
 
   expect_equal(
     length(res$unique$duplicate_id), 586)
-  })
+
+  # check deduplication with merge performing as normal
+  res <- dedup_citations(test_citations, merge_citations=TRUE)
+
+  expect_equal(
+  length(res$unique$duplicate_id), 586)
+})
