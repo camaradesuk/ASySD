@@ -10,7 +10,8 @@ dedup_citations(
   merge_citations = FALSE,
   keep_source = NULL,
   keep_label = NULL,
-  extra_merge_fields = NULL
+  extra_merge_fields = NULL,
+  shiny_progress = FALSE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ dedup_citations(
 \item{keep_label}{Selected citation label to preferentially retain in the dataset as the unique record}
 
 \item{extra_merge_fields}{Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value}
+
+\item{shiny_progress}{Switch on progress indicators for shiny applications}
 }
 \value{
 A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
