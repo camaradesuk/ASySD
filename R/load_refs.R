@@ -58,34 +58,31 @@ load_multi_search <-function(paths, names, method){
 
   if(method == "ris"){
 
-    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
-
     newdat <- synthesisr::read_refs(path)
-    if ("booktitle" %in% colnames(newdat)) {
-      newdat <-newdat %>%
-        tidyr::unite(title, title, booktitle, na.rm = TRUE)
-    }
-
-    if ("start_page" %in% colnames(newdat) &
-        "pages" %in% colnames(newdat)) {
-      newdat <- newdat %>%
-        tidyr::unite(pages, pages, start_page, end_page, sep="-", na.rm=TRUE) %>%
-        select(-start_page, -end_page)
-    }
-
-     if ("start_page" %in% colnames(newdat) &
-         "end_page" %in% colnames(newdat)) {
-      newdat <- newdat %>%
-        tidyr::unite(pages, start_page, end_page, sep="-", na.rm=TRUE)
-    }
-
-    if (!"journal" %in% colnames(newdat)){
-      newdat <- newdat %>%
-        rename(journal = source)
-    }
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
+
+    # rename or coalesce columns
+    targets <- c("journal", "number", "pages", "isbn", "record_id", "booktitle")
+    sources <- c("source", "issue", "start_page", "issn", "ID", "title")
+
+    for (i in seq_along(targets)) {
+      if (targets[i] %in% names(newdat)) {
+        newdat[[targets[i]]] <- dplyr::coalesce(newdat[[targets[i]]], newdat[[sources[i]]])
+      }  else {
+        newdat[[targets[i]]] <- newdat[[sources[i]]]
+      }}
+
+
+    if ("end_page" %in% colnames(newdat)) {
+      newdat <- newdat %>%
+        dplyr::mutate(pages = pages, "-", end_page) %>%
+        dplyr::select(-end_page)
+    }
+
+    newdat$pages <- lapply(newdat$pages, function(x) gsub("--", "-", x))
+
 
     newdat$file_name <- name
     df_list[[i]] <- newdat
