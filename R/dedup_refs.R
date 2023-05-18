@@ -899,10 +899,29 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 #' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
 #' @param additional_pairs dataframe of citations with manual pairs, a subset of the manual pairs export
 #' @param extra_merge_fields Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value
+#' @param show_unknown_tags When a label, source, or other merged field is missing, do you want this to show as "unknown"?
 #' @return Unique citations post added manual deduplication
-dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, keep_source=NULL, keep_label=NULL, additional_pairs, extra_merge_fields = NULL){
+
+dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, keep_source=NULL, keep_label=NULL,
+                                       additional_pairs, extra_merge_fields = NULL, show_unknown_tags=TRUE){
 
   message("formatting data...")
+
+  if(show_unknown_tags == TRUE){
+
+    # add unknowns for blanks and NAs
+    raw_citations <- raw_citations  %>%
+      mutate(across(where(is.character), ~ na_if(.,""))) %>%
+      mutate(label = ifelse(is.na(label), "unknown", paste(label))) %>%
+      mutate(source = ifelse(is.na(source), "unknown", paste(source))) %>%
+      mutate(across({{extra_merge_fields}}, ~ replace(., is.na(.), "unknown")))
+  } else {
+
+    # add unknowns for blanks and NAs
+    raw_citations <- raw_citations  %>%
+      mutate(across(where(is.character), ~ na_if(.,"")))
+  }
+
   # add warning for no record id
   if(!"record_id" %in% names(raw_citations)){
     warning("Search does not contain a record_id column. A record_id will be created using row names")
