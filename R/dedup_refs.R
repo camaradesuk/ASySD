@@ -575,21 +575,30 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
 #' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
 #' @param extra_merge_fields Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value
 #' @param shiny_progress Switch on progress indicators for shiny applications
+#' @param show_unknown_tags When a label, source, or other merged field is missing, do you want this to show as "unknown"?
 #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 dedup_citations <- function(raw_citations, manual_dedup = TRUE,
-                            merge_citations=FALSE, keep_source=NULL, keep_label=NULL, extra_merge_fields = NULL, shiny_progress=FALSE) {
+                            merge_citations=FALSE, keep_source=NULL, keep_label=NULL, extra_merge_fields = NULL,
+                            shiny_progress=FALSE, show_unknown_tags=TRUE) {
 
   if(shiny_progress == TRUE){
 
     withProgress(message = "formatting data...", value = 0, {
 
-      # add unknowns for blanks and NAs
-      raw_citations <- raw_citations  %>%
-        mutate(across(where(is.character), ~ na_if(.,""))) %>%
-        mutate(label = ifelse(is.na(label), "unknown", paste(label))) %>%
-        mutate(source = ifelse(is.na(source), "unknown", paste(source))) %>%
-        mutate(across({{extra_merge_fields}}, ~ replace(., is.na(.), "unknown")))
+      if(show_unknown_tags == TRUE){
 
+        # add unknowns for blanks and NAs
+        raw_citations <- raw_citations  %>%
+          mutate(across(where(is.character), ~ na_if(.,""))) %>%
+          mutate(label = ifelse(is.na(label), "unknown", paste(label))) %>%
+          mutate(source = ifelse(is.na(source), "unknown", paste(source))) %>%
+          mutate(across({{extra_merge_fields}}, ~ replace(., is.na(.), "unknown")))
+      } else {
+
+        # add unknowns for blanks and NAs
+        raw_citations <- raw_citations  %>%
+          mutate(across(where(is.character), ~ na_if(.,"")))
+      }
 
       # add warning for no record id
       if(!"record_id" %in% names(raw_citations)){
@@ -732,13 +741,20 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
     message("formatting data...")
 
-    # add unknowns for blanks and NAs
-    raw_citations <- raw_citations  %>%
-      mutate(across(where(is.character), ~ na_if(.,""))) %>%
-      mutate(label = ifelse(is.na(label), "unknown", paste(label))) %>%
-      mutate(source = ifelse(is.na(source), "unknown", paste(source))) %>%
-      mutate(across({{extra_merge_fields}}, ~ replace(., is.na(.), "unknown")))
+    if(show_unknown_tags == TRUE){
 
+      # add unknowns for blanks and NAs
+      raw_citations <- raw_citations  %>%
+        mutate(across(where(is.character), ~ na_if(.,""))) %>%
+        mutate(label = ifelse(is.na(label), "unknown", paste(label))) %>%
+        mutate(source = ifelse(is.na(source), "unknown", paste(source))) %>%
+        mutate(across({{extra_merge_fields}}, ~ replace(., is.na(.), "unknown")))
+    } else {
+
+      # add unknowns for blanks and NAs
+      raw_citations <- raw_citations  %>%
+        mutate(across(where(is.character), ~ na_if(.,"")))
+    }
 
     # add warning for no record id
     if(!"record_id" %in% names(raw_citations)){
