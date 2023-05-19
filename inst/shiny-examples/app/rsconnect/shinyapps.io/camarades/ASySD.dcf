@@ -5,9 +5,9 @@ account: camarades
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 8433915
-bundleId: 6897748
+bundleId: 7200911
 url: https://camarades.shinyapps.io/ASySD/
-when: 1677595565.46336
-lastSyncTime: 1677595565.46338
+when: 1683745704.20448
+lastSyncTime: 1683745704.2045
 asMultiple: FALSE
 asStatic: FALSE
