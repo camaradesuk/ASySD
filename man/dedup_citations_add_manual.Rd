@@ -10,7 +10,8 @@ dedup_citations_add_manual(
   keep_source = NULL,
   keep_label = NULL,
   additional_pairs,
-  extra_merge_fields = NULL
+  extra_merge_fields = NULL,
+  show_unknown_tags = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ dedup_citations_add_manual(
 \item{additional_pairs}{dataframe of citations with manual pairs, a subset of the manual pairs export}
 
 \item{extra_merge_fields}{Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value}
+
+\item{show_unknown_tags}{When a label, source, or other merged field is missing, do you want this to show as "unknown"?}
 }
 \value{
 Unique citations post added manual deduplication
