@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">ASySD</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,8 @@
 <span>  keep_source <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep_label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  extra_merge_fields <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  shiny_progress <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  shiny_progress <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  show_unknown_tags <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -91,6 +92,10 @@
 
 <dt>shiny_progress</dt>
 <dd><p>Switch on progress indicators for shiny applications</p></dd>
+
+
+<dt>show_unknown_tags</dt>
+<dd><p>When a label, source, or other merged field is missing, do you want this to show as "unknown"?</p></dd>
 
 </dl></div>
     <div class="section level2">
