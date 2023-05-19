@@ -1,3 +1,8 @@
+# ASySD 0.1.2
+* Added new dedup_citations argument for show_unknown_tags (logical) to specify whether merged fields should have
+"unknown" elements for sources / labels [TRUE] or not [FALSE]
+* Put a shiny alert with redirect notice on old RDedup web link to Shiny app
+
 # ASySD 0.1.1
 * Added shiny_progress argument to allow loading bar on shiny app
 * Bug fixes for multiple uploads to shiny app
