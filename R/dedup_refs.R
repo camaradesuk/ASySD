@@ -645,7 +645,8 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
       # warning if no duplicates
       if(is.null(pairs)) {
         warning("No duplicates detected!")
-        return(raw_citations)
+        raw_citations$duplicate_id <- raw_citations$record_id
+        return(list("unique" = raw_citations))
       }
 
       pair_types <- identify_true_matches(pairs)
@@ -657,7 +658,8 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
       # warning if no duplicates
       if(is.null(true_pairs)) {
         warning("No duplicates detected!")
-        return(raw_citations)
+        raw_citations$duplicate_id <- raw_citations$record_id
+        return(list("unique" = raw_citations))
       }
 
       incProgress(0.6/1, message = "merging duplicate citations...")
@@ -798,7 +800,8 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     # warning if no duplicates
     if(is.null(pairs)) {
       warning("No duplicates detected!")
-      return(raw_citations)
+      raw_citations$duplicate_id <- raw_citations$record_id
+      return(list("unique" = raw_citations))
     }
 
     pair_types <- identify_true_matches(pairs)
@@ -807,7 +810,8 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     # warning if no duplicates
     if(is.null(true_pairs)) {
       warning("No duplicates detected!")
-      return(raw_citations)
+      raw_citations$duplicate_id <- raw_citations$record_id
+      return(list("unique" = raw_citations))
     }
 
     message("identified duplicates!")
