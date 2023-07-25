@@ -2,6 +2,7 @@
 require(shiny)
 require(readr)
 require(DT)
+library(shinyhelper)
 require(stringr)
 require(dplyr)
 library(shinyalert)
@@ -60,13 +61,13 @@ ui <- navbarPage(
 
                shinyWidgets::prettyRadioButtons(
                  inputId = "fileType",
-                 label = "Choose a file type",
+                 label = "Choose a file type to upload",
                  inline = TRUE,
                  choices = c("Endnote XML",
                              "CSV", "BIB", "RIS", "Zotero CSV", "Tab delimited"),
-                 status="primary"),
+                 status="primary") %>%
+                 helper(type = "markdown", content = "uploading_studies", size="l"),
 
-               uiOutput("ASySD_pre_upload"),
                br(),
 
                # Input: select a file to upload----
@@ -303,6 +304,8 @@ ui <- navbarPage(
 # addResourcePath("tmpuser", getwd())
 
 server <- function(input, output, session){
+
+  observe_helpers()
 
   output$instructions <- renderUI({
     tags$iframe(
@@ -588,39 +591,39 @@ server <- function(input, output, session){
 
   })
 
-  output$ASySD_pre_upload <- renderUI({
-
-    shiny::validate(
-      shiny::need(input$fileType != "", "")
-    )
-
-    if (input$fileType == "Endnote XML") {
-
-      str1 <- paste("Formatting requirements:")
-      str2 <- paste("From Endnote or Zotero, select references and export to an XML file")
-
-      HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>"))
-
-    }
-
-    else if (input$fileType == "CSV") {
-
-      str1 <- paste("Formatting requirements:")
-      str2 <- paste("Within excel or another program, ensure your data has the following columns:
-      author, year, journal, doi, title, pages, volume, number,
-      abstract, record_id, isbn, label. The column order does not matter. Some columns can be blank,
-      but as much metadata as possible will aid deduplication")
-
-      HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>"))
-    }
-    else if (input$fileType == "Tab delimited") {
-
-      str1 <- paste("Formatting requirements:")
-      str2 <- paste("From Endnote, select references and export to an tab delimited (.txt) file")
-
-      HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>"))
-    }
-  })
+  # output$ASySD_pre_upload <- renderUI({
+  #
+  #   shiny::validate(
+  #     shiny::need(input$fileType != "", "")
+  #   )
+  #
+  #   if (input$fileType == "Endnote XML") {
+  #
+  #     str1 <- paste("Formatting requirements:")
+  #     str2 <- paste("From Endnote or Zotero, select references and export to an XML file")
+  #
+  #     HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>"))
+  #
+  #   }
+  #
+  #   else if (input$fileType == "CSV") {
+  #
+  #     str1 <- paste("Formatting requirements:")
+  #     str2 <- paste("Within excel or another program, ensure your data has the following columns:
+  #     author, year, journal, doi, title, pages, volume, number,
+  #     abstract, record_id, isbn, label. The column order does not matter. Some columns can be blank,
+  #     but as much metadata as possible will aid deduplication")
+  #
+  #     HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>"))
+  #   }
+  #   else if (input$fileType == "Tab delimited") {
+  #
+  #     str1 <- paste("Formatting requirements:")
+  #     str2 <- paste("From Endnote, select references and export to an tab delimited (.txt) file")
+  #
+  #     HTML(paste("<b>", str1, "</b>", "<br>", str2, "<br>"))
+  #   }
+  # })
 
   # download types info
   output$ASySD_download_type <- renderUI({
@@ -736,6 +739,7 @@ remove duplicates.")
                               keep_source = input$keepSource,
                               keep_label = input$keepLabel,
                               merge_citations = TRUE)
+
     return(result)
   })
 
