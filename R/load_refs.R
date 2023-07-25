@@ -27,15 +27,38 @@ load_multi_search <-function(paths, names, method){
 
   if(method == "bib"){
 
-    newdat <- RefManageR::ReadBib(path, check =FALSE)
+    try(newdat <- RefManageR::ReadBib(path, check =FALSE))
+
+    if(!exists("newdat")){
+
+      try(newdat <- bibliometrix::convert2df(path, dbsource = "pubmed", format = "pubmed"))
+
+      field_codes_pubmed <- read_csv("field_codes_pubmed.csv")
+
+      # Create a lookup table to map Field to Abbreviation
+      lookup_table <- setNames(field_codes_pubmed$Field, field_codes_pubmed$Abbreviation)
+
+      # Rename the columns in df_original using the lookup_table
+      colnames(newdat) <- lookup_table[colnames(newdat)]
+
+      # Remove columns
+      keep.cols <- names(newdat) %in% NA
+      newdat <- newdat [! keep.cols]
+      rownames(newdat) <- 1:nrow(newdat)
+
+    # additional formatting for issn - keeping only ISSN vs other identifiers
+    newdat$isbn <- trimws(stringr::str_extract(newdat$issn, ".{4}-.{4}.(?=\\(PRINT\\))"))
+
+    }
+
     newdat <- as.data.frame(newdat)
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
-
     newdat$file_name <- name
     df_list[[i]] <- newdat
+
   }
 
   if(method == "zotero_csv"){
@@ -227,14 +250,36 @@ load_search <-function(path, method){
 
   if(method == "bib"){
 
-    newdat <- RefManageR::ReadBib(path, check =FALSE)
+    try(newdat <- RefManageR::ReadBib(path, check =FALSE))
+
+    if(!exists("newdat")){
+
+      try(newdat <- bibliometrix::convert2df(path, dbsource = "pubmed", format = "pubmed"))
+
+      field_codes_pubmed <- read_csv("field_codes_pubmed.csv")
+
+      # Create a lookup table to map Field to Abbreviation
+      lookup_table <- setNames(field_codes_pubmed$Field, field_codes_pubmed$Abbreviation)
+
+      # Rename the columns in df_original using the lookup_table
+      colnames(newdat) <- lookup_table[colnames(newdat)]
+
+      # Remove columns
+      keep.cols <- names(newdat) %in% NA
+      newdat <- newdat [! keep.cols]
+      rownames(newdat) <- 1:nrow(newdat)
+
+      # additional formatting for issn - keeping only ISSN vs other identifiers
+      newdat$isbn <- trimws(stringr::str_extract(newdat$issn, ".{4}-.{4}.(?=\\(PRINT\\))"))
+    }
+
     newdat <- as.data.frame(newdat)
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
-
   }
+
 
   if(method == "zotero_csv"){
 
