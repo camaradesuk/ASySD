@@ -172,6 +172,10 @@ if(method == "txt"){
 }
   }
 
+  # make sure year is character in both
+  df_list[[1]]$year <- as.character(df_list[[1]]$year)
+  df_list[[2]]$year <- as.character(df_list[[2]]$year)
+
   newdat <- dplyr::bind_rows(df_list)
 
   cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source')
