@@ -1,0 +1,79 @@
+Abbreviation,Long Name,Field
+FN,File Name,file_name
+VR,Version Number,version_number
+PT,Publication Type (J=Journal; B=Book; S=Series; P=Patent),publication_type
+AU,Authors,author
+AF,Author Full Name,author_full_name
+BA,Book Authors,book_authors
+BF,Book Authors Full Name,book_authors_full_name
+CA,Group Authors,group_authors
+GP,Book Group Authors,book_group_authors
+BE,Editors,editors
+TI,Document Title,title
+SO,Publication Name,journal
+SE,Book Series Title,book_series_title
+BS,Book Series Subtitle,book_series_subtitle
+LA,Language,language
+DT,Document Type,document_type
+CT,Conference Title,conference_title
+CY,Conference Date,conference_date
+CL,Conference Location,conference_location
+SP,Conference Sponsors,conference_sponsors
+HO,Conference Host,conference_host
+DE,Author Keywords,author_keywords
+ID,Keywords Plus®,keywords_plus®
+AB,Abstract,abstract
+C1,Author Address,author_address
+RP,Reprint Address,reprint_address
+EM,E-mail Address,e-mail_address
+RI,ResearcherID Number,researcherid_number
+OI,ORCID Identifier (Open Researcher and Contributor ID),orcid_identifier_(open_researcher_and_contributor_id)
+FU,Funding Agency and Grant Number,funding_agency_and_grant_number
+FX,Funding Text,funding_text
+CR,Cited References,cited_references
+NR,Cited Reference Count,cited_reference_count
+TC,Web of Science Core Collection Times Cited Count,web_of_science_core_collection_times_cited_count
+Z9,"Total Times Cited Count (Web of Science Core Collection, Arabic Citation Index, BIOSIS Citation Index, Chinese Science Citation Database, Data Citation Index, Russian Science Citation Index, SciELO Citation Index)","total_times_cited_count_(web_of_science_core_collection,_arabic_citation_index,_biosis_citation_index,_chinese_science_citation_database,_data_citation_index,_russian_science_citation_index,_scielo_citation_index)"
+U1,Usage Count (Last 180 Days),usage_count_(last_180_days)
+U2,Usage Count (Since 2013),usage_count_(since_2013)
+PU,Publisher,publisher
+PI,Publisher City,publisher_city
+PA,Publisher Address,publisher_address
+SN,International Standard Serial Number (ISSN),issn
+EI,Electronic International Standard Serial Number (eISSN),electronic_international_standard_serial_number_(eissn)
+BN,International Standard Book Number (ISBN),isbn
+J9,29-Character Source Abbreviation,29-character_source_abbreviation
+JI,ISO Source Abbreviation,iso_source_abbreviation
+PD,Publication Date,publication_date
+PY,Year Published,year
+VL,Volume,volume
+IS,Issue,number
+SI,Special Issue,special_issue
+PN,Part Number,part_number
+SU,Supplement,supplement
+MA,Meeting Abstract,meeting_abstract
+BP,Beginning Page,beginning_page
+EP,Ending Page,ending_page
+AR,Article Number,article_number
+DI,Digital Object Identifier (DOI),doi
+D2,Book Digital Object Identifier (DOI),doi
+EA,Early access date,early_access_date
+EY,Early access year,early_access_year
+PG,Page Count,page_count
+P2,Chapter Count (Book Citation Index),chapter_count_(book_citation_index)
+WC,Web of Science Categories,web_of_science_categories
+SC,Research Areas,research_areas
+GA,Document Delivery Number,document_delivery_number
+PM,PubMed ID,record_id
+UT,Accession Number,accession_number
+OA,Open Access Indicator,open_access_indicator
+HP,ESI Hot Paper. Note that this field is valued only for ESI subscribers.,esi_hot_paper._note_that_this_field_is_valued_only_for_esi_subscribers.
+HC,ESI Highly Cited Paper. Note that this field is valued only for ESI subscribers.,esi_highly_cited_paper._note_that_this_field_is_valued_only_for_esi_subscribers.
+DA,Date this report was generated.,date_this_report_was_generated.
+ER,End of Record,end_of_record
+EF,End of File,end_of_file
+DI,DOI,doi
+PP,Pages,pages
+DB,Database,source
+OT,Keywords,keywords
+PMID,PMID,record_id
