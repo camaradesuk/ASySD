@@ -140,7 +140,7 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
       select("Reference Type", "Author", "Year",
              "Secondary Title", "DOI", "Title",
              "Pages", "Volume", "Number", "Abstract",
-             "Custom 1", "ISBN/ISSN", "Label", "Name of Database")
+             "Custom 1", "Custom 2", "ISBN/ISSN", "Label", "Name of Database")
 
     write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
