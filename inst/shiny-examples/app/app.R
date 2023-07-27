@@ -760,9 +760,7 @@ remove duplicates.")
   # Action: remove manually selected duplicates ----
   manual_dedup_result <- eventReactive(input$manualdedupsubmit,{
 
-    removeManual <- auto_dedup_result()$manual %>%
-     select(author1, author2, title1, title2, year1, year2, journal1, journal2, doi1, doi2, record_id1, record_id2)
-
+    removeManual <- auto_dedup_result()$manual
     duplicates <- removeManual[input$manual_dedup_dt_rows_selected,]
 
     if(nrow(duplicates) < 1){
@@ -772,9 +770,11 @@ remove duplicates.")
     }
 
     unique_citations <- auto_dedup_result()$unique
-    after <- dedup_citations_add_manual(citations_to_dedup(),
+    after <- dedup_citations_add_manual(unique_citations,
                                         merge_citations = TRUE,
-                                        additional_pairs = duplicates)
+                                        additional_pairs = duplicates,
+                                        keep_source = input$keepSource,
+                                        keep_label = input$keepLabel)
 
 
   })
