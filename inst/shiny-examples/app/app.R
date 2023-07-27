@@ -213,11 +213,10 @@ ui <- navbarPage(
              htmlOutput("Manual_results") %>% withSpinner(color="#754E9B", type=7),
 
              br(),
+             tags$style(HTML(".table.dataTable tbody td.active, .table.dataTable tbody tr.active td {
+            background-color: #754E9B!important;}")),
 
-                       DTOutput("manual_dedup_dt")
-
-
-                        ))),
+             DTOutput("manual_dedup_dt")))),
 
   tabPanel("Summary",
 
@@ -762,7 +761,7 @@ remove duplicates.")
   manual_dedup_result <- eventReactive(input$manualdedupsubmit,{
 
     removeManual <- auto_dedup_result()$manual %>%
-      select(author1, author2, title1, title2, year1, year2, journal1, journal2, doi1, doi2, record_id1, record_id2)
+     select(author1, author2, title1, title2, year1, year2, journal1, journal2, doi1, doi2, record_id1, record_id2)
 
     duplicates <- removeManual[input$manual_dedup_dt_rows_selected,]
 
@@ -776,7 +775,12 @@ remove duplicates.")
     after <- dedup_citations_add_manual(citations_to_dedup(),
                                         merge_citations = TRUE,
                                         additional_pairs = duplicates)
+
+
   })
+
+
+
 
   manual_dedup_result_flagged <- eventReactive(input$manualdedupflag,{
 
