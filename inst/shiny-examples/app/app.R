@@ -159,15 +159,18 @@ ui <- navbarPage(
                       )),
 
              tabPanel("Manual deduplication",
-
-
-                      h4("Duplicate pair selection"),
+                      br(),
 
                       textOutput("Manual_pretext"),
 
                       br(),
 
                       # Button
+
+                     fluidRow(column(width=2,
+
+                      h4("Duplicate pair selection") %>%
+                        helper(type = "markdown", content = "manual_dedup", size="l"))),
 
                       tags$style(HTML('.bttn-unite.bttn-primary {
                       border-color: white;
@@ -178,6 +181,8 @@ ui <- navbarPage(
                       .bttn-unite.bttn-primary:before {
                       background: #6c4771 !important;
                       }')),
+
+                      br(),
 
                         shinyWidgets::actionBttn(
                         inputId = "manualdedupsubmit",
@@ -739,6 +744,12 @@ remove duplicates.")
                               keep_label = input$keepLabel,
                               merge_citations = TRUE)
 
+    rv$pairs_to_check <- result$manual %>%
+      mutate(" " = "") %>%
+      select(" ", everything())
+
+    rv$latest_unique <- result$unique
+
     return(result)
   })
 
@@ -760,62 +771,32 @@ remove duplicates.")
   # Action: remove manually selected duplicates ----
   manual_dedup_result <- eventReactive(input$manualdedupsubmit,{
 
-    removeManual <- auto_dedup_result()$manual
-    duplicates <- removeManual[input$manual_dedup_dt_rows_selected,]
-
-    if(nrow(duplicates) < 1){
-      shinyalert("Oops!", "You haven't selected any duplicate pairs to remove.", type = "error")
-
-      return()
-    }
-
-    unique_citations <- auto_dedup_result()$unique
-    after <- dedup_citations_add_manual(unique_citations,
+    after <- dedup_citations_add_manual(rv$latest_unique,
                                         merge_citations = TRUE,
-                                        additional_pairs = duplicates,
+                                        additional_pairs = rv$pairs_to_check[input$manual_dedup_dt_rows_selected,],
                                         keep_source = input$keepSource,
                                         keep_label = input$keepLabel)
-
-
+    # update latest unique df
+    rv$latest_unique <- after
   })
 
-
-
-
-  manual_dedup_result_flagged <- eventReactive(input$manualdedupflag,{
-
-    # get pairs to manually dedup
-    removeManual <- auto_dedup_result()$manual %>%
-      select(author1, author2, title1, title2, year1, year2, journal1, journal2, doi1, doi2, record_id1, record_id2)
-
-    # keep selected rows
-    duplicates <- removeManual[input$manual_dedup_dt_rows_selected,]
-
-    # dedup with selected pairs as TRUE duplicates
-    unique_citations <- auto_dedup_result()$unique
-
-    # add flag to relevant citations
-    unique_citations <- auto_dedup_result()$unique
-    unique_citations <- unique_citations %>%
-      mutate(flag = ifelse(duplicate_id %in% c(duplicates$record_id1, duplicates$record_id2), "potential_duplicates", "")) %>%
-      mutate(flag = ifelse(duplicate_id %in% c(duplicates$record_id1, duplicates$record_id2), "potential_duplicates", ""))
-    })
-
-  manual_dedup_result_flagged_all <- eventReactive(input$manualdedupflag_all,{
-
-    removeManual <- auto_dedup_result()$manual %>%
-      select(author1, author2, title1, title2, year1, year2, journal1, journal2, doi1, doi2, record_id1, record_id2)
-
-    duplicates <- removeManual
-
-    unique_citations <- auto_dedup_result()$unique
-
-    unique_citations <- auto_dedup_result()$unique
-    unique_citations <- unique_citations %>%
-      mutate(flag = ifelse(duplicate_id %in% c(duplicates$record_id1, duplicates$record_id2), "potential_duplicates", "")) %>%
-      mutate(flag = ifelse(duplicate_id %in% c(duplicates$record_id1, duplicates$record_id2), "potential_duplicates", ""))
-
-  })
+#
+#   manual_dedup_result_flagged <- eventReactive(input$manualdedupflag,{
+#
+#     # add flag to relevant citations
+#     unique_citations <- rv$latest_unique %>%
+#       mutate(flag = ifelse(duplicate_id %in% c(rv$pairs_flagged$record_id1, rv$pairs_flagged$record_id2), "potential_duplicates", ""))
+#
+#     rv$latest_unique <- unique_citations
+#     })
+#
+#   manual_dedup_result_flagged_all <- eventReactive(input$manualdedupflag_all,{
+#
+#     unique_citations <- rv$latest_unique %>%
+#       mutate(flag = ifelse(duplicate_id %in% c(rv$pairs_flagged$record_id1, rv$pairs_flagged$record_id2), "potential_duplicates", ""))
+#
+#     rv$latest_unique <- unique_citations
+#   })
 
 
   # Action: ASySD manual dedup pre text ----
@@ -824,11 +805,9 @@ remove duplicates.")
     manualrefs <- auto_dedup_result()$manual
     manualrefs <- as.numeric(length(manualrefs$record_id1))
 
-    paste(manualrefs, "pairs of citations require manual deduplication. Review the pairs in the table
-        below. You can scroll right to see all citation metadata and hover over any cell to see truncated text. Identical and near-identical fields are highlighted in green.
+    paste(manualrefs, "pairs of citations (see table below) require manual review. You can scroll right to see all citation metadata and hover over any cell to see truncated text. Identical and near-identical fields are highlighted in green.
         Select all rows which contain duplicate pairs and click the button below to remove extra
         duplicates.")
-
 
   })
 
@@ -858,16 +837,51 @@ remove duplicates.")
 
       })
 
+  # Output: manual pairs to be checked
+
+  observeEvent(input$manualdedupsubmit, {
+
+    rv$pairs_to_check <- rv$pairs_to_check[-input$manual_dedup_dt_rows_selected,]
+    rv$pairs_removed <- rv$pairs_to_check[input$manual_dedup_dt_rows_selected,]
+
+    if(nrow(rv$pairs_removed) < 1){
+      shinyalert("Oops!", "You haven't selected any duplicate pairs to remove.", type = "error")
+      return()
+    }
+
+  })
+
+    observeEvent(input$manualdedupflag, {
+
+    rv$pairs_flagged <- rv$pairs_to_check[input$manual_dedup_dt_rows_selected,]
+    rv$pairs_to_check <-  rv$pairs_to_check %>%
+      mutate(" " = ifelse(record_id1 %in% rv$pairs_flagged$record_id1 &
+                                    record_id2 %in% rv$pairs_flagged$record_id2, as.character(icon("flag")), ""))
+
+
+    })
+
+    observeEvent(input$manualdedupflag_all, {
+
+      rv$pairs_flagged <- rv$pairs_to_check
+      rv$pairs_to_check <-  rv$pairs_to_check %>%
+        mutate(" " = as.character(icon("flag")))
+
+
+    })
+
+
   # Output: manual dedup datatable -----
   output$manual_dedup_dt <- renderDT(
-    datatable(auto_dedup_result()$manual,
+    datatable(rv$pairs_to_check,
+              escape=FALSE,
               options = list(dom = 'tp',
                              pageLength = 10,
                              fixedColumns = TRUE,
                              scrollX = TRUE,
                              columnDefs =
-                               list(list(visible=FALSE, targets=c(3,6,9, 12, 15, 18, 21, 24, 25, 30, 31, 32, 33, 34,35,36)),
-                             list(targets = c(1,2,3,4,5,6,7,8,9,10),
+                               list(list(visible=FALSE, targets=c(4, 7, 10, 13, 16, 19, 22, 25, 26, 31, 32, 33, 34, 35, 36, 37, 38, 39)),
+                             list(targets = c(2,3,4,5,6,7,8,9,10,11),
                             render = JS(
                               "function(data, type, row, meta) {",
                               "return type === 'display' && data != null && data.length > 25 ?",
@@ -899,6 +913,8 @@ remove duplicates.")
 
     if(exists("n_unique_manual")){
 
+      final_unique  <- as.numeric(length(rv$latest_unique$duplicate_id))
+
     links <- data.frame(source =
                           c(paste0("Original citations (", n_search, ")"),
                             paste0("Original citations (", n_search, ")"),
@@ -907,9 +923,9 @@ remove duplicates.")
                         target =
                           c(paste0("Remaining citations (", n_unique_auto, ")"),
                             paste0("Auto-dedup removed (", n_search - n_unique_auto, ")"),
-                            paste0("Unique citations (", n_unique_manual, ")"),
-                            paste0("Manually removed (", n_unique_auto - n_unique_manual, ")")),
-                        value = c(n_search, n_search - n_unique_auto, n_unique_manual, n_unique_auto - n_unique_manual))
+                            paste0("Unique citations (", final_unique, ")"),
+                            paste0("Manually removed (", n_unique_auto - final_unique, ")")),
+                        value = c(n_search, n_search - n_unique_auto, final_unique, n_unique_auto - final_unique))
 
     # From these flows we need to create a node data frame: it lists every entities involved in the flow
     nodes <- data.frame(
@@ -966,49 +982,38 @@ remove duplicates.")
   final_results <- reactive({
 
 
-    unique <- auto_dedup_result()$unique
-    try(unique <- manual_dedup_result_flagged(), silent = TRUE)
-    try(unique <- manual_dedup_result_flagged_all(), silent = TRUE)
-    try(unique <- manual_dedup_result(), silent = TRUE)
+    unique <- rv$latest_unique
+    dup_ids_to_flag <- unique %>%
+      select(record_ids, duplicate_id) %>%
+      group_by(duplicate_id) %>%
+      tidyr::separate_rows(record_ids, sep=", ") %>%
+      mutate(flag = ifelse(record_ids %in% c(rv$pairs_flagged$record_id1, rv$pairs_flagged$record_id2), TRUE, FALSE)) %>%
+      filter(flag == TRUE) %>%
+      select(duplicate_id)
+
+    unique <- unique %>%
+      mutate(flag = ifelse(duplicate_id %in% dup_ids_to_flag$duplicate_id, "potential_duplicates", ""))
 
     if(input$export_type == "all_citations_export"){
 
-      if("flag" %in% colnames(unique)){
         final <- unique %>%
           select(flag, duplicate_id, record_ids) %>%
           rename(record_id = record_ids) %>%
           tidyr::separate_rows(record_id)
 
         final <- left_join(final, citations_to_dedup(), by="record_id")
-      } else {
 
-        final <- unique %>%
-          ungroup() %>%
-          select(duplicate_id, record_ids) %>%
-          rename(record_id = record_ids) %>%
-          tidyr::separate_rows(record_id, sep=", ")
+      }  else{
 
-        final <- left_join(final, citations_to_dedup(), by="record_id")
-
-      }}
-
-      else{
-
-        if("flag" %in% colnames(unique)){
           final <- unique %>%
             select(flag, duplicate_id) %>%
             mutate(record_id = duplicate_id)
 
-        } else {
 
-          final <- unique %>%
-            select(duplicate_id) %>%
-            mutate(record_id = duplicate_id)
-        }
-
-        unique <- unique %>%
+          unique <- unique %>%
           select(duplicate_id, source, label)
-        final <- left_join(final, citations_to_dedup(), by="record_id")
+          final <- left_join(final, citations_to_dedup(), by="record_id")
+
         final <- final %>%
           select(-source, -label)
 
