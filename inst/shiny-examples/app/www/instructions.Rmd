@@ -22,7 +22,7 @@ Welcome to the the **Automated Systematic Search Deduplicator** app! This free t
 ASySD uses the following metadata to identify duplicates:
 
 | **Name**              | **Definition**                                                                                                                         |
-|:----------------|:------------------------------------------------------|
+|:----------------------|:---------------------------------------------------------------------------------------------------------------------------------------|
 | **author**            | The author(s) of the publication                                                                                                       |
 | **year**              | The year the publication was published                                                                                                 |
 | **journal**           | The name of the journal in which the publication appeared                                                                              |
@@ -113,7 +113,7 @@ Within Zotero or Endnote, you can identify citations with a flag and go through 
 If we have citations from three sources, our export file will look something like this:
 
 | duplicate_id | title                                                        | source              |
-|:----------------|:--------------------------------------|:----------------|
+|:-------------|:-------------------------------------------------------------|:--------------------|
 | 111          | *An example article*                                         | wos, pubmed         |
 | 112          | *Another example which was only in wos*                      | wos                 |
 | 113          | *Yet another example which was only in pubmed*               | pubmed              |

@@ -38,9 +38,27 @@ If you use Mendeley for reference management, there is only one currently accept
 
 Within excel, ensure your citation data has the following columns:
 
-|        |      |         |     |       |        |        |          |           |       |        |
-|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
-| author | year | journal | doi | pages | volume | number | abstract | record_id | label | source |
+-   record_id
+
+-   author
+
+-   year
+
+-   journal
+
+-   doi
+
+-   volume
+
+-   number
+
+-   pages
+
+-   abstract
+
+-   label
+
+-   source
 
 Click File \> save as CSV file. NB: Some columns can be blank, but as much metadata as possible will aid deduplication accuracy.
 
