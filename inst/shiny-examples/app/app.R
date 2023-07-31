@@ -773,7 +773,7 @@ remove duplicates.")
 
     after <- dedup_citations_add_manual(rv$latest_unique,
                                         merge_citations = TRUE,
-                                        additional_pairs = rv$pairs_to_check[input$manual_dedup_dt_rows_selected,],
+                                        additional_pairs = rv$pairs_removed,
                                         keep_source = input$keepSource,
                                         keep_label = input$keepLabel)
     # update latest unique df
@@ -841,8 +841,8 @@ remove duplicates.")
 
   observeEvent(input$manualdedupsubmit, {
 
-    rv$pairs_to_check <- rv$pairs_to_check[-input$manual_dedup_dt_rows_selected,]
     rv$pairs_removed <- rv$pairs_to_check[input$manual_dedup_dt_rows_selected,]
+    rv$pairs_to_check <- rv$pairs_to_check[-input$manual_dedup_dt_rows_selected,]
 
     if(nrow(rv$pairs_removed) < 1){
       shinyalert("Oops!", "You haven't selected any duplicate pairs to remove.", type = "error")
