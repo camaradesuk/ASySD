@@ -266,10 +266,8 @@ identify_true_matches <- function(pairs){
         (title>0.9 & author>0.9 & abstract>0.9 & isbn >0.99)|
 
         (pages>0.9 & number>0.9 & title>0.90 & author>0.80 & journal>0.6) |
-        (number>0.9 & volume>0.9 & title>0.90 & author>0.90 & journal>0.6) |
+        (number>0.9 & volume>0.9 & title>0.90 & author>0.90 & isbn>0.99) |
         (pages>0.9 & volume>0.9 & title>0.90 & author>0.80 & journal>0.6) |
-        (pages>0.9 & number>0.9 & title>0.90 & author>0.80 & isbn>0.99) |
-        (pages>0.9 & number>0.9 & title>0.90 & author>0.80 & isbn>0.99) |
         (pages>0.9 & number>0.9 & title>0.90 & author>0.80 & isbn>0.99) |
 
         (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & journal>0.9) |
@@ -466,10 +464,10 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
     unique()
 
   # Create a graph from the Edges1 DataFrame
-  g <- graph_from_data_frame(duplicate_id, directed = FALSE)
+  g <- igraph::graph_from_data_frame(duplicate_id, directed = FALSE)
 
   # Get the connected components of the graph
-  cc <- components(g)
+  cc <- igraph::components(g)
 
   # Add a new column to the Edges1 DataFrame with the component ID for each row
   duplicate_id$ComponentID <- cc$membership[match(duplicate_id$record_id, names(cc$membership))]
@@ -487,7 +485,7 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
   if(!is.null(keep_label)){
 
     order <- c(unique(matched_pairs_with_ids$label))
-    chosen_label <- order == keep_source
+    chosen_label <- order == keep_label
     order <- c(order[chosen_label], order[!chosen_label])
 
     duplicate_id <- duplicate_id %>%
