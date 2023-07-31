@@ -465,18 +465,75 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
     select(duplicate_id, record_id) %>%
     unique()
 
+  # Create a graph from the Edges1 DataFrame
+  g <- graph_from_data_frame(duplicate_id, directed = FALSE)
+
+  # Get the connected components of the graph
+  cc <- components(g)
+
+  # Add a new column to the Edges1 DataFrame with the component ID for each row
+  duplicate_id$ComponentID <- cc$membership[match(duplicate_id$record_id, names(cc$membership))]
+
+  # Get the unique component IDs
+  uniqueIDs <- unique(duplicate_id$ComponentID)
+
   raw_citations <- raw_citations %>%
     mutate(record_id = as.character(record_id))
 
   # make character
   duplicate_id$record_id <- as.character(duplicate_id$record_id)
 
-  # join duplicate id to raw citation metadata (e.g. title, author, journal)
-  all_metadata_with_duplicate_id <- left_join(duplicate_id, raw_citations, by="record_id", multiple = "all")
+
+  if(!is.null(keep_label)){
+
+    order <- c(unique(matched_pairs_with_ids$label))
+    chosen_label <- order == keep_source
+    order <- c(order[chosen_label], order[!chosen_label])
+
+    duplicate_id <- duplicate_id %>%
+      left_join(raw_citations) %>%
+      group_by(ComponentID) %>%
+      arrange(factor(label, levels = order)) %>%
+      mutate(duplicate_id = first(record_id)) %>%
+      ungroup() %>%
+      select(-ComponentID)
+
+
+  }
+
+  else if(!is.null(keep_source)){
+
+    order <- c(unique(matched_pairs_with_ids$source))
+    chosen_source <- order == keep_source
+    order <- c(order[chosen_source], order[!chosen_source])
+
+    duplicate_id <- duplicate_id %>%
+      left_join(raw_citations) %>%
+      group_by(ComponentID) %>%
+      arrange(factor(source, levels = order)) %>%
+      mutate(duplicate_id = first(record_id)) %>%
+      ungroup() %>%
+      select(-ComponentID)
+
+  }
+
+  else{
+
+    duplicate_id <- duplicate_id %>%
+      left_join(raw_citations) %>%
+      group_by(ComponentID) %>%
+      arrange(record_id) %>%
+      mutate(duplicate_id = first(record_id)) %>%
+      ungroup() %>%
+      select(-ComponentID)
+  }
+
+  # all_metadata_with_duplicate_id <- duplicate_id %>%
+  #   select(-c(source1, label1, source2, label2))
 
   if(!is.null(extra_merge_fields)){
 
-    all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
+    all_metadata_with_duplicate_id <- duplicate_id %>%
       mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
       mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
       group_by(duplicate_id) %>% # group by duplicate id
@@ -492,7 +549,7 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
 
   } else {
 
-    all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
+    all_metadata_with_duplicate_id <- duplicate_id %>%
       mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
       mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
       group_by(duplicate_id) %>% # group by duplicate id
@@ -505,59 +562,6 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
       rename(record_ids = record_id) %>%
       ungroup()
 
-  }
-
-  if(!is.null(keep_source)){
-
-    corrected_dup_id <- all_metadata_with_duplicate_id %>%
-      filter(grepl(keep_source, .$source)) %>%
-      select(duplicate_id, record_ids, source) %>%
-      tidyr::separate_rows(c(source, record_ids), sep=", ") %>%
-      mutate(dup_id_correct = ifelse(source == keep_source, paste(record_ids), NA)) %>%
-      select(duplicate_id, dup_id_correct, everything()) %>%
-      group_by(duplicate_id) %>%
-      arrange(dup_id_correct) %>%
-      mutate(dup_id_correct = first(dup_id_correct)) %>%
-      select(dup_id_correct, duplicate_id) %>%
-      ungroup() %>%
-      unique()
-
-    corrected_dup_id <- left_join(corrected_dup_id, all_metadata_with_duplicate_id, by="duplicate_id", multiple = "all")
-    corrected_dup_id <- corrected_dup_id %>%
-      select(-duplicate_id) %>%
-      rename(duplicate_id = dup_id_correct)
-
-    all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
-      filter(!grepl(keep_source, .$source))
-
-    all_metadata_with_duplicate_id <- rbind(all_metadata_with_duplicate_id, corrected_dup_id)
-
-  } else if(!is.null(keep_label)){
-
-    corrected_dup_id <- all_metadata_with_duplicate_id %>%
-      filter(grepl(keep_label, .$label)) %>%
-      select(duplicate_id, record_ids, label) %>%
-      tidyr::separate_rows(c(label, record_ids), sep=", ") %>%
-      mutate(dup_id_correct = ifelse(label == keep_label, paste(record_ids), NA)) %>%
-      select(duplicate_id, dup_id_correct, everything()) %>%
-      group_by(duplicate_id) %>%
-      arrange(dup_id_correct) %>%
-      mutate(dup_id_correct = first(dup_id_correct)) %>%
-      select(dup_id_correct, duplicate_id) %>%
-      ungroup() %>%
-      unique()
-
-    corrected_dup_id <- left_join(corrected_dup_id, all_metadata_with_duplicate_id, by="duplicate_id", multiple = "all")
-    corrected_dup_id <- corrected_dup_id %>%
-      select(-duplicate_id) %>%
-      rename(duplicate_id = dup_id_correct)
-
-    all_metadata_with_duplicate_id <- all_metadata_with_duplicate_id %>%
-      filter(!grepl(keep_label, .$label))
-
-    all_metadata_with_duplicate_id <- rbind(all_metadata_with_duplicate_id, corrected_dup_id)
-
-  } else{  return(all_metadata_with_duplicate_id)
   }
 }
 
@@ -906,82 +910,37 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 #' @param show_unknown_tags When a label, source, or other merged field is missing, do you want this to show as "unknown"?
 #' @return Unique citations post added manual deduplication
 
-dedup_citations_add_manual <- function(raw_citations, merge_citations=FALSE, keep_source=NULL, keep_label=NULL,
+dedup_citations_add_manual <- function(unique_citations, merge_citations=FALSE, keep_source=NULL, keep_label=NULL,
                                        additional_pairs, extra_merge_fields = NULL, show_unknown_tags=TRUE){
 
-  message("formatting data...")
+  duplicates <- additional_pairs %>%
+    select(duplicate_id.x, duplicate_id.y, label1, label2, source1, source2)
 
-  if(show_unknown_tags == TRUE){
+  unique_citations <- unique_citations %>%
+    left_join(duplicates, by=c("duplicate_id" = "duplicate_id.x")) %>%
+    mutate(record_ids = ifelse(is.na(duplicate_id.y), record_ids, paste0(record_ids, ", ", duplicate_id.y))) %>%
+    mutate(label = ifelse(is.na(duplicate_id.y), label, paste0(label, ", ", label2))) %>%
+    mutate(source = ifelse(is.na(duplicate_id.y), source, paste0(source, ", ", source2)))
 
-    # add unknowns for blanks and NAs
-    raw_citations <- raw_citations  %>%
-      mutate(across(where(is.character), ~ na_if(.,""))) %>%
-      mutate(label = ifelse(is.na(label), "unknown", paste(label))) %>%
-      mutate(source = ifelse(is.na(source), "unknown", paste(source))) %>%
-      mutate(across({{extra_merge_fields}}, ~ replace(., is.na(.), "unknown")))
-  } else {
+  unique_citations <- unique_citations %>%
+    group_by(duplicate_id) %>%
+    tidyr::separate_rows(record_ids, source, label, sep=", ") %>%
+    rename(record_id = record_ids) %>%
+    select(-duplicate_id.y) %>%
+    unique() %>%
+    ungroup() %>%
+    group_by(record_id) %>%
+    slice_head() %>%
+    ungroup()
 
-    # add unknowns for blanks and NAs
-    raw_citations <- raw_citations  %>%
-      mutate(across(where(is.character), ~ na_if(.,"")))
-  }
+  ids <- unique_citations
 
-  # add warning for no record id
-  if(!"record_id" %in% names(raw_citations)){
-    warning("Search does not contain a record_id column. A record_id will be created using row names")
+  unique_citations_with_metadata <- merge_metadata(unique_citations, ids, keep_source, keep_label, extra_merge_fields)
+  unique_citations_with_metadata <-unique_citations_with_metadata %>%
+    select(-c(source1, label1, source2, label2))
 
-    # add record id using row number
-    raw_citations <- add_id_citations(raw_citations)
-  }
-
-  # add warning for any missing record id
-  else if(any(is.na(raw_citations$record_id) | raw_citations$record_id=="")){
-    warning("Search contains missing values for the record_id column. A record_id will be created using row names")
-
-    # add record id using row number
-    raw_citations <- add_id_citations(raw_citations)
-  }
-
-  # add warning for non unique ids
-  else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
-    warning("The record_id column is not unique. A record_id will be created using row names")
-
-    # add record id using row number
-    raw_citations <- add_id_citations(raw_citations)
-
-  } else{
-
-    ordered_citations <- order_citations(raw_citations)
-    formatted_citations <- format_citations(ordered_citations)
-
-    message("identifying potential duplicates...")
-    pairs <- match_citations(formatted_citations)
-    pair_types <- identify_true_matches(pairs)
-    true_pairs <- plyr::rbind.fill(pair_types$true_pairs, additional_pairs)
-
-    message("identified duplicates!")
-    matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
-
-    if(merge_citations == TRUE){
-
-      unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label, extra_merge_fields)
-    }  else{
-      unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
-
-    }
-
-    # make sure data is returned ungrouped
-    unique_citations_with_metadata <- unique_citations_with_metadata %>%
-      ungroup()
-
-    n_unique <- length(unique(unique_citations_with_metadata$duplicate_id))
-    n_start <- length(unique(formatted_citations$record_id))
-    n_dups <- n_start - n_unique
-
-    message(paste(n_start, "citations loaded..."))
-    message(paste(n_dups, "duplicate citations removed..."))
-    message(paste(n_unique, "unique citations remaining!"))
-
-    return(unique_citations_with_metadata)
-  }
+  return(unique_citations_with_metadata)
 }
+
+
+
