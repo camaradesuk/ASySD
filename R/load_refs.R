@@ -172,9 +172,10 @@ if(method == "txt"){
 }
   }
 
-  # make sure year is character in both
-  df_list[[1]]$year <- as.character(df_list[[1]]$year)
-  df_list[[2]]$year <- as.character(df_list[[2]]$year)
+  # make sure year is character in all
+  for (i in 1:length(df_list)) {
+    df_list[[i]]$year <- as.character(df_list[[i]]$year)
+  }
 
   newdat <- dplyr::bind_rows(df_list)
 
