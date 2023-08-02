@@ -1,3 +1,9 @@
+# ASySD 0.2.1
+
+* Minor bug fix in app logic
+* Chnage of wording when generating unique ids (based on row number not row name) 
+* Adding shiny progress updates back in 
+
 # ASySD 0.2.0
 * Improvements to documentation files (CRAN submission preparation)
 * Changed default deduplication type to merged
