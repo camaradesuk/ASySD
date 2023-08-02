@@ -21,12 +21,12 @@ Imports:
     XML,
     synthesisr,
     utf8,
-    utils,
     tidyr,
     plyr,
     RefManageR,
     dplyr,
-    progressr
+    progressr,
+    igraph
 Suggests: 
     knitr,
     gt,
@@ -39,3 +39,5 @@ Suggests:
 Config/testthat/edition: 3
 URL: https://camaradesuk.github.io/ASySD/
 VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)
