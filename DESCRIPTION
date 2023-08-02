@@ -26,7 +26,8 @@ Imports:
     RefManageR,
     dplyr,
     progressr,
-    igraph
+    igraph,
+    bibliometrix
 Suggests: 
     knitr,
     gt,

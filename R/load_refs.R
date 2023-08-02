@@ -1,15 +1,16 @@
 #' Load in citations for deduplication
 #'
 #' This function loads in a citation file within the shiny app
-#'
+#' @import RefManageR
+#' @import bibliometrix
+#' @importFrom utils read.csv read.table
 #' @param paths Relative paths to the citations file or files
 #' @param method  Import method
 #' @param names File names of input file or files
 #' @return A dataframe of the citations
 #' @export
 #' @import XML
-#' @import RefManageR
-#' @importFrom utils read.csv read.table
+
 load_multi_search <-function(paths, names, method){
 
   df_list <- list()
@@ -20,8 +21,6 @@ load_multi_search <-function(paths, names, method){
     name <- names[i]
 
   if(method == "bib"){
-
-    usethis::use_data_raw()
 
     # try wos format
     suppressMessages(suppressWarnings(try(newdat <- bibliometrix::convert2df(path, dbsource = "wos", format="bibtex"), silent=TRUE)))
@@ -210,13 +209,13 @@ if(method == "txt"){
 #' Load in citations for deduplication
 #'
 #' This function loads in an citations file.
-#'
+#' @import RefManageR
+#' @import bibliometrix
+#' @importFrom utils read.csv read.table
 #' @param path File path to the citations file
 #' @param method  Import method
 #' @return A dataframe of the citations
 #' @export
-#' @import XML
-#' @import RefManageR
 #' @importFrom utils read.csv read.table
 load_search <-function(path, method){
 
@@ -275,7 +274,6 @@ load_search <-function(path, method){
 
   if(method == "bib"){
 
-    usethis::use_data_raw()
 
     # try wos format
     suppressMessages(suppressWarnings(try(newdat <- bibliometrix::convert2df(path, dbsource = "wos", format="bibtex"), silent=TRUE)))
