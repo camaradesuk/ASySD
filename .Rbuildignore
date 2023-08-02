@@ -5,3 +5,4 @@
 ^validation$
 ^pkgdown$
 ^\.github$
+^data-raw$
