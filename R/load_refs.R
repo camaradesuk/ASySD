@@ -1,9 +1,3 @@
-utils::globalVariables(c("Abstract", "AlternateName", "Author", "AuthorAddress", "Authors", "Custom 1",
-                         "CustomId", "DOI", "ISBN/ISSN", "Keywords", "Label", "Name of Database",
-                         "Number", "Pages", "PublicationName", "Reference Type",
-                         "ReferenceType", "Secondary Title", "Title", "Volume", "Year",
-                         "record_ids"))
-
 #' Load in citations for deduplication
 #'
 #' This function loads in a citation file within the shiny app
@@ -15,7 +9,7 @@ utils::globalVariables(c("Abstract", "AlternateName", "Author", "AuthorAddress",
 #' @export
 #' @import XML
 #' @import RefManageR
-
+#' @importFrom utils read.csv read.table
 load_multi_search <-function(paths, names, method){
 
   df_list <- list()
@@ -35,7 +29,7 @@ load_multi_search <-function(paths, names, method){
      if(exists("newdat")){
 
     # Create a lookup table to map Field to Abbreviation
-    lookup_table <- setNames(field_codes_wos$Field, field_codes_wos$Abbreviation)
+    lookup_table <- stats::setNames(field_codes_wos$Field, field_codes_wos$Abbreviation)
 
     # Rename the columns in df_original using the lookup_table
     colnames(newdat) <- lookup_table[colnames(newdat)]
@@ -89,7 +83,7 @@ load_multi_search <-function(paths, names, method){
 
   if(method == "zotero_csv"){
 
-    newdat <- read.csv(path)
+    newdat <- utils::read.csv(path)
     newdat <- newdat %>%
       dplyr::rename(record_id = Key,
                     year = Publication.Year,
@@ -126,7 +120,7 @@ load_multi_search <-function(paths, names, method){
 
     if ("end_page" %in% colnames(newdat)) {
       newdat <- newdat %>%
-        dplyr::mutate(pages = pages, "-", end_page) %>%
+        dplyr::mutate(pages = .data$pages, "-", .data$end_page) %>%
         dplyr::select(-end_page)
     }
 
@@ -167,7 +161,7 @@ load_multi_search <-function(paths, names, method){
           label = sapply(x, xpath2, ".//label", xmlValue),
           source = sapply(x, xpath2, ".//remote-database-name", xmlValue),
           database = sapply(x, xpath2, ".//remote-database-name", xmlValue)) %>%
-          mutate(journal = ifelse(is.na(journal), .data$secondary_title, journal))
+          mutate(journal = ifelse(is.na(.data$journal), .data$secondary_title, .data$journal))
 
         cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
         newdat[cols[!(cols %in% colnames(newdat))]] = NA
@@ -223,7 +217,7 @@ if(method == "txt"){
 #' @export
 #' @import XML
 #' @import RefManageR
-#' @import utils
+#' @importFrom utils read.csv read.table
 load_search <-function(path, method){
 
   if(method == "endnote"){
@@ -252,7 +246,7 @@ load_search <-function(path, method){
       secondary_title = sapply(x, xpath2, ".//titles/secondary-title", xmlValue),
       label = sapply(x, xpath2, ".//label", xmlValue),
       source = sapply(x, xpath2, ".//remote-database-name", xmlValue)) %>%
-      mutate(journal = ifelse(is.na(journal), .data$secondary_title, journal))
+      mutate(journal = ifelse(is.na(.data$journal), .data$secondary_title, .data$journal))
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
@@ -272,7 +266,7 @@ load_search <-function(path, method){
   if(method == "txt"){
 
     cols <- c("label","isbn","source")
-    newdat <- read.table(path)
+    newdat <- utils::read.table(path)
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
     return(newdat)
@@ -308,7 +302,7 @@ load_search <-function(path, method){
       if(exists("newdat")){
 
         # Create a lookup table to map Field to Abbreviation
-        lookup_table <- setNames(field_codes_pubmed$Field, field_codes_pubmed$Abbreviation)
+        lookup_table <- stats::setNames(field_codes_pubmed$Field, field_codes_pubmed$Abbreviation)
 
         # Rename the columns in df_original using the lookup_table
         colnames(newdat) <- lookup_table[colnames(newdat)]
@@ -339,7 +333,7 @@ load_search <-function(path, method){
   if(method == "zotero_csv"){
 
 
-    newdat <- read.csv(path)
+    newdat <- utils::read.csv(path)
     newdat <- newdat %>%
       dplyr::rename(record_id = Key,
                     year = Publication.Year,
@@ -359,13 +353,13 @@ load_search <-function(path, method){
     newdat <- synthesisr::read_refs(path)
     if ("booktitle" %in% colnames(newdat)) {
       newdat <-newdat %>%
-        tidyr::unite(title, title, booktitle, na.rm = TRUE)
+        tidyr::unite(title, .data$title, .data$booktitle, na.rm = TRUE)
     }
 
     if ("start_page" %in% colnames(newdat) &
         "pages" %in% colnames(newdat)) {
       newdat <- newdat %>%
-        tidyr::unite(pages, pages, start_page, end_page, sep="-", na.rm=TRUE) %>%
+        tidyr::unite(pages, .data$pages, .data$start_page, .data$end_page, sep="-", na.rm=TRUE) %>%
         select(-start_page, -end_page)
     }
 

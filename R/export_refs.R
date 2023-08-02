@@ -1,10 +1,12 @@
-utils::globalVariables(c("record_ids", "."))
+# utils::globalVariables(c("record_ids", "."))
 
 #' This function writes citation data to disk in different formats
 #' @export
 #' @import dplyr
 #' @import synthesisr
-#' @param citations A dataframe containing citations - usually post-deduplication
+#' @importFrom utils read.csv read.table
+#' @importFrom rlang .data
+#' @param citations A data frame containing citations - usually post-deduplication
 #' @param type export type
 #' @param filename output file name
 #' @return file export
@@ -51,9 +53,9 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
              AuthorAddress = "",
              AlternateName = "",
              ReferenceType = "",
-             CustomId = duplicate_id,
+             CustomId = .data$duplicate_id,
              Keywords = "",
-             PdfRelativePath = paste0(duplicate_id, ".pdf")) %>%
+             PdfRelativePath = paste0(.data$duplicate_id, ".pdf")) %>%
       select(Title,
              Authors,
              PublicationName,
@@ -97,6 +99,8 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
 #' This function writes citation data to disk in different formats
 #' @export
 #' @import dplyr
+#' @importFrom rlang .data
+#' @importFrom utils read.csv read.table
 #' @import synthesisr
 #' @param citations A dataframe containing citations - usually post-deduplication
 #' @param type export type
@@ -123,47 +127,47 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 
 
     refs <- citations %>%
-      mutate("Reference Type" = "Journal Article") %>%
-      mutate("ISBN/ISSN" = isbn) %>%
-      rename("Custom 1" = duplicate_id,
-             "Author" = author,
-             "Title" = title,
-             "Volume" = volume,
-             "Number" = number,
-             "Label" = label,
-             "Year" = year,
-             "Abstract" = abstract,
-             "Pages" = pages,
-             "DOI" = doi,
-             "Name of Database" = source,
-             "Secondary Title" = journal) %>%
-      select("Reference Type", "Author", "Year",
-             "Secondary Title", "DOI", "Title",
-             "Pages", "Volume", "Number", "Abstract",
-             "Custom 1", "Custom 2", "ISBN/ISSN", "Label", "Name of Database")
+      mutate(`Reference Type` = "Journal Article") %>%
+      mutate(`ISBN/ISSN` = .data$isbn) %>%
+      rename(`Custom 1` = .data$duplicate_id,
+             Author = .data$author,
+             Title = .data$title,
+             Volume = .data$volume,
+             Number = .data$number,
+             Label = .data$label,
+             Year = .data$year,
+             Abstract = .data$abstract,
+             Pages = .data$pages,
+             DOI = .data$doi,
+             `Name of Database` = .data$source,
+             `Secondary Title` = .data$journal) %>%
+      select("Reference Type", Author, Year,
+             "Secondary Title", DOI, Title,
+             Pages, Volume, Number, Abstract,
+             "Custom 1", "Custom 2", "ISBN/ISSN", Label, "Name of Database")
 
-    write.table(refs, filename, sep="\t",
+    utils::write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
 
-    write.table(refs, filename, sep="\t",
+    utils::write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
 
   } else if(type == "syrf_csv"){
 
     refs <- citations %>%
-      rename(Authors = author,
-             Title = title,
-             Abstract = abstract,
-             Year = year,
-             DOI= doi,
-             PublicationName = journal)  %>%
+      rename(Authors = .data$author,
+             Title = .data$title,
+             Abstract = .data$abstract,
+             Year = .data$year,
+             DOI= .data$doi,
+             PublicationName = .data$journal)  %>%
       mutate(Url = "",
              AuthorAddress = "",
              AlternateName = "",
              ReferenceType = "",
-             CustomId = duplicate_id,
+             CustomId = .data$duplicate_id,
              Keywords = "",
-             PdfRelativePath = paste0(duplicate_id, ".pdf")) %>%
+             PdfRelativePath = paste0(.data$duplicate_id, ".pdf")) %>%
       select(Title,
              Authors,
              PublicationName,
@@ -178,12 +182,12 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
              PdfRelativePath,
              CustomId)
 
-    write.csv(refs, filename, row.names = F, quote=TRUE, na="")
+    utils::write.csv(refs, filename, row.names = F, quote=TRUE, na="")
 
   }
   else if(type == "csv"){
 
-    write.csv(citations, filename, row.names = F, quote=TRUE, na="")
+    utils::write.csv(citations, filename, row.names = F, quote=TRUE, na="")
 
   }
 
@@ -200,9 +204,9 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 
     citations$source_type <- "JOUR" #for RIS import to work
     citations <- citations %>% select(source_type , everything()) %>%
-      rename(issue = number) %>%
+      rename(issue = .data$number) %>%
       select(-isbn)
-    citations <- tidyr::separate(citations, pages, into = c("start_page", "end_page"), sep = "-", convert = TRUE)
+    citations <- tidyr::separate(citations, .data$pages, into = c("start_page", "end_page"), sep = "-", convert = TRUE)
     citations$accession_number <- citations$accession
 
     synthesisr::write_refs(citations,
