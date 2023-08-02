@@ -277,6 +277,7 @@ identify_true_matches <- function(pairs){
         (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99) |
         (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99))
 
+
   # Find papers with low matching dois - often indicates FALSE positive matches
   true_pairs_mismatch_doi <- true_pairs %>%
     filter(!(is.na(doi)| doi ==0 | doi > 0.99)) %>%
@@ -580,7 +581,7 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
 #' @param show_unknown_tags When a label, source, or other merged field is missing, do you want this to show as "unknown"?
 #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 dedup_citations <- function(raw_citations, manual_dedup = TRUE,
-                            merge_citations=FALSE, keep_source=NULL, keep_label=NULL, extra_merge_fields = NULL,
+                            merge_citations=TRUE, keep_source=NULL, keep_label=NULL, extra_merge_fields = NULL,
                             shiny_progress=FALSE, show_unknown_tags=TRUE) {
 
   if(shiny_progress == TRUE){
@@ -668,6 +669,15 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
       matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
 
+
+      if(merge_citations == TRUE){
+
+        unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label, extra_merge_fields)
+      } else{
+        unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
+
+      }
+
       if(manual_dedup == TRUE){
 
         incProgress(0.8/1, message = "flagging potential pairs for manual dedup...")
@@ -709,18 +719,25 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
                  record_id1, record_id2, label1,
                  label2, source1, source2)
 
-        manual_dedup <- maybe_pairs
+        ids <- unique_citations_with_metadata %>%
+          select(record_ids, duplicate_id) %>%
+          tidyr::separate_rows(record_ids) %>%
+          unique()
+
+        maybe_pairs <- left_join(maybe_pairs, ids, by=c("record_id1"="record_ids"))
+        maybe_pairs <- left_join(maybe_pairs, ids, by=c("record_id2"="record_ids"))
+
+        maybe_pairs <- maybe_pairs %>%
+          mutate(match= ifelse(duplicate_id.x == duplicate_id.y, TRUE, FALSE)) %>%
+          filter(match == FALSE) %>%
+          group_by(duplicate_id.x, duplicate_id.y) %>%
+          slice_head() %>%
+          ungroup()
+
+        manual_dedup_df <- maybe_pairs
+
+
       }
-
-
-      if(merge_citations == TRUE){
-
-        unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label, extra_merge_fields)
-      } else{
-        unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
-
-      }
-
 
       # make sure data is returned ungrouped
       unique_citations_with_metadata <- unique_citations_with_metadata %>%
@@ -740,7 +757,7 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     })
 
     return(list("unique" = unique_citations_with_metadata,
-                "manual_dedup" = manual_dedup))
+                "manual_dedup" = manual_dedup_df))
   } else {
 
     message("formatting data...")
@@ -820,6 +837,15 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
     matched_pairs_with_ids <- generate_dup_id(true_pairs, formatted_citations)
 
+
+    if(merge_citations == TRUE){
+
+      unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label, extra_merge_fields)
+    } else{
+      unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
+
+    }
+
     if(manual_dedup == TRUE){
 
       message("flagging potential pairs for manual dedup...")
@@ -861,18 +887,36 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
                record_id1, record_id2, label1,
                label2, source1, source2)
 
-      manual_dedup <- maybe_pairs
+      if(merge_citations == TRUE){
+
+      ids <- unique_citations_with_metadata %>%
+        select(record_ids, duplicate_id) %>%
+        tidyr::separate_rows(record_ids) %>%
+        unique()
+
+      maybe_pairs <- left_join(maybe_pairs, ids, by=c("record_id1"="record_ids"))
+      maybe_pairs <- left_join(maybe_pairs, ids, by=c("record_id2"="record_ids"))
+
+      } else {
+
+        ids <- unique_citations_with_metadata %>%
+          select(record_id, duplicate_id) %>%
+          unique()
+
+        maybe_pairs <- left_join(maybe_pairs, ids, by=c("record_id1"="record_id"))
+        maybe_pairs <- left_join(maybe_pairs, ids, by=c("record_id2"="record_id"))
+      }
+
+      maybe_pairs <- maybe_pairs %>%
+        mutate(match= ifelse(duplicate_id.x == duplicate_id.y, TRUE, FALSE)) %>%
+        filter(match == FALSE) %>%
+        group_by(duplicate_id.x, duplicate_id.y) %>%
+        slice_head() %>%
+        ungroup()
+
+      manual_dedup_df <- maybe_pairs
+
     }
-
-
-    if(merge_citations == TRUE){
-
-      unique_citations_with_metadata <- merge_metadata(raw_citations, matched_pairs_with_ids, keep_source, keep_label, extra_merge_fields)
-    } else{
-      unique_citations_with_metadata <- keep_one_unique_citation(raw_citations, matched_pairs_with_ids, keep_source, keep_label)
-
-    }
-
 
     # make sure data is returned ungrouped
     unique_citations_with_metadata <- unique_citations_with_metadata %>%
@@ -888,10 +932,16 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     message(paste(n_dups, "duplicate citations removed..."))
     message(paste(n_unique, "unique citations remaining!"))
 
+    if(manual_dedup == TRUE){
+
     return(list("unique" = unique_citations_with_metadata,
-                "manual_dedup" = manual_dedup))
+                "manual_dedup" = manual_dedup_df))
+    } else {
+
+      return(unique_citations_with_metadata)
   }
 
+  }
 }
 
 ####------ Deduplicate citations WITH manual dups added function ------ ####
@@ -908,11 +958,38 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 #' @param show_unknown_tags When a label, source, or other merged field is missing, do you want this to show as "unknown"?
 #' @return Unique citations post added manual deduplication
 
-dedup_citations_add_manual <- function(unique_citations, merge_citations=FALSE, keep_source=NULL, keep_label=NULL,
+dedup_citations_add_manual <- function(unique_citations, merge_citations=TRUE, keep_source=NULL, keep_label=NULL,
                                        additional_pairs, extra_merge_fields = NULL, show_unknown_tags=TRUE){
 
   duplicates <- additional_pairs %>%
-    select(duplicate_id.x, duplicate_id.y, label1, label2, source1, source2)
+    dplyr::select(duplicate_id.x, duplicate_id.y, label1, label2, source1, source2)
+
+  if (!('record_ids' %in% colnames(unique_citations))) {
+
+     unique_citations <- unique_citations %>%
+      left_join(duplicates, by=c("duplicate_id" = "duplicate_id.x")) %>%
+      mutate(record_id = ifelse(is.na(duplicate_id.y), record_id, paste0(record_id, ", ", duplicate_id.y))) %>%
+      mutate(label = ifelse(is.na(duplicate_id.y), label, paste0(label, ", ", label2))) %>%
+      mutate(source = ifelse(is.na(duplicate_id.y), source, paste0(source, ", ", source2)))
+
+     unique_citations <- unique_citations %>%
+       group_by(duplicate_id) %>%
+       tidyr::separate_rows(record_id, source, label, sep=", ") %>%
+       select(-duplicate_id.y) %>%
+       unique() %>%
+       ungroup() %>%
+       group_by(record_id) %>%
+       slice_head() %>%
+       ungroup()
+
+    ids <- unique_citations
+
+    unique_citations <- unique_citations %>%
+      select(-duplicate_id)
+
+    unique_citations_with_metadata <- keep_one_unique_citation(unique_citations, ids, keep_source, keep_label)
+
+  } else {
 
   unique_citations <- unique_citations %>%
     left_join(duplicates, by=c("duplicate_id" = "duplicate_id.x")) %>%
@@ -934,10 +1011,14 @@ dedup_citations_add_manual <- function(unique_citations, merge_citations=FALSE, 
   ids <- unique_citations
 
   unique_citations_with_metadata <- merge_metadata(unique_citations, ids, keep_source, keep_label, extra_merge_fields)
-  unique_citations_with_metadata <-unique_citations_with_metadata %>%
-    select(-c(source1, label1, source2, label2))
+
+}
+
+unique_citations_with_metadata <-unique_citations_with_metadata %>%
+  select(-c(source1, label1, source2, label2))
 
   return(unique_citations_with_metadata)
+
 }
 
 
