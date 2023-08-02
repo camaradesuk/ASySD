@@ -47,7 +47,7 @@ all_citations <- plyr::rbind.fill(existing_search, new_search)
 Remove duplicate citations automatically using the `dedup_citations` function. Here we have specified the argument `merge=TRUE` to indicate that we want to merge duplicate records and have a record of which citations have been merged into one. We have specified in the `keep_source` argument that we wish to preferentially retain old citations. In practice, this means that the duplicate_id chosen for a set of records will preferentially be the record_id of a citation in the OLD systematic search. This is to facilitate easy record linkage - see later.
 
 ```{r}
-results <- dedup_citations(all_citations, merge=TRUE, keep_source = "old")
+results <- dedup_citations(all_citations, merge_citations = TRUE, keep_source = "old")
 ```
 
 The `dedup_citations` function returns a list of two dataframes by default. The first contains unique citations after duplicates were removed automatically by ASySD. In most cases, this will remove the vast majority of duplicates. There will likely be some duplicates remaining which need manual review by a human (see next step).
@@ -73,7 +73,7 @@ true_duplicates <- potential_duplicates
 Now, to get the final deduplication results, use the `dedup_citations_add_manual()`function. To account for additional duplicates you have reviewed, add them into the *additional_pairs* argument.
 
 ```{r}
-final_results <- dedup_citations_add_manual(all_citations, additional_pairs = true_duplicates, merge_citations = TRUE, keep_source = "old")
+final_results <- dedup_citations_add_manual(unique_citations, additional_pairs = true_duplicates, merge_citations = TRUE, keep_source = "old")
 ```
 
 Now we have a final set of unique citations, how can we find the new citations we added with our latest systematic search?
