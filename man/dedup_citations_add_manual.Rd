@@ -5,8 +5,8 @@
 \title{This function deduplicates citation data}
 \usage{
 dedup_citations_add_manual(
-  raw_citations,
-  merge_citations = FALSE,
+  unique_citations,
+  merge_citations = TRUE,
   keep_source = NULL,
   keep_label = NULL,
   additional_pairs,
@@ -15,8 +15,6 @@ dedup_citations_add_manual(
 )
 }
 \arguments{
-\item{raw_citations}{A dataframe containing duplicate citations}
-
 \item{merge_citations}{Logical value. Do you want to merge matching citations?}
 
 \item{keep_source}{Character vector. Selected citation source to preferentially retain in the dataset as the unique record}
@@ -28,6 +26,8 @@ dedup_citations_add_manual(
 \item{extra_merge_fields}{Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value}
 
 \item{show_unknown_tags}{When a label, source, or other merged field is missing, do you want this to show as "unknown"?}
+
+\item{raw_citations}{A dataframe containing duplicate citations}
 }
 \value{
 Unique citations post added manual deduplication

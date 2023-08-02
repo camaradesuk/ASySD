@@ -7,7 +7,7 @@
 dedup_citations(
   raw_citations,
   manual_dedup = TRUE,
-  merge_citations = FALSE,
+  merge_citations = TRUE,
   keep_source = NULL,
   keep_label = NULL,
   extra_merge_fields = NULL,
