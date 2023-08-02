@@ -1,3 +1,15 @@
+# ASySD 0.2.0
+* Improvements to documentation files (CRAN submission preparation)
+* Changed default deduplication type to merged
+* Improved bib imports via bibliometrix and field code conversions
+* Improvements to manual deduplication process - no need to go through entire deduplication procedure again 
+* Improvements to merging process / duplicate_id selection by building a network of matching records using graph theory (via igraph package)
+* Shiny app improvements
+  - Added helper pop-ups
+  - Added flag symbols to indicate when a pair of citations have been flagged for later review in manual_dedup
+  - Bug fix in selection logic when selecting a label / source to keep 
+  - Aesthetic changes (colour highlight in tables changed to align with colour scheme)
+
 # ASySD 0.1.2
 * Added new dedup_citations argument for show_unknown_tags (logical) to specify whether merged fields should have
 "unknown" elements for sources / labels [TRUE] or not [FALSE]
