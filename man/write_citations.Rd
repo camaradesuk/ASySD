@@ -7,7 +7,7 @@
 write_citations(citations, type = c("ris", "txt", "csv", "bib"), filename)
 }
 \arguments{
-\item{citations}{A dataframe containing citations - usually post-deduplication}
+\item{citations}{A data frame containing citations - usually post-deduplication}
 
 \item{type}{export type}
 
