@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">ASySD</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +45,20 @@
       
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.0" id="asysd-020">ASySD 0.2.0<a class="anchor" aria-label="anchor" href="#asysd-020"></a></h2>
+<ul><li>Improvements to documentation files (CRAN submission preparation)</li>
+<li>Changed default deduplication type to merged</li>
+<li>Improved bib imports via bibliometrix and field code conversions</li>
+<li>Improvements to manual deduplication process - no need to go through entire deduplication procedure again</li>
+<li>Improvements to merging process / duplicate_id selection by building a network of matching records using graph theory (via igraph package)</li>
+<li>Shiny app improvements
+<ul><li>Added helper pop-ups</li>
+<li>Added flag symbols to indicate when a pair of citations have been flagged for later review in manual_dedup</li>
+<li>Bug fix in selection logic when selecting a label / source to keep</li>
+<li>Aesthetic changes (colour highlight in tables changed to align with colour scheme)</li>
+</ul></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.2" id="asysd-012">ASySD 0.1.2<a class="anchor" aria-label="anchor" href="#asysd-012"></a></h2>
 <ul><li>Added new dedup_citations argument for show_unknown_tags (logical) to specify whether merged fields should have “unknown” elements for sources / labels [TRUE] or not [FALSE]</li>
