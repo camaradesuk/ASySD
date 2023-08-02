@@ -737,16 +737,25 @@ remove duplicates.")
   # Action: ASySD auto dedup ----
   auto_dedup_result <- eventReactive(input$dedupbutton,{
 
-    keep_label <- if (input$keepLabel == "") {
-      NULL
+    if(length(input$keepLabel) > 1){
+
+     if(input$keepLabel == "") {
+      keep_label <- NULL
     } else {
-      input$keepLabel
+      keep_label <- input$keepLabel
     }
+
+    } else {
+
+      keep_label <- NULL
+  }
+
 
     result <- dedup_citations(citations_to_dedup(),
                               keep_source = input$keepSource,
                               keep_label = keep_label,
-                              merge_citations = TRUE)
+                              merge_citations = TRUE,
+                              shiny_progress =TRUE)
 
     rv$pairs_to_check <- result$manual_dedup %>%
       mutate(" " = "") %>%
