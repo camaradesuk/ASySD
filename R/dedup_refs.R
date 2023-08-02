@@ -596,21 +596,21 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
       # add warning for no record id
       if(!"record_id" %in% names(raw_citations)){
-        warning("Search does not contain a record_id column. A record_id will be created using row names")
+        warning("Search does not contain a record_id column. A record_id will be created using row numbers")
 
         # add record id using row number
         raw_citations <- add_id_citations(raw_citations)
 
         # add warning for any missing record id
       } else if(any(is.na(raw_citations$record_id)) | any(raw_citations$record_id=="")){
-        warning("Search contains missing values for the record_id column. A record_id will be created using row names")
+        warning("Search contains missing values for the record_id column. A record_id will be created using row numbers")
 
         # add record id using row number
         raw_citations <- add_id_citations(raw_citations)
 
         # add warning for non unique ids
       }  else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
-        warning("The record_id column is not unique. A record_id will be created using row names")
+        warning("The record_id column is not unique. A record_id will be created using row numbers")
 
         # add record id using row number
         raw_citations <- add_id_citations(raw_citations)
@@ -770,21 +770,21 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
     # add warning for no record id
     if(!"record_id" %in% names(raw_citations)){
-      warning("Search does not contain a record_id column. A record_id will be created using row names")
+      warning("Search does not contain a record_id column. A record_id will be created using row numbers")
 
       # add record id using row number
       raw_citations <- add_id_citations(raw_citations)
 
       # add warning for any missing record id
     } else if(any(is.na(raw_citations$record_id)) | any(raw_citations$record_id=="")){
-      warning("Search contains missing values for the record_id column. A record_id will be created using row names")
+      warning("Search contains missing values for the record_id column. A record_id will be created using row numbers")
 
       # add record id using row number
       raw_citations <- add_id_citations(raw_citations)
 
       # add warning for non unique ids
     }  else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
-      warning("The record_id column is not unique. A record_id will be created using row names")
+      warning("The record_id column is not unique. A record_id will be created using row numbers")
 
       # add record id using row number
       raw_citations <- add_id_citations(raw_citations)
