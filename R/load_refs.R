@@ -27,13 +27,31 @@ load_multi_search <-function(paths, names, method){
 
   if(method == "bib"){
 
-    try(newdat <- RefManageR::ReadBib(path, check =FALSE))
+    usethis::use_data_raw()
 
+    # try wos format
+    suppressMessages(suppressWarnings(try(newdat <- bibliometrix::convert2df(path, dbsource = "wos", format="bibtex"), silent=TRUE)))
+
+     if(exists("newdat")){
+
+    # Create a lookup table to map Field to Abbreviation
+    lookup_table <- setNames(field_codes_wos$Field, field_codes_wos$Abbreviation)
+
+    # Rename the columns in df_original using the lookup_table
+    colnames(newdat) <- lookup_table[colnames(newdat)]
+
+    # Remove columns
+    keep.cols <- names(newdat) %in% NA
+    newdat <- newdat [! keep.cols]
+    rownames(newdat) <- 1:nrow(newdat)
+
+  }
     if(!exists("newdat")){
 
-      try(newdat <- bibliometrix::convert2df(path, dbsource = "pubmed", format = "pubmed"))
+      # try pubmed format
+      suppressMessages(suppressWarnings(try(newdat <- bibliometrix::convert2df(path, dbsource = "pubmed", format = "pubmed"), silent=TRUE)))
 
-      field_codes_pubmed <- read_csv("field_codes_pubmed.csv")
+       if(exists("newdat")){
 
       # Create a lookup table to map Field to Abbreviation
       lookup_table <- setNames(field_codes_pubmed$Field, field_codes_pubmed$Abbreviation)
@@ -47,7 +65,13 @@ load_multi_search <-function(paths, names, method){
       rownames(newdat) <- 1:nrow(newdat)
 
     # additional formatting for issn - keeping only ISSN vs other identifiers
-    newdat$isbn <- trimws(stringr::str_extract(newdat$issn, ".{4}-.{4}.(?=\\(PRINT\\))"))
+    newdat$isbn <- trimws(stringr::str_extract(newdat$issn, ".{4}-.{4}.(?=\\((ELECTRONIC|PRINT\\)))"))
+       }
+    }
+
+    if(!exists("newdat")){
+
+    try(newdat <- RefManageR::ReadBib(path, check =FALSE))
 
     }
 
@@ -58,6 +82,8 @@ load_multi_search <-function(paths, names, method){
 
     newdat$file_name <- name
     df_list[[i]] <- newdat
+
+    remove(newdat)
 
   }
 
@@ -235,7 +261,7 @@ load_search <-function(path, method){
   if(method == "csv"){
 
     cols <- c("label","isbn", "source")
-    newdat <- read.csv(path)
+    newdat <- utils::read.csv(path)
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
@@ -255,16 +281,15 @@ load_search <-function(path, method){
 
   if(method == "bib"){
 
-    try(newdat <- RefManageR::ReadBib(path, check =FALSE))
+    usethis::use_data_raw()
 
-    if(!exists("newdat")){
+    # try wos format
+    suppressMessages(suppressWarnings(try(newdat <- bibliometrix::convert2df(path, dbsource = "wos", format="bibtex"), silent=TRUE)))
 
-      try(newdat <- bibliometrix::convert2df(path, dbsource = "pubmed", format = "pubmed"))
-
-      field_codes_pubmed <- read_csv("field_codes_pubmed.csv")
+    if(exists("newdat")){
 
       # Create a lookup table to map Field to Abbreviation
-      lookup_table <- setNames(field_codes_pubmed$Field, field_codes_pubmed$Abbreviation)
+      lookup_table <- setNames(field_codes_wos$Field, field_codes_wos$Abbreviation)
 
       # Rename the columns in df_original using the lookup_table
       colnames(newdat) <- lookup_table[colnames(newdat)]
@@ -274,15 +299,40 @@ load_search <-function(path, method){
       newdat <- newdat [! keep.cols]
       rownames(newdat) <- 1:nrow(newdat)
 
-      # additional formatting for issn - keeping only ISSN vs other identifiers
-      newdat$isbn <- trimws(stringr::str_extract(newdat$issn, ".{4}-.{4}.(?=\\(PRINT\\))"))
+    }
+    if(!exists("newdat")){
+
+      # try pubmed format
+      suppressMessages(suppressWarnings(try(newdat <- bibliometrix::convert2df(path, dbsource = "pubmed", format = "pubmed"), silent=TRUE)))
+
+      if(exists("newdat")){
+
+        # Create a lookup table to map Field to Abbreviation
+        lookup_table <- setNames(field_codes_pubmed$Field, field_codes_pubmed$Abbreviation)
+
+        # Rename the columns in df_original using the lookup_table
+        colnames(newdat) <- lookup_table[colnames(newdat)]
+
+        # Remove columns
+        keep.cols <- names(newdat) %in% NA
+        newdat <- newdat [! keep.cols]
+        rownames(newdat) <- 1:nrow(newdat)
+
+        # additional formatting for issn - keeping only ISSN vs other identifiers
+        newdat$isbn <- trimws(stringr::str_extract(newdat$issn, ".{4}-.{4}.(?=\\((ELECTRONIC|PRINT\\)))"))
+      }
+    }
+
+    if(!exists("newdat")){
+
+      try(newdat <- RefManageR::ReadBib(path, check =FALSE))
+
     }
 
     newdat <- as.data.frame(newdat)
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
-
   }
 
 
