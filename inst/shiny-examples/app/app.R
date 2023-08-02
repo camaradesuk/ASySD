@@ -468,11 +468,10 @@ server <- function(input, output, session){
 
     if (input$Keep_citation_picker == "Citation with a specific label") {
 
-
       selectInput(inputId = "keepLabel",
                   label = "Specify labelled references to keep in the dataset",
-                  choices = unique(rv$refdata$label),
-                  selected = rv$refdata$label[1],
+                  choices = c("", unique(rv$refdata$label)),
+                  selected = NULL,
                   multiple = FALSE)
     }
   })
@@ -488,11 +487,10 @@ server <- function(input, output, session){
 
     if (input$Keep_citation_picker == "Citation from a specific source") {
 
-
       selectInput(inputId = "keepSource",
                   label = "Specify source to keep in the dataset",
                   choices = unique(rv$refdata$source),
-                  selected = rv$refdata$source[1],
+                  selected = NULL,
                   multiple = FALSE)
     }
   })
@@ -739,12 +737,18 @@ remove duplicates.")
   # Action: ASySD auto dedup ----
   auto_dedup_result <- eventReactive(input$dedupbutton,{
 
+    keep_label <- if (input$keepLabel == "") {
+      NULL
+    } else {
+      input$keepLabel
+    }
+
     result <- dedup_citations(citations_to_dedup(),
                               keep_source = input$keepSource,
-                              keep_label = input$keepLabel,
+                              keep_label = keep_label,
                               merge_citations = TRUE)
 
-    rv$pairs_to_check <- result$manual %>%
+    rv$pairs_to_check <- result$manual_dedup %>%
       mutate(" " = "") %>%
       select(" ", everything())
 
@@ -880,7 +884,7 @@ remove duplicates.")
                              fixedColumns = TRUE,
                              scrollX = TRUE,
                              columnDefs =
-                               list(list(visible=FALSE, targets=c(4, 7, 10, 13, 16, 19, 22, 25, 26, 31, 32, 33, 34, 35, 36, 37, 38, 39)),
+                               list(list(visible=FALSE, targets=c(4, 7, 10, 13, 16, 19, 22, 25, 26, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40)),
                              list(targets = c(2,3,4,5,6,7,8,9,10,11),
                             render = JS(
                               "function(data, type, row, meta) {",
@@ -889,17 +893,25 @@ remove duplicates.")
                                                    "}")
                                                )))) %>%
       formatStyle(
-        c('title1', 'author1', 'doi1', 'volume1',
+        c('title1', 'author1', 'volume1',
           'pages1', 'number1', 'year1', 'abstract1', 'journal1', 'isbn1'),
-        c('title', 'author', 'doi', 'volume',
+        c('title', 'author', 'volume',
           'pages', 'number', 'year', 'abstract', 'journal', 'isbn'),
         backgroundColor = styleInterval(c(0.95, 1), c('white', '#82d173', '#82d173'))) %>%
       formatStyle(
-        c('title2', 'author2', 'doi2', 'volume2',
+        c('title2', 'author2', 'volume2',
           'pages2', 'number2', 'year2', 'abstract2', 'journal2', 'isbn2'),
-        c('title', 'author', 'doi', 'volume',
+        c('title', 'author', 'volume',
           'pages', 'number', 'year', 'abstract', 'journal', 'isbn'),
-        backgroundColor = styleInterval(c(0.95, 1), c('white', '#82d173', '#82d173')))
+        backgroundColor = styleInterval(c(0.95, 1), c('white', '#82d173', '#82d173'))) %>%
+      formatStyle(
+        c('doi1'),
+        c('doi'),
+        backgroundColor = styleInterval(c(0.999, 1), c('white', '#82d173', '#82d173'))) %>%
+      formatStyle(
+        c('doi2'),
+        c('doi'),
+        backgroundColor = styleInterval(c(0.999, 1), c('white', '#82d173', '#82d173')))
   )
 
 
