@@ -1,0 +1,12 @@
+utils::globalVariables(c("Abstract", "AlternateName", "Author", "AuthorAddress", "Authors", "ComponentID",
+                         "Custom 1", "CustomId", "DOI", "ISBN/ISSN", "Key", "Keywords", "Label", "Manual.Tags",
+                         "Name of Database", "Number", "Order", "Pages", "PdfRelativePath", "Publication.Title",
+                         "Publication.Year", "PublicationName", "Reference Type", "ReferenceType",
+                         "Secondary Title", "Title", "Url", "Volume", "Year", "abstract", "abstract1", "abstract2",
+                         "author", "author1", "author2", "doi", "doi1", "doi2", "duplicate_id", "duplicate_id.x",
+                         "duplicate_id.y", "end_page", "file_name", "id1", "id2", "incProgress", "isbn", "isbn1",
+                         "isbn2", "journal", "journal1", "journal2", "label", "label1", "label2", "number",
+                         "number1", "number2", "pages", "pages1", "pages2", "record_id", "record_id1",
+                         "record_id2", "record_ids", "setNames", "source1", "source2", "source_type",
+                         "start_page", "title", "title1", "title2", "volume", "volume1", "volume2",
+                         "withProgress", "write.csv", "write.table", "year", "year1", "year2"))
