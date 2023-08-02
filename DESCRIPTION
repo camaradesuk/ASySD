@@ -22,7 +22,7 @@ Imports:
     synthesisr,
     utf8,
     tidyr,
-    plyr,
+    rlang,
     RefManageR,
     dplyr,
     progressr,
