@@ -25,19 +25,19 @@ test_that("citations_check", {
   test_citations_missing$record_id <- rep(c(1, 2, 3, 4, NA), times=round(nrow(test_citations)), length.out = nrow(test_citations))
 
   expect_warning(
-     dedup_citations(test_citations_no_col_for_id, merge_citations = TRUE), "Search does not contain a record_id column. A record_id will be created using row names")
+     dedup_citations(test_citations_no_col_for_id, merge_citations = TRUE), "Search does not contain a record_id column. A record_id will be created using row numbers")
 
   expect_warning(
-      dedup_citations(test_citations_no_record_id, merge_citations = TRUE),"Search contains missing values for the record_id column. A record_id will be created using row names")
+      dedup_citations(test_citations_no_record_id, merge_citations = TRUE),"Search contains missing values for the record_id column. A record_id will be created using row numbers")
 
   expect_warning(
-      dedup_citations(test_citations_na_record_id, merge_citations = TRUE), "Search contains missing values for the record_id column. A record_id will be created using row names")
+      dedup_citations(test_citations_na_record_id, merge_citations = TRUE), "Search contains missing values for the record_id column. A record_id will be created using row numbers")
 
   expect_warning(
-      dedup_citations(test_citations_non_unique, merge_citations = TRUE), "The record_id column is not unique. A record_id will be created using row names")
+      dedup_citations(test_citations_non_unique, merge_citations = TRUE), "The record_id column is not unique. A record_id will be created using row numbers")
 
   expect_warning(
-      dedup_citations(test_citations_missing, merge_citations = TRUE), "Search contains missing values for the record_id column. A record_id will be created using row names")
+      dedup_citations(test_citations_missing, merge_citations = TRUE), "Search contains missing values for the record_id column. A record_id will be created using row numbers")
 
   # check formatting citations doesn't drop rows
   expect_equal(nrow(ASySD:::format_citations(test_citations)), nrow(test_citations))
