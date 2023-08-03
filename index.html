@@ -60,7 +60,7 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><p><!-- badges: start --> <a href="https://github.com/camaradesuk/ASySD/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/camaradesuk/ASySD/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <!-- badges: end --></p>
+  <main id="main" class="col-md-9">
 <p># Automated Systematic Search Deduplicator (ASySD) <img src="reference/figures/updated_logo.png" width="200px" align="right"></p>
 <p>Removing duplicate references obtained from different databases is an essential step when conducting and updating systematic literature reviews. ASySD (pronounced “assist”) is a tool to automatically identify and remove duplicate records.</p>
 <div class="section level2">
@@ -83,6 +83,78 @@
 </h2>
 <pre class="{r}"><code><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"camaradesuk/ASySD"</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="section level2">
+<h2 id="requirements">Requirements<a class="anchor" aria-label="anchor" href="#requirements"></a>
+</h2>
+<p>If loading with the ASySD package functions, the required fields will be automatically created based on the input data. If metadata columns are missing, they will be automatically created by ASySD and set to NA. For optimal performance, we recommend having as much metadata as possible.</p>
+<p>If using a dataframe, you should ideally have the following column names:</p>
+<table class="table">
+<colgroup>
+<col width="21%">
+<col width="78%">
+</colgroup>
+<thead><tr class="header">
+<th><strong>Name</strong></th>
+<th><strong>Definition</strong></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><strong>author</strong></td>
+<td>The author(s) of the publication</td>
+</tr>
+<tr class="even">
+<td><strong>year</strong></td>
+<td>The year the publication was published</td>
+</tr>
+<tr class="odd">
+<td><strong>journal</strong></td>
+<td>The name of the journal in which the publication appeared</td>
+</tr>
+<tr class="even">
+<td><strong>doi</strong></td>
+<td>The Digital Object Identifier (DOI) assigned to the publication</td>
+</tr>
+<tr class="odd">
+<td><strong>title</strong></td>
+<td>The title of the publication</td>
+</tr>
+<tr class="even">
+<td><strong>pages</strong></td>
+<td>The page numbers of the publication</td>
+</tr>
+<tr class="odd">
+<td><strong>volume</strong></td>
+<td>The volume number of the publication (if applicable)</td>
+</tr>
+<tr class="even">
+<td><strong>number</strong></td>
+<td>The issue number of the publication (if applicable)</td>
+</tr>
+<tr class="odd">
+<td><strong>abstract</strong></td>
+<td>Abstract of publication</td>
+</tr>
+<tr class="even">
+<td><strong>record_id</strong></td>
+<td>A unique identifier for the publication. If this is not obtained from the citation file, ASySD will genereate an id for each citation based on row numbers.</td>
+</tr>
+<tr class="odd">
+<td><strong>isbn</strong></td>
+<td>The International Standard Book Number (ISBN) assigned to the publication (if applicable). If unavailable, the International Standard Serial Number can be used here instead (ISSN).</td>
+</tr>
+<tr class="even">
+<td><strong>label (optional)</strong></td>
+<td>A label or tag assigned to the publication (if applicable) - for example, <strong>new search</strong> or <strong>old search</strong>
+</td>
+</tr>
+<tr class="odd">
+<td><strong>source (optional)</strong></td>
+<td>The source or database from which the publication was obtained - for example <strong>wos</strong>, <strong>embase</strong>, <strong>pubmed</strong>, <strong>scopus</strong>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level2">
 <h2 id="automatically-deduplicate-citation-data">Automatically deduplicate citation data<a class="anchor" aria-label="anchor" href="#automatically-deduplicate-citation-data"></a>
@@ -119,7 +191,12 @@
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/camaradesuk/ASySD/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/camaradesuk/ASySD/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>
