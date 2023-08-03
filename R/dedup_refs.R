@@ -564,6 +564,7 @@ merge_metadata <- function(raw_citations, matched_pairs_with_ids, keep_source, k
 #' @export
 #' @import dplyr
 #' @import progressr
+#' @importFrom utils menu
 #' @param raw_citations A dataframe containing duplicate ciations
 #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
 #' @param merge_citations Logical value. Do you want to merge matching citations?
@@ -578,7 +579,7 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
                             shiny_progress=FALSE, show_unknown_tags=TRUE) {
 
   # warning for missing columns
-  cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+  cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "isbn")
   missing_cols <- cols[!(cols %in% colnames(raw_citations))]
 
   raw_citations[missing_cols] <- NA
