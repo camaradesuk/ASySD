@@ -221,7 +221,9 @@ match_citations <- function(formatted_citations){
     mutate(volume = ifelse(is.na(.data$volume1) & is.na(.data$volume2), 1, .data$volume)) %>%
     mutate(number = ifelse(is.na(.data$number1) & is.na(.data$number2), 1, .data$number)) %>%
     mutate(doi = ifelse(is.na(.data$doi1) & is.na(.data$doi2), 0, doi)) %>%
-    mutate(isbn = ifelse(is.na(.data$isbn1) & is.na(.data$isbn2), 0, .data$isbn))
+    mutate(isbn = ifelse(is.na(.data$isbn1) & is.na(.data$isbn2), 0, .data$isbn)) %>%
+    mutate(year = ifelse(is.na(.data$year1) & is.na(.data$year2), 0, .data$year)) %>%
+    mutate(journal = ifelse(is.na(.data$journal1) & is.na(.data$journal2), 0, .data$journal))
 
 }
 
@@ -575,6 +577,12 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
                             merge_citations=TRUE, keep_source=NULL, keep_label=NULL, extra_merge_fields = NULL,
                             shiny_progress=FALSE, show_unknown_tags=TRUE) {
 
+  # warning for missing columns
+  cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+  missing_cols <- cols[!(cols %in% colnames(raw_citations))]
+
+  raw_citations[missing_cols] <- NA
+
   if(shiny_progress == TRUE){
 
     withProgress(message = "formatting data...", value = 0, {
@@ -751,7 +759,17 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
                 "manual_dedup" = manual_dedup_df))
   } else {
 
-    message("formatting data...")
+    if (length(missing_cols) > 0) {
+      message(paste("Warning: The following columns are missing:", paste(missing_cols, collapse = ", ")))
+      if (menu(c("Yes", "No"),
+               title= paste("Are you sure you want to proceed?")) == "1") {
+
+        message("formatting data...")
+
+       } else { print("Halting dedup...")
+          return()}
+
+      } else { message("formatting data...") }
 
     if(show_unknown_tags == TRUE){
 
@@ -930,9 +948,9 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     } else {
 
       return(unique_citations_with_metadata)
-  }
+    }
 
-  }
+    }
 }
 
 ####------ Deduplicate citations WITH manual dups added function ------ ####
