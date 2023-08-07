@@ -41,4 +41,5 @@ Config/testthat/edition: 3
 URL: https://camaradesuk.github.io/ASySD/
 VignetteBuilder: knitr
 Depends: 
-    R (>= 2.10)
+    R (>= 2.10),
+    bibliometrix
