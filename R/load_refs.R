@@ -73,8 +73,11 @@ load_multi_search <-function(paths, names, method){
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
+    newdat$pages <- lapply(newdat$pages, function(x) gsub("--", "-", x))
+
     newdat$file_name <- name
     df_list[[i]] <- newdat
+
 
     remove(newdat)
 
@@ -342,6 +345,8 @@ load_search <-function(path, method){
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
+    newdat$pages <- lapply(newdat$pages, function(x) gsub("--", "-", x))
+
   }
 
   if(method == "ris"){
