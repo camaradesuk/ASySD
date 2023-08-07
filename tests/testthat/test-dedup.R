@@ -15,10 +15,10 @@ test_that("dedup_check", {
 
 
   # check deduplication performing as normal
-  res <- dedup_citations(test_citations, merge_citations = FALSE)
+  res <- dedup_citations(test_citations, merge_citations = FALSE, manual_dedup = FALSE)
 
   expect_equal(
-    length(res$unique$duplicate_id), 586)
+    length(res$duplicate_id), 586)
 
   # check deduplication with merge performing as normal
   res <- dedup_citations(test_citations, merge_citations=TRUE)
