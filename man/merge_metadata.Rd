@@ -4,24 +4,14 @@
 \alias{merge_metadata}
 \title{This function generates a duplicate ID for sets of matching citations}
 \usage{
-merge_metadata(
-  raw_citations,
-  matched_pairs_with_ids,
-  keep_source,
-  keep_label,
-  extra_merge_fields
-)
+merge_metadata(true_pairs_with_ids, raw_citations, extra_merge_fields)
 }
 \arguments{
 \item{raw_citations}{original citation data with unique ids}
 
-\item{matched_pairs_with_ids}{citation data with duplicate ids}
-
-\item{keep_source}{Character vector. Selected citation source to preferentially retain in the dataset as the unique record}
-
-\item{keep_label}{Selected citation label to preferentially retain in the dataset as the unique record}
-
 \item{extra_merge_fields}{Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value}
+
+\item{matched_pairs_with_ids}{citation data with duplicate ids}
 }
 \value{
 Dataframe of formatted citation data with duplicate id
