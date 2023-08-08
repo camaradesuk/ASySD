@@ -22,28 +22,13 @@
     <loc>https://camaradesuk.github.io/ASySD/news/index.html</loc>
   </url>
   <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/add_id_citations.html</loc>
-  </url>
-  <url>
     <loc>https://camaradesuk.github.io/ASySD/reference/dedup_citations.html</loc>
   </url>
   <url>
     <loc>https://camaradesuk.github.io/ASySD/reference/dedup_citations_add_manual.html</loc>
   </url>
   <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/format_citations.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/generate_dup_id.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/identify_true_matches.html</loc>
-  </url>
-  <url>
     <loc>https://camaradesuk.github.io/ASySD/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/keep_one_unique_citation.html</loc>
   </url>
   <url>
     <loc>https://camaradesuk.github.io/ASySD/reference/load_multi_search.html</loc>
@@ -52,13 +37,7 @@
     <loc>https://camaradesuk.github.io/ASySD/reference/load_search.html</loc>
   </url>
   <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/match_citations.html</loc>
-  </url>
-  <url>
     <loc>https://camaradesuk.github.io/ASySD/reference/merge_metadata.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/order_citations.html</loc>
   </url>
   <url>
     <loc>https://camaradesuk.github.io/ASySD/reference/write_citations.html</loc>

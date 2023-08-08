@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">ASySD</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,26 @@
 <p>Load the ASySD package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#devtools::install_github("camaradesuk/ASySD")</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://camaradesuk.github.io/ASySD/">ASySD</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://camaradesuk.github.io/ASySD/">ASySD</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: bibliometrix</span></span>
+<span><span class="co">#&gt; Please note that our software is open source and available for use, distributed under the MIT license.</span></span>
+<span><span class="co">#&gt; When it is used in a publication, we ask that authors properly cite the following reference:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Aria, M. &amp; Cuccurullo, C. (2017) bibliometrix: An R-tool for comprehensive science mapping analysis, </span></span>
+<span><span class="co">#&gt;                         Journal of Informetrics, 11(4), pp 959-975, Elsevier.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Failure to properly cite the software is considered a violation of the license.</span></span>
+<span><span class="co">#&gt;                         </span></span>
+<span><span class="co">#&gt; For information and bug reports:</span></span>
+<span><span class="co">#&gt;                         - Take a look at https://www.bibliometrix.org</span></span>
+<span><span class="co">#&gt;                         - Send an email to info@bibliometrix.org   </span></span>
+<span><span class="co">#&gt;                         - Write a post on https://github.com/massimoaria/bibliometrix/issues</span></span>
+<span><span class="co">#&gt;                         </span></span>
+<span><span class="co">#&gt; Help us to keep Bibliometrix and Biblioshiny free to download and use by contributing with a small donation to support our research team (https://bibliometrix.org/donate.html)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;                         </span></span>
+<span><span class="co">#&gt; To start with the Biblioshiny app, please digit:</span></span>
+<span><span class="co">#&gt; biblioshiny()</span></span></code></pre></div>
 <p>Load citations from an Endnote XML file using the
 <code><a href="../reference/load_search.html">load_search()</a></code> funciton. You can change the <em>method</em>
 argument to upload alternative file types such as .csv files.</p>
@@ -95,6 +114,7 @@ argument to upload alternative file types such as .csv files.</p>
 <span><span class="co">#&gt; identified duplicates!</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(record_id)`</span></span>
 <span><span class="co">#&gt; flagging potential pairs for manual dedup...</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(duplicate_id.x, duplicate_id.y)`</span></span>
 <span><span class="co">#&gt; 8948 citations loaded...</span></span>
 <span><span class="co">#&gt; 3508 duplicate citations removed...</span></span>
 <span><span class="co">#&gt; 5440 unique citations remaining!</span></span></code></pre></div>
@@ -127,8 +147,7 @@ the rows with true duplicates.</p>
 additional duplicates you have reviewed, add them into the
 <em>additional_pairs</em> argument.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">final_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual</a></span><span class="op">(</span><span class="va">unique_citations</span>, additional_pairs <span class="op">=</span> <span class="va">true_duplicates</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Joining with `by = join_by(duplicate_id, record_id)`</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">final_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual</a></span><span class="op">(</span><span class="va">unique_citations</span>, additional_pairs <span class="op">=</span> <span class="va">true_duplicates</span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
