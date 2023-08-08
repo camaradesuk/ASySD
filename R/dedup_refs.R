@@ -603,9 +603,9 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
       if(merge_citations == TRUE){
 
-        unique_citations_with_metadata <- merge_metadata(matched_pairs_with_ids, raw_citations, extra_merge_fields)
+        unique_citations_with_metadata <- merge_metadata(matched_pairs_with_ids, extra_merge_fields)
       } else{
-        unique_citations_with_metadata <- keep_one_unique_citation(matched_pairs_with_ids, raw_citations)
+        unique_citations_with_metadata <- keep_one_unique_citation(matched_pairs_with_ids)
 
       }
 
@@ -681,6 +681,20 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
           group_by(.data$duplicate_id.x, .data$duplicate_id.y) %>%
           slice_head() %>%
           ungroup()
+
+        unique_pairs <- maybe_pairs %>%
+          select(duplicate_id.x, duplicate_id.y) %>%
+          rowwise() %>%
+          mutate(min_id = min(duplicate_id.x, duplicate_id.y),
+                 max_id = max(duplicate_id.x, duplicate_id.y)) %>%
+          group_by(min_id, max_id) %>%
+          slice_head() %>%
+          mutate(unique = TRUE)
+
+        maybe_pairs <- maybe_pairs %>%
+          left_join(unique_pairs) %>%
+          filter(!is.na(unique)) %>%
+          select(-unique)
 
         manual_dedup_df <- maybe_pairs
 
@@ -797,9 +811,9 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
     if(merge_citations == TRUE){
 
-      unique_citations_with_metadata <- merge_metadata(matched_pairs_with_ids, raw_citations, extra_merge_fields)
+      unique_citations_with_metadata <- merge_metadata(matched_pairs_with_ids, extra_merge_fields)
     } else{
-      unique_citations_with_metadata <- keep_one_unique_citation(matched_pairs_with_ids, raw_citations)
+      unique_citations_with_metadata <- keep_one_unique_citation(matched_pairs_with_ids)
 
     }
 
@@ -876,6 +890,20 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
         group_by(.data$duplicate_id.x, .data$duplicate_id.y) %>%
         slice_head() %>%
         ungroup()
+
+      unique_pairs <- maybe_pairs %>%
+        select(duplicate_id.x, duplicate_id.y) %>%
+        rowwise() %>%
+        mutate(min_id = min(duplicate_id.x, duplicate_id.y),
+               max_id = max(duplicate_id.x, duplicate_id.y)) %>%
+        group_by(min_id, max_id) %>%
+        slice_head() %>%
+        mutate(unique = TRUE)
+
+      maybe_pairs <- maybe_pairs %>%
+        left_join(unique_pairs) %>%
+        filter(!is.na(unique)) %>%
+        select(-unique)
 
       manual_dedup_df <- maybe_pairs
 
@@ -957,7 +985,7 @@ dedup_citations_add_manual <- function(unique_citations, merge_citations=TRUE, k
     unique_citations <- unique_citations %>%
       select(-duplicate_id)
 
-    unique_citations_with_metadata <- keep_one_unique_citation(unique_citations, ids)
+    unique_citations_with_metadata <- keep_one_unique_citation(ids)
 
   } else {
 
@@ -981,7 +1009,7 @@ dedup_citations_add_manual <- function(unique_citations, merge_citations=TRUE, k
 
     ids <- unique_citations
 
-    unique_citations_with_metadata <- merge_metadata(unique_citations, ids, extra_merge_fields)
+    unique_citations_with_metadata <- merge_metadata(ids, extra_merge_fields)
 
   }
 
@@ -1018,7 +1046,7 @@ dedup_citations_add_manual <- function(unique_citations, merge_citations=TRUE, k
     unique_citations <- unique_citations %>%
       select(-duplicate_id)
 
-    unique_citations_with_metadata <- keep_one_unique_citation(unique_citations, ids)
+    unique_citations_with_metadata <- keep_one_unique_citation(ids)
 
   } else {
 
@@ -1041,7 +1069,7 @@ dedup_citations_add_manual <- function(unique_citations, merge_citations=TRUE, k
 
     ids <- unique_citations
 
-    unique_citations_with_metadata <- merge_metadata(unique_citations, ids, extra_merge_fields)
+    unique_citations_with_metadata <- merge_metadata(ids, extra_merge_fields)
 
   }
 
