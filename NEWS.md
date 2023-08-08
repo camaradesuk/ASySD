@@ -1,7 +1,15 @@
+# ASySD 0.3.0
+
+* Streamlining merging / keep_one_unique functions to adapt to new duplicate id generation logic (igraph)
+* Ensuring extra_merge_fields supported throughout merging and manual dedup
+* Improvements to bib imports via databases (bibliometrix data import required)
+* Removing documentation for internal functions
+* Simplifying and removing redundant functions
+
 # ASySD 0.2.1
 
 * Minor bug fix in app logic
-* Chnage of wording when generating unique ids (based on row number not row name) 
+* Change of wording when generating unique ids (based on row number not row name) 
 * Adding shiny progress updates back in 
 
 # ASySD 0.2.0
