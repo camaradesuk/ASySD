@@ -112,11 +112,11 @@ load_multi_search <-function(paths, names, method){
     targets <- c("journal", "number", "pages", "isbn", "record_id", "booktitle")
     sources <- c("source", "issue", "start_page", "issn", "ID", "title")
 
-    for (i in seq_along(targets)) {
-      if (targets[i] %in% names(newdat)) {
-        newdat[[targets[i]]] <- dplyr::coalesce(newdat[[targets[i]]], newdat[[sources[i]]])
+    for (j in seq_along(targets)) {
+      if (targets[j] %in% names(newdat)) {
+        newdat[[targets[j]]] <- dplyr::coalesce(newdat[[targets[j]]], newdat[[sources[j]]])
       }  else {
-        newdat[[targets[i]]] <- newdat[[sources[i]]]
+        newdat[[targets[j]]] <- newdat[[sources[j]]]
       }}
 
 
