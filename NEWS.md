@@ -1,3 +1,7 @@
+# ASySD 0.3.1
+
+* Bug fix in multi-search upload for RIS
+
 # ASySD 0.3.0
 
 * Streamlining merging / keep_one_unique functions to adapt to new duplicate id generation logic (igraph)

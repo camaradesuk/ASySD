@@ -1,6 +1,6 @@
 Package: ASySD
 Title: Automated de-duplication of systematic searches
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: 
     person(
     given = "Kaitlyn",
