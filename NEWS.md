@@ -1,3 +1,8 @@
+# ASySD 0.3.2
+
+* Bug fix in RIS export 
+* Improved error handling for manual deduplication (in app)
+
 # ASySD 0.3.1
 
 * Bug fix in multi-search upload for RIS
