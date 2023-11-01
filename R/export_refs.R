@@ -204,7 +204,6 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 
     citations$source_type <- "JOUR" #for RIS import to work
     citations <- citations %>% select(source_type , everything()) %>%
-      rename(issue = .data$number) %>%
       select(-isbn)
     citations <- tidyr::separate(citations, .data$pages, into = c("start_page", "end_page"), sep = "-", convert = TRUE)
     citations$accession_number <- citations$accession
