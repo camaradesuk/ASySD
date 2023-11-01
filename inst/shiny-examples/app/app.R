@@ -24,6 +24,8 @@ options(shiny.maxRequestSize=1000*1024^2, timeout = 40000000)
 # UI ----
 ui <- navbarPage(
 
+  id = "pages",
+
   shinyjs::useShinyjs(),
 
   tags$head(includeHTML(("google-analytics.html"))),
@@ -112,6 +114,7 @@ ui <- navbarPage(
   tabPanel("Deduplicate",
 
            tabsetPanel(
+             id = "dedup_pages",
              tabPanel("Automated deduplication",
 
                       sidebarLayout(
@@ -884,6 +887,25 @@ remove duplicates.")
     })
 
 
+  # Output: manual dedup warning if no pairs  -----
+
+    observeEvent(input$dedup_pages,{
+      if(input$dedup_pages == "Manual deduplication"){
+        if(length(rv$pairs_to_check$record_id1>1)){
+          return()
+
+          }else if(length(rv$pairs_to_check$record_id==0)){
+          shinyalert("No manual deduplication required!",
+                     "There are no additional suggested pairs for manual deduplication", type = "info")
+
+             }else{
+        shinyalert("No pairs identified yet...",
+                   "Run the automated deduplication first in the previous tab!", type = "warning")
+          }
+
+      }
+    })
+
   # Output: manual dedup datatable -----
   output$manual_dedup_dt <- renderDT(
     datatable(rv$pairs_to_check,
@@ -1125,6 +1147,7 @@ remove duplicates.")
         },
 
         content = function(file) {
+
 
         write_citations_app(final_results(), type = input$export_format, file)
         }
