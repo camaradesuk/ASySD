@@ -14,7 +14,7 @@ Please check out the new [ASySD tutorial on youtube](https://www.youtube.com/wat
 
 ## Tool performance
 
-An evaluation of ASySD's performance versus other automated deduplication tools is available [as a preprint](https://www.biorxiv.org/content/10.1101/2021.05.04.442412v1)
+An evaluation of ASySD's performance versus other automated deduplication tools is available [here](https://bmcbiol.biomedcentral.com/articles/10.1186/s12915-023-01686-z#citeas)
 
 ## Installation:
 
