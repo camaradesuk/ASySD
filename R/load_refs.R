@@ -10,11 +10,6 @@
 #' @param names File names of input file or files
 #' @return A dataframe of the loaded citations.
 #' @export
-#'
-#' @examples
-#' paths <- c("vignettes/new_sr_search.csv", "vignettes/old_sr_search.csv")
-#' names <- c("new_sr_search.csv", "old_sr_search.csv")
-#' df <- load_multi_search(paths, names, method="csv")
 
  load_multi_search <-function(paths, names, method){
 
@@ -226,10 +221,6 @@ if(method == "txt"){
 #' @param method  Import method
 #' @return A dataframe of the citations
 #' @export
-#
-#' @examples
-#' path <- c("vignettes/new_sr_search.csv")
-#' load_search(path, method = "csv")
 
 load_search <-function(path, method){
 
