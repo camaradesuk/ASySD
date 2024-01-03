@@ -75,7 +75,7 @@
 
     newdat <- as.data.frame(newdat)
 
-    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
     newdat$pages <- lapply(newdat$pages, function(x) gsub("--", "-", x))
@@ -99,8 +99,9 @@
 
     names(newdat) <- tolower(names(newdat))
 
-    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
+
 
     newdat$file_name <- name
     df_list[[i]] <- newdat
@@ -110,7 +111,7 @@
 
     newdat <- synthesisr::read_refs(path)
 
-    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
     # rename or coalesce columns
@@ -167,10 +168,11 @@
           type = sapply(x, xpath2, ".//ref-type", xmlValue),
           label = sapply(x, xpath2, ".//label", xmlValue),
           source = sapply(x, xpath2, ".//remote-database-name", xmlValue),
+          url = sapply(x, xpath2, ".//urls/related-urls/url", xmlValue),
           database = sapply(x, xpath2, ".//remote-database-name", xmlValue)) %>%
           mutate(journal = ifelse(is.na(.data$journal), .data$secondary_title, .data$journal))
 
-        cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+        cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
         newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
         newdat$file_name <- name
@@ -206,7 +208,7 @@ if(method == "txt"){
 
   newdat <- dplyr::bind_rows(df_list)
 
-  cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source')
+  cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source', 'url')
   newdat[cols_to_modify] <- lapply(newdat[cols_to_modify], function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
   return(newdat)
@@ -256,28 +258,26 @@ load_search <-function(path, method){
       isbn = sapply(x, xpath2, ".//isbn", xmlValue),
       secondary_title = sapply(x, xpath2, ".//titles/secondary-title", xmlValue),
       label = sapply(x, xpath2, ".//label", xmlValue),
+      url = sapply(x, xpath2, ".//url", xmlValue),
       source = sapply(x, xpath2, ".//remote-database-name", xmlValue)) %>%
       mutate(journal = ifelse(is.na(.data$journal), .data$secondary_title, .data$journal))
 
-    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
   }
 
   if(method == "csv"){
 
-    cols <- c("label","isbn", "source")
     newdat <- utils::read.csv(path)
-    newdat[cols[!(cols %in% colnames(newdat))]] = NA
-
-    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
   }
 
 
   if(method == "txt"){
 
-    cols <- c("label","isbn","source")
     newdat <- utils::read.table(path)
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
     return(newdat)
@@ -335,8 +335,9 @@ load_search <-function(path, method){
 
     newdat <- as.data.frame(newdat)
 
-    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
+
   }
 
 
@@ -352,15 +353,13 @@ load_search <-function(path, method){
 
     names(newdat) <- tolower(names(newdat))
 
-    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
     newdat$pages <- lapply(newdat$pages, function(x) gsub("--", "-", x))
 
   }
 
   if(method == "ris"){
-
-    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
 
     newdat <- synthesisr::read_refs(path)
     if ("booktitle" %in% colnames(newdat)) {
@@ -385,12 +384,12 @@ load_search <-function(path, method){
       newdat <- newdat %>%
         rename(journal = source)
     }
-    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
   }
 
-  cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source')
+  cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source', 'url')
   newdat[cols_to_modify] <- lapply(newdat[cols_to_modify], function(x) gsub("\\r\\n|\\r|\\n", "", x))
   return(newdat)
 
