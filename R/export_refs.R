@@ -23,6 +23,7 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
       rename(`Custom 1` = duplicate_id,
              Author = author,
              Title = title,
+             URL=url,
              Volume = volume,
              Number = number,
              Label = label,
@@ -35,7 +36,7 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
       select(`Reference Type`, Author, Year,
              `Secondary Title`, DOI, Title,
               Pages, Volume, Number, Abstract,
-             `Custom 1`, `ISBN/ISSN`, Label, `Name of Database`)
+             `Custom 1`, `ISBN/ISSN`, Label, `Name of Database`, URL)
 
     write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
@@ -45,6 +46,7 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
     refs <- citations %>%
       rename(Authors = author,
              Title = title,
+             Url = url,
              Abstract = abstract,
              Year = year,
              DOI= doi,
@@ -56,6 +58,7 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
              CustomId = .data$duplicate_id,
              Keywords = "",
              PdfRelativePath = paste0(.data$duplicate_id, ".pdf")) %>%
+      mutate(URL = ifelse("url" %in% names(.), url, NA)) %>%
       select(Title,
              Authors,
              PublicationName,
@@ -68,7 +71,8 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
              ReferenceType,
              Keywords,
              PdfRelativePath,
-             CustomId)
+             CustomId,
+             URL)
 
     write.csv(refs, filename,
               col.names=TRUE, row.names = F, quote=FALSE, na="")
@@ -128,23 +132,24 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 
     refs <- citations %>%
       mutate(`Reference Type` = "Journal Article") %>%
-      mutate(`ISBN/ISSN` = .data$isbn) %>%
-      rename(`Custom 1` = .data$duplicate_id,
-             Author = .data$author,
-             Title = .data$title,
-             Volume = .data$volume,
-             Number = .data$number,
-             Label = .data$label,
-             Year = .data$year,
-             Abstract = .data$abstract,
-             Pages = .data$pages,
-             DOI = .data$doi,
-             `Name of Database` = .data$source,
-             `Secondary Title` = .data$journal) %>%
+      mutate(`ISBN/ISSN` = isbn) %>%
+      rename(`Custom 1` = duplicate_id,
+             URL=url,
+             Author = author,
+             Title = title,
+             Volume = volume,
+             Number = number,
+             Label = label,
+             Year = year,
+             Abstract = abstract,
+             Pages = pages,
+             DOI = doi,
+             `Name of Database` = source,
+             `Secondary Title` = journal) %>%
       select("Reference Type", Author, Year,
              "Secondary Title", DOI, Title,
              Pages, Volume, Number, Abstract,
-             "Custom 1", "Custom 2", "ISBN/ISSN", Label, "Name of Database")
+             "Custom 1", "Custom 2", "ISBN/ISSN", Label, "Name of Database", URL)
 
     utils::write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
@@ -155,19 +160,19 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
   } else if(type == "syrf_csv"){
 
     refs <- citations %>%
-      rename(Authors = .data$author,
-             Title = .data$title,
-             Abstract = .data$abstract,
-             Year = .data$year,
-             DOI= .data$doi,
-             PublicationName = .data$journal)  %>%
-      mutate(Url = "",
-             AuthorAddress = "",
+      rename(Authors = author,
+             Title = title,
+             Url=url,
+             Abstract = abstract,
+             Year = year,
+             DOI= doi,
+             PublicationName = journal)  %>%
+      mutate(AuthorAddress = "",
              AlternateName = "",
              ReferenceType = "",
              CustomId = .data$duplicate_id,
              Keywords = "",
-             PdfRelativePath = paste0(.data$duplicate_id, ".pdf")) %>%
+             PdfRelativePath = paste0(duplicate_id, ".pdf")) %>%
       select(Title,
              Authors,
              PublicationName,
