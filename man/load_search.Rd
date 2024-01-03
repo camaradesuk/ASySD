@@ -18,6 +18,6 @@ A dataframe of the citations
 This function loads in an citations file.
 }
 \examples{
-paths <- c("vignettes/new_sr_search.csv")
-load_multi_search(paths, names, method = "csv")
+path <- c("vignettes/new_sr_search.csv")
+load_search(path, method = "csv")
 }
