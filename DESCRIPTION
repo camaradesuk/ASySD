@@ -1,15 +1,14 @@
 Package: ASySD
-Title: Automated de-duplication of systematic searches
+Title: Automated Citation Deduplication
 Version: 0.3.2
 Authors@R: 
-    person(
-    given = "Kaitlyn",
-           family = "Hair",
-           role = c("aut", "cre"),
-           email = "kaitlyn.hair@ed.ac.uk",
-           comment = c(ORCID = "https://orcid.org/0000-0003-0180-7343"))
-Description: ASySD includes functionality to automatically detect and remove duplicate citations from a literature search. 
-License: GNU General Public License
+    person("Kaitlyn","Hair", ,
+    role = c("aut", "cre", "cph"),
+    email = "kaitlyn.hair@ed.ac.uk",
+    comment = c(ORCID = "https://orcid.org/0000-0003-0180-7343"))
+Description: The Automated Systematic Search Deduplicator ('ASySD') includes functions to automatically detect and remove duplicate citations from literature searches. For details, see our paper "The Automated Systematic Search Deduplicator (ASySD): a rapid, open-source, interoperable tool to remove duplicate citations in biomedical systematic reviews. Hair K / Bahor Z / Macleod M / Liao J / Sena E (2023) <doi:10.1186/s12915-023-01686-z>.
+BugReports: https://github.com/camaradesuk/ASySD/issues
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -17,6 +16,7 @@ RoxygenNote: 7.2.3
 Imports:
     parallel,
     parallelly,
+    bibliometrix,
     RecordLinkage,
     XML,
     synthesisr,
@@ -30,6 +30,7 @@ Imports:
 Suggests: 
     knitr,
     gt,
+    plyr,
     readr,
     magrittr,
     roxygen2,
@@ -40,5 +41,4 @@ Config/testthat/edition: 3
 URL: https://camaradesuk.github.io/ASySD/
 VignetteBuilder: knitr
 Depends: 
-    R (>= 2.10),
-    bibliometrix
+    R (>= 2.10)
