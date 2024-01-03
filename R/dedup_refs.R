@@ -575,16 +575,15 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
       incProgress(0.4/1)
 
-
       # warning if no duplicates
       if(is.null(pairs)) {
-        warning("No duplicates detected!")
+        warning("No duplicates detected")
         raw_citations$duplicate_id <- raw_citations$record_id
         return(list("unique" = raw_citations))
       }
 
-      if(length(pairs$record_id1==0)) {
-        warning("No duplicates detected!")
+      if(length(pairs$record_id1)==0) {
+        warning("No duplicates detected")
         raw_citations$duplicate_id <- raw_citations$record_id
         return(list("unique" = raw_citations))
       }
@@ -594,7 +593,6 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
       incProgress(0.5/1)
 
-
       # warning if no duplicates
       if(is.null(true_pairs)) {
         warning("No duplicates detected!")
@@ -602,7 +600,7 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
         return(list("unique" = raw_citations))
       }
 
-      if(length(true_pairs$record_id1==0)) {
+      if(length(true_pairs$record_id1)==0) {
         warning("No duplicates detected!")
         raw_citations$duplicate_id <- raw_citations$record_id
         return(list("unique" = raw_citations))
