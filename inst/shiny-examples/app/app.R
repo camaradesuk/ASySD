@@ -11,7 +11,7 @@ library(networkD3)
 library(rsconnect)
 library(RCurl)
 library(shiny)
-library(ASySD)
+#library(ASySD)
 library(shinythemes)
 library(knitr)
 library(shinycssloaders)
@@ -252,7 +252,7 @@ ui <- navbarPage(
              inputId = "export_format",
              label = "Choose an export format",
              choiceNames = c("Endnote tab delimited", "RIS", "SyRF CSV", "CSV"),
-             choiceValues = c("txt", "ris", "syrf_csv", "csv"),
+             choiceValues = c("txt", "ris", "csv", "csv"),
              status="success"),
 
            materialSwitch("show_advanced", "Show advanced options",
@@ -349,31 +349,31 @@ server <- function(input, output, session){
 
       if(input$fileType=="Endnote XML" & all(grepl(".xml$", input$uploadfile$name))){
 
-        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="endnote")
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="endnote")
 
       }  else if(input$fileType == "CSV" & all(grepl(".csv$", input$uploadfile$name))){
 
-        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="csv")
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="csv")
 
       }  else if(input$fileType == "Zotero CSV" & all(grepl(".csv$", input$uploadfile$name))){
 
-        citations <- ASySD::load_multi_search(input$uploadfile$datapath,  input$uploadfile$name, method="zotero_csv")
+        citations <- load_multi_search(input$uploadfile$datapath,  input$uploadfile$name, method="zotero_csv")
 
       }
-      else if(input$fileType == "RIS" & all(grepl(".ris$", input$uploadfile$name))){
+      else if(input$fileType == "RIS" & all(grepl(".txt|.ris$", input$uploadfile$name))){
 
-        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="ris")
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="ris")
       }
 
       else if(input$fileType == "BIB" & all(grepl(".bib$", input$uploadfile$name))){
 
-        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="bib")
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="bib")
 
       }
 
       else if(input$fileType == "Tab delimited"){
 
-        citations <- ASySD::load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="txt")
+        citations <- load_multi_search(input$uploadfile$datapath, input$uploadfile$name, method="txt")
       }
 
       else{
@@ -754,7 +754,7 @@ remove duplicates.")
   }
 
 
-    result <- ASySD::dedup_citations(citations_to_dedup(),
+    result <- dedup_citations(citations_to_dedup(),
                               keep_source = input$keepSource,
                               keep_label = keep_label,
                               merge_citations = TRUE,
