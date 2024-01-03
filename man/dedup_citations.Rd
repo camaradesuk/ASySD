@@ -12,7 +12,8 @@ dedup_citations(
   keep_label = NULL,
   extra_merge_fields = NULL,
   shiny_progress = FALSE,
-  show_unknown_tags = TRUE
+  show_unknown_tags = TRUE,
+  user_input = NA
 )
 }
 \arguments{
