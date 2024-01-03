@@ -8,8 +8,8 @@
 <meta name="description" content="ASySD">
 <title>Updating a Systematic Search • ASySD</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Updating a Systematic Search">
 <meta property="og:description" content="ASySD">
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">ASySD</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,14 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/camaradesuk/ASySD/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -68,7 +75,7 @@
       <img src="" class="logo" alt=""><h1>Updating a Systematic Search</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/camaradesuk/ASySD/blob/HEAD/vignettes/search-updates.Rmd" class="external-link"><code>vignettes/search-updates.Rmd</code></a></small>
       <div class="d-none name"><code>search-updates.Rmd</code></div>
     </div>
 
@@ -76,25 +83,6 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://camaradesuk.github.io/ASySD/">ASySD</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: bibliometrix</span></span>
-<span><span class="co">#&gt; Please note that our software is open source and available for use, distributed under the MIT license.</span></span>
-<span><span class="co">#&gt; When it is used in a publication, we ask that authors properly cite the following reference:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Aria, M. &amp; Cuccurullo, C. (2017) bibliometrix: An R-tool for comprehensive science mapping analysis, </span></span>
-<span><span class="co">#&gt;                         Journal of Informetrics, 11(4), pp 959-975, Elsevier.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Failure to properly cite the software is considered a violation of the license.</span></span>
-<span><span class="co">#&gt;                         </span></span>
-<span><span class="co">#&gt; For information and bug reports:</span></span>
-<span><span class="co">#&gt;                         - Take a look at https://www.bibliometrix.org</span></span>
-<span><span class="co">#&gt;                         - Send an email to info@bibliometrix.org   </span></span>
-<span><span class="co">#&gt;                         - Write a post on https://github.com/massimoaria/bibliometrix/issues</span></span>
-<span><span class="co">#&gt;                         </span></span>
-<span><span class="co">#&gt; Help us to keep Bibliometrix and Biblioshiny free to download and use by contributing with a small donation to support our research team (https://bibliometrix.org/donate.html)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;                         </span></span>
-<span><span class="co">#&gt; To start with the Biblioshiny app, please digit:</span></span>
-<span><span class="co">#&gt; biblioshiny()</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
@@ -188,23 +176,23 @@ citations we added with our latest systematic search?</p>
 <span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="miltaktofs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#miltaktofs table {
+<div id="ciwkeaujyc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ciwkeaujyc table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#miltaktofs thead, #miltaktofs tbody, #miltaktofs tfoot, #miltaktofs tr, #miltaktofs td, #miltaktofs th {
+#ciwkeaujyc thead, #ciwkeaujyc tbody, #ciwkeaujyc tfoot, #ciwkeaujyc tr, #ciwkeaujyc td, #ciwkeaujyc th {
   border-style: none;
 }
 
-#miltaktofs p {
+#ciwkeaujyc p {
   margin: 0;
   padding: 0;
 }
 
-#miltaktofs .gt_table {
+#ciwkeaujyc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -230,12 +218,12 @@ citations we added with our latest systematic search?</p>
   border-left-color: #D3D3D3;
 }
 
-#miltaktofs .gt_caption {
+#ciwkeaujyc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#miltaktofs .gt_title {
+#ciwkeaujyc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -247,7 +235,7 @@ citations we added with our latest systematic search?</p>
   border-bottom-width: 0;
 }
 
-#miltaktofs .gt_subtitle {
+#ciwkeaujyc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -259,7 +247,7 @@ citations we added with our latest systematic search?</p>
   border-top-width: 0;
 }
 
-#miltaktofs .gt_heading {
+#ciwkeaujyc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -271,13 +259,13 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#miltaktofs .gt_bottom_border {
+#ciwkeaujyc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#miltaktofs .gt_col_headings {
+#ciwkeaujyc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -292,7 +280,7 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#miltaktofs .gt_col_heading {
+#ciwkeaujyc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -312,7 +300,7 @@ citations we added with our latest systematic search?</p>
   overflow-x: hidden;
 }
 
-#miltaktofs .gt_column_spanner_outer {
+#ciwkeaujyc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -324,15 +312,15 @@ citations we added with our latest systematic search?</p>
   padding-right: 4px;
 }
 
-#miltaktofs .gt_column_spanner_outer:first-child {
+#ciwkeaujyc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#miltaktofs .gt_column_spanner_outer:last-child {
+#ciwkeaujyc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#miltaktofs .gt_column_spanner {
+#ciwkeaujyc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -344,11 +332,11 @@ citations we added with our latest systematic search?</p>
   width: 100%;
 }
 
-#miltaktofs .gt_spanner_row {
+#ciwkeaujyc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#miltaktofs .gt_group_heading {
+#ciwkeaujyc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -374,7 +362,7 @@ citations we added with our latest systematic search?</p>
   text-align: left;
 }
 
-#miltaktofs .gt_empty_group_heading {
+#ciwkeaujyc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -389,15 +377,15 @@ citations we added with our latest systematic search?</p>
   vertical-align: middle;
 }
 
-#miltaktofs .gt_from_md > :first-child {
+#ciwkeaujyc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#miltaktofs .gt_from_md > :last-child {
+#ciwkeaujyc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#miltaktofs .gt_row {
+#ciwkeaujyc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -416,7 +404,7 @@ citations we added with our latest systematic search?</p>
   overflow-x: hidden;
 }
 
-#miltaktofs .gt_stub {
+#ciwkeaujyc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -429,7 +417,7 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#miltaktofs .gt_stub_row_group {
+#ciwkeaujyc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -443,15 +431,15 @@ citations we added with our latest systematic search?</p>
   vertical-align: top;
 }
 
-#miltaktofs .gt_row_group_first td {
+#ciwkeaujyc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#miltaktofs .gt_row_group_first th {
+#ciwkeaujyc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#miltaktofs .gt_summary_row {
+#ciwkeaujyc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -461,16 +449,16 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#miltaktofs .gt_first_summary_row {
+#ciwkeaujyc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#miltaktofs .gt_first_summary_row.thick {
+#ciwkeaujyc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#miltaktofs .gt_last_summary_row {
+#ciwkeaujyc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -480,7 +468,7 @@ citations we added with our latest systematic search?</p>
   border-bottom-color: #D3D3D3;
 }
 
-#miltaktofs .gt_grand_summary_row {
+#ciwkeaujyc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -490,7 +478,7 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#miltaktofs .gt_first_grand_summary_row {
+#ciwkeaujyc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -500,7 +488,7 @@ citations we added with our latest systematic search?</p>
   border-top-color: #D3D3D3;
 }
 
-#miltaktofs .gt_last_grand_summary_row_top {
+#ciwkeaujyc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -510,11 +498,11 @@ citations we added with our latest systematic search?</p>
   border-bottom-color: #D3D3D3;
 }
 
-#miltaktofs .gt_striped {
+#ciwkeaujyc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#miltaktofs .gt_table_body {
+#ciwkeaujyc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -523,7 +511,7 @@ citations we added with our latest systematic search?</p>
   border-bottom-color: #D3D3D3;
 }
 
-#miltaktofs .gt_footnotes {
+#ciwkeaujyc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -537,7 +525,7 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#miltaktofs .gt_footnote {
+#ciwkeaujyc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -546,7 +534,7 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#miltaktofs .gt_sourcenotes {
+#ciwkeaujyc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -560,7 +548,7 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#miltaktofs .gt_sourcenote {
+#ciwkeaujyc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -568,63 +556,63 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#miltaktofs .gt_left {
+#ciwkeaujyc .gt_left {
   text-align: left;
 }
 
-#miltaktofs .gt_center {
+#ciwkeaujyc .gt_center {
   text-align: center;
 }
 
-#miltaktofs .gt_right {
+#ciwkeaujyc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#miltaktofs .gt_font_normal {
+#ciwkeaujyc .gt_font_normal {
   font-weight: normal;
 }
 
-#miltaktofs .gt_font_bold {
+#ciwkeaujyc .gt_font_bold {
   font-weight: bold;
 }
 
-#miltaktofs .gt_font_italic {
+#ciwkeaujyc .gt_font_italic {
   font-style: italic;
 }
 
-#miltaktofs .gt_super {
+#ciwkeaujyc .gt_super {
   font-size: 65%;
 }
 
-#miltaktofs .gt_footnote_marks {
+#ciwkeaujyc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#miltaktofs .gt_asterisk {
+#ciwkeaujyc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#miltaktofs .gt_indent_1 {
+#ciwkeaujyc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#miltaktofs .gt_indent_2 {
+#ciwkeaujyc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#miltaktofs .gt_indent_3 {
+#ciwkeaujyc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#miltaktofs .gt_indent_4 {
+#ciwkeaujyc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#miltaktofs .gt_indent_5 {
+#ciwkeaujyc .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -643,11 +631,11 @@ citations we added with our latest systematic search?</p>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="isbn">isbn</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="label">label</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="source">source</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="url">url</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="...1">...1</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="uid">uid</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="keywords">keywords</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="secondarytitle">secondarytitle</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="url">url</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="issn">issn</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pmid">pmid</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ptype">ptype</th>
@@ -669,11 +657,11 @@ citations we added with our latest systematic search?</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223</td>
 <td headers="source" class="gt_row gt_left">new</td>
+<td headers="url" class="gt_row gt_right"></td>
 <td headers="...1" class="gt_row gt_right">5561</td>
 <td headers="uid" class="gt_row gt_left">wos:000931052000002</td>
 <td headers="keywords" class="gt_row gt_left"></td>
 <td headers="secondarytitle" class="gt_row gt_right"></td>
-<td headers="url" class="gt_row gt_right"></td>
 <td headers="issn" class="gt_row gt_right">0891-5849</td>
 <td headers="pmid" class="gt_row gt_right"></td>
 <td headers="ptype" class="gt_row gt_right"></td>
@@ -694,11 +682,11 @@ citations we added with our latest systematic search?</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223</td>
 <td headers="source" class="gt_row gt_left">new</td>
+<td headers="url" class="gt_row gt_right"></td>
 <td headers="...1" class="gt_row gt_right">9861</td>
 <td headers="uid" class="gt_row gt_left">wos:000931426100001</td>
 <td headers="keywords" class="gt_row gt_left">ICH | beta-amyloid | pleiotropy | genetic epidemiology | cadherin | cerebral amyloid angiopathy</td>
 <td headers="secondarytitle" class="gt_row gt_right"></td>
-<td headers="url" class="gt_row gt_right"></td>
 <td headers="issn" class="gt_row gt_right">1747-4930</td>
 <td headers="pmid" class="gt_row gt_right"></td>
 <td headers="ptype" class="gt_row gt_right"></td>
@@ -719,11 +707,11 @@ citations we added with our latest systematic search?</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223</td>
 <td headers="source" class="gt_row gt_left">new</td>
+<td headers="url" class="gt_row gt_right"></td>
 <td headers="...1" class="gt_row gt_right">6501</td>
 <td headers="uid" class="gt_row gt_left">wos:000932018500001</td>
 <td headers="keywords" class="gt_row gt_left"></td>
 <td headers="secondarytitle" class="gt_row gt_right"></td>
-<td headers="url" class="gt_row gt_right"></td>
 <td headers="issn" class="gt_row gt_right">2328-9503</td>
 <td headers="pmid" class="gt_row gt_right"></td>
 <td headers="ptype" class="gt_row gt_right"></td>
@@ -744,23 +732,23 @@ removing citations with a single source.</p>
 <span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="vsntslbvac" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vsntslbvac table {
+<div id="lhrsgvxjwo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lhrsgvxjwo table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vsntslbvac thead, #vsntslbvac tbody, #vsntslbvac tfoot, #vsntslbvac tr, #vsntslbvac td, #vsntslbvac th {
+#lhrsgvxjwo thead, #lhrsgvxjwo tbody, #lhrsgvxjwo tfoot, #lhrsgvxjwo tr, #lhrsgvxjwo td, #lhrsgvxjwo th {
   border-style: none;
 }
 
-#vsntslbvac p {
+#lhrsgvxjwo p {
   margin: 0;
   padding: 0;
 }
 
-#vsntslbvac .gt_table {
+#lhrsgvxjwo .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -786,12 +774,12 @@ removing citations with a single source.</p>
   border-left-color: #D3D3D3;
 }
 
-#vsntslbvac .gt_caption {
+#lhrsgvxjwo .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vsntslbvac .gt_title {
+#lhrsgvxjwo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -803,7 +791,7 @@ removing citations with a single source.</p>
   border-bottom-width: 0;
 }
 
-#vsntslbvac .gt_subtitle {
+#lhrsgvxjwo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -815,7 +803,7 @@ removing citations with a single source.</p>
   border-top-width: 0;
 }
 
-#vsntslbvac .gt_heading {
+#lhrsgvxjwo .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -827,13 +815,13 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#vsntslbvac .gt_bottom_border {
+#lhrsgvxjwo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vsntslbvac .gt_col_headings {
+#lhrsgvxjwo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -848,7 +836,7 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#vsntslbvac .gt_col_heading {
+#lhrsgvxjwo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -868,7 +856,7 @@ removing citations with a single source.</p>
   overflow-x: hidden;
 }
 
-#vsntslbvac .gt_column_spanner_outer {
+#lhrsgvxjwo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -880,15 +868,15 @@ removing citations with a single source.</p>
   padding-right: 4px;
 }
 
-#vsntslbvac .gt_column_spanner_outer:first-child {
+#lhrsgvxjwo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vsntslbvac .gt_column_spanner_outer:last-child {
+#lhrsgvxjwo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vsntslbvac .gt_column_spanner {
+#lhrsgvxjwo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -900,11 +888,11 @@ removing citations with a single source.</p>
   width: 100%;
 }
 
-#vsntslbvac .gt_spanner_row {
+#lhrsgvxjwo .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vsntslbvac .gt_group_heading {
+#lhrsgvxjwo .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -930,7 +918,7 @@ removing citations with a single source.</p>
   text-align: left;
 }
 
-#vsntslbvac .gt_empty_group_heading {
+#lhrsgvxjwo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -945,15 +933,15 @@ removing citations with a single source.</p>
   vertical-align: middle;
 }
 
-#vsntslbvac .gt_from_md > :first-child {
+#lhrsgvxjwo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vsntslbvac .gt_from_md > :last-child {
+#lhrsgvxjwo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vsntslbvac .gt_row {
+#lhrsgvxjwo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -972,7 +960,7 @@ removing citations with a single source.</p>
   overflow-x: hidden;
 }
 
-#vsntslbvac .gt_stub {
+#lhrsgvxjwo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -985,7 +973,7 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#vsntslbvac .gt_stub_row_group {
+#lhrsgvxjwo .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -999,15 +987,15 @@ removing citations with a single source.</p>
   vertical-align: top;
 }
 
-#vsntslbvac .gt_row_group_first td {
+#lhrsgvxjwo .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vsntslbvac .gt_row_group_first th {
+#lhrsgvxjwo .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vsntslbvac .gt_summary_row {
+#lhrsgvxjwo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1017,16 +1005,16 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#vsntslbvac .gt_first_summary_row {
+#lhrsgvxjwo .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vsntslbvac .gt_first_summary_row.thick {
+#lhrsgvxjwo .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vsntslbvac .gt_last_summary_row {
+#lhrsgvxjwo .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1036,7 +1024,7 @@ removing citations with a single source.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#vsntslbvac .gt_grand_summary_row {
+#lhrsgvxjwo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1046,7 +1034,7 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#vsntslbvac .gt_first_grand_summary_row {
+#lhrsgvxjwo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1056,7 +1044,7 @@ removing citations with a single source.</p>
   border-top-color: #D3D3D3;
 }
 
-#vsntslbvac .gt_last_grand_summary_row_top {
+#lhrsgvxjwo .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1066,11 +1054,11 @@ removing citations with a single source.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#vsntslbvac .gt_striped {
+#lhrsgvxjwo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vsntslbvac .gt_table_body {
+#lhrsgvxjwo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1079,7 +1067,7 @@ removing citations with a single source.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#vsntslbvac .gt_footnotes {
+#lhrsgvxjwo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1093,7 +1081,7 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#vsntslbvac .gt_footnote {
+#lhrsgvxjwo .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1102,7 +1090,7 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#vsntslbvac .gt_sourcenotes {
+#lhrsgvxjwo .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1116,7 +1104,7 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#vsntslbvac .gt_sourcenote {
+#lhrsgvxjwo .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1124,63 +1112,63 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#vsntslbvac .gt_left {
+#lhrsgvxjwo .gt_left {
   text-align: left;
 }
 
-#vsntslbvac .gt_center {
+#lhrsgvxjwo .gt_center {
   text-align: center;
 }
 
-#vsntslbvac .gt_right {
+#lhrsgvxjwo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vsntslbvac .gt_font_normal {
+#lhrsgvxjwo .gt_font_normal {
   font-weight: normal;
 }
 
-#vsntslbvac .gt_font_bold {
+#lhrsgvxjwo .gt_font_bold {
   font-weight: bold;
 }
 
-#vsntslbvac .gt_font_italic {
+#lhrsgvxjwo .gt_font_italic {
   font-style: italic;
 }
 
-#vsntslbvac .gt_super {
+#lhrsgvxjwo .gt_super {
   font-size: 65%;
 }
 
-#vsntslbvac .gt_footnote_marks {
+#lhrsgvxjwo .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vsntslbvac .gt_asterisk {
+#lhrsgvxjwo .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vsntslbvac .gt_indent_1 {
+#lhrsgvxjwo .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vsntslbvac .gt_indent_2 {
+#lhrsgvxjwo .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vsntslbvac .gt_indent_3 {
+#lhrsgvxjwo .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vsntslbvac .gt_indent_4 {
+#lhrsgvxjwo .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vsntslbvac .gt_indent_5 {
+#lhrsgvxjwo .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1199,11 +1187,11 @@ removing citations with a single source.</p>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="isbn">isbn</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="label">label</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="source">source</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="url">url</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="...1">...1</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="uid">uid</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="keywords">keywords</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="secondarytitle">secondarytitle</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="url">url</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="issn">issn</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pmid">pmid</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="ptype">ptype</th>
@@ -1225,11 +1213,11 @@ removing citations with a single source.</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223, 270223</td>
 <td headers="source" class="gt_row gt_left">new, new</td>
+<td headers="url" class="gt_row gt_right"></td>
 <td headers="...1" class="gt_row gt_right">3271</td>
 <td headers="uid" class="gt_row gt_left">wos:000919545100001</td>
 <td headers="keywords" class="gt_row gt_left"></td>
 <td headers="secondarytitle" class="gt_row gt_right"></td>
-<td headers="url" class="gt_row gt_right"></td>
 <td headers="issn" class="gt_row gt_left">0098-7484</td>
 <td headers="pmid" class="gt_row gt_right">36652625</td>
 <td headers="ptype" class="gt_row gt_left">Article</td>
@@ -1250,11 +1238,11 @@ removing citations with a single source.</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223, 270223</td>
 <td headers="source" class="gt_row gt_left">new, new</td>
+<td headers="url" class="gt_row gt_right"></td>
 <td headers="...1" class="gt_row gt_right">9981</td>
 <td headers="uid" class="gt_row gt_left">wos:000924510300006</td>
 <td headers="keywords" class="gt_row gt_left"></td>
 <td headers="secondarytitle" class="gt_row gt_right"></td>
-<td headers="url" class="gt_row gt_right"></td>
 <td headers="issn" class="gt_row gt_left">1549-1277</td>
 <td headers="pmid" class="gt_row gt_right"></td>
 <td headers="ptype" class="gt_row gt_left"></td>
@@ -1275,11 +1263,11 @@ removing citations with a single source.</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223, 270223</td>
 <td headers="source" class="gt_row gt_left">new, new</td>
+<td headers="url" class="gt_row gt_right"></td>
 <td headers="...1" class="gt_row gt_right">9791</td>
 <td headers="uid" class="gt_row gt_left">wos:000928044600001</td>
 <td headers="keywords" class="gt_row gt_left">hyperlipidemia | high-fat diet | Curcumin-Nicotinate | amyloid-beta | BDNF | TrkB | CREB signaling | synaptogenesis | Idol/LDLR pathway</td>
 <td headers="secondarytitle" class="gt_row gt_right"></td>
-<td headers="url" class="gt_row gt_right"></td>
 <td headers="issn" class="gt_row gt_left">1934-578X</td>
 <td headers="pmid" class="gt_row gt_right"></td>
 <td headers="ptype" class="gt_row gt_left"></td>
@@ -1311,23 +1299,23 @@ dataframes.</p>
 <span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="gzhxhlvrxp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gzhxhlvrxp table {
+<div id="zvqqcqqzyl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zvqqcqqzyl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gzhxhlvrxp thead, #gzhxhlvrxp tbody, #gzhxhlvrxp tfoot, #gzhxhlvrxp tr, #gzhxhlvrxp td, #gzhxhlvrxp th {
+#zvqqcqqzyl thead, #zvqqcqqzyl tbody, #zvqqcqqzyl tfoot, #zvqqcqqzyl tr, #zvqqcqqzyl td, #zvqqcqqzyl th {
   border-style: none;
 }
 
-#gzhxhlvrxp p {
+#zvqqcqqzyl p {
   margin: 0;
   padding: 0;
 }
 
-#gzhxhlvrxp .gt_table {
+#zvqqcqqzyl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1353,12 +1341,12 @@ dataframes.</p>
   border-left-color: #D3D3D3;
 }
 
-#gzhxhlvrxp .gt_caption {
+#zvqqcqqzyl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gzhxhlvrxp .gt_title {
+#zvqqcqqzyl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1370,7 +1358,7 @@ dataframes.</p>
   border-bottom-width: 0;
 }
 
-#gzhxhlvrxp .gt_subtitle {
+#zvqqcqqzyl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1382,7 +1370,7 @@ dataframes.</p>
   border-top-width: 0;
 }
 
-#gzhxhlvrxp .gt_heading {
+#zvqqcqqzyl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1394,13 +1382,13 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#gzhxhlvrxp .gt_bottom_border {
+#zvqqcqqzyl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gzhxhlvrxp .gt_col_headings {
+#zvqqcqqzyl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1415,7 +1403,7 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#gzhxhlvrxp .gt_col_heading {
+#zvqqcqqzyl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1435,7 +1423,7 @@ dataframes.</p>
   overflow-x: hidden;
 }
 
-#gzhxhlvrxp .gt_column_spanner_outer {
+#zvqqcqqzyl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1447,15 +1435,15 @@ dataframes.</p>
   padding-right: 4px;
 }
 
-#gzhxhlvrxp .gt_column_spanner_outer:first-child {
+#zvqqcqqzyl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gzhxhlvrxp .gt_column_spanner_outer:last-child {
+#zvqqcqqzyl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gzhxhlvrxp .gt_column_spanner {
+#zvqqcqqzyl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1467,11 +1455,11 @@ dataframes.</p>
   width: 100%;
 }
 
-#gzhxhlvrxp .gt_spanner_row {
+#zvqqcqqzyl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gzhxhlvrxp .gt_group_heading {
+#zvqqcqqzyl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1497,7 +1485,7 @@ dataframes.</p>
   text-align: left;
 }
 
-#gzhxhlvrxp .gt_empty_group_heading {
+#zvqqcqqzyl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1512,15 +1500,15 @@ dataframes.</p>
   vertical-align: middle;
 }
 
-#gzhxhlvrxp .gt_from_md > :first-child {
+#zvqqcqqzyl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gzhxhlvrxp .gt_from_md > :last-child {
+#zvqqcqqzyl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gzhxhlvrxp .gt_row {
+#zvqqcqqzyl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1539,7 +1527,7 @@ dataframes.</p>
   overflow-x: hidden;
 }
 
-#gzhxhlvrxp .gt_stub {
+#zvqqcqqzyl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1552,7 +1540,7 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#gzhxhlvrxp .gt_stub_row_group {
+#zvqqcqqzyl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1566,15 +1554,15 @@ dataframes.</p>
   vertical-align: top;
 }
 
-#gzhxhlvrxp .gt_row_group_first td {
+#zvqqcqqzyl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gzhxhlvrxp .gt_row_group_first th {
+#zvqqcqqzyl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gzhxhlvrxp .gt_summary_row {
+#zvqqcqqzyl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1584,16 +1572,16 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#gzhxhlvrxp .gt_first_summary_row {
+#zvqqcqqzyl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gzhxhlvrxp .gt_first_summary_row.thick {
+#zvqqcqqzyl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gzhxhlvrxp .gt_last_summary_row {
+#zvqqcqqzyl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1603,7 +1591,7 @@ dataframes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#gzhxhlvrxp .gt_grand_summary_row {
+#zvqqcqqzyl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1613,7 +1601,7 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#gzhxhlvrxp .gt_first_grand_summary_row {
+#zvqqcqqzyl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1623,7 +1611,7 @@ dataframes.</p>
   border-top-color: #D3D3D3;
 }
 
-#gzhxhlvrxp .gt_last_grand_summary_row_top {
+#zvqqcqqzyl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1633,11 +1621,11 @@ dataframes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#gzhxhlvrxp .gt_striped {
+#zvqqcqqzyl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gzhxhlvrxp .gt_table_body {
+#zvqqcqqzyl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1646,7 +1634,7 @@ dataframes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#gzhxhlvrxp .gt_footnotes {
+#zvqqcqqzyl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1660,7 +1648,7 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#gzhxhlvrxp .gt_footnote {
+#zvqqcqqzyl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1669,7 +1657,7 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#gzhxhlvrxp .gt_sourcenotes {
+#zvqqcqqzyl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1683,7 +1671,7 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#gzhxhlvrxp .gt_sourcenote {
+#zvqqcqqzyl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1691,63 +1679,63 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#gzhxhlvrxp .gt_left {
+#zvqqcqqzyl .gt_left {
   text-align: left;
 }
 
-#gzhxhlvrxp .gt_center {
+#zvqqcqqzyl .gt_center {
   text-align: center;
 }
 
-#gzhxhlvrxp .gt_right {
+#zvqqcqqzyl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gzhxhlvrxp .gt_font_normal {
+#zvqqcqqzyl .gt_font_normal {
   font-weight: normal;
 }
 
-#gzhxhlvrxp .gt_font_bold {
+#zvqqcqqzyl .gt_font_bold {
   font-weight: bold;
 }
 
-#gzhxhlvrxp .gt_font_italic {
+#zvqqcqqzyl .gt_font_italic {
   font-style: italic;
 }
 
-#gzhxhlvrxp .gt_super {
+#zvqqcqqzyl .gt_super {
   font-size: 65%;
 }
 
-#gzhxhlvrxp .gt_footnote_marks {
+#zvqqcqqzyl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gzhxhlvrxp .gt_asterisk {
+#zvqqcqqzyl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gzhxhlvrxp .gt_indent_1 {
+#zvqqcqqzyl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gzhxhlvrxp .gt_indent_2 {
+#zvqqcqqzyl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gzhxhlvrxp .gt_indent_3 {
+#zvqqcqqzyl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gzhxhlvrxp .gt_indent_4 {
+#zvqqcqqzyl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gzhxhlvrxp .gt_indent_5 {
+#zvqqcqqzyl .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1766,11 +1754,11 @@ dataframes.</p>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="isbn">isbn</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="label">label</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="source">source</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="url">url</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="...1">...1</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="uid">uid</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="keywords">keywords</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="secondarytitle">secondarytitle</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="url">url</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="issn">issn</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pmid">pmid</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="ptype">ptype</th>
@@ -1792,11 +1780,11 @@ dataframes.</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223, 270223</td>
 <td headers="source" class="gt_row gt_left">new, new</td>
+<td headers="url" class="gt_row gt_right"></td>
 <td headers="...1" class="gt_row gt_right">3271</td>
 <td headers="uid" class="gt_row gt_left">wos:000919545100001</td>
 <td headers="keywords" class="gt_row gt_left"></td>
 <td headers="secondarytitle" class="gt_row gt_right"></td>
-<td headers="url" class="gt_row gt_right"></td>
 <td headers="issn" class="gt_row gt_left">0098-7484</td>
 <td headers="pmid" class="gt_row gt_right">36652625</td>
 <td headers="ptype" class="gt_row gt_left">Article</td>
@@ -1817,11 +1805,11 @@ dataframes.</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223, 270223</td>
 <td headers="source" class="gt_row gt_left">new, new</td>
+<td headers="url" class="gt_row gt_right"></td>
 <td headers="...1" class="gt_row gt_right">9981</td>
 <td headers="uid" class="gt_row gt_left">wos:000924510300006</td>
 <td headers="keywords" class="gt_row gt_left"></td>
 <td headers="secondarytitle" class="gt_row gt_right"></td>
-<td headers="url" class="gt_row gt_right"></td>
 <td headers="issn" class="gt_row gt_left">1549-1277</td>
 <td headers="pmid" class="gt_row gt_right"></td>
 <td headers="ptype" class="gt_row gt_left"></td>
@@ -1842,11 +1830,11 @@ dataframes.</p>
 <td headers="isbn" class="gt_row gt_right"></td>
 <td headers="label" class="gt_row gt_right">270223, 270223</td>
 <td headers="source" class="gt_row gt_left">new, new</td>
+<td headers="url" class="gt_row gt_right"></td>
 <td headers="...1" class="gt_row gt_right">9791</td>
 <td headers="uid" class="gt_row gt_left">wos:000928044600001</td>
 <td headers="keywords" class="gt_row gt_left">hyperlipidemia | high-fat diet | Curcumin-Nicotinate | amyloid-beta | BDNF | TrkB | CREB signaling | synaptogenesis | Idol/LDLR pathway</td>
 <td headers="secondarytitle" class="gt_row gt_right"></td>
-<td headers="url" class="gt_row gt_right"></td>
 <td headers="issn" class="gt_row gt_left">1934-578X</td>
 <td headers="pmid" class="gt_row gt_right"></td>
 <td headers="ptype" class="gt_row gt_left"></td>
