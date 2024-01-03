@@ -754,7 +754,7 @@ remove duplicates.")
   }
 
 
-    result <- dedup_citations(citations_to_dedup(),
+    result <- ASySD::dedup_citations(citations_to_dedup(),
                               keep_source = input$keepSource,
                               keep_label = keep_label,
                               merge_citations = TRUE,
