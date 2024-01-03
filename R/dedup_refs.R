@@ -504,13 +504,7 @@ merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields){
 #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 dedup_citations <- function(raw_citations, manual_dedup = TRUE,
                             merge_citations=TRUE, keep_source=NULL, keep_label=NULL, extra_merge_fields = NULL,
-                            shiny_progress=FALSE, show_unknown_tags=TRUE) {
-
-  # warning for missing columns
-  cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "isbn")
-  missing_cols <- cols[!(cols %in% colnames(raw_citations))]
-
-  raw_citations[missing_cols] <- NA
+                            shiny_progress=FALSE, show_unknown_tags=TRUE, user_input=NA) {
 
   if(shiny_progress == TRUE){
 
@@ -560,12 +554,15 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
       }
 
       cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
-      missing_cols <- cols[!(cols %in% colnames(raw_citations))] # find missing columns
+      essential_cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn")
+      all_missing_cols <- cols[!(cols %in% colnames(raw_citations))] # find missing columns
+      missing_cols <- essential_cols[!(essential_cols %in% colnames(raw_citations))] # find missing columns
+
       if (length(missing_cols) > 0) {
         warning(paste0("The following columns are missing: ", paste(missing_cols, collapse = ", "), "\n"))
         message(paste0("Setting missing cols to NA"))
       }
-      raw_citations[missing_cols] <- NA # set missing columns to NA
+      raw_citations[all_missing_cols] <- NA # set missing columns to NA
 
       raw_citations$record_id <- as.character(raw_citations$record_id)
       ordered_citations <- order_citations(raw_citations, extra_merge_fields)
@@ -742,17 +739,30 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
                 "manual_dedup" = manual_dedup_df))
   } else {
 
+    cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+    essential_cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn")
+    all_missing_cols <- cols[!(cols %in% colnames(raw_citations))] # find missing columns
+    missing_cols <- essential_cols[!(essential_cols %in% colnames(raw_citations))] # find missing columns
+
     if (length(missing_cols) > 0) {
+
       message(paste("Warning: The following columns are missing:", paste(missing_cols, collapse = ", ")))
-      if (menu(c("Yes", "No"),
-               title= paste("Are you sure you want to proceed?")) == "1") {
+
+      if (is.na(user_input)) {
+        user_input <- menu(c("Yes", "No"),
+                               title= paste("Are you sure you want to proceed?"))
+      }
+
+       if (user_input == "1") {
 
         message("formatting data...")
 
-      } else { print("Halting dedup...")
-        return()}
+      } else {
+        return("Halting dedup...")}
 
     } else { message("formatting data...") }
+
+    raw_citations[all_missing_cols] <- NA #set all missing columns to NA
 
     if(show_unknown_tags == TRUE){
 
@@ -792,12 +802,15 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     }
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
-    missing_cols <- cols[!(cols %in% colnames(raw_citations))] # find missing columns
+    essential_cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn")
+    all_missing_cols <- cols[!(cols %in% colnames(raw_citations))] # find missing columns
+    missing_cols <- essential_cols[!(essential_cols %in% colnames(raw_citations))] # find missing columns
+
     if (length(missing_cols) > 0) {
       warning(paste0("The following columns are missing: ", paste(missing_cols, collapse = ", "), "\n"))
       message(paste0("Setting missing cols to NA"))
     }
-    raw_citations[missing_cols] <- NA # set missing columns to NA
+    raw_citations[all_missing_cols] <- NA # set missing columns to NA
 
     raw_citations$record_id <- as.character(raw_citations$record_id)
     ordered_citations <- order_citations(raw_citations)
