@@ -1,3 +1,9 @@
+# ASySD 0.3.3
+
+* Improvements to export metadata - now retains URLs in app export
+* Improved error handling when 0 duplicates present
+* Additional unit tests for package stability
+
 # ASySD 0.3.2
 
 * Bug fix in RIS export 

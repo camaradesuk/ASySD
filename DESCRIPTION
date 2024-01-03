@@ -1,6 +1,6 @@
 Package: ASySD
 Title: Automated Citation Deduplication
-Version: 0.3.2
+Version: 0.3.3
 Authors@R: 
     person("Kaitlyn","Hair", ,
     role = c("aut", "cre", "cph"),
