@@ -1,5 +1,3 @@
-# utils::globalVariables(c("record_ids", "."))
-
 #' This function writes citation data to disk in different formats
 #' @export
 #' @import dplyr
