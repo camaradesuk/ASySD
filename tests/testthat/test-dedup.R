@@ -7,11 +7,21 @@ test_that("dedup_check", {
   # when no dups, check warning works
   test_citations_nodups <- test_citations[c(6,21,65),]
 
+  # duplicate pairs detected but no TRUE pairs
+  test_citations_notruedups <- test_citations[c(5,11,13),]
+  test_citations_notruedups$doi <- test_citations_notruedups$doi[2]
+
   expect_warning(
     a <- dedup_citations(test_citations_nodups, merge_citations = TRUE), "No duplicates detected!")
 
   expect_warning(
     a <- dedup_citations(test_citations_nodups, merge_citations = FALSE), "No duplicates detected!")
+
+  expect_warning(
+    a <- dedup_citations(test_citations_notruedups, merge_citations = TRUE), "No duplicates detected!")
+
+  expect_warning(
+    a <- dedup_citations(test_citations_notruedups, merge_citations = FALSE), "No duplicates detected!")
 
 
   # check deduplication performing as normal
