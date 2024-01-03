@@ -51,6 +51,8 @@ format_citations <- function(raw_citations){
     mutate(author = ifelse(.data$author=="", "Unknown", .data$author)) %>%
     mutate(author = ifelse(is.na(.data$author), "Unknown", .data$author)) %>%
     mutate(author = ifelse(.data$author=="Anonymous", "Unknown", .data$author)) %>%
+    mutate(author = ifelse(.data$author=="Anonymous.", "Unknown", .data$author)) %>%
+    mutate(author = ifelse(.data$author=="[Anonymous] A", "Unknown", .data$author)) %>%
     dplyr::mutate_if(is.character, utf8::utf8_encode) # make sure utf8
 
   # Fix page formatting
@@ -209,10 +211,10 @@ match_citations <- function(formatted_citations){
     suppressWarnings(try(pairs$author <- parallel::mcmapply(jarowinkler, pairs$author1, pairs$author2, mc.cores = numCores), silent = TRUE))
     suppressWarnings(try(pairs$title <- parallel::mcmapply(jarowinkler, pairs$title1, pairs$title2, mc.cores = numCores), silent = TRUE))
     suppressWarnings(try(pairs$abstract <- parallel::mcmapply(jarowinkler, pairs$abstract1, pairs$abstract2, mc.cores = numCores), silent = TRUE))
-    suppressWarnings(try(pairs$year <- mapply(jarowinkler, pairs$year1, pairs$year2), silent = TRUE))
-    suppressWarnings(try(pairs$pages <- mapply(jarowinkler, pairs$pages1, pairs$pages2), silent = TRUE))
-    suppressWarnings(try(pairs$number <- mapply(jarowinkler, pairs$number1, pairs$number2), silent = TRUE))
-    suppressWarnings(try(pairs$volume <- mapply(jarowinkler, pairs$volume1, pairs$volume2), silent = TRUE))
+    suppressWarnings(try(pairs$year <- parallel::mapply(jarowinkler, pairs$year1, pairs$year2), silent = TRUE))
+    suppressWarnings(try(pairs$pages <- parallel::mapply(jarowinkler, pairs$pages1, pairs$pages2), silent = TRUE))
+    suppressWarnings(try(pairs$number <- parallel::mapply(jarowinkler, pairs$number1, pairs$number2), silent = TRUE))
+    suppressWarnings(try(pairs$volume <- parallel::mapply(jarowinkler, pairs$volume1, pairs$volume2), silent = TRUE))
     suppressWarnings(try(pairs$journal <- parallel::mcmapply(jarowinkler, pairs$journal1, pairs$journal2, mc.cores = numCores), silent = TRUE))
     suppressWarnings(try(pairs$isbn <- parallel::mcmapply(jarowinkler, pairs$isbn1, pairs$isbn2, mc.cores = numCores), silent = TRUE))
     suppressWarnings(try(pairs$doi <- parallel::mcmapply(jarowinkler, pairs$doi1, pairs$doi2, mc.cores = numCores), silent = TRUE))
@@ -386,7 +388,7 @@ generate_dup_id <- function(true_pairs, raw_citations, keep_source, keep_label){
     chosen_label <- order == keep_label
     order <- c(order[chosen_label], order[!chosen_label])
 
-   citations_duplicate_id <- duplicate_id %>%
+    citations_duplicate_id <- duplicate_id %>%
       group_by(.data$ComponentID) %>%
       arrange(factor(.data$label, levels = order)) %>%
       mutate(duplicate_id = first(.data$record_id)) %>%
@@ -435,9 +437,9 @@ generate_dup_id <- function(true_pairs, raw_citations, keep_source, keep_label){
 #' @noRd
 keep_one_unique_citation <- function(true_pairs_with_ids){
 
-     true_pairs_with_ids <- true_pairs_with_ids %>%
-       group_by(duplicate_id) %>%
-       slice_head()
+  true_pairs_with_ids <- true_pairs_with_ids %>%
+    group_by(duplicate_id) %>%
+    slice_head()
 
 }
 
@@ -448,7 +450,7 @@ keep_one_unique_citation <- function(true_pairs_with_ids){
 #' @import dplyr
 merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields){
 
-    if(!is.null(extra_merge_fields)){
+  if(!is.null(extra_merge_fields)){
 
     all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%
       mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
@@ -489,7 +491,8 @@ merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields){
 #' @export
 #' @import dplyr
 #' @import progressr
-#' @importFrom utils menu
+#' @importFrom rlang :=
+#' @import utils
 #' @param raw_citations A dataframe containing duplicate ciations
 #' @param manual_dedup Logical value. Do you want to retrieve dataframe for manual deduplication?
 #' @param merge_citations Logical value. Do you want to merge matching citations?
@@ -583,6 +586,12 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
         return(list("unique" = raw_citations))
       }
 
+      if(length(pairs$record_id1==0)) {
+        warning("No duplicates detected!")
+        raw_citations$duplicate_id <- raw_citations$record_id
+        return(list("unique" = raw_citations))
+      }
+
       pair_types <- identify_true_matches(pairs)
       true_pairs <- pair_types$true_pairs
 
@@ -591,6 +600,12 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
       # warning if no duplicates
       if(is.null(true_pairs)) {
+        warning("No duplicates detected!")
+        raw_citations$duplicate_id <- raw_citations$record_id
+        return(list("unique" = raw_citations))
+      }
+
+      if(length(true_pairs$record_id1==0)) {
         warning("No duplicates detected!")
         raw_citations$duplicate_id <- raw_citations$record_id
         return(list("unique" = raw_citations))
@@ -647,14 +662,14 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
           maybe_pairs <- maybe_pairs  %>%
             mutate(!!paste0(extra_merge_fields, 1) := ordered_citations[[extra_merge_fields]][id1],
-                 !!paste0(extra_merge_fields, 2) := ordered_citations[[extra_merge_fields]][id2]) %>%
-          select(author1, author2, author, title1,
-                 title2, title, abstract1, abstract2, abstract, year1,
-                 year2, year, number1, number2, number, pages1, pages2,
-                 pages, volume1, volume2, volume, journal1, journal2,
-                 journal, isbn, isbn1, isbn2, doi1, doi2, doi,
-                 record_id1, record_id2, label1,
-                 label2, source1, source2, starts_with(paste0(extra_merge_fields)))
+                   !!paste0(extra_merge_fields, 2) := ordered_citations[[extra_merge_fields]][id2]) %>%
+            select(author1, author2, author, title1,
+                   title2, title, abstract1, abstract2, abstract, year1,
+                   year2, year, number1, number2, number, pages1, pages2,
+                   pages, volume1, volume2, volume, journal1, journal2,
+                   journal, isbn, isbn1, isbn2, doi1, doi2, doi,
+                   record_id1, record_id2, label1,
+                   label2, source1, source2, starts_with(paste0(extra_merge_fields)))
 
         } else {
 
@@ -682,21 +697,26 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
           slice_head() %>%
           ungroup()
 
-        unique_pairs <- maybe_pairs %>%
-          select(duplicate_id.x, duplicate_id.y) %>%
-          rowwise() %>%
-          mutate(min_id = min(duplicate_id.x, duplicate_id.y),
-                 max_id = max(duplicate_id.x, duplicate_id.y)) %>%
-          group_by(min_id, max_id) %>%
-          slice_head() %>%
-          mutate(unique = TRUE)
+        if(length(maybe_pairs$record_id1)==0){
+          manual_dedup_df <- maybe_pairs
+        } else {
 
-        maybe_pairs <- maybe_pairs %>%
-          left_join(unique_pairs) %>%
-          filter(!is.na(unique)) %>%
-          select(-unique)
+          unique_pairs <- maybe_pairs %>%
+            select(duplicate_id.x, duplicate_id.y) %>%
+            rowwise() %>%
+            mutate(min_id = min(duplicate_id.x, duplicate_id.y),
+                   max_id = max(duplicate_id.x, duplicate_id.y)) %>%
+            group_by(min_id, max_id) %>%
+            slice_head() %>%
+            mutate(unique = TRUE)
 
-        manual_dedup_df <- maybe_pairs
+          maybe_pairs <- maybe_pairs %>%
+            left_join(unique_pairs) %>%
+            filter(!is.na(unique)) %>%
+            select(-unique)
+
+          manual_dedup_df <- maybe_pairs
+        }
 
 
       }
@@ -795,11 +815,23 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
       return(list("unique" = raw_citations))
     }
 
+    if(length(pairs$record_id1)==0) {
+      warning("No duplicates detected!")
+      raw_citations$duplicate_id <- raw_citations$record_id
+      return(list("unique" = raw_citations))
+    }
+
     pair_types <- identify_true_matches(pairs)
     true_pairs <- pair_types$true_pairs
 
     # warning if no duplicates
     if(is.null(true_pairs)) {
+      warning("No duplicates detected!")
+      raw_citations$duplicate_id <- raw_citations$record_id
+      return(list("unique" = raw_citations))
+    }
+
+    if(length(true_pairs$record_id1)==0) {
       warning("No duplicates detected!")
       raw_citations$duplicate_id <- raw_citations$record_id
       return(list("unique" = raw_citations))
@@ -867,16 +899,16 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
       }  else {
 
-          maybe_pairs <- maybe_pairs  %>%
-            select(author1, author2, author, title1,
-                   title2, title, abstract1, abstract2, abstract, year1,
-                   year2, year, number1, number2, number, pages1, pages2,
-                   pages, volume1, volume2, volume, journal1, journal2,
-                   journal, isbn, isbn1, isbn2, doi1, doi2, doi,
-                   record_id1, record_id2, label1,
-                   label2, source1, source2)
+        maybe_pairs <- maybe_pairs  %>%
+          select(author1, author2, author, title1,
+                 title2, title, abstract1, abstract2, abstract, year1,
+                 year2, year, number1, number2, number, pages1, pages2,
+                 pages, volume1, volume2, volume, journal1, journal2,
+                 journal, isbn, isbn1, isbn2, doi1, doi2, doi,
+                 record_id1, record_id2, label1,
+                 label2, source1, source2)
 
-        }
+      }
 
       ids <- matched_pairs_with_ids %>%
         select(duplicate_id, record_id)
@@ -891,21 +923,26 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
         slice_head() %>%
         ungroup()
 
-      unique_pairs <- maybe_pairs %>%
-        select(duplicate_id.x, duplicate_id.y) %>%
-        rowwise() %>%
-        mutate(min_id = min(duplicate_id.x, duplicate_id.y),
-               max_id = max(duplicate_id.x, duplicate_id.y)) %>%
-        group_by(min_id, max_id) %>%
-        slice_head() %>%
-        mutate(unique = TRUE)
+      if(length(maybe_pairs$record_id1)==0){
+        manual_dedup_df <- maybe_pairs
+      } else {
 
-      maybe_pairs <- maybe_pairs %>%
-        left_join(unique_pairs) %>%
-        filter(!is.na(unique)) %>%
-        select(-unique)
+        unique_pairs <- maybe_pairs %>%
+          select(duplicate_id.x, duplicate_id.y) %>%
+          rowwise() %>%
+          mutate(min_id = min(duplicate_id.x, duplicate_id.y),
+                 max_id = max(duplicate_id.x, duplicate_id.y)) %>%
+          group_by(min_id, max_id) %>%
+          slice_head() %>%
+          mutate(unique = TRUE)
 
-      manual_dedup_df <- maybe_pairs
+        maybe_pairs <- maybe_pairs %>%
+          left_join(unique_pairs) %>%
+          filter(!is.na(unique)) %>%
+          select(-unique)
+
+        manual_dedup_df <- maybe_pairs
+      }
 
     }
 
@@ -955,131 +992,130 @@ dedup_citations_add_manual <- function(unique_citations, merge_citations=TRUE, k
   # if extra merge fields not null
   if(!is.null(extra_merge_fields)){
 
-  extra_cols <- paste(extra_merge_fields, 1:2, sep = "")
+    extra_cols <- paste(extra_merge_fields, 1:2, sep = "")
 
-  duplicates <- additional_pairs %>%
-    dplyr::select(duplicate_id.x, duplicate_id.y, label1, label2, source1, source2, !!!extra_cols)
+    duplicates <- additional_pairs %>%
+      dplyr::select(duplicate_id.x, duplicate_id.y, label1, label2, source1, source2, !!!extra_cols)
 
 
-  if (!('record_ids' %in% colnames(unique_citations))) {
+    if (!('record_ids' %in% colnames(unique_citations))) {
 
-    unique_citations <- unique_citations %>%
-      left_join(duplicates, by=c("duplicate_id" = "duplicate_id.x")) %>%
-      mutate(record_id = ifelse(is.na(.data$duplicate_id.y), .data$record_id, paste0(.data$record_id, ", ", .data$duplicate_id.y))) %>%
-      mutate(label = ifelse(is.na(.data$duplicate_id.y), .data$label, paste0(.data$label, ", ", .data$label2))) %>%
-      mutate(source = ifelse(is.na(.data$duplicate_id.y), .data$source, paste0(.data$source, ", ", .data$source2))) %>%
-      mutate(across(all_of({{extra_merge_fields}}), ~ifelse(is.na(duplicate_id.y), .x, paste0(.x, ", ", get(paste0(cur_column(), 2))))))
+      unique_citations <- unique_citations %>%
+        left_join(duplicates, by=c("duplicate_id" = "duplicate_id.x")) %>%
+        mutate(record_id = ifelse(is.na(.data$duplicate_id.y), .data$record_id, paste0(.data$record_id, ", ", .data$duplicate_id.y))) %>%
+        mutate(label = ifelse(is.na(.data$duplicate_id.y), .data$label, paste0(.data$label, ", ", .data$label2))) %>%
+        mutate(source = ifelse(is.na(.data$duplicate_id.y), .data$source, paste0(.data$source, ", ", .data$source2))) %>%
+        mutate(across(all_of({{extra_merge_fields}}), ~ifelse(is.na(duplicate_id.y), .x, paste0(.x, ", ", get(paste0(cur_column(), 2))))))
 
-    unique_citations <- unique_citations %>%
-      group_by(.data$duplicate_id) %>%
-      tidyr::separate_rows(record_ids, source, label, {{extra_merge_fields}}, sep=", ") %>%
-      select(-duplicate_id.y, -!!extra_cols) %>%
-      unique() %>%
-      ungroup() %>%
-      group_by(.data$record_id) %>%
-      slice_head() %>%
-      ungroup()
+      unique_citations <- unique_citations %>%
+        group_by(.data$duplicate_id) %>%
+        tidyr::separate_rows(record_ids, source, label, {{extra_merge_fields}}, sep=", ") %>%
+        select(-duplicate_id.y, -!!extra_cols) %>%
+        unique() %>%
+        ungroup() %>%
+        group_by(.data$record_id) %>%
+        slice_head() %>%
+        ungroup()
 
-    ids <- unique_citations
+      ids <- unique_citations
 
-    unique_citations <- unique_citations %>%
-      select(-duplicate_id)
+      unique_citations <- unique_citations %>%
+        select(-duplicate_id)
 
-    unique_citations_with_metadata <- keep_one_unique_citation(ids)
+      unique_citations_with_metadata <- keep_one_unique_citation(ids)
 
-  } else {
+    } else {
 
-    unique_citations <- unique_citations %>%
-      left_join(duplicates, by=c("duplicate_id" = "duplicate_id.x")) %>%
-      mutate(record_ids = ifelse(is.na(duplicate_id.y), record_ids, paste0(record_ids, ", ", duplicate_id.y))) %>%
-      mutate(label = ifelse(is.na(duplicate_id.y), label, paste0(label, ", ", label2))) %>%
-      mutate(source = ifelse(is.na(duplicate_id.y), source, paste0(source, ", ", source2))) %>%
-      mutate(across(all_of({{extra_merge_fields}}), ~ifelse(is.na(duplicate_id.y), .x, paste0(.x, ", ", get(paste0(cur_column(), 2))))))
+      unique_citations <- unique_citations %>%
+        left_join(duplicates, by=c("duplicate_id" = "duplicate_id.x")) %>%
+        mutate(record_ids = ifelse(is.na(duplicate_id.y), record_ids, paste0(record_ids, ", ", duplicate_id.y))) %>%
+        mutate(label = ifelse(is.na(duplicate_id.y), label, paste0(label, ", ", label2))) %>%
+        mutate(source = ifelse(is.na(duplicate_id.y), source, paste0(source, ", ", source2))) %>%
+        mutate(across(all_of({{extra_merge_fields}}), ~ifelse(is.na(duplicate_id.y), .x, paste0(.x, ", ", get(paste0(cur_column(), 2))))))
 
-    unique_citations <- unique_citations %>%
-      group_by(.data$duplicate_id) %>%
-      tidyr::separate_rows(record_ids, source, label, {{extra_merge_fields}}, sep=", ") %>%
-      rename(record_id = record_ids) %>%
-      select(-duplicate_id.y, -!!extra_cols) %>%
-      unique() %>%
-      ungroup() %>%
-      group_by(record_id) %>%
-      slice_head() %>%
-      ungroup()
+      unique_citations <- unique_citations %>%
+        group_by(.data$duplicate_id) %>%
+        tidyr::separate_rows(record_ids, source, label, {{extra_merge_fields}}, sep=", ") %>%
+        rename(record_id = record_ids) %>%
+        select(-duplicate_id.y, -!!extra_cols) %>%
+        unique() %>%
+        ungroup() %>%
+        group_by(record_id) %>%
+        slice_head() %>%
+        ungroup()
 
-    ids <- unique_citations
+      ids <- unique_citations
 
-    unique_citations_with_metadata <- merge_metadata(ids, extra_merge_fields)
+      unique_citations_with_metadata <- merge_metadata(ids, extra_merge_fields)
 
-  }
+    }
 
-  unique_citations_with_metadata <-unique_citations_with_metadata %>%
-    select(-c(source1, label1, source2, label2))
+    unique_citations_with_metadata <-unique_citations_with_metadata %>%
+      select(-c(source1, label1, source2, label2))
 
-  return(unique_citations_with_metadata)
+    return(unique_citations_with_metadata)
 
-   }  else {
+  }  else {
 
     duplicates <- additional_pairs %>%
       dplyr::select(duplicate_id.x, duplicate_id.y, label1, label2, source1, source2)
 
     if (!('record_ids' %in% colnames(unique_citations))) {
 
-    unique_citations <- unique_citations %>%
-      left_join(duplicates, by=c("duplicate_id" = "duplicate_id.x")) %>%
-      mutate(record_id = ifelse(is.na(.data$duplicate_id.y), .data$record_id, paste0(.data$record_id, ", ", .data$duplicate_id.y))) %>%
-      mutate(label = ifelse(is.na(.data$duplicate_id.y), .data$label, paste0(.data$label, ", ", .data$label2))) %>%
-      mutate(source = ifelse(is.na(.data$duplicate_id.y), .data$source, paste0(.data$source, ", ", .data$source2)))
+      unique_citations <- unique_citations %>%
+        left_join(duplicates, by=c("duplicate_id" = "duplicate_id.x")) %>%
+        mutate(record_id = ifelse(is.na(.data$duplicate_id.y), .data$record_id, paste0(.data$record_id, ", ", .data$duplicate_id.y))) %>%
+        mutate(label = ifelse(is.na(.data$duplicate_id.y), .data$label, paste0(.data$label, ", ", .data$label2))) %>%
+        mutate(source = ifelse(is.na(.data$duplicate_id.y), .data$source, paste0(.data$source, ", ", .data$source2)))
 
-    unique_citations <- unique_citations %>%
-      group_by(.data$duplicate_id) %>%
-      tidyr::separate_rows(record_ids, source, label, sep=", ") %>%
-      select(-duplicate_id.y) %>%
-      unique() %>%
-      ungroup() %>%
-      group_by(.data$record_id) %>%
-      slice_head() %>%
-      ungroup()
+      unique_citations <- unique_citations %>%
+        group_by(.data$duplicate_id) %>%
+        tidyr::separate_rows(record_ids, source, label, sep=", ") %>%
+        select(-duplicate_id.y) %>%
+        unique() %>%
+        ungroup() %>%
+        group_by(.data$record_id) %>%
+        slice_head() %>%
+        ungroup()
 
-    ids <- unique_citations
+      ids <- unique_citations
 
-    unique_citations <- unique_citations %>%
-      select(-duplicate_id)
+      unique_citations <- unique_citations %>%
+        select(-duplicate_id)
 
-    unique_citations_with_metadata <- keep_one_unique_citation(ids)
+      unique_citations_with_metadata <- keep_one_unique_citation(ids)
 
-  } else {
+    } else {
 
-    unique_citations <- unique_citations %>%
-      left_join(duplicates, by=c("duplicate_id" = "duplicate_id.x")) %>%
-      mutate(record_ids = ifelse(is.na(duplicate_id.y), record_ids, paste0(record_ids, ", ", duplicate_id.y))) %>%
-      mutate(label = ifelse(is.na(duplicate_id.y), label, paste0(label, ", ", label2))) %>%
-      mutate(source = ifelse(is.na(duplicate_id.y), source, paste0(source, ", ", source2)))
+      unique_citations <- unique_citations %>%
+        left_join(duplicates, by=c("duplicate_id" = "duplicate_id.x")) %>%
+        mutate(record_ids = ifelse(is.na(duplicate_id.y), record_ids, paste0(record_ids, ", ", duplicate_id.y))) %>%
+        mutate(label = ifelse(is.na(duplicate_id.y), label, paste0(label, ", ", label2))) %>%
+        mutate(source = ifelse(is.na(duplicate_id.y), source, paste0(source, ", ", source2)))
 
-    unique_citations <- unique_citations %>%
-      group_by(.data$duplicate_id) %>%
-      tidyr::separate_rows(record_ids, source, label, sep=", ") %>%
-      rename(record_id = record_ids) %>%
-      select(-duplicate_id.y) %>%
-      unique() %>%
-      ungroup() %>%
-      group_by(record_id) %>%
-      slice_head() %>%
-      ungroup()
+      unique_citations <- unique_citations %>%
+        group_by(.data$duplicate_id) %>%
+        tidyr::separate_rows(record_ids, source, label, sep=", ") %>%
+        rename(record_id = record_ids) %>%
+        select(-duplicate_id.y) %>%
+        unique() %>%
+        ungroup() %>%
+        group_by(record_id) %>%
+        slice_head() %>%
+        ungroup()
 
-    ids <- unique_citations
+      ids <- unique_citations
 
-    unique_citations_with_metadata <- merge_metadata(ids, extra_merge_fields)
+      unique_citations_with_metadata <- merge_metadata(ids, extra_merge_fields)
 
-  }
+    }
 
-  unique_citations_with_metadata <-unique_citations_with_metadata %>%
-    select(-c(source1, label1, source2, label2))
+    unique_citations_with_metadata <-unique_citations_with_metadata %>%
+      select(-c(source1, label1, source2, label2))
 
-  return(unique_citations_with_metadata)
+    return(unique_citations_with_metadata)
   }
 
 }
-
 
 
