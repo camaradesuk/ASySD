@@ -64,3 +64,16 @@ test_that("Deduplication with merge performing as normal", {
   res <- dedup_citations(test_citations, merge_citations = TRUE)
   expect_equal(length(res$unique$duplicate_id), 586)
 })
+
+# Test case: Deduplication with non-numeric record IDs
+test_that("Deduplication with non-numeric record IDs", {
+  expect_no_warning(
+  tibble(
+    title = c(rep(LETTERS[1:3], 2), LETTERS[7:9]), author = c(rep(LETTERS[1:3], 2), LETTERS[7:9]),
+    journal = c(rep(LETTERS[1:3], 2), LETTERS[7:9]),
+    year = c(rep(2010:2012, 2), 2017:2019), source = c(rep("aa", 5), rep("bb", 4)),
+    record_id = letters[1:9], label = ""
+  ) %>% ASySD::dedup_citations(user_input=1)
+)
+
+})
