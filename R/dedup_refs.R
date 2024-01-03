@@ -14,7 +14,7 @@ add_id_citations <- function(raw_citations){
 }
 
 #' This function orders citation data for deduplication
-#' @inherit raw citations
+#' @inherit raw_citations
 #' @return Dataframe of ordered citations with id
 #' @import dplyr
 #' @import utf8
@@ -37,7 +37,7 @@ order_citations <- function(raw_citations, extra_merge_fields){
 ####------ Format citation data ------ ####
 
 #' This function formats citation data for deduplication
-#' @inherit raw citations
+#' @inherit raw_citations
 #' @return Dataframe of formatted citations with id
 #' @import dplyr
 #' @noRd
