@@ -17,7 +17,3 @@ A dataframe of the citations
 \description{
 This function loads in an citations file.
 }
-\examples{
-path <- c("vignettes/new_sr_search.csv")
-load_search(path, method = "csv")
-}
