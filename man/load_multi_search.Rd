@@ -14,8 +14,13 @@ load_multi_search(paths, names, method)
 \item{method}{Import method}
 }
 \value{
-A dataframe of the citations
+A dataframe of the loaded citations.
 }
 \description{
 This function loads in a citation file within the shiny app
+}
+\examples{
+ paths <- c("vignettes/new_sr_search.csv", "vignettes/old_sr_search.csv")
+ names <- c("new_sr_search.csv", "old_sr_search.csv")
+ df <- load_multi_search(paths, names, method="csv")
 }

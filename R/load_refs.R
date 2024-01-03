@@ -12,9 +12,9 @@
 #' @export
 #'
 #' @examples
- paths <- c("vignettes/new_sr_search.csv", "vignettes/old_sr_search.csv")
- names <- c("new_sr_search.csv", "old_sr_search.csv")
-
+#'  paths <- c("vignettes/new_sr_search.csv", "vignettes/old_sr_search.csv")
+#'  names <- c("new_sr_search.csv", "old_sr_search.csv")
+#'  df <- load_multi_search(paths, names, method="csv")
 
  load_multi_search <-function(paths, names, method){
 
@@ -228,6 +228,7 @@ if(method == "txt"){
 #' @examples
 #' paths <- c("vignettes/new_sr_search.csv")
 #' load_multi_search(paths, names, method = "csv")
+
 load_search <-function(path, method){
 
   if(method == "endnote"){
