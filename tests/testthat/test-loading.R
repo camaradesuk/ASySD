@@ -35,7 +35,7 @@ test_that("RIS file is read in correctly", {
 
 })
 
-# Test for reading in an XML file exported from EndNote
+# Test for reading in an XML file exported from Zotero
 test_that("EndNote XML file from Zotero is read in correctly", {
   path <- "zotero_export.xml"
   name <- "zotero_export.xml"
@@ -60,7 +60,7 @@ test_that("EndNote XML file from Endnote is read in correctly", {
 
 })
 
-# Test for reading in an XML file exported from EndNote
+# Test for reading in an XML file exported from Mendeley
 test_that("EndNote XML file from Mendeley is read in correctly", {
   path <- "mendeley_export.xml"
   name <- "mendeley_export.xml"
@@ -72,3 +72,17 @@ test_that("EndNote XML file from Mendeley is read in correctly", {
   expect_true(all(c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source") %in% colnames(df2)))
 
 })
+
+# Test for reading in an XML file exported from Mendeley
+test_that("RIS file from Endnote is read in correctly", {
+  path <- "ris_export.txt"
+  name <- "ris_export.txt"
+  df1 <- load_multi_search(path, name, "ris")
+  df2 <- load_search(path, "ris")
+
+  # Add your expectations here
+  expect_true(all(c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source") %in% colnames(df1)))
+  expect_true(all(c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source") %in% colnames(df2)))
+
+})
+
