@@ -3,15 +3,20 @@
 #' This function loads in a citation file within the shiny app
 #' @import RefManageR
 #' @import bibliometrix
+#' @import XML
 #' @importFrom utils read.csv read.table
 #' @param paths Relative paths to the citations file or files
 #' @param method  Import method
 #' @param names File names of input file or files
-#' @return A dataframe of the citations
+#' @return A dataframe of the loaded citations.
 #' @export
-#' @import XML
+#'
+#' @examples
+ paths <- c("vignettes/new_sr_search.csv", "vignettes/old_sr_search.csv")
+ names <- c("new_sr_search.csv", "old_sr_search.csv")
 
-load_multi_search <-function(paths, names, method){
+
+ load_multi_search <-function(paths, names, method){
 
   df_list <- list()
 
@@ -219,7 +224,10 @@ if(method == "txt"){
 #' @param method  Import method
 #' @return A dataframe of the citations
 #' @export
-#' @importFrom utils read.csv read.table
+#
+#' @examples
+#' paths <- c("vignettes/new_sr_search.csv")
+#' load_multi_search(paths, names, method = "csv")
 load_search <-function(path, method){
 
   if(method == "endnote"){
