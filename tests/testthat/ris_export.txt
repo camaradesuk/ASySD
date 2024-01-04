@@ -1,0 +1,2167 @@
+﻿TY  - JOUR
+AB  - Missense mutations in the beta-amyloid precursor protein gene (APP) co-segregate with a small subset of autosomal dominant familial Alzheimer's disease (FAD) cases wherein deposition of the 39-43 amino acid beta-amyloid (A beta) peptide and neurodegeneration are principal neuropathological hallmarks. To accurately examine the effect of missense mutations on APP metabolism and A beta production in vivo we have introduced yeast artificial chromosomes (YACs) containing the entire approximately 400 kbp human APP gene encoding APP harboring either the asparagine for lysine and leucine for methionine FAD substitution at codons 670 and 671 (APP(K670N/M671L)) the isoleucine for valine FAD substitution at codon 717 (APP(V7171)) or a combination of both substitutions into transgenic mice. We demonstrate that relative to YAC transgenic mice expressing wild-type APP high levels of A beta peptides are detected in the brains of YAC transgenic mice expressing human APP(K670N/M671L) that is associated with a concomitant diminution in the levels of apha-secretase-generated soluble APP derivatives. Moreover the levels of longer A beta peptides (species terminating at amino acids 42/43) are elevated in YAC transgenic mice expressing human APP(V7171). These mice should prove valuable for detailed analysis of the in vivo effects of the APP FAD mutations in a variety of tissues and throughout aging and for testing therapeutic agents that specifically alter APP metabolism and A beta production.
+AU  - Wagner, Lamb B. T. Call L. M. Slunt H. H. Bardel K. A. Lawler A. M. Eckman C. B. Younkin S. G. Holtz G.
+C1  - 57279
+DO  - 10.1093/hmg/6.9.1535
+IS  - 9
+PY  - 1997
+SN  - 0964-6906 (Print)0964-6906
+SP  - 1535-41
+ST  - Altered metabolism of familial Alzheimer's disease-linked amyloid precursor protein variants in yeast artificial chromosome transgenic mice
+T2  - Hum Mol Genet
+TI  - Altered metabolism of familial Alzheimer's disease-linked amyloid precursor protein variants in yeast artificial chromosome transgenic mice
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15
+VL  - 6
+ID  - 57530
+ER  - 
+
+TY  - JOUR
+AB  - Demand for cancer genetic counseling has grown rapidly in recent years as germline genomic information has become increasingly incorporated into cancer care, and the field has entered the public consciousness through high-profile celebrity publications. Increased demand and existing variability in the availability of trained cancer genetics clinicians place a priority on developing and evaluating alternate service delivery models for genetic counseling. This mini-review summarizes the state of science regarding service delivery models, such as telephone counseling, telegenetics, and group counseling. Research on comparative effectiveness of these models in traditional individual, in-person genetic counseling has been promising for improving access to care in a manner acceptable to patients. Yet, it has not fully evaluated the short- and long-term patient- and system-level outcomes that will help answer the question of whether these models achieve the same beneficial psychosocial and behavioral outcomes as traditional cancer genetic counseling. We propose a research agenda focused on comparative effectiveness of available service delivery models and how to match models to patients and practice settings. Only through this rigorous research can clinicians and systems find the optimal balance of clinical quality, ready and secure access to care, and financial sustainability. Such research will be integral to achieving the promise of genomic medicine in oncology. © 2016 Buchanan, Rahm and Williams.
+AD  - Geisinger Health System, Genomic Medicine Institute, Danville, PA, United States
+AU  - Buchanan, A. H.
+AU  - Rahm, A. K.
+AU  - Williams, J. L.
+C7  - 120
+DB  - Scopus
+DO  - 10.3389/fonc.2016.00120
+IS  - MAY
+J2  - Front. Oncol.
+KW  - Access
+Cancer
+Comparative effectiveness
+Genetic counseling
+Telemedicine
+BRCA1 protein
+BRCA2 protein
+behavior change
+cancer genetics
+cancer susceptibility
+decision making
+distress syndrome
+e-counseling
+familial cancer
+gene mutation
+genetic screening
+health care delivery
+health care facility
+health care quality
+health economics
+health education
+health practitioner
+human
+medical education
+mental stress
+outcome assessment
+patient satisfaction
+prevalence
+risk assessment
+Short Survey
+telegenetics
+tumor suppressor gene
+LA  - English
+M3  - Short survey
+N1  - Export Date: 24 November 2023; Cited By: 75; Correspondence Address: A.H. Buchanan; Geisinger Health System, Genomic Medicine Institute, Danville, United States; email: ahbuchanan@geisinger.edu
+PY  - 2016
+SN  - 2234943X (ISSN)
+ST  - Alternate service delivery models in cancer genetic counseling: A mini-review
+T2  - Frontiers in Oncology
+TI  - Alternate service delivery models in cancer genetic counseling: A mini-review
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-84973514459&doi=10.3389%2ffonc.2016.00120&partnerID=40&md5=3b55430ba6736abb6d8a01181c593739
+VL  - 6
+ID  - 54411
+ER  - 
+
+TY  - JOUR
+AB  - Demand for cancer genetic counseling has grown rapidly in recent years as germline genomic information has become increasingly incorporated into cancer care and the field has entered the public consciousness through high-profile celebrity publications. Increased demand and existing variability in the availability of trained cancer genetics clinicians place a priority on developing and evaluating alternate service delivery models for genetic counseling. This mini-review summarizes the state of science regarding service delivery models such as telephone counseling telegenetics and group counseling. Research on comparative effectiveness of these models in traditional individual in-person genetic counseling has been promising for improving access to care in a manner acceptable to patients. Yet it has not fully evaluated the short- and long-term patient- and system-level outcomes that will help answer the question of whether these models achieve the same beneficial psychosocial and behavioral outcomes as traditional cancer genetic counseling. We propose a research agenda focused on comparative effectiveness of available service delivery models and how to match models to patients and practice settings. Only through this rigorous research can clinicians and systems find the optimal balance of clinical quality ready and secure access to care and financial sustainability. Such research will be integral to achieving the promise of genomic medicine in oncology. © 2016 Buchanan Rahm and Williams.
+AU  - L., Buchanan A. H. Rahm A. K. Williams J.
+C1  - 57283
+DB  - Scopus
+DO  - 10.3389/fonc.2016.00120
+IS  - MAY
+PY  - 2016
+SN  - 2234943X (ISSN)
+ST  - Alternate service delivery models in cancer genetic counseling: A mini-review
+T2  - Frontiers in Oncology
+TI  - Alternate service delivery models in cancer genetic counseling: A mini-review
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15, internal-pdf://3779373774/K.J-2016-From a mouse_ systematic analysis rev.pdf
+VL  - 6
+ID  - 57364
+ER  - 
+
+TY  - JOUR
+AB  - Demand for cancer genetic counseling has grown rapidly in recent years as germline genomic information has become increasingly incorporated into cancer care and the field has entered the public consciousness through high-profile celebrity publications. Increased demand and existing variability in the availability of trained cancer genetics clinicians place a priority on developing and evaluating alternate service delivery models for genetic counseling. This mini-review summarizes the state of science regarding service delivery models such as telephone counseling telegenetics and group counseling. Research on comparative effectiveness of these models in traditional individual in-person genetic counseling has been promising for improving access to care in a manner acceptable to patients. Yet it has not fully evaluated the short- and long-term patient- and system-level outcomes that will help answer the question of whether these models achieve the same beneficial psychosocial and behavioral outcomes as traditional cancer genetic counseling. We propose a research agenda focused on comparative effectiveness of available service delivery models and how to match models to patients and practice settings. Only through this rigorous research can clinicians and systems find the optimal balance of clinical quality ready and secure access to care and financial sustainability. Such research will be integral to achieving the promise of genomic medicine in oncology. © 2016 Buchanan Rahm and Williams.
+AU  - L., Buchanan A. H. Rahm A. K. Williams J.
+C1  - 57283
+DB  - Scopus
+DO  - 10.3389/fonc.2016.00120
+IS  - MAY
+PY  - 2016
+SN  - 2234943X (ISSN)
+ST  - Alternate service delivery models in cancer genetic counseling: A mini-review
+T2  - Frontiers in Oncology
+TI  - Alternate service delivery models in cancer genetic counseling: A mini-review
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15
+VL  - 6
+ID  - 57534
+ER  - 
+
+TY  - JOUR
+AB  - Africa is a continent with many nuances challenges opportunities diversities histories and cultures. It has over a billion people covers about 14% of the earth’s available land surface has over 50 different independent nations four main regions (North South East West)-each with peculiar peoples and histories-and over 1 000 known large language groupings. Africa has a history of major kingdoms with relics values cultural artifacts symbols and realities that still dominate many African peoples through the traditional chieftaincy system. No other continent has suffered such a sustained period of pillage and emaciation as Africa through some 300 years of slavery perpetuated by Europe and perhaps 1 000 years of slavery through the Sahara and East African routes (Arnold 2006; Reader 1998). It is perhaps the only continent where for much of the modern era its economy has been dominated by business and political interests that are foreign to its people. In recent times scholars are increasingly waking up to the reality that Africa is insufficiently researched and poorly understood (Kamoche 2011). What is interesting though is that despite the recognition scholars are as yet to tackle the equally difficult problem of the lens through which we frame the difficult research agendas and the methods with which we operationalize and carry out research in Africa. Without compromising or taking away from the established principle of rigor-that the research questions and the theory behind said questions must direct researchers’ design and methodswe argue in this paper that the sheer range of issues nuances and diversities call for out-of-the-box approaches to research. We argue that the dominant positivist traditions valuable as they are must not necessarily be the starting point of our research; neither must they necessarily constrain our judgment as to what is acceptable. We argue that researchers interested in Africa must show methodological reflexivity (Johnson and Cassell 2001) and a willingness to challenge the status quo. To this end this paper suggests four research approaches that scholars may consider as viable tools for researching management and organizations in Africa. © 2016 Taylor and Francis.
+AU  - B., Puplampu B.
+C1  - 57282
+DB  - Scopus
+DO  - 10.4324/9781315714424-19
+PY  - 2016
+SN  - 978-131750096-4 (ISBN); 978-113888701-5 (ISBN)
+SP  - 171-187
+ST  - Alternative approaches to management research in Africa: Hermeneutics graphic scales and applied interventions
+T2  - Sustainable Management Development in Africa: Building Capabilities to Serve African Organizations
+TI  - Alternative approaches to management research in Africa: Hermeneutics graphic scales and applied interventions
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15, internal-pdf://3779373774/K.J-2016-From a mouse_ systematic analysis rev.pdf
+ID  - 57363
+ER  - 
+
+TY  - JOUR
+AB  - Africa is a continent with many nuances challenges opportunities diversities histories and cultures. It has over a billion people covers about 14% of the earth’s available land surface has over 50 different independent nations four main regions (North South East West)-each with peculiar peoples and histories-and over 1 000 known large language groupings. Africa has a history of major kingdoms with relics values cultural artifacts symbols and realities that still dominate many African peoples through the traditional chieftaincy system. No other continent has suffered such a sustained period of pillage and emaciation as Africa through some 300 years of slavery perpetuated by Europe and perhaps 1 000 years of slavery through the Sahara and East African routes (Arnold 2006; Reader 1998). It is perhaps the only continent where for much of the modern era its economy has been dominated by business and political interests that are foreign to its people. In recent times scholars are increasingly waking up to the reality that Africa is insufficiently researched and poorly understood (Kamoche 2011). What is interesting though is that despite the recognition scholars are as yet to tackle the equally difficult problem of the lens through which we frame the difficult research agendas and the methods with which we operationalize and carry out research in Africa. Without compromising or taking away from the established principle of rigor-that the research questions and the theory behind said questions must direct researchers’ design and methodswe argue in this paper that the sheer range of issues nuances and diversities call for out-of-the-box approaches to research. We argue that the dominant positivist traditions valuable as they are must not necessarily be the starting point of our research; neither must they necessarily constrain our judgment as to what is acceptable. We argue that researchers interested in Africa must show methodological reflexivity (Johnson and Cassell 2001) and a willingness to challenge the status quo. To this end this paper suggests four research approaches that scholars may consider as viable tools for researching management and organizations in Africa. © 2016 Taylor and Francis.
+AU  - B., Puplampu B.
+C1  - 57282
+DB  - Scopus
+DO  - 10.4324/9781315714424-19
+PY  - 2016
+SN  - 978-131750096-4 (ISBN); 978-113888701-5 (ISBN)
+SP  - 171-187
+ST  - Alternative approaches to management research in Africa: Hermeneutics graphic scales and applied interventions
+T2  - Sustainable Management Development in Africa: Building Capabilities to Serve African Organizations
+TI  - Alternative approaches to management research in Africa: Hermeneutics graphic scales and applied interventions
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15
+ID  - 57533
+ER  - 
+
+TY  - CHAP
+AB  - Africa is a continent with many nuances, challenges, opportunities, diversities, histories, and cultures. It has over a billion people, covers about 14% of the earth’s available land surface, has over 50 different independent nations, four main regions (North, South, East, West)-each with peculiar peoples and histories-and over 1, 000 known large language groupings. Africa has a history of major kingdoms with relics, values, cultural artifacts, symbols, and realities that still dominate many African peoples through the traditional chieftaincy system. No other continent has suffered such a sustained period of pillage and emaciation as Africa through some 300 years of slavery perpetuated by Europe and perhaps 1, 000 years of slavery through the Sahara and East African routes (Arnold, 2006; Reader, 1998). It is perhaps the only continent where for much of the modern era its economy has been dominated by business and political interests that are foreign to its people. In recent times, scholars are increasingly waking up to the reality that Africa is insufficiently researched and poorly understood (Kamoche, 2011). What is interesting though is that despite the recognition, scholars are as yet to tackle the equally difficult problem of the lens through which we frame the difficult research agendas and the methods with which we operationalize and carry out research in Africa. Without compromising or taking away from the established principle of rigor-that the research questions and the theory behind said questions must direct researchers’ design and methodswe argue in this paper that the sheer range of issues, nuances, and diversities call for out-of-the-box approaches to research. We argue that the dominant positivist traditions, valuable as they are, must not necessarily be the starting point of our research; neither must they necessarily constrain our judgment as to what is acceptable. We argue that researchers interested in Africa must show methodological reflexivity (Johnson and Cassell, 2001) and a willingness to challenge the status quo. To this end, this paper suggests four research approaches that scholars may consider as viable tools for researching management and organizations in Africa. © 2016 Taylor and Francis.
+AD  - Organizational Behavior and Chartered Psychologist (BPS), Central Business School of Central University College, Ghana
+AU  - Puplampu, B. B.
+DB  - Scopus
+DO  - 10.4324/9781315714424-19
+J2  - Sustainable Management Development in Africa: Building Capabilities to Serve African Organizations
+LA  - English
+N1  - Export Date: 24 November 2023; Cited By: 1
+PB  - Taylor and Francis
+PY  - 2016
+SN  - 978-131750096-4 (ISBN); 978-113888701-5 (ISBN)
+SP  - 171-187
+ST  - Alternative approaches to management research in Africa: Hermeneutics, graphic scales, and applied interventions
+T2  - Sustainable Management Development in Africa: Building Capabilities to Serve African Organizations
+TI  - Alternative approaches to management research in Africa: Hermeneutics, graphic scales, and applied interventions
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-85110633032&doi=10.4324%2f9781315714424-19&partnerID=40&md5=53be5c1d27e8438823976581f969449d
+ID  - 54320
+ER  - 
+
+TY  - JOUR
+AB  - Background: Informed consent requirements generally require a lengthy process and signed documentation for patients to participate in clinical research. With growing interest in comparative effectiveness research (CER) whereby patients receive approved (nonexperimental) medicines for their medical condition questions have been raised whether the same consent requirements should apply. Little input from patients has been part of these debates. Methods: We conducted two “deliberative engagement sessions” with patients from Johns Hopkins Community Physicians (JHCP) and Geisinger Health System (GHS). Full-day sessions introduced participants to two different CER designs (observational vs. randomized) comparing two antihypertensive medications and three disclosure or consent approaches: Opt-In Opt-Out and “General Approval.” Sessions consisted of presentations and extensive discussion at small group tables. Pre- and posttest surveys were completed by participants before and after all-day discussions measuring attitudes about research and about each of the three disclosure/consent options. Results: One hundred thirty-seven adults over age 40 years participated. Attitudes were similar between JHCP and GHS. Participants strongly preferred Opt-In or Opt-Out consent options to General Approval for both observational and randomized designs. For the randomized CER study 70% liked Opt-In 65% liked Opt-Out and 40% liked General Approval. In discussing disclosure/consent options patients cared most about choice information privacy and confidentiality quality of the research trust respect and impact of the study on patient care. Conclusions: The majority of participants from two different types of health systems liked both Opt-In and Opt-Out approaches for observational and randomized designs for low-risk CER. There were no posttest differences in the proportion liking Opt-In versus Opt-Out. Patients in this study wanted to be told about research and have a choice but were very open to such disclosures being streamlined. Policymakers may find patients' views about what matters to them in the context of consent and CER relevant. © 2016 Taylor & Francis Group LLC.
+AU  - J., Kass N. Faden R. Fabi R. E. Morain S. Hallez K. Whicher D. Tunis S. Moloney R. Messner D. Pitcavage
+C1  - 57284
+DB  - Scopus
+DO  - 10.1080/23294515.2016.1156188
+IS  - 2
+PY  - 2016
+SN  - 23294515 (ISSN)
+SP  - 92-105
+ST  - Alternative consent models for comparative effectiveness studies: Views of patients from two institutions
+T2  - AJOB Empirical Bioethics
+TI  - Alternative consent models for comparative effectiveness studies: Views of patients from two institutions
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15, internal-pdf://3779373774/K.J-2016-From a mouse_ systematic analysis rev.pdf
+VL  - 7
+ID  - 57365
+ER  - 
+
+TY  - JOUR
+AB  - Background: Informed consent requirements generally require a lengthy process and signed documentation for patients to participate in clinical research. With growing interest in comparative effectiveness research (CER) whereby patients receive approved (nonexperimental) medicines for their medical condition questions have been raised whether the same consent requirements should apply. Little input from patients has been part of these debates. Methods: We conducted two “deliberative engagement sessions” with patients from Johns Hopkins Community Physicians (JHCP) and Geisinger Health System (GHS). Full-day sessions introduced participants to two different CER designs (observational vs. randomized) comparing two antihypertensive medications and three disclosure or consent approaches: Opt-In Opt-Out and “General Approval.” Sessions consisted of presentations and extensive discussion at small group tables. Pre- and posttest surveys were completed by participants before and after all-day discussions measuring attitudes about research and about each of the three disclosure/consent options. Results: One hundred thirty-seven adults over age 40 years participated. Attitudes were similar between JHCP and GHS. Participants strongly preferred Opt-In or Opt-Out consent options to General Approval for both observational and randomized designs. For the randomized CER study 70% liked Opt-In 65% liked Opt-Out and 40% liked General Approval. In discussing disclosure/consent options patients cared most about choice information privacy and confidentiality quality of the research trust respect and impact of the study on patient care. Conclusions: The majority of participants from two different types of health systems liked both Opt-In and Opt-Out approaches for observational and randomized designs for low-risk CER. There were no posttest differences in the proportion liking Opt-In versus Opt-Out. Patients in this study wanted to be told about research and have a choice but were very open to such disclosures being streamlined. Policymakers may find patients' views about what matters to them in the context of consent and CER relevant. © 2016 Taylor & Francis Group LLC.
+AU  - J., Kass N. Faden R. Fabi R. E. Morain S. Hallez K. Whicher D. Tunis S. Moloney R. Messner D. Pitcavage
+C1  - 57284
+DB  - Scopus
+DO  - 10.1080/23294515.2016.1156188
+IS  - 2
+PY  - 2016
+SN  - 23294515 (ISSN)
+SP  - 92-105
+ST  - Alternative consent models for comparative effectiveness studies: Views of patients from two institutions
+T2  - AJOB Empirical Bioethics
+TI  - Alternative consent models for comparative effectiveness studies: Views of patients from two institutions
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15
+VL  - 7
+ID  - 57535
+ER  - 
+
+TY  - JOUR
+AB  - Background: Informed consent requirements generally require a lengthy process and signed documentation for patients to participate in clinical research. With growing interest in comparative effectiveness research (CER), whereby patients receive approved (nonexperimental) medicines for their medical condition, questions have been raised whether the same consent requirements should apply. Little input from patients has been part of these debates. Methods: We conducted two “deliberative engagement sessions” with patients from Johns Hopkins Community Physicians (JHCP) and Geisinger Health System (GHS). Full-day sessions introduced participants to two different CER designs (observational vs. randomized) comparing two antihypertensive medications and three disclosure or consent approaches: Opt-In, Opt-Out, and “General Approval.” Sessions consisted of presentations and extensive discussion at small group tables. Pre- and posttest surveys were completed by participants before and after all-day discussions measuring attitudes about research and about each of the three disclosure/consent options. Results: One hundred thirty-seven adults over age 40 years participated. Attitudes were similar between JHCP and GHS. Participants strongly preferred Opt-In or Opt-Out consent options to General Approval for both observational and randomized designs. For the randomized CER study, 70% liked Opt-In, 65% liked Opt-Out, and 40% liked General Approval. In discussing disclosure/consent options, patients cared most about choice, information, privacy and confidentiality, quality of the research, trust, respect, and impact of the study on patient care. Conclusions: The majority of participants from two different types of health systems liked both Opt-In and Opt-Out approaches for observational and randomized designs for low-risk CER. There were no posttest differences in the proportion liking Opt-In versus Opt-Out. Patients in this study wanted to be told about research and have a choice, but were very open to such disclosures being streamlined. Policymakers may find patients' views about what matters to them in the context of consent and CER relevant. © 2016 Taylor & Francis Group, LLC.
+AD  - Johns Hopkins Berman Institute of Bioethics and Johns Hopkins Bloomberg School of Public Health, United States
+Johns Hopkins Berman Institute of Bioethics, United States
+Baylor College of Medicine, Center for Medical Ethics and Health Policy, United States
+Patient-Centered Outcomes Research Institute, United States
+Center for Medical Technology Policy, United States
+Geisinger Health System, United States
+AU  - Kass, N.
+AU  - Faden, R.
+AU  - Fabi, R. E.
+AU  - Morain, S.
+AU  - Hallez, K.
+AU  - Whicher, D.
+AU  - Tunis, S.
+AU  - Moloney, R.
+AU  - Messner, D.
+AU  - Pitcavage, J.
+DB  - Scopus
+DO  - 10.1080/23294515.2016.1156188
+IS  - 2
+J2  - AJOB Empir. Bioethics
+KW  - choice
+comparative effectiveness research
+disclosure
+informed consent
+respect
+streamlined consent
+LA  - English
+M3  - Article
+N1  - Export Date: 24 November 2023; Cited By: 26; Correspondence Address: N. Kass; Johns Hopkins Berman Institute of Bioethics, Baltimore, Deering Hall, 1809 Ashland Avenue, 21205, United States; email: nkass@jhu.edu
+PY  - 2016
+SN  - 23294515 (ISSN)
+SP  - 92-105
+ST  - Alternative consent models for comparative effectiveness studies: Views of patients from two institutions
+T2  - AJOB Empirical Bioethics
+TI  - Alternative consent models for comparative effectiveness studies: Views of patients from two institutions
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-84962907308&doi=10.1080%2f23294515.2016.1156188&partnerID=40&md5=cacaee85f681ab3c0e00003cb0940248
+VL  - 7
+ID  - 54677
+ER  - 
+
+TY  - JOUR
+AB  - Background: Enumeration of circulating peripheral blood dendritic cells (DCs) is complicated by the absence of a unique cell surface marker expressed on all DC subsets and by the use of various biological adjuvants to modulate the DC compartment including granulocyte macrophage colony stimulating factor (GM-CSF). Common methods employ a cocktail of antibodies typically including anti-CD 14 to define a lineage negative MHC class II positive putative DC population. Reported flow cytometry protocols include highly variable gating strategies and DC identification criteria. Increasing appreciation of DC pleiomorphism GM-CSF biology and recognition of CD14 expression in some DC subsets led us to consider an alternative lineage cocktail to improve identification of the circulating DC pool. Methods: Standard whole blood staining with appropriate fluorochrome conjugated antibodies to MHC class II and either standard CD14 containing or an alternate CD66acde containing lineage cocktail was performed on samples obtained from normal donors and breast cancer patients before and after administration of dose-dense cytotoxic chemotherapy with daily GM-CSF hematopoetic growth factor support. Putative DCs were enumerated by standard flow cytometry. Data set differences were evaluated using two tailed Mann-Whitney or Wilcoxon signed rank tests. Cellular morphology was examined in cell-sorted populations from post GM-CSF samples. Results: Use of either antibody cocktail defined comparably sized lineage negative MHC class II positive populations in normal donors and at baseline in cancer patients. However selection of lineage negative subsets with increasing MHC class II expression levels yielded larger putative DC populations identified with the alternate cocktail. Both cocktails yielded highly reproducible data. Use of the alternate cocktail: 1) yielded a putative DC population post GM-CSF that was more homogenous and consistent with DCs 2) resulted in less data variation across gating strategies and 3) resulted in more uniform and concordant longitudinal data consistent with established GM-CSF biological activity. Conclusion: An alternative lineage negative cocktail substituting anti-CD66 antibody for anti-CD14 is a viable option for enumerating the circulating DC population potentially more accurately defining the circulating DC pool by including CD14 positive immature DCs and thus may give more reliable data particularly in the setting of sustained GM-CSF administration. © 2006 Wang et al; licensee BioMed Central Ltd.
+AU  - L., Wang K. Nishimoto K. P. Mehta R. S. Nelson E.
+C1  - 57278
+DB  - Scopus
+DO  - 10.1186/1479-5876-4-18
+PY  - 2006
+SN  - 14795876 (ISSN)
+ST  - An alternative flow cytometry strategy for peripheral blood dendritic cell enumeration in the setting of repetitive GM-CSF dosing
+T2  - Journal of Translational Medicine
+TI  - An alternative flow cytometry strategy for peripheral blood dendritic cell enumeration in the setting of repetitive GM-CSF dosing
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15, internal-pdf://3779373774/K.J-2016-From a mouse_ systematic analysis rev.pdf
+VL  - 4
+ID  - 57359
+ER  - 
+
+TY  - JOUR
+AB  - Background: Enumeration of circulating peripheral blood dendritic cells (DCs) is complicated by the absence of a unique cell surface marker expressed on all DC subsets and by the use of various biological adjuvants to modulate the DC compartment including granulocyte macrophage colony stimulating factor (GM-CSF). Common methods employ a cocktail of antibodies typically including anti-CD 14 to define a lineage negative MHC class II positive putative DC population. Reported flow cytometry protocols include highly variable gating strategies and DC identification criteria. Increasing appreciation of DC pleiomorphism GM-CSF biology and recognition of CD14 expression in some DC subsets led us to consider an alternative lineage cocktail to improve identification of the circulating DC pool. Methods: Standard whole blood staining with appropriate fluorochrome conjugated antibodies to MHC class II and either standard CD14 containing or an alternate CD66acde containing lineage cocktail was performed on samples obtained from normal donors and breast cancer patients before and after administration of dose-dense cytotoxic chemotherapy with daily GM-CSF hematopoetic growth factor support. Putative DCs were enumerated by standard flow cytometry. Data set differences were evaluated using two tailed Mann-Whitney or Wilcoxon signed rank tests. Cellular morphology was examined in cell-sorted populations from post GM-CSF samples. Results: Use of either antibody cocktail defined comparably sized lineage negative MHC class II positive populations in normal donors and at baseline in cancer patients. However selection of lineage negative subsets with increasing MHC class II expression levels yielded larger putative DC populations identified with the alternate cocktail. Both cocktails yielded highly reproducible data. Use of the alternate cocktail: 1) yielded a putative DC population post GM-CSF that was more homogenous and consistent with DCs 2) resulted in less data variation across gating strategies and 3) resulted in more uniform and concordant longitudinal data consistent with established GM-CSF biological activity. Conclusion: An alternative lineage negative cocktail substituting anti-CD66 antibody for anti-CD14 is a viable option for enumerating the circulating DC population potentially more accurately defining the circulating DC pool by including CD14 positive immature DCs and thus may give more reliable data particularly in the setting of sustained GM-CSF administration. © 2006 Wang et al; licensee BioMed Central Ltd.
+AU  - L., Wang K. Nishimoto K. P. Mehta R. S. Nelson E.
+C1  - 57278
+DB  - Scopus
+DO  - 10.1186/1479-5876-4-18
+PY  - 2006
+SN  - 14795876 (ISSN)
+ST  - An alternative flow cytometry strategy for peripheral blood dendritic cell enumeration in the setting of repetitive GM-CSF dosing
+T2  - Journal of Translational Medicine
+TI  - An alternative flow cytometry strategy for peripheral blood dendritic cell enumeration in the setting of repetitive GM-CSF dosing
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15
+VL  - 4
+ID  - 57529
+ER  - 
+
+TY  - JOUR
+AB  - Background: Enumeration of circulating peripheral blood dendritic cells (DCs) is complicated by the absence of a unique cell surface marker expressed on all DC subsets and by the use of various biological adjuvants to modulate the DC compartment, including granulocyte macrophage colony stimulating factor (GM-CSF). Common methods employ a cocktail of antibodies, typically including anti-CD 14, to define a lineage negative, MHC class II positive, putative DC population. Reported flow cytometry protocols include highly variable gating strategies and DC identification criteria. Increasing appreciation of DC pleiomorphism, GM-CSF biology, and recognition of CD14 expression in some DC subsets led us to consider an alternative lineage cocktail to improve identification of the circulating DC pool. Methods: Standard whole blood staining with appropriate fluorochrome conjugated antibodies to MHC class II and either standard CD14 containing, or an alternate CD66acde containing, lineage cocktail was performed on samples obtained from normal donors and breast cancer patients before and after administration of dose-dense, cytotoxic chemotherapy with daily GM-CSF hematopoetic growth factor support. Putative DCs were enumerated by standard flow cytometry. Data set differences were evaluated using two tailed Mann-Whitney or Wilcoxon signed rank tests. Cellular morphology was examined in cell-sorted populations from post GM-CSF samples. Results: Use of either antibody cocktail defined comparably sized lineage negative, MHC class II positive populations in normal donors and at baseline in cancer patients. However, selection of lineage negative subsets with increasing MHC class II expression levels yielded larger putative DC populations identified with the alternate cocktail. Both cocktails yielded highly reproducible data. Use of the alternate cocktail: 1) yielded a putative DC population, post GM-CSF that was more homogenous and consistent with DCs, 2) resulted in less data variation across gating strategies, and 3) resulted in more uniform and concordant longitudinal data, consistent with established GM-CSF biological activity. Conclusion: An alternative lineage negative cocktail substituting anti-CD66 antibody for anti-CD14 is a viable option for enumerating the circulating DC population, potentially more accurately defining the circulating DC pool by including CD14 positive immature DCs, and thus, may give more reliable data, particularly in the setting of sustained GM-CSF administration. © 2006 Wang et al; licensee BioMed Central Ltd.
+AD  - Department of Medicine, Division of Hematology/Oncology, University of California, Irvine, CA, United States
+Department of Molecular Biology and Biochemistry, School of Biological Sciences, University of California, Irvine, CA, United States
+Center for Immunology, University of California, Irvine, CA, United States
+AU  - Wang, K.
+AU  - Nishimoto, K. P.
+AU  - Mehta, R. S.
+AU  - Nelson, E. L.
+C7  - 18
+DB  - Scopus
+DO  - 10.1186/1479-5876-4-18
+J2  - J. Transl. Med.
+KW  - antibody conjugate
+antigen
+CD14 antigen
+CD66 antigen
+cell surface marker
+cyclophosphamide
+cytotoxic agent
+doxorubicin
+granulocyte macrophage colony stimulating factor
+major histocompatibility antigen class 2
+monoclonal antibody
+unclassified drug
+antigen expression
+article
+blood sampling
+blood stain
+breast cancer
+cancer combination chemotherapy
+cancer patient
+cell composition
+cell maturation
+cell structure
+cell subpopulation
+controlled study
+dendritic cell
+flow cytometry
+human
+immunomodulation
+molecular recognition
+rank sum test
+reliability
+reproducibility
+LA  - English
+M3  - Article
+N1  - Export Date: 24 November 2023; Cited By: 6; Correspondence Address: E.L. Nelson; Department of Medicine, Division of Hematology/Oncology, University of California, Irvine, CA, United States; email: enelson@uci.edu
+PY  - 2006
+SN  - 14795876 (ISSN)
+ST  - An alternative flow cytometry strategy for peripheral blood dendritic cell enumeration in the setting of repetitive GM-CSF dosing
+T2  - Journal of Translational Medicine
+TI  - An alternative flow cytometry strategy for peripheral blood dendritic cell enumeration in the setting of repetitive GM-CSF dosing
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-33646675850&doi=10.1186%2f1479-5876-4-18&partnerID=40&md5=d4d37c29c71adcb66759e62ad71adcee
+VL  - 4
+ID  - 47897
+ER  - 
+
+TY  - JOUR
+AB  - Most tanneries use conventional systems for treatment of the mixture of all production effluents. Such an approach makes it possible to meet environmental regulations but because of the high cost of the treatment facilities its implementation has been scarce especially in developing countries. With the waste reduction-elimination concept in view an alternative strategy for water management is proposed based on individual treatment of the effluents from different processing steps to obtain multiquality recycled water for various reuse purposes materials recovery and complete reuse of treated water. The methodology includes a database generation of tanneries in Mexico a mass balance and pollution index determination formulation of water management scenarios and technical-economical evaluation. To replace the traditionally used sulfide oxidation a sulfide recovering was proposed. Chromium grease and protein recovery were considered too. The proposed alternative allows a 90% fresh water reduction the recovery of more than 95% of chromium and sulfide 90% of grease 65% of protein and zero discharge of wastewater. Simultaneous implementation of various water saving methods using in-house wastewater treatment techniques for recovering of chemicals and sub-products reduces substantially the cost of water management. © IWA Publishing 2004.
+AU  - M., Mijaylova Nacheva P. Moeller Chávez G. Juárez Herrera
+C1  - 57277
+DB  - Scopus
+DO  - 10.2166/wst.2004.0105
+IS  - 2
+PY  - 2004
+SN  - 02731223 (ISSN)
+SP  - 121-130
+ST  - Alternative treatment strategy for tannery water reuse and material recovery
+T2  - Water Science and Technology
+TI  - Alternative treatment strategy for tannery water reuse and material recovery
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15, internal-pdf://3779373774/K.J-2016-From a mouse_ systematic analysis rev.pdf
+VL  - 50
+ID  - 57358
+ER  - 
+
+TY  - JOUR
+AB  - Most tanneries use conventional systems for treatment of the mixture of all production effluents. Such an approach makes it possible to meet environmental regulations but because of the high cost of the treatment facilities its implementation has been scarce especially in developing countries. With the waste reduction-elimination concept in view an alternative strategy for water management is proposed based on individual treatment of the effluents from different processing steps to obtain multiquality recycled water for various reuse purposes materials recovery and complete reuse of treated water. The methodology includes a database generation of tanneries in Mexico a mass balance and pollution index determination formulation of water management scenarios and technical-economical evaluation. To replace the traditionally used sulfide oxidation a sulfide recovering was proposed. Chromium grease and protein recovery were considered too. The proposed alternative allows a 90% fresh water reduction the recovery of more than 95% of chromium and sulfide 90% of grease 65% of protein and zero discharge of wastewater. Simultaneous implementation of various water saving methods using in-house wastewater treatment techniques for recovering of chemicals and sub-products reduces substantially the cost of water management. © IWA Publishing 2004.
+AU  - M., Mijaylova Nacheva P. Moeller Chávez G. Juárez Herrera
+C1  - 57277
+DB  - Scopus
+DO  - 10.2166/wst.2004.0105
+IS  - 2
+PY  - 2004
+SN  - 02731223 (ISSN)
+SP  - 121-130
+ST  - Alternative treatment strategy for tannery water reuse and material recovery
+T2  - Water Science and Technology
+TI  - Alternative treatment strategy for tannery water reuse and material recovery
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15
+VL  - 50
+ID  - 57528
+ER  - 
+
+TY  - JOUR
+AB  - Most tanneries use conventional systems for treatment of the mixture of all production effluents. Such an approach makes it possible to meet environmental regulations, but because of the high cost of the treatment facilities, its implementation has been scarce, especially in developing countries. With the waste reduction-elimination concept in view, an alternative strategy for water management is proposed based on individual treatment of the effluents from different processing steps to obtain multiquality recycled water for various reuse purposes, materials recovery and complete reuse of treated water. The methodology includes a database generation of tanneries in Mexico, a mass balance and pollution index determination, formulation of water management scenarios and technical-economical evaluation. To replace the traditionally used sulfide oxidation, a sulfide recovering was proposed. Chromium, grease and protein recovery were considered too. The proposed alternative allows a 90% fresh water reduction, the recovery of more than 95% of chromium and sulfide, 90% of grease, 65% of protein and zero discharge of wastewater. Simultaneous implementation of various water saving methods using in-house wastewater treatment techniques for recovering of chemicals and sub-products reduces substantially the cost of water management. © IWA Publishing 2004.
+AD  - Mexican Institute of Water Technol., Jiutepec, Morelos 62550, Paseo Cuauhnáhuac 8532, Mexico
+AU  - Mijaylova Nacheva, P.
+AU  - Moeller Chávez, G.
+AU  - Juárez Herrera, M.
+C2  - 15344782
+DB  - Scopus
+DO  - 10.2166/wst.2004.0105
+IS  - 2
+J2  - Water Sci. Technol.
+KW  - Material recovery
+Tannery water management
+Wastewater reuse
+Recycling
+sulfide
+tannery
+Wastewater treatment
+Effluents
+Environmental protection
+Laws and legislation
+Reusability
+Water treatment
+chromium
+fresh water
+protein
+Water management
+Water saving
+article
+data base
+effluent
+environmental economics
+leather industry
+methodology
+Mexico
+oxidation
+pollution
+product recovery
+water quality
+Wastewater reclamation
+LA  - English
+M3  - Article
+N1  - Export Date: 24 November 2023; Cited By: 9; Correspondence Address: P. Mijaylova Nacheva; Mexican Institute of Water Technol., Jiutepec, Morelos 62550, Paseo Cuauhnáhuac 8532, Mexico; email: petiam@tlaloc.imta.mx; CODEN: WSTED
+PY  - 2004
+SN  - 02731223 (ISSN)
+SP  - 121-130
+ST  - Alternative treatment strategy for tannery water reuse and material recovery
+T2  - Water Science and Technology
+TI  - Alternative treatment strategy for tannery water reuse and material recovery
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-4444370793&doi=10.2166%2fwst.2004.0105&partnerID=40&md5=a6241855dfab8512855c2111deb28769
+VL  - 50
+ID  - 47159
+ER  - 
+
+TY  - JOUR
+AB  - Objectives: This study sought to determine public opinion on alternatives to project-specific consent for use of their personal information for health research. Design: The authors conducted a fixed-response random-digit dialed telephone survey of 1230 adults across Canada. Measurements: We measured attitudes toward privacy and health research; trust in different institutions to keep information confidential; and consent choice for research use of one's own health information involving medical record review automated abstraction of information from the electronic medical record and linking education or income with health data. Results: Support was strong for both health research and privacy protection. Studying communicable diseases and quality of health care had greatest support (85% to 89%). Trust was highest for data institutes university researchers hospitals and disease foundations (78% to 80%). Four percent of respondents thought information from their paper medical record should not be used at all for research 32% thought permission should be obtained for each use 29% supported broad consent 24% supported notification and opt out and 11% felt no need for notification or consent. Opinions were more polarized for automated abstraction of data from the electronic medical record. Respondents were more willing to link education with health data than income. Conclusions: Most of the public supported alternatives to study-specific consent but few supported use without any notification or consent. Consent choices for research use of one's health information should be documented in the medical record. The challenge remains how best to elicit those choices and ensure that they are up-to-date. © 2007 J Am Med Inform Assoc.
+AU  - L., Willison D. J. Schwartz L. Abelson J. Charles C. Swinton M. Northrup D. Thabane
+C1  - 57280
+DB  - Scopus
+DO  - 10.1197/jamia.M2457
+IS  - 6
+PY  - 2007
+SN  - 10675027 (ISSN)
+SP  - 706-712
+ST  - Alternatives to Project-specific Consent for Access to Personal Information for Health Research: What Is the Opinion of the Canadian Public?
+T2  - Journal of the American Medical Informatics Association
+TI  - Alternatives to Project-specific Consent for Access to Personal Information for Health Research: What Is the Opinion of the Canadian Public?
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15, internal-pdf://3779373774/K.J-2016-From a mouse_ systematic analysis rev.pdf
+VL  - 14
+ID  - 57361
+ER  - 
+
+TY  - JOUR
+AB  - Objectives: This study sought to determine public opinion on alternatives to project-specific consent for use of their personal information for health research. Design: The authors conducted a fixed-response random-digit dialed telephone survey of 1230 adults across Canada. Measurements: We measured attitudes toward privacy and health research; trust in different institutions to keep information confidential; and consent choice for research use of one's own health information involving medical record review automated abstraction of information from the electronic medical record and linking education or income with health data. Results: Support was strong for both health research and privacy protection. Studying communicable diseases and quality of health care had greatest support (85% to 89%). Trust was highest for data institutes university researchers hospitals and disease foundations (78% to 80%). Four percent of respondents thought information from their paper medical record should not be used at all for research 32% thought permission should be obtained for each use 29% supported broad consent 24% supported notification and opt out and 11% felt no need for notification or consent. Opinions were more polarized for automated abstraction of data from the electronic medical record. Respondents were more willing to link education with health data than income. Conclusions: Most of the public supported alternatives to study-specific consent but few supported use without any notification or consent. Consent choices for research use of one's health information should be documented in the medical record. The challenge remains how best to elicit those choices and ensure that they are up-to-date. © 2007 J Am Med Inform Assoc.
+AU  - L., Willison D. J. Schwartz L. Abelson J. Charles C. Swinton M. Northrup D. Thabane
+C1  - 57280
+DB  - Scopus
+DO  - 10.1197/jamia.M2457
+IS  - 6
+PY  - 2007
+SN  - 10675027 (ISSN)
+SP  - 706-712
+ST  - Alternatives to Project-specific Consent for Access to Personal Information for Health Research: What Is the Opinion of the Canadian Public?
+T2  - Journal of the American Medical Informatics Association
+TI  - Alternatives to Project-specific Consent for Access to Personal Information for Health Research: What Is the Opinion of the Canadian Public?
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15
+VL  - 14
+ID  - 57531
+ER  - 
+
+TY  - JOUR
+AB  - Objectives: This study sought to determine public opinion on alternatives to project-specific consent for use of their personal information for health research. Design: The authors conducted a fixed-response random-digit dialed telephone survey of 1,230 adults across Canada. Measurements: We measured attitudes toward privacy and health research; trust in different institutions to keep information confidential; and consent choice for research use of one's own health information involving medical record review, automated abstraction of information from the electronic medical record, and linking education or income with health data. Results: Support was strong for both health research and privacy protection. Studying communicable diseases and quality of health care had greatest support (85% to 89%). Trust was highest for data institutes, university researchers, hospitals, and disease foundations (78% to 80%). Four percent of respondents thought information from their paper medical record should not be used at all for research, 32% thought permission should be obtained for each use, 29% supported broad consent, 24% supported notification and opt out, and 11% felt no need for notification or consent. Opinions were more polarized for automated abstraction of data from the electronic medical record. Respondents were more willing to link education with health data than income. Conclusions: Most of the public supported alternatives to study-specific consent, but few supported use without any notification or consent. Consent choices for research use of one's health information should be documented in the medical record. The challenge remains how best to elicit those choices and ensure that they are up-to-date. © 2007 J Am Med Inform Assoc.
+AD  - Department of Clinical Epidemiology and Biostatistics, McMaster University, Hamilton, Ont., Canada
+Department of Philosophy, McMaster University, Hamilton, Ont., Canada
+School of Nursing, McMaster University, Hamilton, Ont., Canada
+Centre for Evaluation of Medicines, Hamilton, Ont., St. Joseph's Healthcare, Canada
+Centre for Health Economics and Policy Analysis, Hamilton, Ont., Canada
+Institute for Social Research, York University, Toronto, Ont., Canada
+AU  - Willison, D. J.
+AU  - Schwartz, L.
+AU  - Abelson, J.
+AU  - Charles, C.
+AU  - Swinton, M.
+AU  - Northrup, D.
+AU  - Thabane, L.
+C2  - 17712084
+DB  - Scopus
+DO  - 10.1197/jamia.M2457
+IS  - 6
+J2  - J. Am. Med. Informatics Assoc.
+KW  - Access to Information
+Attitude to Health
+Biomedical Research
+Canada
+Confidentiality
+Cross-Sectional Studies
+Health Care Surveys
+Humans
+Medical Records
+Medical Records Systems, Computerized
+Public Opinion
+Trust
+adult
+aged
+article
+controlled study
+electronic medical record
+female
+health care organization
+health education
+health survey
+human
+informed consent
+medical information
+medical research
+privacy
+LA  - English
+M3  - Article
+N1  - Export Date: 24 November 2023; Cited By: 79; Correspondence Address: D.J. Willison; Department of Clinical Epidemiology and Biostatistics, McMaster University, Hamilton, Ont., Canada; email: willison@mcmaster.ca; CODEN: JAMAF
+PY  - 2007
+SN  - 10675027 (ISSN)
+SP  - 706-712
+ST  - Alternatives to Project-specific Consent for Access to Personal Information for Health Research: What Is the Opinion of the Canadian Public?
+T2  - Journal of the American Medical Informatics Association
+TI  - Alternatives to Project-specific Consent for Access to Personal Information for Health Research: What Is the Opinion of the Canadian Public?
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-35648983023&doi=10.1197%2fjamia.M2457&partnerID=40&md5=9da02d1462f57a519802041f123f9035
+VL  - 14
+ID  - 48348
+ER  - 
+
+TY  - JOUR
+AB  - BACKGROUND: Altruistic unbalanced paired kidney exchanges (AUPKE) use compatible live donor/recipient pairs to facilitate transplants for individuals with incompatible live donors. We report a three donor/recipient pair complex AUPKE. Little is known of the circumstances under which individuals are likely to trade away a compatible live donor or the overall impact that AUPKE could have on the organ supply. METHODS: (1) A retrospective analysis of live donor renal transplants was performed using United Network for Organ Sharing data and our own center experience to determine the potential impact of AUPKE. (2) At initial evaluation potential donors and recipients were administered a survey regarding attitudes toward AUPKE using a 5-point Likert Scale. RESULTS: (1) One thousand three hundred ninety-six (22.8%) ABO compatible but nonidentical live donor transplants were performed in the United States in 2005. Ninety-one percent of donors were blood group O. (2) Recipient survey respondents were more likely than donors (P=0.002) to favor participation in AUPKE with no advantage to themselves. A number of circumstances increased the propensity to view AUPKE favorably (P<0.05). CONCLUSIONS: (1) AUPKE can have a profound impact on the kidney supply. (2) By using ABO compatible but nonidentical donors AUPKE can be performed at individual centers without requiring large sharing networks. (3) O recipients with incompatible donors are likely to be the primary beneficiary of AUPKE. (4) Attitudes are not static and can be influenced in favor of participation if there is a perceived benefit to the recipient. (5) Both donors and recipients are more willing to participate if their intended recipient or donor is enthusiastic about participating. (6) AUPKE reflects a paradigm shift for live donation converting a private resource (the donor) to a shared one. copyright © 2010 by Lippincott Williams & Wilkins.
+AU  - I., Ratner L. E. Rana A. Ratner E. R. Ernst V. Kelly J. Kornfeld D. Cohen D. Wiener
+C1  - 57281
+DB  - Scopus
+DO  - 10.1097/TP.0b013e3181c626e1
+IS  - 1
+PY  - 2010
+SN  - 00411337 (ISSN)
+SP  - 15-22
+ST  - The altruistic unbalanced paired kidney exchange: Proof of concept and survey of potential donor and recipient attitudes
+T2  - Transplantation
+TI  - The altruistic unbalanced paired kidney exchange: Proof of concept and survey of potential donor and recipient attitudes
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15, internal-pdf://3779373774/K.J-2016-From a mouse_ systematic analysis rev.pdf
+VL  - 89
+ID  - 57362
+ER  - 
+
+TY  - JOUR
+AB  - BACKGROUND: Altruistic unbalanced paired kidney exchanges (AUPKE) use compatible live donor/recipient pairs to facilitate transplants for individuals with incompatible live donors. We report a three donor/recipient pair complex AUPKE. Little is known of the circumstances under which individuals are likely to trade away a compatible live donor or the overall impact that AUPKE could have on the organ supply. METHODS: (1) A retrospective analysis of live donor renal transplants was performed using United Network for Organ Sharing data and our own center experience to determine the potential impact of AUPKE. (2) At initial evaluation potential donors and recipients were administered a survey regarding attitudes toward AUPKE using a 5-point Likert Scale. RESULTS: (1) One thousand three hundred ninety-six (22.8%) ABO compatible but nonidentical live donor transplants were performed in the United States in 2005. Ninety-one percent of donors were blood group O. (2) Recipient survey respondents were more likely than donors (P=0.002) to favor participation in AUPKE with no advantage to themselves. A number of circumstances increased the propensity to view AUPKE favorably (P<0.05). CONCLUSIONS: (1) AUPKE can have a profound impact on the kidney supply. (2) By using ABO compatible but nonidentical donors AUPKE can be performed at individual centers without requiring large sharing networks. (3) O recipients with incompatible donors are likely to be the primary beneficiary of AUPKE. (4) Attitudes are not static and can be influenced in favor of participation if there is a perceived benefit to the recipient. (5) Both donors and recipients are more willing to participate if their intended recipient or donor is enthusiastic about participating. (6) AUPKE reflects a paradigm shift for live donation converting a private resource (the donor) to a shared one. copyright © 2010 by Lippincott Williams & Wilkins.
+AU  - I., Ratner L. E. Rana A. Ratner E. R. Ernst V. Kelly J. Kornfeld D. Cohen D. Wiener
+C1  - 57281
+DB  - Scopus
+DO  - 10.1097/TP.0b013e3181c626e1
+IS  - 1
+PY  - 2010
+SN  - 00411337 (ISSN)
+SP  - 15-22
+ST  - The altruistic unbalanced paired kidney exchange: Proof of concept and survey of potential donor and recipient attitudes
+T2  - Transplantation
+TI  - The altruistic unbalanced paired kidney exchange: Proof of concept and survey of potential donor and recipient attitudes
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15
+VL  - 89
+ID  - 57532
+ER  - 
+
+TY  - JOUR
+AB  - BACKGROUND: Altruistic unbalanced paired kidney exchanges (AUPKE) use compatible live donor/recipient pairs to facilitate transplants for individuals with incompatible live donors. We report a three donor/recipient pair complex AUPKE. Little is known of the circumstances under which individuals are likely to trade away a compatible live donor or the overall impact that AUPKE could have on the organ supply. METHODS: (1) A retrospective analysis of live donor renal transplants was performed using United Network for Organ Sharing data and our own center experience to determine the potential impact of AUPKE. (2) At initial evaluation, potential donors and recipients were administered a survey regarding attitudes toward AUPKE using a 5-point Likert Scale. RESULTS: (1) One thousand three hundred ninety-six (22.8%) ABO compatible but nonidentical live donor transplants were performed in the United States in 2005. Ninety-one percent of donors were blood group O. (2) Recipient survey respondents were more likely than donors (P=0.002) to favor participation in AUPKE with no advantage to themselves. A number of circumstances increased the propensity to view AUPKE favorably (P<0.05). CONCLUSIONS: (1) AUPKE can have a profound impact on the kidney supply. (2) By using ABO compatible but nonidentical donors, AUPKE can be performed at individual centers without requiring large sharing networks. (3) O recipients with incompatible donors are likely to be the primary beneficiary of AUPKE. (4) Attitudes are not static and can be influenced in favor of participation if there is a perceived benefit to the recipient. (5) Both donors and recipients are more willing to participate if their intended recipient or donor is enthusiastic about participating. (6) AUPKE reflects a paradigm shift for live donation, converting a private resource (the donor) to a shared one. copyright © 2010 by Lippincott Williams & Wilkins.
+AD  - Department of Surgery, College of Physicians and Surgeons, Columbia University, New York, NY 10032, 622 W. 168th Street, PH14-408, United States
+New York-Presbyterian Hospital, New York, NY, United States
+Department of Psychiatry, College of Physicians and Surgeons, Columbia University, New York, NY, United States
+Department of Medicine, College of Physicians and Surgeons, Columbia University, New York, NY, United States
+AU  - Ratner, L. E.
+AU  - Rana, A.
+AU  - Ratner, E. R.
+AU  - Ernst, V.
+AU  - Kelly, J.
+AU  - Kornfeld, D.
+AU  - Cohen, D.
+AU  - Wiener, I.
+C2  - 20061914
+DB  - Scopus
+DO  - 10.1097/TP.0b013e3181c626e1
+IS  - 1
+J2  - Transplantation
+KW  - Altruistic unbalanced paired kidney exchange
+Attitudes toward live donation.
+Kidney transplantation
+Live donors
+Paired kidney exchange
+ABO Blood-Group System
+Adult
+Altruism
+Attitude to Health
+Blood Group Incompatibility
+Donor Selection
+Female
+Health Surveys
+Histocompatibility
+Humans
+Information Dissemination
+Living Donors
+Patient Selection
+Tissue Donors
+article
+blood compatibility
+blood group ABO system
+blood group O
+controlled study
+graft recipient
+health survey
+hospital admission
+human
+kidney donor
+living donor
+major clinical study
+male
+medical decision making
+priority journal
+rating scale
+responsibility
+United States
+LA  - English
+M3  - Article
+N1  - Export Date: 24 November 2023; Cited By: 49; Correspondence Address: L. E. Ratner; Department of Surgery, College of Physicians and Surgeons, Columbia University, New York, NY 10032, 622 W. 168th Street, PH14-408, United States; email: lr2182@columbia.edu; CODEN: TRPLA
+PY  - 2010
+SN  - 00411337 (ISSN)
+SP  - 15-22
+ST  - The altruistic unbalanced paired kidney exchange: Proof of concept and survey of potential donor and recipient attitudes
+T2  - Transplantation
+TI  - The altruistic unbalanced paired kidney exchange: Proof of concept and survey of potential donor and recipient attitudes
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-74549115829&doi=10.1097%2fTP.0b013e3181c626e1&partnerID=40&md5=455b04dc62d6f13cb87bb1ee80dcf5ac
+VL  - 89
+ID  - 49586
+ER  - 
+
+TY  - JOUR
+AU  - Hickman, Richard A.
+AU  - Faustin, Arline
+AU  - Wisniewski, Thomas
+DO  - 10.1016/j.ncl.2016.06.009
+IS  - 4
+PY  - 2016
+SN  - 0733-8619
+SP  - 941-953
+ST  - Alzheimer Disease and Its Growing Epidemic: Risk Factors, Biomarkers, and the Urgent Need for Therapeutics
+T2  - Neurologic Clinics
+TI  - Alzheimer Disease and Its Growing Epidemic: Risk Factors, Biomarkers, and the Urgent Need for Therapeutics
+UR  - https://doi.org/10.1016/j.ncl.2016.06.009
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5116320/pdf/nihms793069.pdf
+VL  - 34
+Y2  - 2020/01/15
+ID  - 343
+ER  - 
+
+TY  - JOUR
+AU  - Hickman, Richard A.
+AU  - Faustin, Arline
+AU  - Wisniewski, Thomas
+DO  - 10.1016/j.ncl.2016.06.009
+IS  - 4
+L1  - internal-pdf://3175815937/Hickman-2016-Alzheimer Disease and Its Growing.pdf
+PY  - 2016
+SN  - 0733-8619
+SP  - 941-953
+ST  - Alzheimer Disease and Its Growing Epidemic: Risk Factors, Biomarkers, and the Urgent Need for Therapeutics
+T2  - Neurologic Clinics
+TI  - Alzheimer Disease and Its Growing Epidemic: Risk Factors, Biomarkers, and the Urgent Need for Therapeutics
+UR  - https://doi.org/10.1016/j.ncl.2016.06.009
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5116320/pdf/nihms793069.pdf
+VL  - 34
+Y2  - 2020/01/15
+ID  - 1583
+ER  - 
+
+TY  - JOUR
+AU  - Long, Justin M.
+AU  - Holtzman, David M.
+DO  - 10.1016/j.cell.2019.09.001
+IS  - 2
+PY  - 2019
+SN  - 0092-8674
+SP  - 312-339
+ST  - Alzheimer Disease: An Update on Pathobiology and Treatment Strategies
+T2  - Cell
+TI  - Alzheimer Disease: An Update on Pathobiology and Treatment Strategies
+UR  - https://doi.org/10.1016/j.cell.2019.09.001
+VL  - 179
+Y2  - 2022/03/03
+ID  - 517
+ER  - 
+
+TY  - JOUR
+AB  - There are still no effective treatments to prevent, halt, or reverse Alzheimer's disease, but research advances over the past three decades could change this gloomy picture. Genetic studies demonstrate that the disease has multiple causes. Interdisciplinary approaches combining biochemistry, molecular and cell biology, and transgenic modeling have revealed some of its molecular mechanisms. Progress in chemistry, radiology, and systems biology is beginning to provide useful biomarkers, and the emergence of personalized medicine is poised to transform pharmaceutical development and clinical trials. However, investigative and drug development efforts should be diversified to fully address the multifactoriality of the disease.
+AD  - Gladstone Institute of Neurological Disease, San Francisco, CA 94158, USA.
+AN  - 22424230
+AU  - Huang, Y.
+AU  - Mucke, L.
+C2  - PMC3319071
+C6  - NIHMS364253
+DA  - Mar 16
+DO  - 10.1016/j.cell.2012.02.040
+DP  - NLM
+ET  - 2012/03/20
+IS  - 6
+J2  - Cell
+KW  - Alzheimer Disease/*drug therapy/genetics/*metabolism/physiopathology
+Amyloid beta-Protein Precursor/metabolism
+Animals
+Cognition
+Humans
+gamma-Aminobutyric Acid/metabolism
+LA  - eng
+N1  - 1097-4172
+Huang, Yadong
+Mucke, Lennart
+P01 AG022074/AG/NIA NIH HHS/United States
+P01 AG022074-10/AG/NIA NIH HHS/United States
+AG011385/AG/NIA NIH HHS/United States
+AG022074/AG/NIA NIH HHS/United States
+Journal Article
+Research Support, N.I.H., Extramural
+Research Support, Non-U.S. Gov't
+Review
+United States
+Cell. 2012 Mar 16;148(6):1204-22. doi: 10.1016/j.cell.2012.02.040.
+PY  - 2012
+SN  - 0092-8674
+SP  - 1204-22
+ST  - Alzheimer mechanisms and therapeutic strategies
+T2  - Cell
+TI  - Alzheimer mechanisms and therapeutic strategies
+UR  - https://ac.els-cdn.com/S0092867412002784/1-s2.0-S0092867412002784-main.pdf?_tid=6eb2ec6a-ffa9-4812-903a-197b989ec7d6&acdnat=1530194011_48046e28df4eee26e6b3ca0e5454bdcb
+VL  - 148
+ID  - 374
+ER  - 
+
+TY  - JOUR
+AB  - There are still no effective treatments to prevent, halt, or reverse Alzheimer's disease, but research advances over the past three decades could change this gloomy picture. Genetic studies demonstrate that the disease has multiple causes. Interdisciplinary approaches combining biochemistry, molecular and cell biology, and transgenic modeling have revealed some of its molecular mechanisms. Progress in chemistry, radiology, and systems biology is beginning to provide useful biomarkers, and the emergence of personalized medicine is poised to transform pharmaceutical development and clinical trials. However, investigative and drug development efforts should be diversified to fully address the multifactoriality of the disease.
+AD  - Gladstone Institute of Neurological Disease, San Francisco, CA 94158, USA.
+AN  - 22424230
+AU  - Huang, Y.
+AU  - Mucke, L.
+C2  - PMC3319071
+C6  - NIHMS364253
+DA  - Mar 16
+DO  - 10.1016/j.cell.2012.02.040
+DP  - NLM
+ET  - 2012/03/20
+IS  - 6
+J2  - Cell
+KW  - Alzheimer Disease/*drug therapy/genetics/*metabolism/physiopathology
+Amyloid beta-Protein Precursor/metabolism
+Animals
+Cognition
+Humans
+gamma-Aminobutyric Acid/metabolism
+L1  - internal-pdf://3219887662/Huang-2012-Alzheimer mechanisms and therapeuti.pdf
+LA  - eng
+N1  - 1097-4172
+Huang, Yadong
+Mucke, Lennart
+P01 AG022074/AG/NIA NIH HHS/United States
+P01 AG022074-10/AG/NIA NIH HHS/United States
+AG011385/AG/NIA NIH HHS/United States
+AG022074/AG/NIA NIH HHS/United States
+Journal Article
+Research Support, N.I.H., Extramural
+Research Support, Non-U.S. Gov't
+Review
+United States
+Cell. 2012 Mar 16;148(6):1204-22. doi: 10.1016/j.cell.2012.02.040.
+PY  - 2012
+SN  - 0092-8674
+SP  - 1204-22
+ST  - Alzheimer mechanisms and therapeutic strategies
+T2  - Cell
+TI  - Alzheimer mechanisms and therapeutic strategies
+UR  - https://ac.els-cdn.com/S0092867412002784/1-s2.0-S0092867412002784-main.pdf?_tid=6eb2ec6a-ffa9-4812-903a-197b989ec7d6&acdnat=1530194011_48046e28df4eee26e6b3ca0e5454bdcb
+VL  - 148
+ID  - 1144
+ER  - 
+
+TY  - JOUR
+AB  - Alzheimer's disease (AD) is the most common cause of progressive intellectual failure in aged humans. AD brains contain numerous amyloid plaques surrounded by dystrophic neurites, and show profound synaptic loss, neurofibrillary tangle formation and gliosis. The amyloid plaques are composed of amyloid beta-peptide (A beta), a 40-42-amino-acid fragment of the beta-amyloid precursor protein (APP). A primary pathogenic role for APP/A beta is suggested by missense mutations in APP that are tightly linked to autosomal dominant forms of AD. A major obstacle to elucidating and treating AD has been the lack of an animal model. Animals transgenic for APP have previously failed to show extensive AD-type neuropathology, but we now report the production of transgenic mice that express high levels of human mutant APP (with valine at residue 717 substituted by phenylalanine) and which progressively develop many of the pathological hallmarks of AD, including numerous extracellular thioflavin S-positive A beta deposits, neuritic plaques, synaptic loss, astrocytosis and microgliosis. These mice support a primary role for APP/A beta in the genesis of AD and could provide a preclinical model for testing therapeutic drugs.
+AD  - Athena Neurosciences, Inc., South San Francisco, California 94080.
+AN  - 7845465
+AU  - Games, D.
+AU  - Adams, D.
+AU  - Alessandrini, R.
+AU  - Barbour, R.
+AU  - Berthelette, P.
+AU  - Blackwell, C.
+AU  - Carr, T.
+AU  - Clemens, J.
+AU  - Donaldson, T.
+AU  - Gillespie, F.
+AU  - et al.
+DA  - Feb 9
+DO  - 10.1038/373523a0
+DP  - NLM
+ET  - 1995/02/09
+IS  - 6514
+J2  - Nature
+KW  - Alzheimer Disease/metabolism/*pathology
+Amyloid beta-Peptides/genetics/*metabolism
+Amyloid beta-Protein Precursor/genetics/metabolism
+Animals
+Base Sequence
+Brain/metabolism/*pathology
+DNA Primers
+Humans
+Immunoenzyme Techniques
+Mice
+Mice, Transgenic
+Microscopy, Confocal
+Molecular Sequence Data
+Mutation
+Platelet-Derived Growth Factor/genetics/metabolism
+LA  - eng
+N1  - Games, D
+Adams, D
+Alessandrini, R
+Barbour, R
+Berthelette, P
+Blackwell, C
+Carr, T
+Clemens, J
+Donaldson, T
+Gillespie, F
+Journal Article
+England
+Nature. 1995 Feb 9;373(6514):523-7. doi: 10.1038/373523a0.
+PY  - 1995
+SN  - 0028-0836 (Print)
+0028-0836
+SP  - 523-7
+ST  - Alzheimer-type neuropathology in transgenic mice overexpressing V717F beta-amyloid precursor protein
+T2  - Nature
+TI  - Alzheimer-type neuropathology in transgenic mice overexpressing V717F beta-amyloid precursor protein
+UR  - https://www.ncbi.nlm.nih.gov/pubmed/7845465
+https://www.nature.com/articles/373523a0.pdf
+VL  - 373
+ID  - 267
+ER  - 
+
+TY  - JOUR
+AB  - INTRODUCTION: Alzheimer's disease (AD) is increasing in frequency as the global population ages. Five drugs are approved for treatment of AD, including four cholinesterase inhibitors and an N-methyl-D-aspartate (NMDA)-receptor antagonist. We have an urgent need to find new therapies for AD. METHODS: We examined Clinicaltrials.gov, a public website that records ongoing clinical trials. We examined the decade of 2002 to 2012, to better understand AD-drug development. We reviewed trials by sponsor, sites, drug mechanism of action, duration, number of patients required, and rate of success in terms of advancement from one phase to the next. We also reviewed the current AD therapy pipeline. RESULTS: During the 2002 to 2012 observation period, 413 AD trials were performed: 124 Phase 1 trials, 206 Phase 2 trials, and 83 Phase 3 trials. Seventy-eight percent were sponsored by pharmaceutical companies. The United States of America (U.S.) remains the single world region with the greatest number of trials; cumulatively, more non-U.S. than U.S. trials are performed. The largest number of registered trials addressed symptomatic agents aimed at improving cognition (36.6%), followed by trials of disease-modifying small molecules (35.1%) and trials of disease-modifying immunotherapies (18%). The mean length of trials increases from Phase 2 to Phase 3, and the number of participants in trials increases between Phase 2 and Phase 3. Trials of disease-modifying agents are larger and longer than those for symptomatic agents. A very high attrition rate was found, with an overall success rate during the 2002 to 2012 period of 0.4% (99.6% failure). CONCLUSIONS: The Clinicaltrials.gov database demonstrates that relatively few clinical trials are undertaken for AD therapeutics, considering the magnitude of the problem. The success rate for advancing from one phase to another is low, and the number of compounds progressing to regulatory review is among the lowest found in any therapeutic area. The AD drug-development ecosystem requires support.
+AD  - Cleveland Clinic Lou Ruvo Center for Brain Health, 888 West Bonneville Avenue, Las Vegas, Nevada 89106, USA.
+Touro University Nevada College of Osteopathic Medicine, Henderson, Nevada, USA.
+AU  - Cummings, J. L.
+AU  - Morstorf, T.
+AU  - Zhong, K.
+C2  - PMC4095696
+DO  - 10.1186/alzrt269
+ET  - 2014/07/16
+IS  - 4
+LA  - eng
+N1  - Cummings, Jeffrey L
+Morstorf, Travis
+Zhong, Kate
+Journal Article
+England
+Alzheimers Res Ther. 2014 Jul 3;6(4):37. doi: 10.1186/alzrt269. eCollection 2014.
+OP  - Alzheimers Res Ther
+PY  - 2014
+SN  - 1758-9193 (Print)
+SP  - 37
+ST  - Alzheimer's disease drug-development pipeline: few candidates, frequent failures
+T2  - Alzheimers Res Ther
+TI  - Alzheimer's disease drug-development pipeline: few candidates, frequent failures
+VL  - 6
+ID  - 190
+ER  - 
+
+TY  - JOUR
+AB  - INTRODUCTION: Alzheimer's disease (AD) is increasing in frequency as the global population ages. Five drugs are approved for treatment of AD, including four cholinesterase inhibitors and an N-methyl-D-aspartate (NMDA)-receptor antagonist. We have an urgent need to find new therapies for AD. METHODS: We examined Clinicaltrials.gov, a public website that records ongoing clinical trials. We examined the decade of 2002 to 2012, to better understand AD-drug development. We reviewed trials by sponsor, sites, drug mechanism of action, duration, number of patients required, and rate of success in terms of advancement from one phase to the next. We also reviewed the current AD therapy pipeline. RESULTS: During the 2002 to 2012 observation period, 413 AD trials were performed: 124 Phase 1 trials, 206 Phase 2 trials, and 83 Phase 3 trials. Seventy-eight percent were sponsored by pharmaceutical companies. The United States of America (U.S.) remains the single world region with the greatest number of trials; cumulatively, more non-U.S. than U.S. trials are performed. The largest number of registered trials addressed symptomatic agents aimed at improving cognition (36.6%), followed by trials of disease-modifying small molecules (35.1%) and trials of disease-modifying immunotherapies (18%). The mean length of trials increases from Phase 2 to Phase 3, and the number of participants in trials increases between Phase 2 and Phase 3. Trials of disease-modifying agents are larger and longer than those for symptomatic agents. A very high attrition rate was found, with an overall success rate during the 2002 to 2012 period of 0.4% (99.6% failure). CONCLUSIONS: The Clinicaltrials.gov database demonstrates that relatively few clinical trials are undertaken for AD therapeutics, considering the magnitude of the problem. The success rate for advancing from one phase to another is low, and the number of compounds progressing to regulatory review is among the lowest found in any therapeutic area. The AD drug-development ecosystem requires support.
+AD  - Cleveland Clinic Lou Ruvo Center for Brain Health, 888 West Bonneville Avenue, Las Vegas, Nevada 89106, USA.
+Touro University Nevada College of Osteopathic Medicine, Henderson, Nevada, USA.
+AU  - Cummings, J. L.
+AU  - Morstorf, T.
+AU  - Zhong, K.
+C2  - PMC4095696
+DO  - 10.1186/alzrt269
+ET  - 2014/07/16
+IS  - 4
+L1  - internal-pdf://0247570714/alzrt269.pdf
+LA  - eng
+N1  - Cummings, Jeffrey L
+Morstorf, Travis
+Zhong, Kate
+Journal Article
+England
+Alzheimers Res Ther. 2014 Jul 3;6(4):37. doi: 10.1186/alzrt269. eCollection 2014.
+OP  - Alzheimers Res Ther
+PY  - 2014
+SN  - 1758-9193 (Print)
+SP  - 37
+ST  - Alzheimer's disease drug-development pipeline: few candidates, frequent failures
+T2  - Alzheimers Res Ther
+TI  - Alzheimer's disease drug-development pipeline: few candidates, frequent failures
+VL  - 6
+ID  - 1004
+ER  - 
+
+TY  - JOUR
+AB  - In its earliest clinical phase, Alzheimer's disease characteristically produces a remarkably pure impairment of memory. Mounting evidence suggests that this syndrome begins with subtle alterations of hippocampal synaptic efficacy prior to frank neuronal degeneration, and that the synaptic dysfunction is caused by diffusible oligomeric assemblies of the amyloid β protein.
+AU  - Selkoe, Dennis J.
+IS  - 5594
+M3  - 10.1126/science.1074069
+PY  - 2002
+SP  - 789
+ST  - Alzheimer's Disease Is a Synaptic Failure
+T2  - Science
+TI  - Alzheimer's Disease Is a Synaptic Failure
+UR  - http://science.sciencemag.org/content/298/5594/789.abstract
+http://science.sciencemag.org/content/298/5594/789.long
+VL  - 298
+ID  - 738
+ER  - 
+
+TY  - JOUR
+AB  - Alzheimer's disease (AD) and frontotemporal lobar degeneration (FTLD) are complex human brain disorders that affect an increasing number of people worldwide. With the identification first of the proteins that aggregate in AD and FTLD brains and subsequently of pathogenic gene mutations that cause their formation in the familial cases, the foundation was laid for the generation of animal models. These recapitulate essential aspects of the human conditions; expression of mutant forms of the amyloid-β protein-encoding APP gene in mice reproduces amyloid-β (Aβ) plaque formation in AD, while that of mutant forms of the tau-encoding microtubule-associated protein tau (MAPT) gene reproduces tau-containing neurofibrillary tangle formation, a lesion that is also prevalent in FTLD-Tau. The mouse models have been complemented by those in lower species such as C. elegans or Drosophila, highlighting the crucial role for Aβ and tau in human neurodegenerative disease. In this review, we will introduce selected AD/FTLD models and discuss how they were instrumental, by identifying deregulated mRNAs, miRNAs and proteins, in dissecting pathogenic mechanisms in neurodegenerative disease. We will discuss some recent examples, which includes miRNA species that are specifically deregulated by Aβ, mitochondrial proteins that are targets of both Aβ and tau, and the nuclear splicing factor SFPQ that accumulates in the cytoplasm in a tau-dependent manner. These examples illustrate how a functional genomics approach followed by a careful validation in experimental models and human tissue leads to a deeper understanding of the pathogenesis of AD and FTLD and ultimately, may help in finding a cure.
+AD  - Prof Jurgen Gotz,The University of Queensland,Centre for Ageing Dementia Research (CADR), Queensland Brain Institute (QBI), The University of Queensland, Australia,St Lucia,Australia,j.goetz@uq.edu.au
+AU  - Gotz, Jurgen
+AU  - Matamales, Miriam
+AU  - Gotz, Naeman
+AU  - Ittner, Lars
+AU  - Eckert, Anne
+DA  - 2012-August-08
+DO  - 10.3389/fphys.2012.00320
+IS  - 320
+KW  - Alzheimer’s disease,Amyloid,Frontotemporal Dementia,kinase,phosphatase,proteomic,tau,tran
+LA  - English
+M3  - Review
+PY  - 2012
+SN  - 1664-042X
+ST  - Functional genomics and Alzheimer models
+T2  - Frontiers in Physiology
+TI  - Alzheimer's disease models and functional genomics—How many needles are there in the haystack?
+UR  - https://www.frontiersin.org/article/10.3389/fphys.2012.00320
+https://fjfsdata01prod.blob.core.windows.net/articles/files/30977/pubmed-zip/.versions/4/.package-entries/fphys-03-00320-r5/fphys-03-00320.pdf?sv=2015-12-11&sr=b&sig=Lj%2Btige9OZt%2B9CZ%2BkLvI5akHcOg2%2B9ehFgzEV%2Fd0cxo%3D&se=2020-01-15T11%3A29%3A41Z&sp=r&rscd=attachment%3B%20filename%2A%3DUTF-8%27%27fphys-03-00320.pdf
+VL  - 3
+ID  - 286
+ER  - 
+
+TY  - JOUR
+AB  - Alzheimer's disease (AD) and frontotemporal lobar degeneration (FTLD) are complex human brain disorders that affect an increasing number of people worldwide. With the identification first of the proteins that aggregate in AD and FTLD brains and subsequently of pathogenic gene mutations that cause their formation in the familial cases, the foundation was laid for the generation of animal models. These recapitulate essential aspects of the human conditions; expression of mutant forms of the amyloid-β protein-encoding APP gene in mice reproduces amyloid-β (Aβ) plaque formation in AD, while that of mutant forms of the tau-encoding microtubule-associated protein tau (MAPT) gene reproduces tau-containing neurofibrillary tangle formation, a lesion that is also prevalent in FTLD-Tau. The mouse models have been complemented by those in lower species such as C. elegans or Drosophila, highlighting the crucial role for Aβ and tau in human neurodegenerative disease. In this review, we will introduce selected AD/FTLD models and discuss how they were instrumental, by identifying deregulated mRNAs, miRNAs and proteins, in dissecting pathogenic mechanisms in neurodegenerative disease. We will discuss some recent examples, which includes miRNA species that are specifically deregulated by Aβ, mitochondrial proteins that are targets of both Aβ and tau, and the nuclear splicing factor SFPQ that accumulates in the cytoplasm in a tau-dependent manner. These examples illustrate how a functional genomics approach followed by a careful validation in experimental models and human tissue leads to a deeper understanding of the pathogenesis of AD and FTLD and ultimately, may help in finding a cure.
+AD  - Prof Jurgen Gotz,The University of Queensland,Centre for Ageing Dementia Research (CADR), Queensland Brain Institute (QBI), The University of Queensland, Australia,St Lucia,Australia,j.goetz@uq.edu.au
+AU  - Gotz, Jurgen
+AU  - Matamales, Miriam
+AU  - Gotz, Naeman
+AU  - Ittner, Lars
+AU  - Eckert, Anne
+DA  - 2012-August-08
+DO  - 10.3389/fphys.2012.00320
+IS  - 320
+KW  - Alzheimer’s disease,Amyloid,Frontotemporal Dementia,kinase,phosphatase,proteomic,tau,tran
+L1  - internal-pdf://0505807917/Gotz-2012-Alzheimer's disease models and funct.pdf
+LA  - English
+M3  - Review
+PY  - 2012
+SN  - 1664-042X
+ST  - Functional genomics and Alzheimer models
+T2  - Frontiers in Physiology
+TI  - Alzheimer's disease models and functional genomics—How many needles are there in the haystack?
+UR  - https://www.frontiersin.org/article/10.3389/fphys.2012.00320
+https://fjfsdata01prod.blob.core.windows.net/articles/files/30977/pubmed-zip/.versions/4/.package-entries/fphys-03-00320-r5/fphys-03-00320.pdf?sv=2015-12-11&sr=b&sig=Lj%2Btige9OZt%2B9CZ%2BkLvI5akHcOg2%2B9ehFgzEV%2Fd0cxo%3D&se=2020-01-15T11%3A29%3A41Z&sp=r&rscd=attachment%3B%20filename%2A%3DUTF-8%27%27fphys-03-00320.pdf
+VL  - 3
+ID  - 1578
+ER  - 
+
+TY  - JOUR
+AB  - Alzheimer's disease (AD) and frontotemporal lobar degeneration (FTLD) are complex human brain disorders that affect an increasing number of people worldwide. With the identification first of the proteins that aggregate in AD and FTLD brains and subsequently of pathogenic gene mutations that cause their formation in the familial cases the foundation was laid for the generation of animal models. These recapitulate essential aspects of the human conditions; expression of mutant forms of the amyloid-β protein-encoding APP gene in mice reproduces amyloid-β (Aβ) plaque formation in AD while that of mutant forms of the tau-encoding microtubule-associated protein tau (MAPT) gene reproduces tau-containing neurofibrillary tangle formation a lesion that is also prevalent in FTLD-Tau. The mouse models have been complemented by those in lower species such as C. elegans or Drosophila highlighting the crucial role for Aβ and tau in human neurodegenerative disease. In this review we will introduce selected AD/FTLD models and discuss how they were instrumental by identifying deregulated mRNAs miRNAs and proteins in dissecting pathogenic mechanisms in neurodegenerative disease. We will discuss some recent examples which includes miRNA species that are specifically deregulated by Aβ mitochondrial proteins that are targets of both Aβ and tau and the nuclear splicing factor SFPQ that accumulates in the cytoplasm in a tau-dependent manner. These examples illustrate how a functional genomics approach followed by a careful validation in experimental models and human tissue leads to a deeper understanding of the pathogenesis of AD and FTLD and ultimately may help in finding a cure.
+AU  - GotzJurgen, MatamalesMiriam, GotzNaeman, IttnerLars, EckertAnne
+C1  - 1578
+DO  - 10.3389/fphys.2012.00320
+IS  - 320
+PY  - 2012
+SN  - 1664-042X
+ST  - Alzheimer's disease models and functional genomics—How many needles are there in the haystack?
+T2  - Frontiers in Physiology
+TI  - Alzheimer's disease models and functional genomics—How many needles are there in the haystack?
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15, internal-pdf://3779373774/K.J-2016-From a mouse_ systematic analysis rev.pdf
+VL  - 3
+ID  - 57334
+ER  - 
+
+TY  - JOUR
+AB  - Alzheimer's disease (AD) and frontotemporal lobar degeneration (FTLD) are complex human brain disorders that affect an increasing number of people worldwide. With the identification first of the proteins that aggregate in AD and FTLD brains and subsequently of pathogenic gene mutations that cause their formation in the familial cases the foundation was laid for the generation of animal models. These recapitulate essential aspects of the human conditions; expression of mutant forms of the amyloid-β protein-encoding APP gene in mice reproduces amyloid-β (Aβ) plaque formation in AD while that of mutant forms of the tau-encoding microtubule-associated protein tau (MAPT) gene reproduces tau-containing neurofibrillary tangle formation a lesion that is also prevalent in FTLD-Tau. The mouse models have been complemented by those in lower species such as C. elegans or Drosophila highlighting the crucial role for Aβ and tau in human neurodegenerative disease. In this review we will introduce selected AD/FTLD models and discuss how they were instrumental by identifying deregulated mRNAs miRNAs and proteins in dissecting pathogenic mechanisms in neurodegenerative disease. We will discuss some recent examples which includes miRNA species that are specifically deregulated by Aβ mitochondrial proteins that are targets of both Aβ and tau and the nuclear splicing factor SFPQ that accumulates in the cytoplasm in a tau-dependent manner. These examples illustrate how a functional genomics approach followed by a careful validation in experimental models and human tissue leads to a deeper understanding of the pathogenesis of AD and FTLD and ultimately may help in finding a cure.
+AU  - GotzJurgen, MatamalesMiriam, GotzNaeman, IttnerLars, EckertAnne
+C1  - 1578
+DO  - 10.3389/fphys.2012.00320
+IS  - 320
+PY  - 2012
+SN  - 1664-042X
+ST  - Alzheimer's disease models and functional genomics—How many needles are there in the haystack?
+T2  - Frontiers in Physiology
+TI  - Alzheimer's disease models and functional genomics—How many needles are there in the haystack?
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15
+VL  - 3
+ID  - 57504
+ER  - 
+
+TY  - JOUR
+AB  - Alzheimer's disease (AD) is a progressive neurodegenerative disease characterized by insidious cognitive decline and memory dysfunction. Synapse loss is the best pathological correlate of cognitive decline in AD and mounting evidence suggests that AD is primarily a disease of synaptic dysfunction. Soluble oligomeric forms of amyloid beta (Abeta), the peptide that aggregates to form senile plaques in the brain of AD patients, have been shown to be toxic to neuronal synapses both in vitro and in vivo. Abeta oligomers inhibit long-term potentiation (LTP) and facilitate long-term depression (LTD), electrophysiological correlates of memory formation. Furthermore, oligomeric Abeta has also been shown to induce synapse loss and cognitive impairment in animals. The molecular underpinnings of these observations are now being elucidated, and may provide clear therapeutic targets for effectively treating the disease. Here, we review recent findings concerning AD pathogenesis with a particular focus on how Abeta impacts synapses.
+AD  - Massachusetts General Hospital, Harvard Medical School, 114 16th Street, Charlestown, MA 02129, USA. tspires@partners.org.
+AN  - 21871088
+AU  - Koffie, R. M.
+AU  - Hyman, B. T.
+AU  - Spires-Jones, T. L.
+C2  - PMC3178498
+DA  - Aug 26
+DO  - 10.1186/1750-1326-6-63
+DP  - NLM
+ET  - 2011/08/30
+IS  - 1
+J2  - Molecular neurodegeneration
+LA  - eng
+N1  - 1750-1326
+Koffie, Robert M
+Hyman, Bradley T
+Spires-Jones, Tara L
+P50 AG005134/AG/NIA NIH HHS/United States
+T32 GM007753/GM/NIGMS NIH HHS/United States
+Journal Article
+England
+Mol Neurodegener. 2011 Aug 26;6(1):63. doi: 10.1186/1750-1326-6-63.
+PY  - 2011
+SN  - 1750-1326
+SP  - 63
+ST  - Alzheimer's disease: synapses gone cold
+T2  - Mol Neurodegener
+TI  - Alzheimer's disease: synapses gone cold
+UR  - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3178498/pdf/1750-1326-6-63.pdf
+VL  - 6
+ID  - 464
+ER  - 
+
+TY  - JOUR
+AB  - Alzheimer's disease (AD) is a progressive neurodegenerative disease characterized by insidious cognitive decline and memory dysfunction. Synapse loss is the best pathological correlate of cognitive decline in AD and mounting evidence suggests that AD is primarily a disease of synaptic dysfunction. Soluble oligomeric forms of amyloid beta (Abeta), the peptide that aggregates to form senile plaques in the brain of AD patients, have been shown to be toxic to neuronal synapses both in vitro and in vivo. Abeta oligomers inhibit long-term potentiation (LTP) and facilitate long-term depression (LTD), electrophysiological correlates of memory formation. Furthermore, oligomeric Abeta has also been shown to induce synapse loss and cognitive impairment in animals. The molecular underpinnings of these observations are now being elucidated, and may provide clear therapeutic targets for effectively treating the disease. Here, we review recent findings concerning AD pathogenesis with a particular focus on how Abeta impacts synapses.
+AD  - Massachusetts General Hospital, Harvard Medical School, 114 16th Street, Charlestown, MA 02129, USA. tspires@partners.org.
+AN  - 21871088
+AU  - Koffie, R. M.
+AU  - Hyman, B. T.
+AU  - Spires-Jones, T. L.
+C2  - PMC3178498
+DA  - Aug 26
+DO  - 10.1186/1750-1326-6-63
+DP  - NLM
+ET  - 2011/08/30
+IS  - 1
+J2  - Molecular neurodegeneration
+L1  - internal-pdf://2823014959/Koffie-2011-Alzheimer's disease_ synapses gone.pdf
+LA  - eng
+N1  - 1750-1326
+Koffie, Robert M
+Hyman, Bradley T
+Spires-Jones, Tara L
+P50 AG005134/AG/NIA NIH HHS/United States
+T32 GM007753/GM/NIGMS NIH HHS/United States
+Journal Article
+England
+Mol Neurodegener. 2011 Aug 26;6(1):63. doi: 10.1186/1750-1326-6-63.
+PY  - 2011
+SN  - 1750-1326
+SP  - 63
+ST  - Alzheimer's disease: synapses gone cold
+T2  - Mol Neurodegener
+TI  - Alzheimer's disease: synapses gone cold
+UR  - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3178498/pdf/1750-1326-6-63.pdf
+VL  - 6
+ID  - 1323
+ER  - 
+
+TY  - JOUR
+AD  - Department of Biochemistry, St. Mary's Hospital Medical School, London, U.K.
+AN  - 1566067
+AU  - Hardy, J. A.
+AU  - Higgins, G. A.
+DA  - Apr 10
+DO  - 10.1126/science.1566067
+DP  - NLM
+ET  - 1992/04/10
+IS  - 5054
+KW  - Alzheimer Disease/*etiology/genetics/physiopathology
+Amyloid/*genetics/metabolism/physiology
+Amyloid beta-Protein Precursor/genetics
+Brain/pathology/physiopathology
+Cell Death
+Humans
+*Mutation
+Neurofibrillary Tangles/physiology
+LA  - eng
+N1  - Hardy, J A
+Higgins, G A
+Journal Article
+Review
+United States
+Science. 1992 Apr 10;256(5054):184-5. doi: 10.1126/science.1566067.
+PY  - 1992
+SN  - 0036-8075 (Print)
+0036-8075
+SP  - 184-5
+ST  - Alzheimer's disease: the amyloid cascade hypothesis
+T2  - Science
+TI  - Alzheimer's disease: the amyloid cascade hypothesis
+VL  - 256
+ID  - 326
+ER  - 
+
+TY  - JOUR
+AU  - Golde T. E., DeKosky S. T., Galasko D.
+C1  - 1561
+DO  - 10.1126/science.aau0437
+IS  - 6420
+PY  - 2018
+SN  - 0036-8075
+SP  - 1250-1251
+ST  - Alzheimer's disease: The right drug the right time
+T2  - Science (New York N.Y.)
+TI  - Alzheimer's disease: The right drug the right time
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15, internal-pdf://3779373774/K.J-2016-From a mouse_ systematic analysis rev.pdf
+VL  - 362
+ID  - 57329
+ER  - 
+
+TY  - JOUR
+AU  - Golde T. E., DeKosky S. T., Galasko D.
+C1  - 1561
+DO  - 10.1126/science.aau0437
+IS  - 6420
+PY  - 2018
+SN  - 0036-8075
+SP  - 1250-1251
+ST  - Alzheimer's disease: The right drug the right time
+T2  - Science (New York N.Y.)
+TI  - Alzheimer's disease: The right drug the right time
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1002/ebm2.15
+VL  - 362
+ID  - 57499
+ER  - 
+
+TY  - JOUR
+AD  - Evelyn F. and William L. McKnight Brain Institute, Center for Translational Research in Neurodegenerative Disease, Departments of Neuroscience and Neurology, College of Medicine, University of Florida, Gainesville, FL, USA. tgolde@ufl.edu steven.dekosky@neurology.ufl.edu dgalasko@ucsd.edu.
+Department of Neurosciences and Shiley-Marcos Alzheimer's Disease Research Center, University of California San Diego, La Jolla, CA, USA. tgolde@ufl.edu steven.dekosky@neurology.ufl.edu dgalasko@ucsd.edu.
+AN  - 30545877
+AU  - Golde, T. E.
+AU  - DeKosky, S. T.
+AU  - Galasko, D.
+DA  - Dec 14
+DO  - 10.1126/science.aau0437
+DP  - NLM
+ET  - 2018/12/14
+IS  - 6420
+KW  - Alzheimer Disease/diagnosis/*drug therapy/metabolism
+Amyloid/metabolism
+Antibodies/therapeutic use
+Biomarkers/analysis
+Clinical Trials as Topic
+Humans
+Time Factors
+Treatment Failure
+LA  - eng
+N1  - 1095-9203
+Golde, Todd E
+DeKosky, Steven T
+Galasko, Douglas
+U01 AG046139/AG/NIA NIH HHS/United States
+P50 AG047266/AG/NIA NIH HHS/United States
+P50 AG005131/AG/NIA NIH HHS/United States
+Journal Article
+Research Support, N.I.H., Extramural
+United States
+Science. 2018 Dec 14;362(6420):1250-1251. doi: 10.1126/science.aau0437.
+PY  - 2018
+SN  - 0036-8075
+SP  - 1250-1251
+ST  - Alzheimer's disease: The right drug, the right time
+T2  - Science
+TI  - Alzheimer's disease: The right drug, the right time
+UR  - https://science.sciencemag.org/content/sci/362/6420/1250.full.pdf
+VL  - 362
+ID  - 282
+ER  - 
+
+TY  - JOUR
+AD  - Evelyn F. and William L. McKnight Brain Institute, Center for Translational Research in Neurodegenerative Disease, Departments of Neuroscience and Neurology, College of Medicine, University of Florida, Gainesville, FL, USA. tgolde@ufl.edu steven.dekosky@neurology.ufl.edu dgalasko@ucsd.edu.
+Department of Neurosciences and Shiley-Marcos Alzheimer's Disease Research Center, University of California San Diego, La Jolla, CA, USA. tgolde@ufl.edu steven.dekosky@neurology.ufl.edu dgalasko@ucsd.edu.
+AN  - 30545877
+AU  - Golde, T. E.
+AU  - DeKosky, S. T.
+AU  - Galasko, D.
+DA  - Dec 14
+DO  - 10.1126/science.aau0437
+DP  - NLM
+ET  - 2018/12/14
+IS  - 6420
+KW  - Alzheimer Disease/diagnosis/*drug therapy/metabolism
+Amyloid/metabolism
+Antibodies/therapeutic use
+Biomarkers/analysis
+Clinical Trials as Topic
+Humans
+Time Factors
+Treatment Failure
+L1  - internal-pdf://3966326174/Golde-2018-Alzheimer's disease_ The right drug.pdf
+LA  - eng
+N1  - 1095-9203
+Golde, Todd E
+DeKosky, Steven T
+Galasko, Douglas
+U01 AG046139/AG/NIA NIH HHS/United States
+P50 AG047266/AG/NIA NIH HHS/United States
+P50 AG005131/AG/NIA NIH HHS/United States
+Journal Article
+Research Support, N.I.H., Extramural
+United States
+Science. 2018 Dec 14;362(6420):1250-1251. doi: 10.1126/science.aau0437.
+PY  - 2018
+SN  - 0036-8075
+SP  - 1250-1251
+ST  - Alzheimer's disease: The right drug, the right time
+T2  - Science
+TI  - Alzheimer's disease: The right drug, the right time
+UR  - https://science.sciencemag.org/content/sci/362/6420/1250.full.pdf
+VL  - 362
+ID  - 1561
+ER  - 
+
+TY  - JOUR
+AB  - The worldwide incidence of Alzheimer's disease (AD) is increasing with estimates that 115 million individuals will have AD by 2050, creating an unsustainable healthcare challenge due to a lack of effective treatment options highlighted by multiple clinical failures of agents designed to reduce the brain amyloid burden considered synonymous with the disease. The amyloid hypothesis that has been the overarching focus of AD research efforts for more than two decades has been questioned in terms of its causality but has not been unequivocally disproven despite multiple clinical failures, This is due to issues related to the quality of compounds advanced to late stage clinical trials and the lack of validated biomarkers that allow the recruitment of AD patients into trials before they are at a sufficiently advanced stage in the disease where therapeutic intervention is deemed futile. Pursuit of a linear, reductionistic amyloidocentric approach to AD research, which some have compared to a religious faith, has resulted in other, equally plausible but as yet unvalidated AD hypotheses being underfunded leading to a disastrous roadblock in the search for urgently needed AD therapeutics. Genetic evidence supporting amyloid causality in AD is reviewed in the context of the clinical failures, and progress in tau-based and alternative approaches to AD, where an evolving modus operandi in biomedical research fosters excessive optimism and a preoccupation with unproven, and often ephemeral, biomarker/genome-based approaches that override transparency, objectivity and data-driven decision making, resulting in low probability environments where data are subordinate to self propagating hypotheses.
+AU  - Mullane, Kevin
+AU  - Williams, Michael
+DA  - 2013/02/01/
+DO  - https://doi.org/10.1016/j.bcp.2012.11.014
+IS  - 3
+KW  - Alzheimer's
+Amyloid
+Tau
+GWAS
+Clinical trial failures
+PY  - 2013
+SN  - 0006-2952
+SP  - 289-305
+ST  - Alzheimer's therapeutics: Continued clinical failures question the validity of the amyloid hypothesis—but what lies beyond?
+T2  - Biochemical Pharmacology
+TI  - Alzheimer's therapeutics: Continued clinical failures question the validity of the amyloid hypothesis—but what lies beyond?
+UR  - http://www.sciencedirect.com/science/article/pii/S0006295212007551
+https://pdf.sciencedirectassets.com/271311/1-s2.0-S0006295213X00024/1-s2.0-S0006295212007551/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCFx97G9kavxqoiW58fGLtGc1mMORiIpEVj2OxIzxG%2BYQIgX2C4jw0tfSaO%2F376VkebpUE9pwcbTE%2F5kPB4JyhqmDUqtAMIcxACGgwwNTkwMDM1NDY4NjUiDJwtlBYw4vgNlG2BgiqRA7%2BPglM9JRRnEvHdpeFZh3jEnU8tlS5lfe7PvoIEnrmaoQC8qBYm2gOgCtrtfCwTOMvLIX%2BhJreMEz8uOKHqPkXSGZLOzCLafqir6k4FAL%2FeNJrgQL0IptKBWAvktkxwQb1yWI874v%2BkWhEak%2B7LrHJ3K5RGv%2FlD4W5hzqgUyx8PZo8wTWr71AQi%2FSTXMJl8zwhuUA8If%2F%2FXv0LehXmJmHj5rtMRks2bygZEGsgiI3iQNXL2TAGn3EtP3bbbCQK3WoRYA9AOLyk%2Bf0%2BKv3WwsOt7Cm1lmxuWnGR4PN%2FUOkWrI3YbdwKPVa5BfoGE6GTvcIhzPGz2vogf9lxanuw%2BSmyxhPNLBTsohjBwO3kTq5kSVyDFzSp8FWGwf52WrDrh3ksHDBr%2B2vKPhTAZp7bDPkmA1Z2skLSYzWcMcXgHDN%2B5dQ2BVOpqvdEj0lBLD%2FmuPx9Jzam%2BYm8pvM4Ml%2BnEqEJuVIxsvAFwnENFo4k0T03I2Aw5vFvraHKyt5ldIBkW4zL3SBLZLsq4UVGpKWnQwFrsMIDC%2B%2FAFOusBxkx%2B8qS3NUdwRbaEgNl0v%2FqiIq3WKFuDJKgyV%2FyOrj9w5151ucRJJ9xZI6JKaV6DO2v6W8A9rIf1P35ZW4S%2FTuE7qk1nnqHx%2Fek7U%2FQ9zDq3FHCOuEG5JyB6dMq9tt0scj5F1nhVG2d5LmDNdV66qQP8O4WTN5d1xLpf0t47JMrqEcLYp6qbMeEYacyX4AIOFDLNyNI0FnFRe%2FNU5yTm55YvuBzIh9SnCYox642p%2FYN7b77WJXgp6uifmH27iGY4Exxih59iBwFXWr6E%2B5nuXkS0IF%2Bja96wNzso5xtBcu2pD%2FNKCYpTzbum5Q%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200115T112927Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYZPU4GKE5%2F20200115%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=cb8a8d40d75ef19860cccbe1134d632cad7f3dc12bf2fa9012e260a8743bfac1&hash=5b8767e4a900eed353a9d6110c354416de8f06169243f5eb1eb62bba1e253897&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S0006295212007551&tid=spdf-a7cc059a-46be-4989-b0f5-1e878dc482b0&sid=1b2516399913404e7a4a3d10f53aaf5ae7a9gxrqb&type=client
+VL  - 85
+ID  - 591
+ER  - 
+
+TY  - JOUR
+AB  - The worldwide incidence of Alzheimer's disease (AD) is increasing with estimates that 115 million individuals will have AD by 2050, creating an unsustainable healthcare challenge due to a lack of effective treatment options highlighted by multiple clinical failures of agents designed to reduce the brain amyloid burden considered synonymous with the disease. The amyloid hypothesis that has been the overarching focus of AD research efforts for more than two decades has been questioned in terms of its causality but has not been unequivocally disproven despite multiple clinical failures, This is due to issues related to the quality of compounds advanced to late stage clinical trials and the lack of validated biomarkers that allow the recruitment of AD patients into trials before they are at a sufficiently advanced stage in the disease where therapeutic intervention is deemed futile. Pursuit of a linear, reductionistic amyloidocentric approach to AD research, which some have compared to a religious faith, has resulted in other, equally plausible but as yet unvalidated AD hypotheses being underfunded leading to a disastrous roadblock in the search for urgently needed AD therapeutics. Genetic evidence supporting amyloid causality in AD is reviewed in the context of the clinical failures, and progress in tau-based and alternative approaches to AD, where an evolving modus operandi in biomedical research fosters excessive optimism and a preoccupation with unproven, and often ephemeral, biomarker/genome-based approaches that override transparency, objectivity and data-driven decision making, resulting in low probability environments where data are subordinate to self propagating hypotheses.
+AU  - Mullane, Kevin
+AU  - Williams, Michael
+DA  - 2013/02/01/
+DO  - https://doi.org/10.1016/j.bcp.2012.11.014
+IS  - 3
+KW  - Alzheimer's
+Amyloid
+Tau
+GWAS
+Clinical trial failures
+L1  - internal-pdf://0003073830/Mullane-2013-Alzheimer's therapeutics_ Continu.pdf
+PY  - 2013
+SN  - 0006-2952
+SP  - 289-305
+ST  - Alzheimer's therapeutics: Continued clinical failures question the validity of the amyloid hypothesis—but what lies beyond?
+T2  - Biochemical Pharmacology
+TI  - Alzheimer's therapeutics: Continued clinical failures question the validity of the amyloid hypothesis—but what lies beyond?
+UR  - http://www.sciencedirect.com/science/article/pii/S0006295212007551
+https://pdf.sciencedirectassets.com/271311/1-s2.0-S0006295213X00024/1-s2.0-S0006295212007551/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCFx97G9kavxqoiW58fGLtGc1mMORiIpEVj2OxIzxG%2BYQIgX2C4jw0tfSaO%2F376VkebpUE9pwcbTE%2F5kPB4JyhqmDUqtAMIcxACGgwwNTkwMDM1NDY4NjUiDJwtlBYw4vgNlG2BgiqRA7%2BPglM9JRRnEvHdpeFZh3jEnU8tlS5lfe7PvoIEnrmaoQC8qBYm2gOgCtrtfCwTOMvLIX%2BhJreMEz8uOKHqPkXSGZLOzCLafqir6k4FAL%2FeNJrgQL0IptKBWAvktkxwQb1yWI874v%2BkWhEak%2B7LrHJ3K5RGv%2FlD4W5hzqgUyx8PZo8wTWr71AQi%2FSTXMJl8zwhuUA8If%2F%2FXv0LehXmJmHj5rtMRks2bygZEGsgiI3iQNXL2TAGn3EtP3bbbCQK3WoRYA9AOLyk%2Bf0%2BKv3WwsOt7Cm1lmxuWnGR4PN%2FUOkWrI3YbdwKPVa5BfoGE6GTvcIhzPGz2vogf9lxanuw%2BSmyxhPNLBTsohjBwO3kTq5kSVyDFzSp8FWGwf52WrDrh3ksHDBr%2B2vKPhTAZp7bDPkmA1Z2skLSYzWcMcXgHDN%2B5dQ2BVOpqvdEj0lBLD%2FmuPx9Jzam%2BYm8pvM4Ml%2BnEqEJuVIxsvAFwnENFo4k0T03I2Aw5vFvraHKyt5ldIBkW4zL3SBLZLsq4UVGpKWnQwFrsMIDC%2B%2FAFOusBxkx%2B8qS3NUdwRbaEgNl0v%2FqiIq3WKFuDJKgyV%2FyOrj9w5151ucRJJ9xZI6JKaV6DO2v6W8A9rIf1P35ZW4S%2FTuE7qk1nnqHx%2Fek7U%2FQ9zDq3FHCOuEG5JyB6dMq9tt0scj5F1nhVG2d5LmDNdV66qQP8O4WTN5d1xLpf0t47JMrqEcLYp6qbMeEYacyX4AIOFDLNyNI0FnFRe%2FNU5yTm55YvuBzIh9SnCYox642p%2FYN7b77WJXgp6uifmH27iGY4Exxih59iBwFXWr6E%2B5nuXkS0IF%2Bja96wNzso5xtBcu2pD%2FNKCYpTzbum5Q%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200115T112927Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYZPU4GKE5%2F20200115%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=cb8a8d40d75ef19860cccbe1134d632cad7f3dc12bf2fa9012e260a8743bfac1&hash=5b8767e4a900eed353a9d6110c354416de8f06169243f5eb1eb62bba1e253897&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S0006295212007551&tid=spdf-a7cc059a-46be-4989-b0f5-1e878dc482b0&sid=1b2516399913404e7a4a3d10f53aaf5ae7a9gxrqb&type=client
+VL  - 85
+ID  - 1609
+ER  - 
+
+TY  - JOUR
+AB  - Toxic amyloid beta oligomers (AbetaOs) are known to accumulate in Alzheimer's disease (AD) and in animal models of AD. Their structure is heterogeneous and they are found in both intracellular and extracellular milieu. When given to CNS cultures or injected ICV into non-human primates and other non-transgenic animals AbetaOs have been found to cause impaired synaptic plasticity loss of memory function tau hyperphosphorylation and tangle formation synapse elimination oxidative and ER stress inflammatory microglial activation and selective nerve cell death. Memory loss and pathology in transgenic models are prevented by AbetaO antibodies while Aducanumab an antibody that targets AbetaOs as well as fibrillar Abeta has provided cognitive benefit to humans in early clinical trials. AbetaOs have now been investigated in more than 3000 studies and are widely thought to be the major toxic form of Abeta. Although much has been learned about the downstream mechanisms of AbetaO action a major gap concerns the earliest steps: How do AbetaOs initially interact with surface membranes to generate neuron-damaging transmembrane events? Findings from Ohnishi et al (PNAS 2005) combined with new results presented here are consistent with the hypothesis that AbetaOs act as neurotoxins because they attach to particular membrane protein docks containing Na/K ATPase-alpha3 where they inhibit ATPase activity and pathologically restructure dock composition and topology in a manner leading to excessive Ca++ build-up. Better understanding of the mechanism that makes attachment of AbetaOs to vulnerable neurons a neurotoxic phenomenon should open the door to therapeutics and diagnostics targeting the first step of a complex pathway that leads to neural damage and dementia.
+AU  - K., DiChiara T.DiNunno N.Clark J.Bu R. L.Cline E. N.Rollins M. G.Gong Y.Brody D. L.Sligar S. G.Velasco P. T.Viola
+C1  - PUBMED-28356893
+IS  - 1
+LB  - OLD
+PY  - 2017
+SN  - 0044-0086
+SP  - 45-61
+ST  - Alzheimer's Toxic Amyloid Beta Oligomers: Unwelcome Visitors to the Na/K ATPase alpha3 Docking Station
+T2  - Yale J Biol Med
+TI  - Alzheimer's Toxic Amyloid Beta Oligomers: Unwelcome Visitors to the Na/K ATPase alpha3 Docking Station
+VL  - 90
+ID  - 432
+ER  - 
+
+TY  - JOUR
+AB  - Experimental models of Alzheimer’s disease (AD) are critical to gaining a better understanding of pathogenesis and to assess the potential of novel therapeutic approaches. The most commonly used experimental animal models are transgenic mice that overexpress human genes associated with familial AD (FAD) that result in the formation of amyloid plaques. However, AD is defined by the presence and interplay of both amyloid plaques and neurofibrillary tangle pathology. The track record of success in AD clinical trials thus far has been very poor. In part, this high failure rate has been related to the premature translation of highly successful results in animal models that mirror only limited aspects of AD pathology to humans. A greater understanding of the strengths and weakness of each of the various models and the use of more than one model to evaluate potential therapies would help enhance the success of therapy translation from preclinical studies to patients. In this review, we summarize the pathological features and limitations of the major experimental models of AD, including transgenic mice, transgenic rats, various physiological models of sporadic AD and in vitro human cell culture models.
+AU  - Drummond, Eleanor
+AU  - Wisniewski, Thomas
+DA  - February 01
+DO  - 10.1007/s00401-016-1662-x
+IS  - 2
+LB  - Drummond2017
+M3  - journal article
+PY  - 2017
+SN  - 1432-0533
+SP  - 155-175
+ST  - Alzheimer’s disease: experimental models and reality
+T2  - Acta Neuropathologica
+TI  - Alzheimer’s disease: experimental models and reality
+UR  - https://doi.org/10.1007/s00401-016-1662-x
+https://link.springer.com/content/pdf/10.1007%2Fs00401-016-1662-x.pdf
+VL  - 133
+ID  - 224
+ER  - 
+
+TY  - JOUR
+AB  - Experimental models of Alzheimer’s disease (AD) are critical to gaining a better understanding of pathogenesis and to assess the potential of novel therapeutic approaches. The most commonly used experimental animal models are transgenic mice that overexpress human genes associated with familial AD (FAD) that result in the formation of amyloid plaques. However, AD is defined by the presence and interplay of both amyloid plaques and neurofibrillary tangle pathology. The track record of success in AD clinical trials thus far has been very poor. In part, this high failure rate has been related to the premature translation of highly successful results in animal models that mirror only limited aspects of AD pathology to humans. A greater understanding of the strengths and weakness of each of the various models and the use of more than one model to evaluate potential therapies would help enhance the success of therapy translation from preclinical studies to patients. In this review, we summarize the pathological features and limitations of the major experimental models of AD, including transgenic mice, transgenic rats, various physiological models of sporadic AD and in vitro human cell culture models.
+AU  - Drummond, Eleanor
+AU  - Wisniewski, Thomas
+DA  - February 01
+DO  - 10.1007/s00401-016-1662-x
+IS  - 2
+L1  - internal-pdf://0741567941/Drummond-2017-Alzheimer’s disease_ experimenta.pdf
+LB  - Drummond2017
+M3  - journal article
+PY  - 2017
+SN  - 1432-0533
+SP  - 155-175
+ST  - Alzheimer’s disease: experimental models and reality
+T2  - Acta Neuropathologica
+TI  - Alzheimer’s disease: experimental models and reality
+UR  - https://doi.org/10.1007/s00401-016-1662-x
+https://link.springer.com/content/pdf/10.1007%2Fs00401-016-1662-x.pdf
+VL  - 133
+ID  - 1000
+ER  - 
+
+TY  - JOUR
+AU  - Masters, Colin L.
+AU  - Bateman, Randall
+AU  - Blennow, Kaj
+AU  - Rowe, Christopher C.
+AU  - Sperling, Reisa A.
+AU  - Cummings, Jeffrey L.
+DA  - 10/15/online
+DO  - 10.1038/nrdp.2015.56
+M3  - Primer
+PY  - 2015
+SP  - 15056
+ST  - Alzheimer&#39;s disease
+T2  - Nature Reviews Disease Primers
+TI  - Alzheimer&#39;s disease
+UR  - http://dx.doi.org/10.1038/nrdp.2015.56
+https://www.nature.com/articles/nrdp201556.pdf
+VL  - 1
+ID  - 551
+ER  - 
+
+TY  - JOUR
+AB  - Purpose: Much has been written about the importance of Web site usability. However, a Web site that is usable in terms of navigation can still have credibility issues that reflect negatively on an organization. As a result, Website credibility assessments have gained popularity, but little research in that area has examined one of the most common forms of Web site communication-that is, small business Web sites that do not pose risk and do not offer e-commerce. This paper begins to address that gap by exploring the relationship between Web visitor expectations and their credibility judgments about a small business based on its Web site. Method: I conducted research based on principles of Prominence Interpretation Theory of Web credibility. This research included focus groups of likely consumers to explore the relationship between Web visitor expectations and judgments about the small business Web site and credibility judgments about the small business. Data from the focus groups was used to: (1) determine the factors that women use when setting expectations and making credibility judgments about a small business based on their Web experiences, and (2) identify if those factors vary generationally. Results: The results of the research revealed that likely consumers of the small business did not believe the Web experience projected a credible brand with which they would want to engage. In other words, a Web site that was intended to promote the products and the store was ironically hurting the business by turning away potential customers. Conclusion: I show how a six-step credibility test (based on Prominence- Interpretation Theory principles) can be used by communications consultants, Web site developers, and small-business owners. Such a test is an effective yet simple approach to gauging Web credibility judgments and making sustainable Web site changes in organizations with limited resources. The ease of this test combined with the time- and cost-effectiveness make it especially useful for small business Web sites, where expertise and resources may be limited.
+AD  - Texas Tech University in Technical Communication and Rhetoric, St. Cloud Technical and Community College, United States
+AU  - Everett, H. L.
+DB  - Scopus
+IS  - 2
+J2  - Tech. Commun.
+KW  - Drupal
+Open source web content management systems
+Prominence-interpretation theory
+Usability
+Web site credibility
+Wix
+Wordpress
+LA  - English
+M3  - Article
+N1  - Export Date: 24 November 2023; Cited By: 5; Correspondence Address: H. L. Everett; Texas Tech University in Technical Communication and Rhetoric, St. Cloud Technical and Community College, United States; email: heidi.everett@ttu.edu
+PY  - 2013
+SN  - 00493155 (ISSN)
+SP  - 118-130
+ST  - Amateur hour: Credibility testing for small business web sites
+T2  - Technical Communication
+TI  - Amateur hour: Credibility testing for small business web sites
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-84879139996&partnerID=40&md5=0722df2bc291803dd5d0c0ab0c2dd176
+VL  - 60
+ID  - 51774
+ER  - 
+
+TY  - JOUR
+AB  - Contextual ambidexterity is of paramount importance for new product innovation and organizational success, particularly in high-tech firms operating in a dynamic environment. Whilst it is recognized that contextual ambidexterity is grounded in organizational culture, existing research has not crystallized what kind of organizational culture enables contextual ambidexterity and consequently new product innovation. In this paper, drawing on data from 150 UK and 242 Chinese high-tech firms, we conceptualize ambidextrous organizational culture as a higher-order construct consisting of organizational diversity and shared vision, and examine its impacts on contextual ambidexterity and consequently on new product innovation outcomes. Using structural equation modelling, we find significant relationships between ambidextrous organizational culture, contextual ambidexterity and new product innovation outcomes; contextual ambidexterity mediates the relationship between ambidextrous organizational culture and new product innovation outcomes. Our findings also suggest that the above relationships are robust in the UK-China comparative research context, and that contextual ambidexterity and new product innovation outcomes are dependent on business unit level heterogeneity (i.e. ambidextrous organizational culture and research and development strength) rather than industry or cross-cultural differences. © 2012 British Academy of Management.
+AD  - School of Management, Royal Holloway, University of London, Egham, Surrey, TW20 0EX, Egham Hill, United Kingdom
+School of Business and Economics, Loughborough University, Loughborough, Leicestershire, LE11 3TU, United Kingdom
+AU  - Wang, C. L.
+AU  - Rafiq, M.
+DB  - Scopus
+DO  - 10.1111/j.1467-8551.2012.00832.x
+IS  - 1
+J2  - Br. J. Manage.
+LA  - English
+M3  - Article
+N1  - Export Date: 24 November 2023; Cited By: 206; Correspondence Address: C.L. Wang; School of Management, Royal Holloway, University of London, Egham, Surrey, TW20 0EX, Egham Hill, United Kingdom; email: Catherine.Wang@rhul.ac.uk
+PY  - 2014
+SN  - 14678551 (ISSN)
+SP  - 58-76
+ST  - Ambidextrous organizational culture, contextual ambidexterity and new product innovation: A comparative study of UK and Chinese high-tech firms
+T2  - British Journal of Management
+TI  - Ambidextrous organizational culture, contextual ambidexterity and new product innovation: A comparative study of UK and Chinese high-tech firms
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-84891488400&doi=10.1111%2fj.1467-8551.2012.00832.x&partnerID=40&md5=caaba20d6c56c83870f65b2ab0873e12
+VL  - 25
+ID  - 52775
+ER  - 
+
+TY  - JOUR
+AB  - Background: Intracerebral haemorrhage (ICH) rates increase in winter months. We aimed to determine associations of ambient temperature with clinical severity and haematoma size in acute ICH among Chinese participants in the Intensive Blood Pressure Reduction in Acute Cerebral Haemorrhage Trial (INTERACT1). Methods: INTERACT1 was a randomised controlled trial of early intensive blood pressure lowering in 404 patients with acute ICH. Among 304 (79%) Chinese participants, data on ambient temperature (average, minimum, maximum and range) on the day of ICH onset obtained from the China Meteorological Data Sharing Service System were linked to measures of clinical severity: elevated National Institute of Health Stroke Scale score (>10), low Glasgow Coma Scale score (<14), and haematoma parameters at the time of presentation. Clinical outcomes were evaluated in logistic regression models, and haematoma volume (log transformed, with and without intraventricular haemorrhage, IVH) was evaluated in multivariable regression models. Results: No significant associations were evident between temperature parameters and clinical parameters and haematoma volume (with and without IVH), even after adjustment for key prognostic factors. Conclusions: No relationship was evident between ambient temperature and severity in acute ICH. © 2014 S. Karger AG, Basel.
+AD  - George Institute for Global Health, Sydney, NSW 2050, PO Box M201, Missenden Road, Australia
+Department of Statistics, Macquarie University, Sydney, NSW, Australia
+Nanjing Hospital, Nanjing Medical University, Nanjing, China
+AU  - Zheng, D.
+AU  - Arima, H.
+AU  - Heeley, E.
+AU  - Karpin, A.
+AU  - Heller, G.
+AU  - Yang, J.
+AU  - Chalmers, J.
+AU  - Anderson, C. S.
+C2  - 24577383
+DB  - Scopus
+DO  - 10.1159/000358304
+IS  - 3
+J2  - Neuroepidemiology
+KW  - Ambient temperature
+Clinical trials
+Glasgow Coma Scale score
+Haematoma volume
+INTERACT
+Intracerebral haemorrhage
+NIHSS score
+Aged
+Cerebral Hemorrhage
+Female
+Glasgow Coma Scale
+Humans
+Male
+Middle Aged
+Temperature
+antihypertensive agent
+antithrombocytic agent
+warfarin
+adult
+article
+brain hemorrhage
+Chinese
+controlled study
+disease association
+disease severity
+environmental temperature
+hematoma volume
+human
+major clinical study
+National Institutes of Health Stroke Scale
+nervous system parameters
+outcome assessment
+prognosis
+randomized controlled trial
+risk assessment
+LA  - English
+M3  - Article
+N1  - Export Date: 24 November 2023; Cited By: 4; CODEN: NEEPD
+PY  - 2014
+SN  - 02515350 (ISSN)
+SP  - 169-173
+ST  - Ambient Temperature and Severity of Intracerebral Haemorrhage: The interact1 Study
+T2  - Neuroepidemiology
+TI  - Ambient Temperature and Severity of Intracerebral Haemorrhage: The interact1 Study
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-84895710121&doi=10.1159%2f000358304&partnerID=40&md5=8b32c8e5eadb424493c21c4c3e377c9f
+VL  - 42
+ID  - 52721
+ER  - 
+
+TY  - JOUR
+AB  - Background: As no human data exist, we aimed to determine the relation between ambient temperature and volume of perihematomal 'cerebral' edema in acute spontaneous intracerebral haemorrhage (ICH) among Chinese participants of the pilot phase, Intensive Blood Pressure Reduction in Acute Cerebral Haemorrhage Trial (INTERACT1). Methods: INTERACT1 was a multicenter, open, blind outcome assessed, randomized controlled trial of intensive (systolic target <140mmHg) vs. guideline-recommended (systolic target <180mmHg) blood pressure (BP) lowering in 404 patients with acute ICH. Data on ambient temperature (mean, minimum, maximum, and range) on the day of each participant's ICH obtained from China Meteorological Data Sharing Service System were linked to other data including edema volumes. Multivariable regression analyses were performed to evaluate association between ambient temperature and edema volumes. A generalized linear regression model with a generalized estimating equations approach (GEE) was used to assess any association of ambient temperature and change in edema volume over 72h. Results: A total of 250 of all 384 Chinese participants had complete data that showed positive associations between ambient temperature (mean and minimum temperatures) and edema volumes at each time point over 72h after hospital admission (all P<0·05). All temperature parameters except diurnal temperature range were positively associated with edema volume after adjustment for confounding variables (all P<0·02). Conclusion: An apparent positive association exists between ambient temperature and perihematomal edema volume in acute spontaneous ICH. © 2014 World Stroke Organization.
+AD  - The George Institute for Global Health, Royal Prince Alfred Hospital, Sydney, Australia
+Sydney Medical School, University of Sydney, Sydney, Australia
+Department of Statistics, Macquarie University, Sydney, Australia
+Nanjing First Hospital, Nanjing Medical University, Nanjing, China
+AU  - Zheng, D.
+AU  - Arima, H.
+AU  - Heeley, E.
+AU  - Karpin, A.
+AU  - Yang, J.
+AU  - Chalmers, J.
+AU  - Anderson, C. S.
+C2  - 25345354
+DB  - Scopus
+DO  - 10.1111/ijs.12389
+IS  - 1
+J2  - Int. J. Stroke
+KW  - Ambient temperature
+Clinical trials
+INTERACT
+Intracerebral haemorrhage
+Perihematomal edema volume
+Adult
+Asian Continental Ancestry Group
+Brain Edema
+Cerebral Hemorrhage
+Female
+Humans
+Male
+Middle Aged
+Pilot Projects
+Temperature
+antihypertensive agent
+warfarin
+acute disease
+Article
+blood pressure regulation
+brain hemorrhage
+China
+Chinese
+circadian rhythm
+disease association
+disease severity
+environmental parameters
+environmental temperature
+hospital admission
+human
+hypertension
+information system
+major clinical study
+meteorology
+multicenter study (topic)
+open study
+outcome assessment
+pilot study
+practice guideline
+priority journal
+randomized controlled trial (topic)
+systolic blood pressure
+temperature measurement
+clinical trial
+complication
+controlled study
+multicenter study
+pathology
+randomized controlled trial
+LA  - English
+M3  - Article
+N1  - Export Date: 24 November 2023; Cited By: 9
+PY  - 2015
+SN  - 17474930 (ISSN)
+SP  - 25-27
+ST  - Ambient temperature and volume of perihematomal edema in acute intracerebral haemorrhage: The INTERACT1 study
+T2  - International Journal of Stroke
+TI  - Ambient temperature and volume of perihematomal edema in acute intracerebral haemorrhage: The INTERACT1 study
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-84915754845&doi=10.1111%2fijs.12389&partnerID=40&md5=a82a0f61ed0ef35c9e62e0d51f055050
+VL  - 10
+ID  - 53466
+ER  - 
+
+TY  - JOUR
+AB  - Objective: After the recent publication of the prospective study of feasibility of mammary reduction in ambulatory setting by Guilbert et al., we would like to present our North-American experience and share some data from the last year. Methods: We obtained four data from our medical archives: the total number of reduction mammaplasties done during the last year, the number of cases done in ambulatory setting, the number of cases done with hospitalization, and the number of conversions (ambulatory cases transformed into hospitalizations lasting more than 24. hours). Results: Two hundred and eighteen bilateral mammary reductions were completed between March 2011 and April 2012. Of these 218 cases, 97% were planned for a surgery in ambulatory setting whereas only six were planned with hospitalization. Moreover, only seven of the 212 cases in ambulatory setting required a conversion to a brief hospitalization. Conclusion: Cost-effectiveness, low rate of complication, and high satisfaction rate are all advantages of surgery in ambulatory setting. Our 10-year experience with this mode of care confirms these benefits. © 2013.
+AD  - Service de chirurgie plastique du centre hospitalier de l'université de Montréal, Québec, Canada
+Service de chirurgie plastique et reconstruction, Montréal, QC, campus Notre-Dame, 1560, rue Sherbrooke Est, Canada
+AU  - El-Diwany, M.
+AU  - Danino, A. M.
+C2  - 23816054
+DB  - Scopus
+DO  - 10.1016/j.anplas.2013.05.005
+IS  - 6
+J2  - Ann. Chir. Plast. Esthet.
+KW  - Ambulatory surgery
+Chirurgie ambulatoire
+Choix de pédicules
+Mammary reduction
+Pedicle choice
+Réduction mammaire
+Ambulatory Surgical Procedures
+Female
+Humans
+Mammaplasty
+breast reconstruction
+human
+letter
+methodology
+LA  - French
+M3  - Letter
+N1  - Export Date: 24 November 2023; Cited By: 1; Correspondence Address: M. El-Diwany; Service de chirurgie plastique du centre hospitalier de l'université de Montréal, Québec, Canada; email: mostafa.el-diwany@umontreal.ca; CODEN: ACESE
+PY  - 2013
+SN  - 02941260 (ISSN)
+SP  - 709-710
+ST  - La chirurgie ambulatoire de réduction mammaire: L'adaptation à une pratique nord-américaine
+T2  - Annales de Chirurgie Plastique Esthetique
+TI  - "The ambulatory surgery of breast reduction: The adaptation to a North-American practice"
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-84888205740&doi=10.1016%2fj.anplas.2013.05.005&partnerID=40&md5=8661b16286315c078ab6ed24dcde7b3b
+VL  - 58
+ID  - 51503
+ER  - 
+
+TY  - JOUR
+AB  - For a quarter century, American education researchers have tended to favour qualitative and descriptive analyses over quantitative studies using random assignment or featuring credible quasi-experimental research designs. This has now changed. In 2002 and 2003, the US Department of Education funded a dozen randomized trials to evaluate the efficacy of pre-school programmes, up from one in 2000. In this essay, I explore the intellectual and legislative roots of this change, beginning with the story of how contemporary education research fell out of step with other social sciences. I then use a study in which low-achieving high-school students were randomly offered incentives to learn to show how recent developments in research methods answer ethical and practical objections to the use of random assignment for research on schools. Finally, I offer a few cautionary notes based on results from the recent effort to cut class size in California. © Oxford University Press and the Oxford Review of Economic Policy Limited 2004; all rights reserved.
+AD  - MIT, NBER, Cambridge, MA 02139-4307, United States
+AU  - Angrist, J. D.
+DB  - Scopus
+DO  - 10.1093/oxrep/grh011
+IS  - 2
+J2  - Oxf. Rev. Econ. Policy
+KW  - North America
+United States
+academic research
+comparative study
+education policy
+policy strategy
+LA  - English
+M3  - Article
+N1  - Export Date: 24 November 2023; Cited By: 54
+PY  - 2004
+SN  - 0266903X (ISSN)
+SP  - 198-212
+ST  - American education research changes tack
+T2  - Oxford Review of Economic Policy
+TI  - American education research changes tack
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-3242876647&doi=10.1093%2foxrep%2fgrh011&partnerID=40&md5=ec0ef5be3358dfb5497fcd9237f0fce4
+VL  - 20
+ID  - 47287
+ER  - 
+
+TY  - JOUR
+AB  - Epidemiological data indicate that HIV and AIDS are disproportionately affecting American Indians. Specific to American Indian men identifying as gay, bisexual, twospirit or who have same-sex experiences, this study assessed HIV-risk behaviours and barriers to testing, prevention and treatment efforts. A rapid assessment model was utilised as an indigenous-supporting research design. Rigour and thoroughness were achieved via multiple validation procedures. Central themes surrounding barriers to HIV prevention included social discrimination, low self-esteem and substance use. Findings suggest the underutilisation of condoms due to ineffective placement and limited availability in popular locations among gay, bisexual and two-spirit individuals. Participants indicated that HIV testing is occurring less frequently and that testing was not available after hours or weekends. Barriers to treatment included a mistrust of the current healthcare system, a perceived lack of support from the Indian Health Service for AIDS care and a lack of transportation to healthcare appointments. Lastly, participants discussed and supported culturally-sensitive treatment services. This study calls attention to the value of an American Indian-specific HIV/AIDS service organisation, the presence of indigenous service providers in the community and culturally-sensitive healthcare providers. © 2010 Taylor & Francis.
+AD  - Department of Veterans Affairs, Mental Illness Research, Education, and Clinical Centre, Portland, United States
+Department of Counselling Psychology, University of Oklahoma, Norman, United States
+Department of Biology, Portland Community College, Portland, United States
+AU  - Burks, D. J.
+AU  - Robbins, R.
+AU  - Durtschi, J. P.
+C2  - 21049311
+DB  - Scopus
+DO  - 10.1080/13691058.2010.525666
+IS  - 3
+J2  - Cult. Health Sexual.
+KW  - American Indian
+Gay
+HIV/AIDS
+Rapid assessment
+Two-spirit
+Adult
+Bisexuality
+Cultural Competency
+Data Collection
+Focus Groups
+Health Services Accessibility
+HIV Infections
+Homosexuality, Male
+Humans
+Indians, North American
+Interviews as Topic
+Male
+Middle Aged
+Oklahoma
+Primary Prevention
+Risk Factors
+article
+cultural competence
+ethnology
+health care delivery
+homosexuality
+human
+Human immunodeficiency virus infection
+information processing
+interview
+risk factor
+United States
+LA  - English
+M3  - Article
+N1  - Export Date: 24 November 2023; Cited By: 28; Correspondence Address: D. J. Burks; Department of Veterans Affairs, Mental Illness Research, Education, and Clinical Centre, Portland, United States; email: derek.burks@va.gov; CODEN: CHSUB
+PY  - 2011
+SN  - 14645351 (ISSN)
+SP  - 283-298
+ST  - American Indian gay, bisexual and two-spirit men: A rapid assessment of HIV/AIDS risk factors, barriers to prevention and culturally-sensitive intervention
+T2  - Culture, Health and Sexuality
+TI  - American Indian gay, bisexual and two-spirit men: A rapid assessment of HIV/AIDS risk factors, barriers to prevention and culturally-sensitive intervention
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-79251625796&doi=10.1080%2f13691058.2010.525666&partnerID=40&md5=4befa9404b033d59eabf8ee334cab649
+VL  - 13
+ID  - 50158
+ER  - 
+
+TY  - JOUR
+AB  - Well-publicized lapses in the review or implementation of clinical research studies have raised public questions about the integrity of the clinical research process. Public trust in the integrity of research is critical not only for funding and participation in clinical trials but also for confidence in the treatments that result from the trials. The questions raised by these unfortunate cases pose an important opportunity to reassess the clinical trials oversight system to ensure the integrity of clinical research and the safety of those who enroll in clinical trials. Since its inception, the American Society of Clinical Oncology (ASCO) has worked for the advancement of cancer treatments through clinical research and to help patients gain prompt access to scientifically excellent and ethically unimpeachable clinical trials. As an extension of its mission, ASCO is affirming with this policy statement the critical importance of a robust review and oversight system to ensure that clinical trials participants give fully informed consent and that their safety is a top priority. Ensuring the integrity of research cannot be stressed enough because of its seminal connection to the advancement of clinical cancer treatment. The overall goal of this policy is to enhance public trust in the cancer clinical trials process. To achieve this, the following elements are essential: 1. Ensure safety precautions for clinical trial participants and their fully informed consent. 2. Ensure the validity and integrity of scientific research. 3. Enhance the educational training of clinical scientists and research staff to ensure the highest standards of research conduct. 4. Promote accountability and responsibility among all those involved in clinical research (not just those serving on institutional review boards [IRBs], but also institutional officials, researchers, sponsors, and participants) and ensure support for an effective oversight process. 5. Enhance the professional and public understanding of clinical research oversight. 6. Enhance the efficiency and cost-effectiveness of the clinical research oversight system. This policy statement makes recommendations in several areas that serve as principles to support an improved system of oversight for clinical research. ASCO will work with all parties involved in the clinical research system to develop the steps necessary to implement these recommendations. • Centralized Trial Review: A large percentage of oncology clinical trials are coordinated through the National Cancer Institute's (NCI) system of cooperative groups, which already incorporates centralized scientific review. As such, there is a tremendous opportunity to employ a centralized mechanism to provide ethical review by highly trained IRB members, allowing local IRBs to take advantage of the financial and time efficiencies that central review provides. Centralized review boards (CRBs) would also contribute consistency and efficiency to the process. Once successfully completed, the review would represent an approval to open the protocol at all of the institutions that have subscribed to the centralized review system. Local IRBs would be able to devote time usually spent on initial review to ongoing monitoring of the trial taking place at their institution. Considering the enormous size and complexity of the clinical research enterprise, ASCO envisions multiple CRBs, which could be distributed as regional review boards. Central review will use a single protocol and consent form, and monitor and evaluate adverse events (AEs) on a global basis, eliminating many of the time-consuming steps for the local IRB. Global monitoring and assessment of AEs has real potential to enhance trial participants' safety by giving local institutions more information on the overall trial and enabling them to devote more time to ongoing review of the trial onsite. Use of a CRB also has real potential to reduce the costs of clinical trial oversight by allowing local IRBs to eliminate the costs of initial review. These efficiencies will likely lead o institutions redirecting funds toward monitoring ongoing trials. Although a CRB has potential to improve the efficiency of the process, a CRB could also have tremendous ability to delay valuable trials. Checks and balances must be included in the newly devised system to ensure timely review and appeals of CRB actions. ASCO proposes the advent of a new pilot program for centralizing review of clinical trials. It requires clear engagement of all stakeholders in planning the experiment, clear articulation of the goals, and assurance of federal regulatory protection for institutions choosing to participate. If successful, this CRB pilot project could be expanded to include multi-institutional industry-sponsored research. • Education and Training: Education and training are critical to the ultimate success of an improved oversight system. All members of the research team should receive comprehensive education on conducting scientifically and ethically valid clinical research. The curriculum should also include information on the prevailing local and federal regulations that pertain to the clinical trials process. IRB members should also receive ongoing education and training in the review of clinical research protocols. IRB training should pay particular attention to nonscientific members to give them the tools necessary to speak on behalf of research participants. ASCO should develop a curriculum that focuses on the proper conduct of human research and emphasize ethically sound clinical research in the context of its Annual Meeting. • Informed Consent: Investigators and review boards have specific roles to play in ensuring the education of trial participants through the informed consent process, both when they are considering trial enrollment and as they participate in the trial. Review boards and investigators should focus primarily on the informed consent process, rather than the informed consent documents. • Federal Oversight: The federal government has an important role to play in the oversight of clinical research. This role should be expanded to cover all research, not just that which is funded by the federal government or conducted with the oversight of the Food and Drug Administration (FDA). The Department of Health and Human Services (HHS) Office for Human Research Protections (OHRP) and the FDA should provide clear regulatory support and guidance for local institutions that choose to employ a CRB. In the case of the pilot CRB discussed in this policy statement, it should serve as the preferred option for the cancer cooperative group clinical trials. Ideally, the federal government should unify and streamline its regulations for the oversight of clinical research. • Resources Supporting Clinical Research Infrastructure: An effective oversight process demands the highest quality scientific and ethical review and onsite monitoring of the safety of trial participants. This can only be accomplished by the involvement of an experienced IRB that receives funding, resources, and institutional support enabling it to fulfill its mandate. • Conflict of Interest: Critical to the integrity of research is the absence of bias in the process. ASCO strongly recommends the adoption of standards for the identification, management, and, where appropriate, elimination of conflicts of interests, whether they are actual, potential, or apparent. © 2003 by American Society of Clinical Oncology.
+AD  - American Society of Clinical Oncology, Cancer Policy and Clinical Affairs, Alexandria, VA 22314, 1900 Duke Street, United States
+AU  - Bruinooge, S. S.
+C2  - 12721281
+DB  - Scopus
+DO  - 10.1200/JCO.2003.04.026
+IS  - 12
+J2  - J. Clin. Oncol.
+KW  - Biomedical Research
+Clinical Trials
+Conflict of Interest
+Ethical Review
+Ethics Committees, Research
+Government Regulation
+Human Experimentation
+Humans
+Informed Consent
+Neoplasms
+Societies, Medical
+United States
+antineoplastic agent
+cancer
+cancer chemotherapy
+cancer research
+cancer therapy
+clinical education
+clinical research
+cost effectiveness analysis
+health care policy
+human
+medical society
+priority journal
+review
+article
+clinical trial
+ethics
+human experiment
+legal aspect
+medical research
+neoplasm
+professional standard
+standard
+LA  - English
+M3  - Review
+N1  - Export Date: 24 November 2023; Cited By: 62; Correspondence Address: S.S. Bruinooge; American Society of Clinical Oncology, Cancer Policy and Clinical Affairs, Alexandria, VA 22314, 1900 Duke Street, United States; email: bruinoos@asco.org; CODEN: JCOND
+PY  - 2003
+SN  - 0732183X (ISSN)
+SP  - 2377-2386
+ST  - American Society of Clinical Oncology policy statement: Oversight of clinical research
+T2  - Journal of Clinical Oncology
+TI  - American Society of Clinical Oncology policy statement: Oversight of clinical research
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-0038501058&doi=10.1200%2fJCO.2003.04.026&partnerID=40&md5=d97dcbd480a225fa669a53919912eefc
+VL  - 21
+ID  - 47073
+ER  - 
+
+TY  - CHAP
+AB  - Commercial parenteral nutrition (PN) solutions contain L-amino acid preparations that typically include all nine essential amino acids (AA) and varying numbers of nonessential amino acids over a range of concentrations. Data remain limited from rigorous randomized clinical trials (RCTs) and comparative effectiveness research (CER) on optimal doses of amino acids in PN. In addition, with some exceptions (e.g., glutamine (GLN)), little rigorous research on the clinical and metabolic impact of altered specific amino acid composition of the PN amino acid component has been performed in children or adults. An exception is the growing number of studies on the efficacy of GLN added to PN and emerging amino acid dose-response studies in very low birth weight infants requiring PN. Parenteral GLN added to complete PN may confer benefit in selected patients; however, several recent studies show no difference in clinical outcomes in intensive care unit (ICU) patients with use of PN supplemented with GLN dipeptides, while high-dose intravenous GLN dipeptide combined with high-dose enteral GLN in adult critically ill patients with multiple organ failure and/or shock may be deleterious. Additional data to define optimal GLN dosing and the patient subgroups may benefit after organ recovery are needed. Very limited data on the efficacy of PN supplemented with branchedchain amino acids (BCAA), arginine, taurine, or cysteine are available. Few clinical efficacy data are available to conclusively guide total or specific amino acid dosing in adult and pediatric patients in PN. Adequately powered RCTs are needed to better determine optimal amino acid dosing and PN amino acid composition in critically ill patients who require PN support. © Springer Science+Business Media New York 2015.
+AD  - Division of Medical Intensive Care, Erciyes University School of Medicine, Kayseri, Turkey
+Division of Endocrinology, Metabolism and Lipids, Department of Medicine Emory University School of Medicine Nutrition and Metabolic Support Service Atlanta Clinical and Translational Science Institute Emory University Hospital, Atlanta, GA, United States
+AU  - Gundogan, K.
+AU  - Ziegler, T. R.
+DB  - Scopus
+DO  - 10.1007/978-1-4614-7836-2_144
+J2  - Diet and Nutrition in Critical Care
+LA  - English
+N1  - Export Date: 24 November 2023; Cited By: 0
+PB  - Springer New York
+PY  - 2015
+SN  - 978-146147836-2 (ISBN); 978-146147837-9 (ISBN)
+SP  - 1885-1894
+ST  - Amino acid composition in parenteral nutrition
+T2  - Diet and Nutrition in Critical Care
+TI  - Amino acid composition in parenteral nutrition
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-84945151649&doi=10.1007%2f978-1-4614-7836-2_144&partnerID=40&md5=ec4a6aa0b3d629b33bbf7fcc7dd2d38a
+ID  - 53232
+ER  - 
+
+TY  - JOUR
+AB  - Purpose of review: Complete parenteral nutrition solutions contain mixed amino acid products providing all nine essential amino acids and a varying composition of nonessential amino acids. Relatively little rigorous comparative efficacy research on altered parenteral nutrition amino acid composition has been published in recent years. Recent findings: Limited data from randomized, double-blind, adequately powered clinical trials to define optimal doses of total or individual amino acids in parenteral nutrition are available. An exception is the growing number of studies on the efficacy of glutamine supplementation of parenteral nutrition or given as a single parenteral agent. Parenteral glutamine appears to confer benefit in selected patients; however, additional data to define optimal glutamine dosing and the patient subgroups who may most benefit from this amino acid are needed. Although some promising studies have been published, little data are available in the current era of nutrition support on the clin cal efficacy of altered doses of arginine, branched chain amino acids, cysteine, or taurine supplementation of parenteral nutrition. Summary: Despite routine use of parenteral nutrition, surprisingly little clinical efficacy data are available to guide total or specific amino acid dosing in adult and pediatric patients requiring this therapy. This warrants increased attention by the research community and funding agencies to better define optimal amino acid administration strategies in patient subgroups requiring parenteral nutrition. © 2010 Wolters Kluwer Health | Lippincott Williams & Wilkins.
+AD  - Department of Medicine, Emory University, School of Medicine, Atlanta, GA, United States
+Nutrition and Metabolic Support Service, Emory University Hospital, Emory University, Atlanta, GA, United States
+AU  - Yarandi, S. S.
+AU  - Zhao, V. M.
+AU  - Hebbar, G.
+AU  - Ziegler, T. R.
+C2  - 21076291
+DB  - Scopus
+DO  - 10.1097/MCO.0b013e328341235a
+IS  - 1
+J2  - Curr. Opin. Clin. Nutr. Metab. Care
+KW  - Amino acids
+Arginine
+Cysteine
+Glutamine
+Taurine
+Humans
+Parenteral Nutrition Solutions
+Parenteral Nutrition, Total
+Treatment Outcome
+branched chain amino acid
+amino acid composition
+amino acid metabolism
+article
+diet supplementation
+drug safety
+human
+nonhuman
+nutritional requirement
+nutritional support
+outcome assessment
+parenteral nutrition
+therapy effect
+LA  - English
+M3  - Article
+N1  - Export Date: 24 November 2023; Cited By: 49; Correspondence Address: T. R. Ziegler; Atlanta Clinical and Translational Science Institute, Emory University Hospital, Atlanta, GA 30322, 1364 Clifton Road, United States; email: tzieg01@emory.edu; CODEN: COCMF
+PY  - 2011
+SN  - 14736519 (ISSN)
+SP  - 75-82
+ST  - Amino acid composition in parenteral nutrition: What is the evidence?
+T2  - Current Opinion in Clinical Nutrition and Metabolic Care
+TI  - Amino acid composition in parenteral nutrition: What is the evidence?
+UR  - https://www.scopus.com/inward/record.uri?eid=2-s2.0-79851514325&doi=10.1097%2fMCO.0b013e328341235a&partnerID=40&md5=736653c65242f5466d85e226a2356c95
+VL  - 14
+ID  - 50185
+ER  - 
+
+TY  - JOUR
+AB  - It is widely thought that Alzheimer's disease (AD) begins as a malfunction of synapses, eventually leading to cognitive impairment and dementia. Homeostatic synaptic scaling is a mechanism that could be crucial at the onset of AD but has not been examined experimentally. In this process, the synaptic strength of a neuron is modified so that the overall excitability of the cell is maintained. Here, we investigate whether synaptic scaling mediated by l-alpha-amino-3-hydroxy-5-methyl-4-isoxazolepropionic acid receptors (AMPARs) contributes to pathology in double knockin (2 x KI) mice carrying human mutations in the genes for amyloid precursor protein and presenilin-1. By using whole-cell recordings, we show that 2 x KI mice exhibit age-related downscaling of AMPAR-mediated evoked currents and spontaneous, miniature currents. Electron microscopic analysis further corroborates the synaptic AMPAR decrease. Additionally, 2 x KI mice show age-related deficits in bidirectional plasticity (long-term potentiation and long-term depression) and memory flexibility. These results suggest that AMPARs are important synaptic targets for AD and provide evidence that cognitive impairment may involve downscaling of postsynaptic AMPAR function.
+AD  - Center for Neural Science, New York University, NY 10003, USA.
+AN  - 16492745
+AU  - Chang, E. H.
+AU  - Savage, M. J.
+AU  - Flood, D. G.
+AU  - Thomas, J. M.
+AU  - Levy, R. B.
+AU  - Mahadomrongkul, V.
+AU  - Shirao, T.
+AU  - Aoki, C.
+AU  - Huerta, P. T.
+C2  - PMC1413872
+DA  - Feb 28
+DO  - 10.1073/pnas.0507313103
+DP  - NLM
+ET  - 2006/02/24
+IS  - 9
+J2  - Proceedings of the National Academy of Sciences of the United States of America
+KW  - Aging/*physiology
+Alzheimer Disease/genetics/*metabolism/*pathology
+Amyloid beta-Peptides/metabolism
+Animals
+*Down-Regulation
+Electrophysiology
+Hippocampus/metabolism/pathology/ultrastructure
+Memory
+Mice
+Mice, Transgenic
+Microscopy, Electron
+Neuronal Plasticity
+Receptors, AMPA/genetics/*metabolism
+Synapses/metabolism/pathology
+LA  - eng
+N1  - Experiment utilising both MWM and slice electrophysiology
+PY  - 2006
+SN  - 0027-8424 (Print)
+0027-8424
+SP  - 3410-5
+ST  - AMPA receptor downscaling at the onset of Alzheimer's disease pathology in double knockin mice
+T2  - Proc Natl Acad Sci U S A
+TI  - AMPA receptor downscaling at the onset of Alzheimer's disease pathology in double knockin mice
+UR  - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1413872/pdf/pnas-0507313103.pdf
+VL  - 103
+ID  - 154
+ER  - 
+
+TY  - JOUR
+AB  - It is widely thought that Alzheimer's disease (AD) begins as a malfunction of synapses, eventually leading to cognitive impairment and dementia. Homeostatic synaptic scaling is a mechanism that could be crucial at the onset of AD but has not been examined experimentally. In this process, the synaptic strength of a neuron is modified so that the overall excitability of the cell is maintained. Here, we investigate whether synaptic scaling mediated by l-alpha-amino-3-hydroxy-5-methyl-4-isoxazolepropionic acid receptors (AMPARs) contributes to pathology in double knockin (2 x KI) mice carrying human mutations in the genes for amyloid precursor protein and presenilin-1. By using whole-cell recordings, we show that 2 x KI mice exhibit age-related downscaling of AMPAR-mediated evoked currents and spontaneous, miniature currents. Electron microscopic analysis further corroborates the synaptic AMPAR decrease. Additionally, 2 x KI mice show age-related deficits in bidirectional plasticity (long-term potentiation and long-term depression) and memory flexibility. These results suggest that AMPARs are important synaptic targets for AD and provide evidence that cognitive impairment may involve downscaling of postsynaptic AMPAR function.
+AD  - Center for Neural Science, New York University, NY 10003, USA.
+AN  - 16492745
+AU  - Chang, E. H.
+AU  - Savage, M. J.
+AU  - Flood, D. G.
+AU  - Thomas, J. M.
+AU  - Levy, R. B.
+AU  - Mahadomrongkul, V.
+AU  - Shirao, T.
+AU  - Aoki, C.
+AU  - Huerta, P. T.
+C2  - PMC1413872
+DA  - Feb 28
+DO  - 10.1073/pnas.0507313103
+DP  - NLM
+ET  - 2006/02/24
+IS  - 9
+J2  - Proceedings of the National Academy of Sciences of the United States of America
+KW  - Aging/*physiology
+Alzheimer Disease/genetics/*metabolism/*pathology
+Amyloid beta-Peptides/metabolism
+Animals
+*Down-Regulation
+Electrophysiology
+Hippocampus/metabolism/pathology/ultrastructure
+Memory
+Mice
+Mice, Transgenic
+Microscopy, Electron
+Neuronal Plasticity
+Receptors, AMPA/genetics/*metabolism
+Synapses/metabolism/pathology
+L1  - internal-pdf://2958526049/Chang-2006-AMPA receptor downscaling at the on.pdf
+LA  - eng
+N1  - Experiment utilising both MWM and slice electrophysiology
+PY  - 2006
+SN  - 0027-8424 (Print)
+0027-8424
+SP  - 3410-5
+ST  - AMPA receptor downscaling at the onset of Alzheimer's disease pathology in double knockin mice
+T2  - Proc Natl Acad Sci U S A
+TI  - AMPA receptor downscaling at the onset of Alzheimer's disease pathology in double knockin mice
+UR  - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1413872/pdf/pnas-0507313103.pdf
+VL  - 103
+ID  - 1359
+ER  - 
+
+TY  - JOUR
+AB  - One of the most clinically advanced forms of experimental disease-modifying treatment for Alzheimer disease is immunization against the amyloid beta protein (Abeta), but how this may prevent cognitive impairment is unclear. We hypothesized that antibodies to Abeta could exert a beneficial action by directly neutralizing potentially synaptotoxic soluble Abeta species in the brain. Intracerebroventricular injection of naturally secreted human Abeta inhibited long-term potentiation (LTP), a correlate of learning and memory, in rat hippocampus in vivo but a monoclonal antibody to Abeta completely prevented the inhibition of LTP when injected after Abeta. Size fractionation showed that Abeta oligomers, not monomers or fibrils, were responsible for inhibiting LTP, and an Abeta antibody again prevented such inhibition. Active immunization against Abeta was partially effective, and the effects correlated positively with levels of antibodies to Abeta oligomers. The ability of exogenous and endogenous antibodies to rapidly neutralize soluble Abeta oligomers that disrupt synaptic plasticity in vivo suggests that treatment with such antibodies might show reversible cognitive deficits in early Alzheimer disease.
+AD  - Trinity College Institute of Neuroscience, Department of Pharmacology and Therapeutics, Trinity College, Dublin 2, Ireland.
+AN  - 15834427
+AU  - Klyubin, I.
+AU  - Walsh, D. M.
+AU  - Lemere, C. A.
+AU  - Cullen, W. K.
+AU  - Shankar, G. M.
+AU  - Betts, V.
+AU  - Spooner, E. T.
+AU  - Jiang, L.
+AU  - Anwyl, R.
+AU  - Selkoe, D. J.
+AU  - Rowan, M. J.
+DA  - May
+DO  - 10.1038/nm1234
+DP  - NLM
+ET  - 2005/04/19
+IS  - 5
+KW  - Alzheimer Disease/immunology/*therapy
+Amyloid beta-Peptides/*immunology/metabolism/pharmacology
+Animals
+Antibodies, Monoclonal/*immunology/metabolism
+CHO Cells
+Chromatography, Gel
+Cricetinae
+Cricetulus
+Electrophysiology
+Enzyme-Linked Immunosorbent Assay
+Hippocampus/*metabolism
+Immunization/*methods
+Immunohistochemistry
+Immunoprecipitation
+Long-Term Potentiation/drug effects
+Neuronal Plasticity/physiology
+Neutralization Tests
+Peptide Fragments/*immunology/pharmacology
+Rats
+Synapses/physiology
+LA  - eng
+N1  - Klyubin, Igor
+Walsh, Dominic M
+Lemere, Cynthia A
+Cullen, William K
+Shankar, Ganesh M
+Betts, Vicki
+Spooner, Edward T
+Jiang, Liying
+Anwyl, Roger
+Selkoe, Dennis J
+Rowan, Michael J
+AG06173/AG/NIA NIH HHS/United States
+Wellcome Trust/United Kingdom
+Comparative Study
+Journal Article
+Research Support, N.I.H., Extramural
+Research Support, Non-U.S. Gov't
+Research Support, U.S. Gov't, P.H.S.
+United States
+Nat Med. 2005 May;11(5):556-61. doi: 10.1038/nm1234. Epub 2005 Apr 17.
+PY  - 2005
+SN  - 1078-8956 (Print)
+1078-8956
+SP  - 556-61
+ST  - Amyloid beta protein immunotherapy neutralizes Abeta oligomers that disrupt synaptic plasticity in vivo
+T2  - Nat Med
+TI  - Amyloid beta protein immunotherapy neutralizes Abeta oligomers that disrupt synaptic plasticity in vivo
+VL  - 11
+ID  - 457
+ER  - 
+
+TY  - JOUR
+AU  - Hardy, John
+AU  - Allsop, David
+PY  - 1991
+SN  - 0165-6147
+SP  - 383-388
+ST  - Amyloid deposition as the central event in the aetiology of Alzheimer's disease
+T2  - Trends in pharmacological sciences
+TI  - Amyloid deposition as the central event in the aetiology of Alzheimer's disease
+VL  - 12
+ID  - 324
+ER  - 
+
+TY  - JOUR
+AB  - Despite continuing debate about the amyloid β-protein (or Aβ hypothesis new lines of evidence from laboratories and clinics worldwide support the concept that an imbalance between production and clearance of Aβ42 and related Aβ peptides is a very early often initiating factor in Alzheimer's disease (AD). Confirmation that presenilin is the catalytic site of γ-secretase has provided a linchpin: all dominant mutations causing early-onset AD occur either in the substrate (amyloid precursor protein APP) or the protease (presenilin) of the reaction that generates Aβ. Duplication of the wild-type APP gene in Down's syndrome leads to Aβ deposits in the teens followed by microgliosis astrocytosis and neurofibrillary tangles typical of AD Apolipoprotein E4 which predisposes to AD in > 40% of cases has been found to impair Aβ clearance from the brain. Soluble oligomers of Aβ42 isolated from AD patients' brains can decrease synapse number inhibit long-term potentiation and enhance long-term synaptic depression in rodent hippocampus and injecting them into healthy rats impairs memory. The human oligomers also induce hyperphosphorylation of tau at AD-relevant epitopes and cause neuritic dystrophy in cultured neurons. Crossing human APP with human tau transgenic mice enhances tau-positive neurotoxicity. In humans new studies show that low cerebrospinal fluid (CSF) Aβ42 and amyloid-PET positivity precede other AD manifestations by many years. Most importantly recent trials of three different Aβ antibodies (solanezumab crenezumab and aducanumab) have suggested a slowing of cognitive decline in post hoc analyses of mild AD subjects. Although many factors contribute to AD pathogenesis Aβ dyshomeostasis has emerged as the most extensively validated and compelling therapeutic target.
+AU  - J., Selkoe D. J.Hardy
+C1  - PUBMED-27025652
+DO  - 10.15252/emmm.201606210
+IS  - 6
+LB  - NEW
+PY  - 2016
+SN  - 1757-4676 (Print)\r1757-4676
+SP  - 595-608
+ST  - The amyloid hypothesis of Alzheimer's disease at 25 years
+T2  - EMBO Mol Med
+TI  - The amyloid hypothesis of Alzheimer's disease at 25 years
+VL  - 8
+ID  - 404
+ER  - 
+
+TY  - JOUR
+AU  - Selkoe, Dennis J
+AU  - Hardy, John
+IS  - 6
+PY  - 2016
+SN  - 1757-4676
+SP  - 595-608
+ST  - The amyloid hypothesis of Alzheimer's disease at 25 years
+T2  - EMBO molecular medicine
+TI  - The amyloid hypothesis of Alzheimer's disease at 25 years
+VL  - 8
+ID  - 739
+ER  - 
+
+TY  - JOUR
+AB  - Despite continuing debate about the amyloid -protein (or A hypothesis new lines of evidence from laboratories and clinics worldwide support the concept that an imbalance between production and clearance of A42 and related A peptides is a very early often initiating factor in Alzheimer's disease (AD). Confirmation that presenilin is the catalytic site of -secretase has provided a linchpin: all dominant mutations causing early-onset AD occur either in the substrate (amyloid precursor protein APP) or the protease (presenilin) of the reaction that generates A. Duplication of the wild-type APP gene in Down's syndrome leads to A deposits in the teens followed by microgliosis astrocytosis and neurofibrillary tangles typical of AD. Apolipoprotein E4 which predisposes to AD in >40% of cases has been found to impair A clearance from the brain. Soluble oligomers of A42 isolated from AD patients' brains can decrease synapse number inhibit long-term potentiation and enhance long-term synaptic depression in rodent hippocampus and injecting them into healthy rats impairs memory. The human oligomers also induce hyperphosphorylation of tau at AD-relevant epitopes and cause neuritic dystrophy in cultured neurons. Crossing human APP with human tau transgenic mice enhances tau-positive neurotoxicity. In humans new studies show that low cerebrospinal fluid (CSF) A42 and amyloid-PET positivity precede other AD manifestations by many years. Most importantly recent trials of three different A antibodies (solanezumab crenezumab and aducanumab) have suggested a slowing of cognitive decline in post hoc analyses of mild AD subjects. Although many factors contribute to AD pathogenesis A dyshomeostasis has emerged as the most extensively validated and compelling therapeutic target.
+AU  - J., Selkoe D. J.Hardy
+C1  - WOS-WOS:000379964000004
+IS  - 6
+LB  - OLD
+PY  - 2016
+SN  - 1757-4676
+SP  - 595-608
+ST  - The amyloid hypothesis of Alzheimer's disease at 25years
+T2  - Embo Molecular Medicine
+TI  - The amyloid hypothesis of Alzheimer's disease at 25years
+VL  - 8
+ID  - 405
+ER  - 
+
+TY  - JOUR
+AB  - It has been more than 10 years since it was first proposed that the neurodegeneration in Alzheimer's disease (AD) may be caused by deposition of amyloid beta-peptide (Abeta) in plaques in brain tissue. According to the amyloid hypothesis, accumulation of Abeta in the brain is the primary influence driving AD pathogenesis. The rest of the disease process, including formation of neurofibrillary tangles containing tau protein, is proposed to result from an imbalance between Abeta production and Abeta clearance.
+AD  - Laboratories of Neurogenetics, National Institute on Aging, Bethesda, MD 20892, USA.
+AN  - 12130773
+AU  - Hardy, J.
+AU  - Selkoe, D. J.
+DA  - Jul 19
+DO  - 10.1126/science.1072994
+DP  - NLM
+ET  - 2002/07/20
+IS  - 5580
+J2  - Science (New York, N.Y.)
+KW  - Alzheimer Disease/*drug therapy/*etiology/genetics/pathology
+Amino Acid Sequence
+Amyloid beta-Peptides/*metabolism
+Amyloid beta-Protein Precursor/chemistry/genetics/metabolism
+Animals
+Anti-Inflammatory Agents/therapeutic use
+Anticholesteremic Agents/therapeutic use
+Brain/*metabolism/pathology
+Clinical Trials as Topic
+Humans
+Molecular Sequence Data
+Nerve Degeneration
+Neurofibrillary Tangles/metabolism/pathology
+Neurons/pathology
+Plaque, Amyloid/pathology
+Protease Inhibitors/therapeutic use
+tau Proteins/metabolism
+LA  - eng
+N1  - 1095-9203
+Hardy, John
+Selkoe, Dennis J
+Journal Article
+Review
+United States
+Science. 2002 Jul 19;297(5580):353-6. doi: 10.1126/science.1072994.
+PY  - 2002
+SN  - 0036-8075
+SP  - 353-6
+ST  - The amyloid hypothesis of Alzheimer's disease: progress and problems on the road to therapeutics
+T2  - Science
+TI  - The amyloid hypothesis of Alzheimer's disease: progress and problems on the road to therapeutics
+UR  - http://science.sciencemag.org/content/sci/297/5580/353.full.pdf
+VL  - 297
+ID  - 325
+ER  - 
+
+TY  - JOUR
+AB  - Since the report of a double mutation at codons 670 and 671 of the amyloid precursor protein (APP) gene identified in two Swedish families with clinically diagnosed Alzheimer's disease (AD), a carrier with dementia has died. Neuropathology confirmed the clinical diagnosis of AD. Genealogical investigations have confirmed that the two families are related to common founders. Two-point linkage analysis of the mutation versus the disease in the revised pedigree now gives a lod score of 7.62.
+AN  - 8028788
+AU  - Lannfelt, L.
+AU  - Bogdanovic, N.
+AU  - Appelgren, H.
+AU  - Axelman, K.
+AU  - Lilius, L.
+AU  - Hansson, G.
+AU  - Schenk, D.
+AU  - Hardy, J.
+AU  - Winblad, B.
+DA  - Feb 28
+DO  - 10.1016/0304-3940(94)90463-4
+DP  - NLM
+ET  - 1994/02/28
+IS  - 1-2
+KW  - Aged
+Alzheimer Disease/*genetics/pathology
+Amyloid beta-Protein Precursor/*genetics
+Brain/*pathology
+Female
+Genetic Carrier Screening
+Genetic Linkage
+Humans
+Lod Score
+Male
+Middle Aged
+*Mutation
+Neurofibrillary Tangles/pathology
+Organ Specificity
+Sweden
+LA  - eng
+N1  - Lannfelt, L
+Bogdanovic, N
+Appelgren, H
+Axelman, K
+Lilius, L
+Hansson, G
+Schenk, D
+Hardy, J
+Winblad, B
+Case Reports
+Letter
+Ireland
+Neurosci Lett. 1994 Feb 28;168(1-2):254-6. doi: 10.1016/0304-3940(94)90463-4.
+PY  - 1994
+SN  - 0304-3940 (Print)
+0304-3940
+SP  - 254-6
+ST  - Amyloid precursor protein mutation causes Alzheimer's disease in a Swedish family
+T2  - Neurosci Lett
+TI  - Amyloid precursor protein mutation causes Alzheimer's disease in a Swedish family
+VL  - 168
+ID  - 486
+ER  - 
+
+TY  - JOUR
+AB  - Alzheimer's disease (AD), the leading cause of dementia worldwide, is characterized by the accumulation of the ?-amyloid peptide (A?) within the brain along with hyperphosphorylated and cleaved forms of the microtubule-associated protein tau. Genetic, biochemical, and behavioral research suggest that physiologic generation of the neurotoxic A? peptide from sequential amyloid precursor protein (APP) proteolysis is the crucial step in the development of AD. APP is a single-pass transmembrane protein expressed at high levels in the brain and metabolized in a rapid and highly complex fashion by a series of sequential proteases, including the intramembranous ?-secretase complex, which also process other key regulatory molecules. Why A? accumulates in the brains of elderly individuals is unclear but could relate to changes in APP metabolism or A? elimination. Lessons learned from biochemical and genetic studies of APP processing will be crucial to the development of therapeutic targets to treat AD.
+AU  - O'Brien, Richard J.
+AU  - Wong, Philip C.
+DA  - 2011/07/21
+DO  - 10.1146/annurev-neuro-061010-113613
+IS  - 1
+PY  - 2011
+SN  - 0147-006X
+SP  - 185-204
+ST  - Amyloid Precursor Protein Processing and Alzheimer's Disease
+T2  - Annual Review of Neuroscience
+TI  - Amyloid Precursor Protein Processing and Alzheimer's Disease
+UR  - https://doi.org/10.1146/annurev-neuro-061010-113613
+VL  - 34
+Y2  - 2021/06/23
+ID  - 621
+ER  - 
+
+TY  - JOUR
+AB  - The amyloid precursor protein (APP) takes a central position in Alzheimer's disease (AD) pathogenesis: APP processing generates the β-amyloid (Aβ) peptides, which are deposited as the amyloid plaques in brains of AD individuals; Point mutations and duplications of APP are causal for a subset of early onset of familial Alzheimer's disease (FAD). Not surprisingly, the production and pathogenic effect of Aβ has been the central focus in AD field. Nevertheless, the biological properties of APP have also been the subject of intense investigation since its identification nearly 20 years ago as it demonstrates a number of interesting putative physiological roles. Several attractive models of APP function have been put forward recently based on in vitro biochemical studies. Genetic analyses of gain- and loss-of-function mutants in Drosophila and mouse have also revealed important insights into its biological activities in vivo. This article will review the current understanding of APP physiological functions.
+AU  - Zheng, Hui
+AU  - Koo, Edward H.
+DA  - 2006/07/03
+DO  - 10.1186/1750-1326-1-5
+IS  - 1
+PY  - 2006
+SN  - 1750-1326
+SP  - 5
+ST  - The amyloid precursor protein: beyond amyloid
+T2  - Molecular Neurodegeneration
+TI  - The amyloid precursor protein: beyond amyloid
+UR  - https://doi.org/10.1186/1750-1326-1-5
+VL  - 1
+ID  - 915
+ER  - 
+
