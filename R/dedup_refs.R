@@ -515,8 +515,10 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
         # add unknowns for blanks and NAs
         raw_citations <- raw_citations  %>%
-          mutate(across(where(is.character), ~ na_if(.,"")))
-
+          mutate(across(where(is.character), ~ na_if(.,""))) %>%
+          mutate(label = ifelse(is.na(.data$label), "unknown", paste(.data$label))) %>%
+          mutate(source = ifelse(is.na(.data$source), "unknown", paste(.data$source))) %>%
+          mutate(across({{extra_merge_fields}}, ~ replace(., is.na(.), "unknown")))
 
       } else {
 
@@ -524,13 +526,6 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
         raw_citations <- raw_citations  %>%
           mutate(across(where(is.character), ~ na_if(.,"")))
       }
-
-      if(!is.null(extra_merge_fields)){
-
-        raw_citations <- raw_citations  %>%
-          mutate(across(c({{extra_merge_fields}}, label, source), ~ replace(., is.na(.), "unknown")))
-      }
-
 
       # add warning for no record id
       if(!"record_id" %in% names(raw_citations)){
