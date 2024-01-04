@@ -32,6 +32,8 @@ dedup_citations(
 \item{shiny_progress}{Switch on progress indicators for shiny applications}
 
 \item{show_unknown_tags}{When a label, source, or other merged field is missing, do you want this to show as "unknown"?}
+
+\item{user_input}{Do you want to proceed if important columns are missing? 1-yes; 2-no}
 }
 \value{
 A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
