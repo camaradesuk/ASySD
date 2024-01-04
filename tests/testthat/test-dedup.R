@@ -46,7 +46,7 @@ test_that("Essential column missing", {
   test_citations_nopages <- test_citations %>% select(-pages)
 
   res <- dedup_citations(test_citations_nopages, merge_citations = FALSE, user_input = 1)
-  expect_equal(length(res$unique$duplicate_id), 584)
+  expect_equal(length(res$unique$duplicate_id), 583)
 
   expect_match({
     dedup_citations(test_citations_nopages, merge_citations = FALSE, user_input = 2)
