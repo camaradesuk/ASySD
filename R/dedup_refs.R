@@ -211,10 +211,10 @@ match_citations <- function(formatted_citations){
     suppressWarnings(try(pairs$author <- parallel::mcmapply(jarowinkler, pairs$author1, pairs$author2, mc.cores = numCores), silent = TRUE))
     suppressWarnings(try(pairs$title <- parallel::mcmapply(jarowinkler, pairs$title1, pairs$title2, mc.cores = numCores), silent = TRUE))
     suppressWarnings(try(pairs$abstract <- parallel::mcmapply(jarowinkler, pairs$abstract1, pairs$abstract2, mc.cores = numCores), silent = TRUE))
-    suppressWarnings(try(pairs$year <- parallel::mapply(jarowinkler, pairs$year1, pairs$year2), silent = TRUE))
-    suppressWarnings(try(pairs$pages <- parallel::mapply(jarowinkler, pairs$pages1, pairs$pages2), silent = TRUE))
-    suppressWarnings(try(pairs$number <- parallel::mapply(jarowinkler, pairs$number1, pairs$number2), silent = TRUE))
-    suppressWarnings(try(pairs$volume <- parallel::mapply(jarowinkler, pairs$volume1, pairs$volume2), silent = TRUE))
+    suppressWarnings(try(pairs$year <- ::mapply(jarowinkler, pairs$year1, pairs$year2), silent = TRUE))
+    suppressWarnings(try(pairs$pages <- mapply(jarowinkler, pairs$pages1, pairs$pages2), silent = TRUE))
+    suppressWarnings(try(pairs$number <- mapply(jarowinkler, pairs$number1, pairs$number2), silent = TRUE))
+    suppressWarnings(try(pairs$volume <- mapply(jarowinkler, pairs$volume1, pairs$volume2), silent = TRUE))
     suppressWarnings(try(pairs$journal <- parallel::mcmapply(jarowinkler, pairs$journal1, pairs$journal2, mc.cores = numCores), silent = TRUE))
     suppressWarnings(try(pairs$isbn <- parallel::mcmapply(jarowinkler, pairs$isbn1, pairs$isbn2, mc.cores = numCores), silent = TRUE))
     suppressWarnings(try(pairs$doi <- parallel::mcmapply(jarowinkler, pairs$doi1, pairs$doi2, mc.cores = numCores), silent = TRUE))
@@ -500,6 +500,7 @@ merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields){
 #' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
 #' @param extra_merge_fields Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value
 #' @param shiny_progress Switch on progress indicators for shiny applications
+#' @param user_input Do you want to proceed if important columns are missing? 1-yes; 2-no
 #' @param show_unknown_tags When a label, source, or other merged field is missing, do you want this to show as "unknown"?
 #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
 dedup_citations <- function(raw_citations, manual_dedup = TRUE,
