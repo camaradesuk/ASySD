@@ -60,3 +60,9 @@ Now, to get the final deduplication results, use the `dedup_citations_add_manual
 ```{r}
 final_results <- dedup_citations_add_manual(unique_citations, additional_pairs = true_duplicates)
 ```
+
+
+You can now write your results to a file for import into a reference manager or systematic review software
+```{r}
+write_citations(final_results, type="txt", filename="citations.txt")
+```

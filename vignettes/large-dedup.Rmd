@@ -1,0 +1,49 @@
+---
+title: "Deduplicating large datasets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{deduplicating-large-datasets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ASySD)
+```
+
+Load citations from an Endnote XML file using the `load_search()` funciton. You can change the *method* argument to upload alternative file types such as .csv files.
+
+```{r eval=FALSE}
+citations <- load_search("systematic_search.xml", method="endnote")
+```
+
+
+Remove duplicate citations from a large dataset (>10000 citations) automatically using the `dedup_large_search` function.
+
+```{r eval=FALSE}
+results <- dedup_large_search(citations, merge_citations = TRUE)
+```
+
+If you want to preferentially retain a certain source or label, you can also specify this in the function. For example, if you want to maintain pubmed data over other sources you can try the below code. Note that the source column in your dataframe must contain the relevant sources to allow for this selection.
+
+```{r eval=FALSE}
+results <- dedup_citations(citations, merge_citations = TRUE, keep_source="pubmed")
+```
+
+Your unique results can be found in the output in a list element called "unique"
+```{r eval=FALSE}
+unique_citations <- results$unique
+```
+
+You can now write your results to a file for import into a reference manager or systematic review software
+```{r eval=FALSE}
+write_citations(unique_citations, type="txt", filename="unique.txt")
+```
+

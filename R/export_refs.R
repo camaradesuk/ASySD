@@ -10,6 +10,7 @@
 #' @return file export
 write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filename){
 
+  citations$record_id <- citations$duplicate_id
   cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source')
   citations[cols_to_modify] <- lapply(citations[cols_to_modify], function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
@@ -39,24 +40,22 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
     write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
 
-  } else if(type == "csv"){
+  } else if(type == "syrf_csv"){
 
     refs <- citations %>%
       rename(Authors = author,
              Title = title,
-             Url = url,
+             Url=url,
              Abstract = abstract,
              Year = year,
              DOI= doi,
              PublicationName = journal)  %>%
-      mutate(Url = "",
-             AuthorAddress = "",
+      mutate(AuthorAddress = "",
              AlternateName = "",
              ReferenceType = "",
              CustomId = .data$duplicate_id,
              Keywords = "",
-             PdfRelativePath = paste0(.data$duplicate_id, ".pdf")) %>%
-      mutate(URL = ifelse("url" %in% names(.), url, NA)) %>%
+             PdfRelativePath = paste0(duplicate_id, ".pdf")) %>%
       select(Title,
              Authors,
              PublicationName,
@@ -69,13 +68,15 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
              ReferenceType,
              Keywords,
              PdfRelativePath,
-             CustomId,
-             URL)
+             CustomId)
 
-    write.csv(refs, filename,
-              col.names=TRUE, row.names = F, quote=FALSE, na="")
+    utils::write.csv(refs, filename, row.names = F, quote=TRUE, na="")
 
   } else if(type == "ris"){
+
+    citations <- as.data.frame(citations)
+    citations$database <- citations$duplicate_id
+    citations$notes <- ""
 
     citations$source_type <- "JOUR" #for RIS import to work
     citations <- citations %>% select(source_type , everything()) %>%
@@ -92,7 +93,10 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
 
   } else if(type == "bib"){
 
-    citations <- as.data.frame(citations)
+   citations <- as.data.frame(citations)
+    citations$database <- citations$duplicate_id
+    citations$notes <- ""
+
     refs <- synthesisr::write_refs(citations, format = "bib",
                                    file = filename)
   }
@@ -152,8 +156,6 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
     utils::write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
 
-    utils::write.table(refs, filename, sep="\t",
-                col.names=TRUE, row.names = F, quote=FALSE, na="")
 
   } else if(type == "syrf_csv"){
 

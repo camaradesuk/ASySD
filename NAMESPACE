@@ -2,6 +2,7 @@
 
 export(dedup_citations)
 export(dedup_citations_add_manual)
+export(dedup_large_search)
 export(load_multi_search)
 export(load_search)
 export(write_citations)
