@@ -13,6 +13,9 @@
     <loc>https://camaradesuk.github.io/ASySD/articles/index.html</loc>
   </url>
   <url>
+    <loc>https://camaradesuk.github.io/ASySD/articles/large-dedup.html</loc>
+  </url>
+  <url>
     <loc>https://camaradesuk.github.io/ASySD/articles/search-updates.html</loc>
   </url>
   <url>
@@ -29,6 +32,9 @@
   </url>
   <url>
     <loc>https://camaradesuk.github.io/ASySD/reference/dedup_citations_add_manual.html</loc>
+  </url>
+  <url>
+    <loc>https://camaradesuk.github.io/ASySD/reference/dedup_large_search.html</loc>
   </url>
   <url>
     <loc>https://camaradesuk.github.io/ASySD/reference/index.html</loc>
