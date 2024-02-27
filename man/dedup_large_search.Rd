@@ -8,6 +8,11 @@ dedup_large_search(citations, keep_source = NULL, keep_label = NULL)
 }
 \arguments{
 \item{citations}{A dataframe containing citation information.}
+
+\item{keep_source}{Character vector. Selected citation source to preferentially retain in the dataset as the unique record}
+
+\item{keep_label}{Selected citation label to preferentially retain in the dataset as the unique record
+@import dplyr}
 }
 \value{
 A list with components:
