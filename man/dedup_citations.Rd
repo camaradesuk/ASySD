@@ -41,3 +41,6 @@ A list of 2 dataframes - unique citations and citations to be manually deduplica
 \description{
 This function deduplicates citation data
 }
+\details{
+The following fields will be used in \code{raw_citations} (if provided): record_id, author, year, journal, doi, title, pages, volume, number, abstract, isbn, label, source
+}

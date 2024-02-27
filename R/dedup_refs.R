@@ -488,7 +488,7 @@ merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields){
 
 #'
 #' This function deduplicates citation data
-#' @export
+#' @details The following fields will be used in `raw_citations` (if provided): record_id, author, year, journal, doi, title, pages, volume, number, abstract, isbn, label, source
 #' @import dplyr
 #' @import progressr
 #' @importFrom rlang :=
@@ -503,6 +503,7 @@ merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields){
 #' @param user_input Do you want to proceed if important columns are missing? 1-yes; 2-no
 #' @param show_unknown_tags When a label, source, or other merged field is missing, do you want this to show as "unknown"?
 #' @return A list of 2 dataframes - unique citations and citations to be manually deduplicated if option selected
+#' @export
 dedup_citations <- function(raw_citations, manual_dedup = TRUE,
                             merge_citations=TRUE, keep_source=NULL, keep_label=NULL, extra_merge_fields = NULL,
                             shiny_progress=FALSE, show_unknown_tags=TRUE, user_input=NA) {
@@ -981,7 +982,7 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
 ####------ Deduplicate citations WITH manual dups added function ------ ####
 #'
-#' This function deduplicates citation data
+#' This function performs additional deduplication with the additional of manually flagged duplicates
 #' @export
 #' @import dplyr
 #' @param unique_citations A dataframe containing citations after automated deduplication
@@ -991,7 +992,7 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 #' @param additional_pairs dataframe of citations with manual pairs, a subset of the manual pairs export
 #' @param extra_merge_fields Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value
 #' @param show_unknown_tags When a label, source, or other merged field is missing, do you want this to show as "unknown"?
-#' @return Unique citations post added manual deduplication
+#' @return Unique citations post manual deduplication
 
 dedup_citations_add_manual <- function(unique_citations, merge_citations=TRUE, keep_source=NULL, keep_label=NULL,
                                        additional_pairs, extra_merge_fields = NULL, show_unknown_tags=TRUE){

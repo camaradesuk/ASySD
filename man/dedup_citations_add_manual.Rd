@@ -2,7 +2,7 @@
 % Please edit documentation in R/dedup_refs.R
 \name{dedup_citations_add_manual}
 \alias{dedup_citations_add_manual}
-\title{This function deduplicates citation data}
+\title{This function performs additional deduplication with the additional of manually flagged duplicates}
 \usage{
 dedup_citations_add_manual(
   unique_citations,
@@ -30,8 +30,8 @@ dedup_citations_add_manual(
 \item{show_unknown_tags}{When a label, source, or other merged field is missing, do you want this to show as "unknown"?}
 }
 \value{
-Unique citations post added manual deduplication
+Unique citations post manual deduplication
 }
 \description{
-This function deduplicates citation data
+This function performs additional deduplication with the additional of manually flagged duplicates
 }
