@@ -14,20 +14,24 @@ knitr::opts_chunk$set(
 )
 ```
 
-Load the ASySD package.
+## **Setup**
+
+First, install and load the ASySD package.
 
 ```{r setup}
-#devtools::install_github("camaradesuk/ASySD")
+# devtools::install_github("camaradesuk/ASySD")
 library(ASySD)
 ```
 
-Load citations from an Endnote XML file using the `load_search()` funciton. You can change the *method* argument to upload alternative file types such as .csv files.
+## **Loading Citation Data**
+
+Begin by loading your citation data from an Endnote XML file using the **`load_search()`** function. You can specify alternative file formats such as CSV if needed.
 
 ```{r}
 citations <- load_search("systematic_search.xml", method="endnote")
 ```
 
-### Automated deduplication
+## Automated deduplication
 
 Remove duplicate citations automatically using the `dedup_citations` function.
 
@@ -41,9 +45,9 @@ The `dedup_citations` function returns a list of two dataframes by default. The 
 unique_citations <- results$unique
 ```
 
-### Manual deduplication
+## Manual deduplication
 
-To check for additional duplicates, get the dataframe of citations for manual review. You can review within R or export as a csv / excel file to go through each row of pairs.
+To address remaining duplicates, review potential pairs manually. You can examine them within R or export them to a CSV or Excel file for detailed inspection.
 
 ```{r}
 potential_duplicates <- results$manual_dedup
@@ -55,14 +59,18 @@ After reviewing the pairs, create a dataframe containing **only the true duplica
 true_duplicates <- potential_duplicates[1:16,]
 ```
 
-Now, to get the final deduplication results, use the `dedup_citations_add_manual()`function. To account for additional duplicates you have reviewed, add them into the *additional_pairs* argument.
+## **Final Deduplication**
+
+Combine the results of automated and manual deduplication using the **`dedup_citations_add_manual()`** function. Include any additional duplicates you've identified in the **`additional_pairs`** argument.
 
 ```{r}
 final_results <- dedup_citations_add_manual(unique_citations, additional_pairs = true_duplicates)
 ```
 
+## **Exporting Results**
 
 You can now write your results to a file for import into a reference manager or systematic review software
+
 ```{r}
 write_citations(final_results, type="txt", filename="citations.txt")
 ```

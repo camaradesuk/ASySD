@@ -14,24 +14,30 @@ knitr::opts_chunk$set(
 )
 ```
 
+## **Setup**
+
+First, install and load the ASySD package.
+
 ```{r setup}
+# devtools::install_github("camaradesuk/ASySD")library(ASySD)
 library(ASySD)
-library(dplyr)
 ```
 
-Load citations from an existing search file using the `load_search()` function. In this example, we use a csv format. You can change the *method* argument to upload alternative file types.
+## **Loading citation data**
+
+Load citations from an **existing search** file using the `load_search()` function. In this example, we use a csv format. You can change the *method* argument to upload alternative file types.
 
 ```{r}
 existing_search <- load_search("old_sr_search.csv", method="csv")
 ```
 
-Load citations from a new systematic search.
+Load citations from a **new systematic search.**
 
 ```{r}
 new_search <- load_search("new_sr_search.csv", method="csv")
 ```
 
-### Combine citations
+### Combine old and new citation data
 
 Before deduplication, we must bind the citations into one dataframe. First, give each search a different source so that we can specify which citations to retain.
 
@@ -42,7 +48,7 @@ new_search$source <- "new"
 all_citations <- plyr::rbind.fill(existing_search, new_search)
 ```
 
-### Automated deduplication
+## Automated deduplication
 
 Remove duplicate citations automatically using the `dedup_citations` function. Here we have specified the argument `merge=TRUE` to indicate that we want to merge duplicate records and have a record of which citations have been merged into one. We have specified in the `keep_source` argument that we wish to preferentially retain old citations. In practice, this means that the duplicate_id chosen for a set of records will preferentially be the record_id of a citation in the OLD systematic search. This is to facilitate easy record linkage - see later.
 
@@ -56,7 +62,7 @@ The `dedup_citations` function returns a list of two dataframes by default. The 
 unique_citations <- results$unique
 ```
 
-### Manual deduplication
+## Manual deduplication
 
 To check for additional duplicates, get the dataframe of citations for manual review. You can review within R or export as a csv / excel file to go through each row of pairs.
 
@@ -76,9 +82,12 @@ Now, to get the final deduplication results, use the `dedup_citations_add_manual
 final_results <- dedup_citations_add_manual(unique_citations, additional_pairs = true_duplicates, merge_citations = TRUE, keep_source = "old")
 ```
 
+## Find new citations identified in update
+
 Now we have a final set of unique citations, how can we find the new citations we added with our latest systematic search?
 
 ```{r}
+library(dplyr)
 new_citations <- final_results %>%
   filter(source == "new") 
 
@@ -109,7 +118,7 @@ old_citations <- final_results %>%
 
 ```
 
-We can check that the duplicate ids here refer to the original record id in the existing_citations dataframe we imported. As you can see, they are all present. In the record_ids column you can see the different record_ids that have merged into a single citation. In case you make a mistake or don't specify the record_id to keep as the duplicate_id, you can use these to trace back your citations to the original dataframes. 
+We can check that the duplicate ids here refer to the original record id in the existing_citations dataframe we imported. As you can see, they are all present. In the record_ids column you can see the different record_ids that have merged into a single citation. In case you make a mistake or don't specify the record_id to keep as the duplicate_id, you can use these to trace back your citations to the original dataframes.
 
 ```{r}
 old_citations_check <- old_citations %>%
@@ -120,3 +129,13 @@ crossover %>%
    gt::gt() %>%
    gt::cols_hide(c(abstract))
 ```
+
+## Exporting results
+
+Once deduplication is complete, you can export the new unique records to a file for import into reference managers or systematic review software.
+
+```{r}
+write_citations(new_citations, type="txt", filename="unique.txt")
+```
+
+
