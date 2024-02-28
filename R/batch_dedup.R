@@ -1,20 +1,26 @@
-####------ Deduplicate searches in batches ------ ####
-
-#' This function processes a dataframe of citations, deduplicates them, and provides unique citation results. If the number of citations exceeds a specified threshold, it splits the dataframe and performs deduplication on each batch.
+#' Batch deduplication for large searches
 #'
+#' This function splits citations into batches, deduplicates each batch, and binds results together into one dataframe of unique citations.
+#' @details The following fields will be used in `citations` (if provided): record_id, author, year, journal, doi, title, pages, volume, number, abstract, isbn, label, source
 #' @param citations A dataframe containing citation information.
 #' @param batch_n Numeric value specifying the maximum number of citations per batch. Default is 50000.
 #' @param keep_source Character vector specifying the citation source(s) to preferentially retain in the dataset as the unique record.
 #' @param keep_label Character vector specifying the citation label(s) to preferentially retain in the dataset as the unique record.
 #' @param sort_by Character vector specifying the sorting criteria. Default is c("year", "title","author"). Valid options are column names of the citations dataframe.
 #' @return A list with components:
-#'   \describe{
-#'     \item{unique}{Dataframe containing unique citations.}
-#'     \item{manual_dedup}{Dataframe containing citations to be manually checked for duplicates.}
-#'   }
+#' * unique - dataframe containing unique citations.
+#' * manual_dedup - dataframe containing citations to be manually checked for duplicates.
 #' @import dplyr
 #' @export
-
+#' @examples
+#'
+#' # Perform batch deduplication
+#' result <- batch_dedup(citations_df, batch_n = 250)
+#'
+#' # View unique citations
+#' head(result$unique)
+#'
+#'
 batch_dedup <- function(citations, batch_n = 50000, keep_source=NULL, keep_label=NULL, sort_by = c("year", "title","author")){
 
   message("Splitting up dataframe")
@@ -25,7 +31,7 @@ batch_dedup <- function(citations, batch_n = 50000, keep_source=NULL, keep_label
   # Convert sortby to lowercase to match column names
   sort_by <- tolower(sort_by)
 
-  # Check if sortby values are valid column names
+  # Check if sort by values are valid column names
   valid_sortby <- sort_by[sort_by %in% names(citations)]
 
   if (length(valid_sortby) == 0) {
