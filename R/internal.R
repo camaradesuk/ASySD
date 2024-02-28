@@ -1,27 +1,65 @@
-####------ Assign id ------ ####
-
-#' This function adds an id to citation data if missing
-#' @param raw_citations Citation dataframe with relevant columns
-#' @return Dataframe of citations with id
+#' Add IDs to Citation Data
+#'
+#' This function adds an ID to citation data if missing.
+#'
+#' @param raw_citations A dataframe containing citation data with relevant columns.
+#' @return A dataframe of citations with IDs.
 #' @import dplyr
 #' @noRd
-add_id_citations <- function(raw_citations){
-
+#'
+#' @examples
+#' # Load example data
+#' data <- data.frame(
+#'   author = c("Author A", "Author B", "Author C"),
+#'   title = c("Title 1", "Title 2", "Title 3"),
+#'   year = c(2020, 2019, 2018)
+#' )
+#'
+#' # Add IDs to citation data
+#' data_with_ids <- add_id_citations(data)
+#' head(data_with_ids)
+#'
+add_id_citations <- function(raw_citations) {
   # add record id from row number if missing
   raw_citations <- raw_citations %>%
-    mutate(record_id =  as.character(row_number()+1000))
-
+    mutate(record_id = as.character(row_number() + 1000))
 }
 
-#' This function orders citation data for deduplication
-#' @inherit raw_citations
-#' @return Dataframe of ordered citations with id
+#' Order Citation Data
+#'
+#' This function orders citation data for deduplication.
+#'
+#' @param raw_citations A dataframe containing citation data with relevant columns.
+#' @param extra_merge_fields Additional fields to include in the ordered citations.
+#' @return A dataframe of ordered citations with an ID.
 #' @import dplyr
 #' @import utf8
 #' @noRd
-order_citations <- function(raw_citations, extra_merge_fields){
+#'
+#' @examples
+#' # Load example data
+#' data <- data.frame(
+#'   author = c("Author A", "Author B", "Author C"),
+#'   title = c("Title 1", "Title 2", "Title 3"),
+#'   year = c(2020, 2019, 2018),
+#'   journal = c("Journal A", "Journal B", "Journal C"),
+#'   abstract = c("Abstract 1", "", "Abstract 3"),
+#'   doi = c("doi1", "doi2", "doi3"),
+#'   number = c(1, 2, 3),
+#'   pages = c("1-10", "20-30", "40-50"),
+#'   volume = c(10, 20, 30),
+#'   isbn = c("isbn1", "isbn2", "isbn3"),
+#'   record_id = c(1001, 1002, 1003),
+#'   label = c("Label 1", "Label 2", "Label 3"),
+#'   source = c("Source 1", "Source 2", "Source 3")
+#' )
+#'
+#' # Order citation data
+#' ordered_data <- order_citations(data, extra_merge_fields = c("field1", "field2"))
+#' head(ordered_data)
+#'
+order_citations <- function(raw_citations, extra_merge_fields) {
   # arrange by Year and presence of an Abstract - we want to keep newer records and records with an abstract preferentially
-
   ordered_citations <- raw_citations %>%
     arrange(abstract, year) %>%
     dplyr::mutate_if(is.character, utf8::utf8_encode) # make sure utf8
@@ -30,17 +68,41 @@ order_citations <- function(raw_citations, extra_merge_fields){
   ordered_citations <- ordered_citations  %>%
     dplyr::select(author, title, year, journal, abstract, doi, number, pages, volume, isbn, record_id, label, source, {{extra_merge_fields}})
 
-
   return(ordered_citations)
 }
 
-####------ Format citation data ------ ####
-
-#' This function formats citation data for deduplication
-#' @inherit raw_citations
-#' @return Dataframe of formatted citations with id
+#' Format Citation Data
+#'
+#' This function formats citation data for deduplication.
+#'
+#' @param raw_citations A dataframe containing citation data with relevant columns.
+#' @return A dataframe of formatted citations with an ID.
 #' @import dplyr
+#' @import utf8
 #' @noRd
+#'
+#' @examples
+#' # Load example data
+#' data <- data.frame(
+#'   author = c("Author A", "Author B", "Author C"),
+#'   title = c("Title 1", "Title 2", "Title 3"),
+#'   year = c(2020, 2019, 2018),
+#'   journal = c("Journal A", "Journal B", "Journal C"),
+#'   abstract = c("Abstract 1", "", "Abstract 3"),
+#'   doi = c("doi1", "doi2", "doi3"),
+#'   number = c(1, 2, 3),
+#'   pages = c("1-10", "20-30", "40-50"),
+#'   volume = c(10, 20, 30),
+#'   isbn = c("isbn1", "isbn2", "isbn3"),
+#'   record_id = c(1001, 1002, 1003),
+#'   label = c("Label 1", "Label 2", "Label 3"),
+#'   source = c("Source 1", "Source 2", "Source 3")
+#' )
+#'
+#' # Format citation data
+#' formatted_data <- format_citations(data)
+#' head(formatted_data)
+#'
 format_citations <- function(raw_citations){
 
   # make sure author is a character
@@ -111,15 +173,39 @@ format_citations <- function(raw_citations){
 
 }
 
-####------ Identify all possible matching pairs of citations ------ ####
-
-#' This function identifies matching pairs of citations
-#' @param formatted_citations Formatted citation dataframe with relevant columns and id column
-#' @return Dataframe of citation pairs
+#' Match Citations
+#'
+#' This function identifies matching pairs of citations.
+#'
+#' @param formatted_citations A dataframe containing formatted citation data with relevant columns and an ID column.
+#' @return A dataframe of citation pairs.
 #' @import RecordLinkage
 #' @import parallel
 #' @import parallelly
 #' @noRd
+#'
+#' @examples
+#' # Load example data
+#' data <- data.frame(
+#'   author = c("Author A", "Author B", "Author C"),
+#'   title = c("Title 1", "Title 2", "Title 3"),
+#'   year = c(2020, 2019, 2018),
+#'   journal = c("Journal A", "Journal B", "Journal C"),
+#'   abstract = c("Abstract 1", "", "Abstract 3"),
+#'   doi = c("doi1", "doi2", "doi3"),
+#'   number = c(1, 2, 3),
+#'   pages = c("1-10", "20-30", "40-50"),
+#'   volume = c(10, 20, 30),
+#'   isbn = c("isbn1", "isbn2", "isbn3"),
+#'   record_id = c(1001, 1002, 1003),
+#'   label = c("Label 1", "Label 2", "Label 3"),
+#'   source = c("Source 1", "Source 2", "Source 3")
+#' )
+#'
+#' # Match citation pairs
+#' matched_pairs <- match_citations(data)
+#' head(matched_pairs)
+#'
 match_citations <- function(formatted_citations){
 
   # ROUND 1: run compare.dedup function and block by title&pages OR title&author OR title&abstract OR doi
@@ -607,6 +693,30 @@ merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields){
 
   if(!is.null(extra_merge_fields)){
 
+    # if on a rerun, include record_ids in merging
+    if("record_ids" %in% names(matched_pairs_with_ids)){
+
+      all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%
+        mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
+        mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
+        group_by(.data$duplicate_id) %>%
+        summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
+        mutate(across(c(everything(), -c(label, source, record_id, {{extra_merge_fields}})), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
+        mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+        mutate(across(record_ids, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+        mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+        mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
+        mutate(across({{extra_merge_fields}}, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+        ungroup() %>%
+        mutate(record_ids = paste0(record_ids, ", ", record_id)) %>%
+        select(-record_id)
+
+      # Apply the function to the 'id' column
+      all_metadata_with_duplicate_id$record_ids <- sapply(all_metadata_with_duplicate_id$record_ids, remove_string_dups)
+
+      return(all_metadata_with_duplicate_id)
+    } else {
+
     all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%
       mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
       mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
@@ -621,8 +731,9 @@ merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields){
       rename(record_ids = record_id) %>%
       ungroup()
 
-  } else {
+  }} else {
 
+    # if on a rerun, include record_ids in merging
     if("record_ids" %in% names(matched_pairs_with_ids)){
 
       all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%

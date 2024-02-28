@@ -11,7 +11,19 @@
 #' @param extra_merge_fields Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value
 #' @param show_unknown_tags When a label, source, or other merged field is missing, do you want this to show as "unknown"?
 #' @return Unique citations post manual deduplication
-
+#' @examples
+#'
+#' # Perform deduplication
+#' result <- dedup_citations(citations_df, keep_source="Embase")
+#'
+#' # View unique citations
+#' res_unique <- result$unique
+#' head(result$manual_dedup)
+#'
+#'true_dups <- result$manual_dedup[1:5,]
+#'
+#'final_result <- dedup_citations_add_manual(res_unique, additional_pairs = true_dups)
+#'
 dedup_citations_add_manual <- function(unique_citations, merge_citations=TRUE, keep_source=NULL, keep_label=NULL,
                                        additional_pairs, extra_merge_fields = NULL, show_unknown_tags=TRUE){
 
@@ -22,6 +34,11 @@ dedup_citations_add_manual <- function(unique_citations, merge_citations=TRUE, k
 
     duplicates <- additional_pairs %>%
       dplyr::select(duplicate_id.x, duplicate_id.y, label1, label2, source1, source2, !!!extra_cols)
+  } else{
+
+    duplicates <- additional_pairs %>%
+      dplyr::select(duplicate_id.x, duplicate_id.y, label1, label2, source1, source2)
+  }
 
     unique_citations <- unique_citations %>%
       rename(record_id = duplicate_id)
@@ -31,5 +48,3 @@ dedup_citations_add_manual <- function(unique_citations, merge_citations=TRUE, k
 
     return(unique_citations_with_metadata)
   }
-
-}
