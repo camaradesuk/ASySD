@@ -417,8 +417,8 @@ generate_dup_id <- function(true_pairs, raw_citations, keep_source, keep_label){
   else{
 
     citations_duplicate_id <- duplicate_id %>%
-      group_by(.data$ComponentID) %>%
-      arrange(.data$record_id) %>%
+      group_by(ComponentID) %>%
+      arrange(record_id) %>%
       mutate(duplicate_id = first(.data$record_id)) %>%
       ungroup() %>%
       select(-ComponentID)
@@ -427,7 +427,162 @@ generate_dup_id <- function(true_pairs, raw_citations, keep_source, keep_label){
   return(citations_duplicate_id)
 
 }
+####------ Process for manual dedup ------ ####
+process_possible_pairs <- function(maybe_pairs, ordered_citations, matched_pairs_with_ids, extra_merge_fields){
 
+  maybe_pairs <- maybe_pairs  %>%
+    mutate(author1 =ordered_citations$author[id1]) %>%
+    mutate(author2 =ordered_citations$author[id2]) %>%
+    mutate(title1 =ordered_citations$title[id1]) %>%
+    mutate(title2 =ordered_citations$title[id2]) %>%
+    mutate(abstract1 =ordered_citations$abstract[id1]) %>%
+    mutate(abstract2 =ordered_citations$abstract[id2]) %>%
+    mutate(doi1= ordered_citations$doi[id1]) %>%
+    mutate(doi2 =ordered_citations$doi[id2]) %>%
+    mutate(year1=ordered_citations$year[id1]) %>%
+    mutate(year2=ordered_citations$year[id2]) %>%
+    mutate(number1 =ordered_citations$number[id1]) %>%
+    mutate(number2 =ordered_citations$number[id2]) %>%
+    mutate(pages1 =ordered_citations$pages[id1]) %>%
+    mutate(pages2 =ordered_citations$pages[id2]) %>%
+    mutate(volume1 =ordered_citations$volume[id1]) %>%
+    mutate(volume2 =ordered_citations$volume[id2]) %>%
+    mutate(journal1 =ordered_citations$journal[id1]) %>%
+    mutate(journal2 =ordered_citations$journal[id2]) %>%
+    mutate(isbn1 =ordered_citations$isbn[id1]) %>%
+    mutate(isbn2 =ordered_citations$isbn[id2]) %>%
+    mutate(record_id1=ordered_citations$record_id[id1]) %>%
+    mutate(record_id2 =ordered_citations$record_id[id2]) %>%
+    mutate(label1 =ordered_citations$label[id1]) %>%
+    mutate(label2 =ordered_citations$label[id2]) %>%
+    mutate(source1 =ordered_citations$source[id1]) %>%
+    mutate(source2 =ordered_citations$source[id2])
+
+  if(!is.null(extra_merge_fields)){
+
+    maybe_pairs <- maybe_pairs  %>%
+      mutate(!!paste0(extra_merge_fields, 1) := ordered_citations[[extra_merge_fields]][id1],
+             !!paste0(extra_merge_fields, 2) := ordered_citations[[extra_merge_fields]][id2]) %>%
+      select(author1, author2, author, title1,
+             title2, title, abstract1, abstract2, abstract, year1,
+             year2, year, number1, number2, number, pages1, pages2,
+             pages, volume1, volume2, volume, journal1, journal2,
+             journal, isbn, isbn1, isbn2, doi1, doi2, doi,
+             record_id1, record_id2, label1,
+             label2, source1, source2, starts_with(paste0(extra_merge_fields)))
+
+  } else {
+
+    maybe_pairs <- maybe_pairs  %>%
+      select(author1, author2, author, title1,
+             title2, title, abstract1, abstract2, abstract, year1,
+             year2, year, number1, number2, number, pages1, pages2,
+             pages, volume1, volume2, volume, journal1, journal2,
+             journal, isbn, isbn1, isbn2, doi1, doi2, doi,
+             record_id1, record_id2, label1,
+             label2, source1, source2)
+
+  }
+
+  ids <- matched_pairs_with_ids %>%
+    select(duplicate_id, record_id)
+
+  maybe_pairs <- left_join(maybe_pairs, ids, by=c("record_id1"="record_id"))
+  maybe_pairs <- left_join(maybe_pairs, ids, by=c("record_id2"="record_id"))
+
+  maybe_pairs <- maybe_pairs %>%
+    mutate(match= ifelse(duplicate_id.x == duplicate_id.y, TRUE, FALSE)) %>%
+    filter(match == FALSE) %>%
+    group_by(.data$duplicate_id.x, .data$duplicate_id.y) %>%
+    slice_head() %>%
+    ungroup()
+
+  if(length(maybe_pairs$record_id1)==0){
+    manual_dedup_df <- maybe_pairs
+  } else {
+
+    unique_pairs <- maybe_pairs %>%
+      select(duplicate_id.x, duplicate_id.y) %>%
+      rowwise() %>%
+      mutate(min_id = min(duplicate_id.x, duplicate_id.y),
+             max_id = max(duplicate_id.x, duplicate_id.y)) %>%
+      group_by(min_id, max_id) %>%
+      slice_head() %>%
+      mutate(unique = TRUE)
+
+    maybe_pairs <- maybe_pairs %>%
+      left_join(unique_pairs) %>%
+      filter(!is.na(unique)) %>%
+      select(-unique)
+
+    return(maybe_pairs)
+  }
+}
+
+####------ Adding missing columns ------ ####
+add_missing_cols <- function(raw_citations){
+  # add warning for no record id
+  if(!"record_id" %in% names(raw_citations)){
+    warning("Search does not contain a record_id column. A record_id will be created using row numbers")
+
+    # add record id using row number
+    raw_citations <- add_id_citations(raw_citations)
+
+    # add warning for any missing record id
+  } else if(any(is.na(raw_citations$record_id)) | any(raw_citations$record_id=="")){
+    warning("Search contains missing values for the record_id column. A record_id will be created using row numbers")
+
+    # add record id using row number
+    raw_citations <- add_id_citations(raw_citations)
+
+    # add warning for non unique ids
+  }  else if(length(unique(raw_citations$record_id)) != nrow(raw_citations)){
+    warning("The record_id column is not unique. A record_id will be created using row numbers")
+
+    # add record id using row number
+    raw_citations <- add_id_citations(raw_citations)
+  }
+
+  cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source")
+  essential_cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn")
+  all_missing_cols <- cols[!(cols %in% colnames(raw_citations))] # find missing columns
+  missing_cols <- essential_cols[!(essential_cols %in% colnames(raw_citations))] # find missing columns
+
+  if (length(missing_cols) > 0) {
+    warning(paste0("The following columns are missing: ", paste(missing_cols, collapse = ", "), "\n"))
+    message(paste0("Setting missing cols to NA"))
+  }
+  raw_citations[all_missing_cols] <- NA # set missing columns to NA
+
+  raw_citations$record_id <- as.character(raw_citations$record_id)
+
+  return(raw_citations)
+}
+
+####------ Remove double values within string ------ ####
+# Function to remove duplicates within a string
+remove_string_dups <- function(string) {
+  elements <- unlist(strsplit(string, ", "))  # Split the string into individual elements
+  unique_elements <- unique(elements)         # Remove duplicates
+  cleaned_string <- paste(unique_elements, collapse = ", ")  # Combine elements back into a string
+  return(cleaned_string)
+}
+
+
+### --- Format datafarme if rerunning dedup --- ####
+format_rerun <- function(raw_citations){
+
+  if("duplicate_id" %in% names(raw_citations)){
+
+    message("Re-running ASySD on dataset...")
+    raw_citations <- raw_citations %>%
+      rename(record_id = duplicate_id)
+    return(raw_citations)
+
+  }  else {
+    return(raw_citations)
+  }
+}
 ####------ Remove duplicates------ ####
 
 #' This function retains one citation in a set of matching records
@@ -468,18 +623,42 @@ merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields){
 
   } else {
 
-    all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%
-      mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
-      mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
-      group_by(.data$duplicate_id) %>%
-      summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
-      mutate(across(c(everything(), -c(label, source, record_id)), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
-      mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-      mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-      mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
-      ungroup() %>%
-      rename(record_ids = record_id) %>%
-      ungroup()
+    if("record_ids" %in% names(matched_pairs_with_ids)){
 
+      all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%
+        mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
+        mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
+        group_by(.data$duplicate_id) %>%
+        summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
+        mutate(across(c(everything(), -c(label, source, record_id, record_ids)), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
+        mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+        mutate(across(record_ids, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+        mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+        mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
+        ungroup() %>%
+        mutate(record_ids = paste0(record_ids, ", ", record_id)) %>%
+        select(-record_id)
+
+      # Apply the function to the 'id' column
+      all_metadata_with_duplicate_id$record_ids <- sapply(all_metadata_with_duplicate_id$record_ids, remove_string_dups)
+
+      return(all_metadata_with_duplicate_id)
+    }
+
+    else {
+      all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%
+        mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
+        mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
+        group_by(.data$duplicate_id) %>%
+        summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
+        mutate(across(c(everything(), -c(label, source, record_id)), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
+        mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+        mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
+        mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
+        ungroup() %>%
+        rename(record_ids = record_id) %>%
+        ungroup()
+
+    }
   }
 }
