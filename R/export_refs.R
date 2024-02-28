@@ -8,30 +8,7 @@
 #' @param type export type
 #' @param filename output file name
 #' @return file export
-#' @examples
-#'
-#' # Create sample citations dataframe
-# citations <- data.frame(
-#   author = c("Author1", "Author2"),
-#   year = c(2000, 2001),
-#   title = c("Title 1", "Title 2"),
-#   journal = c("Journal A", "Journal B"),
-#   doi = c("doi1", "doi2"),
-#   pages = c("1-10", "20-30"),
-#   volume = c("Vol 1", "Vol 2"),
-#   number = c("Issue 1", "Issue 2"),
-#   abstract = c("Abstract 1", "Abstract 2"),
-#   isbn = c("123456789", "987654321"),
-#   duplicate_id = c(1, 2),
-#   label = c("Label A", "Label B"),
-#   source = c("Source A", "Source B"),
-#   stringsAsFactors = FALSE
-# )
-#'
-#' # Example usage for exporting to txt format
-#' write_citations(citations, type = "txt", filename = "citations.txt")
-#'
-#'
+
 write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filename){
 
   citations$record_id <- citations$duplicate_id
