@@ -19,3 +19,12 @@ file export
 \description{
 This function writes citation data to disk in different formats
 }
+\examples{
+
+# Create sample citations dataframe
+
+# Example usage for exporting to txt format
+write_citations(citations, type = "txt", filename = "citations.txt")
+
+
+}
