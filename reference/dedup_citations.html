@@ -66,7 +66,6 @@
 <span>  keep_source <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep_label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  extra_merge_fields <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  shiny_progress <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  show_unknown_tags <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  user_input <span class="op">=</span> <span class="cn">NA</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -98,10 +97,6 @@
 <dd><p>Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value</p></dd>
 
 
-<dt>shiny_progress</dt>
-<dd><p>Switch on progress indicators for shiny applications</p></dd>
-
-
 <dt>show_unknown_tags</dt>
 <dd><p>When a label, source, or other merged field is missing, do you want this to show as "unknown"?</p></dd>
 
@@ -121,6 +116,37 @@
     <p>The following fields will be used in <code>raw_citations</code> (if provided): record_id, author, year, journal, doi, title, pages, volume, number, abstract, isbn, label, source</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Perform deduplication</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">dedup_citations</span><span class="op">(</span><span class="va">citations_df</span>, keep_source<span class="op">=</span><span class="st">"Embase"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> formatting data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> identifying potential duplicates...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> identified duplicates!</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> flagging potential pairs for manual dedup...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(duplicate_id.x, duplicate_id.y)`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1001 citations loaded...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 392 duplicate citations removed...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 609 unique citations remaining!</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># View unique citations</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">unique</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 16</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   duplicate_id record_ids author   year  journal doi   title pages volume number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 1018         1018       Della-M… 2012  Pharma… 10.2… Gene… 1741… 13     <span style="color: #949494;">"</span>15<span style="color: #949494;">"</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 1107         1107       Downey … 2008  Expert… 10.1… Free… 589-… 6      <span style="color: #949494;">"</span>5<span style="color: #949494;">"</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 1127         1127       Duan D.… 2005  Acta P… 10.1… Func… 265-… 26     <span style="color: #949494;">"</span>3<span style="color: #949494;">"</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 1184         1184       Eskilds… 1996  Ann N … 10.1… Expl… 210-… 793    <span style="color: #949494;">""</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 1288         1288       Fryer R… 2001  Am J P… 10.1… Esse… H134… 280    <span style="color: #949494;">"</span>3<span style="color: #949494;">"</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 1290         1290       Fryer R… 2001  Basic … 10.1… ERK … 136-… 96     <span style="color: #949494;">"</span>2<span style="color: #949494;">"</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: abstract &lt;chr&gt;, isbn &lt;chr&gt;, secondary_title &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   label &lt;chr&gt;, url &lt;chr&gt;, source &lt;chr&gt;</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

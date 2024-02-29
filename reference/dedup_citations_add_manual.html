@@ -49,7 +49,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>This function performs additional deduplication with the additional of manually flagged duplicates</h1>
-      <small class="dont-index">Source: <a href="https://github.com/camaradesuk/ASySD/blob/HEAD/R/dedup_refs.R" class="external-link"><code>R/dedup_refs.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/camaradesuk/ASySD/blob/HEAD/R/manual_dedup.R" class="external-link"><code>R/manual_dedup.R</code></a></small>
       <div class="d-none name"><code>dedup_citations_add_manual.Rd</code></div>
     </div>
 
@@ -107,6 +107,47 @@
 <p>Unique citations post manual deduplication</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Perform deduplication</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="dedup_citations.html">dedup_citations</a></span><span class="op">(</span><span class="va">citations_df</span>, keep_source<span class="op">=</span><span class="st">"Embase"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> formatting data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> identifying potential duplicates...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> identified duplicates!</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> flagging potential pairs for manual dedup...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(duplicate_id.x, duplicate_id.y)`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1001 citations loaded...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 392 duplicate citations removed...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 609 unique citations remaining!</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># View unique citations</span></span></span>
+<span class="r-in"><span><span class="va">res_unique</span> <span class="op">&lt;-</span> <span class="va">result</span><span class="op">$</span><span class="va">unique</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">manual_dedup</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 41</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   author1  author2 author title1 title2 title abstract1 abstract2 abstract year1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Oliveir… de Oli…  0.839 Effec… Effec… 0.888 <span style="color: #949494;">"</span>OBJECTI… <span style="color: #949494;">"</span>Objecti…    0.933 2009 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Zou T.,… Yan H.…  0.638 Effec… Effec… 0.847 <span style="color: #949494;">"</span>Introdu… <span style="color: #949494;">"</span>Introdu…    0.813 2010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Koenig … Abotal…  0.565 Focus… Focus… 0.907 <span style="color: #949494;">"</span>Skeleta… <span style="color: #949494;">"</span>Vitamin…    0.775 2010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Davaria… Koenig…  0.594 Focus… Focus… 0.903 <span style="color: #949494;">"</span>Reducin… <span style="color: #949494;">"</span>Skeleta…    0.789 2010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Davaria… Abotal…  0.646 Focus… Focus… 0.909 <span style="color: #949494;">"</span>Reducin… <span style="color: #949494;">"</span>Vitamin…    0.781 2010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Liu X. … Liu X.…  0.937 Effec… Effec… 0.835 <span style="color: #949494;">"</span>In a mo… <span style="color: #949494;">"</span>The eff…    0.769 1997 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 31 more variables: year2 &lt;chr&gt;, year &lt;dbl&gt;, number1 &lt;chr&gt;, number2 &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   number &lt;dbl&gt;, pages1 &lt;chr&gt;, pages2 &lt;chr&gt;, pages &lt;dbl&gt;, volume1 &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   volume2 &lt;chr&gt;, volume &lt;dbl&gt;, journal1 &lt;chr&gt;, journal2 &lt;chr&gt;, journal &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   isbn &lt;dbl&gt;, isbn1 &lt;chr&gt;, isbn2 &lt;chr&gt;, doi1 &lt;chr&gt;, doi2 &lt;chr&gt;, doi &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   record_id1 &lt;chr&gt;, record_id2 &lt;chr&gt;, label1 &lt;chr&gt;, label2 &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   source1 &lt;chr&gt;, source2 &lt;chr&gt;, duplicate_id.x &lt;chr&gt;, duplicate_id.y &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   match &lt;lgl&gt;, min_id &lt;chr&gt;, max_id &lt;chr&gt;</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">true_dups</span> <span class="op">&lt;-</span> <span class="va">result</span><span class="op">$</span><span class="va">manual_dedup</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">final_result</span> <span class="op">&lt;-</span> <span class="fu">dedup_citations_add_manual</span><span class="op">(</span><span class="va">res_unique</span>, additional_pairs <span class="op">=</span> <span class="va">true_dups</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(record_id)`</span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

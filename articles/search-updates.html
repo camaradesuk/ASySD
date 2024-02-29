@@ -82,28 +82,30 @@
 
     
     
+<div class="section level2">
+<h2 id="setup">
+<strong>Setup</strong><a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
+<p>First, install and load the ASySD package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://camaradesuk.github.io/ASySD/">ASySD</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span></code></pre></div>
-<p>Load citations from an existing search file using the
-<code><a href="../reference/load_search.html">load_search()</a></code> function. In this example, we use a csv
+<code class="sourceCode R"><span><span class="co"># devtools::install_github("camaradesuk/ASySD")library(ASySD)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://camaradesuk.github.io/ASySD/">ASySD</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="loading-citation-data">
+<strong>Loading citation data</strong><a class="anchor" aria-label="anchor" href="#loading-citation-data"></a>
+</h2>
+<p>Load citations from an <strong>existing search</strong> file using
+the <code><a href="../reference/load_search.html">load_search()</a></code> function. In this example, we use a csv
 format. You can change the <em>method</em> argument to upload
 alternative file types.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">existing_search</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_search.html">load_search</a></span><span class="op">(</span><span class="st">"old_sr_search.csv"</span>, method<span class="op">=</span><span class="st">"csv"</span><span class="op">)</span></span></code></pre></div>
-<p>Load citations from a new systematic search.</p>
+<p>Load citations from a <strong>new systematic search.</strong></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_search</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_search.html">load_search</a></span><span class="op">(</span><span class="st">"new_sr_search.csv"</span>, method<span class="op">=</span><span class="st">"csv"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="combine-citations">Combine citations<a class="anchor" aria-label="anchor" href="#combine-citations"></a>
+<h3 id="combine-old-and-new-citation-data">Combine old and new citation data<a class="anchor" aria-label="anchor" href="#combine-old-and-new-citation-data"></a>
 </h3>
 <p>Before deduplication, we must bind the citations into one dataframe.
 First, give each search a different source so that we can specify which
@@ -114,9 +116,10 @@ citations to retain.</p>
 <span></span>
 <span><span class="va">all_citations</span> <span class="op">&lt;-</span> <span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/rbind.fill.html" class="external-link">rbind.fill</a></span><span class="op">(</span><span class="va">existing_search</span>, <span class="va">new_search</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="automated-deduplication">Automated deduplication<a class="anchor" aria-label="anchor" href="#automated-deduplication"></a>
-</h3>
+</div>
+<div class="section level2">
+<h2 id="automated-deduplication">Automated deduplication<a class="anchor" aria-label="anchor" href="#automated-deduplication"></a>
+</h2>
 <p>Remove duplicate citations automatically using the
 <code>dedup_citations</code> function. Here we have specified the
 argument <code>merge=TRUE</code> to indicate that we want to merge
@@ -131,7 +134,6 @@ search. This is to facilitate easy record linkage - see later.</p>
 <span><span class="co">#&gt; formatting data...</span></span>
 <span><span class="co">#&gt; identifying potential duplicates...</span></span>
 <span><span class="co">#&gt; identified duplicates!</span></span>
-<span><span class="co">#&gt; Joining with `by = join_by(record_id)`</span></span>
 <span><span class="co">#&gt; flagging potential pairs for manual dedup...</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(duplicate_id.x, duplicate_id.y)`</span></span>
 <span><span class="co">#&gt; 8972 citations loaded...</span></span>
@@ -146,9 +148,9 @@ step).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">unique_citations</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">$</span><span class="va">unique</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="manual-deduplication">Manual deduplication<a class="anchor" aria-label="anchor" href="#manual-deduplication"></a>
-</h3>
+<div class="section level2">
+<h2 id="manual-deduplication">Manual deduplication<a class="anchor" aria-label="anchor" href="#manual-deduplication"></a>
+</h2>
 <p>To check for additional duplicates, get the dataframe of citations
 for manual review. You can review within R or export as a csv / excel
 file to go through each row of pairs.</p>
@@ -166,34 +168,48 @@ duplicates.</p>
 additional duplicates you have reviewed, add them into the
 <em>additional_pairs</em> argument.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">final_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual</a></span><span class="op">(</span><span class="va">unique_citations</span>, additional_pairs <span class="op">=</span> <span class="va">true_duplicates</span>, merge_citations <span class="op">=</span> <span class="cn">TRUE</span>, keep_source <span class="op">=</span> <span class="st">"old"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">final_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual</a></span><span class="op">(</span><span class="va">unique_citations</span>, additional_pairs <span class="op">=</span> <span class="va">true_duplicates</span>, merge_citations <span class="op">=</span> <span class="cn">TRUE</span>, keep_source <span class="op">=</span> <span class="st">"old"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(record_id)`</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="find-new-citations-identified-in-update">Find new citations identified in update<a class="anchor" aria-label="anchor" href="#find-new-citations-identified-in-update"></a>
+</h2>
 <p>Now we have a final set of unique citations, how can we find the new
 citations we added with our latest systematic search?</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">new_citations</span> <span class="op">&lt;-</span> <span class="va">final_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span><span class="va">new_citations</span> <span class="op">&lt;-</span> <span class="va">final_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">source</span> <span class="op">==</span> <span class="st">"new"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">new_citations</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="yscktjwfus" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yscktjwfus table {
+<div id="ctrssuxcpt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ctrssuxcpt table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yscktjwfus thead, #yscktjwfus tbody, #yscktjwfus tfoot, #yscktjwfus tr, #yscktjwfus td, #yscktjwfus th {
+#ctrssuxcpt thead, #ctrssuxcpt tbody, #ctrssuxcpt tfoot, #ctrssuxcpt tr, #ctrssuxcpt td, #ctrssuxcpt th {
   border-style: none;
 }
 
-#yscktjwfus p {
+#ctrssuxcpt p {
   margin: 0;
   padding: 0;
 }
 
-#yscktjwfus .gt_table {
+#ctrssuxcpt .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -219,12 +235,12 @@ citations we added with our latest systematic search?</p>
   border-left-color: #D3D3D3;
 }
 
-#yscktjwfus .gt_caption {
+#ctrssuxcpt .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yscktjwfus .gt_title {
+#ctrssuxcpt .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -236,7 +252,7 @@ citations we added with our latest systematic search?</p>
   border-bottom-width: 0;
 }
 
-#yscktjwfus .gt_subtitle {
+#ctrssuxcpt .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -248,7 +264,7 @@ citations we added with our latest systematic search?</p>
   border-top-width: 0;
 }
 
-#yscktjwfus .gt_heading {
+#ctrssuxcpt .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -260,13 +276,13 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#yscktjwfus .gt_bottom_border {
+#ctrssuxcpt .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yscktjwfus .gt_col_headings {
+#ctrssuxcpt .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -281,7 +297,7 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#yscktjwfus .gt_col_heading {
+#ctrssuxcpt .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -301,7 +317,7 @@ citations we added with our latest systematic search?</p>
   overflow-x: hidden;
 }
 
-#yscktjwfus .gt_column_spanner_outer {
+#ctrssuxcpt .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -313,15 +329,15 @@ citations we added with our latest systematic search?</p>
   padding-right: 4px;
 }
 
-#yscktjwfus .gt_column_spanner_outer:first-child {
+#ctrssuxcpt .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yscktjwfus .gt_column_spanner_outer:last-child {
+#ctrssuxcpt .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yscktjwfus .gt_column_spanner {
+#ctrssuxcpt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -333,11 +349,11 @@ citations we added with our latest systematic search?</p>
   width: 100%;
 }
 
-#yscktjwfus .gt_spanner_row {
+#ctrssuxcpt .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yscktjwfus .gt_group_heading {
+#ctrssuxcpt .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -363,7 +379,7 @@ citations we added with our latest systematic search?</p>
   text-align: left;
 }
 
-#yscktjwfus .gt_empty_group_heading {
+#ctrssuxcpt .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -378,15 +394,15 @@ citations we added with our latest systematic search?</p>
   vertical-align: middle;
 }
 
-#yscktjwfus .gt_from_md > :first-child {
+#ctrssuxcpt .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yscktjwfus .gt_from_md > :last-child {
+#ctrssuxcpt .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yscktjwfus .gt_row {
+#ctrssuxcpt .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -405,7 +421,7 @@ citations we added with our latest systematic search?</p>
   overflow-x: hidden;
 }
 
-#yscktjwfus .gt_stub {
+#ctrssuxcpt .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -418,7 +434,7 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#yscktjwfus .gt_stub_row_group {
+#ctrssuxcpt .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -432,15 +448,15 @@ citations we added with our latest systematic search?</p>
   vertical-align: top;
 }
 
-#yscktjwfus .gt_row_group_first td {
+#ctrssuxcpt .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yscktjwfus .gt_row_group_first th {
+#ctrssuxcpt .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yscktjwfus .gt_summary_row {
+#ctrssuxcpt .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -450,16 +466,16 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#yscktjwfus .gt_first_summary_row {
+#ctrssuxcpt .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#yscktjwfus .gt_first_summary_row.thick {
+#ctrssuxcpt .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yscktjwfus .gt_last_summary_row {
+#ctrssuxcpt .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -469,7 +485,7 @@ citations we added with our latest systematic search?</p>
   border-bottom-color: #D3D3D3;
 }
 
-#yscktjwfus .gt_grand_summary_row {
+#ctrssuxcpt .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -479,7 +495,7 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#yscktjwfus .gt_first_grand_summary_row {
+#ctrssuxcpt .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -489,7 +505,7 @@ citations we added with our latest systematic search?</p>
   border-top-color: #D3D3D3;
 }
 
-#yscktjwfus .gt_last_grand_summary_row_top {
+#ctrssuxcpt .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -499,11 +515,11 @@ citations we added with our latest systematic search?</p>
   border-bottom-color: #D3D3D3;
 }
 
-#yscktjwfus .gt_striped {
+#ctrssuxcpt .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yscktjwfus .gt_table_body {
+#ctrssuxcpt .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -512,7 +528,7 @@ citations we added with our latest systematic search?</p>
   border-bottom-color: #D3D3D3;
 }
 
-#yscktjwfus .gt_footnotes {
+#ctrssuxcpt .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -526,7 +542,7 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#yscktjwfus .gt_footnote {
+#ctrssuxcpt .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -535,7 +551,7 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#yscktjwfus .gt_sourcenotes {
+#ctrssuxcpt .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -549,7 +565,7 @@ citations we added with our latest systematic search?</p>
   border-right-color: #D3D3D3;
 }
 
-#yscktjwfus .gt_sourcenote {
+#ctrssuxcpt .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -557,63 +573,63 @@ citations we added with our latest systematic search?</p>
   padding-right: 5px;
 }
 
-#yscktjwfus .gt_left {
+#ctrssuxcpt .gt_left {
   text-align: left;
 }
 
-#yscktjwfus .gt_center {
+#ctrssuxcpt .gt_center {
   text-align: center;
 }
 
-#yscktjwfus .gt_right {
+#ctrssuxcpt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yscktjwfus .gt_font_normal {
+#ctrssuxcpt .gt_font_normal {
   font-weight: normal;
 }
 
-#yscktjwfus .gt_font_bold {
+#ctrssuxcpt .gt_font_bold {
   font-weight: bold;
 }
 
-#yscktjwfus .gt_font_italic {
+#ctrssuxcpt .gt_font_italic {
   font-style: italic;
 }
 
-#yscktjwfus .gt_super {
+#ctrssuxcpt .gt_super {
   font-size: 65%;
 }
 
-#yscktjwfus .gt_footnote_marks {
+#ctrssuxcpt .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yscktjwfus .gt_asterisk {
+#ctrssuxcpt .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yscktjwfus .gt_indent_1 {
+#ctrssuxcpt .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yscktjwfus .gt_indent_2 {
+#ctrssuxcpt .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yscktjwfus .gt_indent_3 {
+#ctrssuxcpt .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yscktjwfus .gt_indent_4 {
+#ctrssuxcpt .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yscktjwfus .gt_indent_5 {
+#ctrssuxcpt .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -733,23 +749,23 @@ removing citations with a single source.</p>
 <span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="xkuhwbufxu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xkuhwbufxu table {
+<div id="xedrxbdrfr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xedrxbdrfr table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xkuhwbufxu thead, #xkuhwbufxu tbody, #xkuhwbufxu tfoot, #xkuhwbufxu tr, #xkuhwbufxu td, #xkuhwbufxu th {
+#xedrxbdrfr thead, #xedrxbdrfr tbody, #xedrxbdrfr tfoot, #xedrxbdrfr tr, #xedrxbdrfr td, #xedrxbdrfr th {
   border-style: none;
 }
 
-#xkuhwbufxu p {
+#xedrxbdrfr p {
   margin: 0;
   padding: 0;
 }
 
-#xkuhwbufxu .gt_table {
+#xedrxbdrfr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -775,12 +791,12 @@ removing citations with a single source.</p>
   border-left-color: #D3D3D3;
 }
 
-#xkuhwbufxu .gt_caption {
+#xedrxbdrfr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xkuhwbufxu .gt_title {
+#xedrxbdrfr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -792,7 +808,7 @@ removing citations with a single source.</p>
   border-bottom-width: 0;
 }
 
-#xkuhwbufxu .gt_subtitle {
+#xedrxbdrfr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -804,7 +820,7 @@ removing citations with a single source.</p>
   border-top-width: 0;
 }
 
-#xkuhwbufxu .gt_heading {
+#xedrxbdrfr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -816,13 +832,13 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#xkuhwbufxu .gt_bottom_border {
+#xedrxbdrfr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xkuhwbufxu .gt_col_headings {
+#xedrxbdrfr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -837,7 +853,7 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#xkuhwbufxu .gt_col_heading {
+#xedrxbdrfr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -857,7 +873,7 @@ removing citations with a single source.</p>
   overflow-x: hidden;
 }
 
-#xkuhwbufxu .gt_column_spanner_outer {
+#xedrxbdrfr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -869,15 +885,15 @@ removing citations with a single source.</p>
   padding-right: 4px;
 }
 
-#xkuhwbufxu .gt_column_spanner_outer:first-child {
+#xedrxbdrfr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xkuhwbufxu .gt_column_spanner_outer:last-child {
+#xedrxbdrfr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xkuhwbufxu .gt_column_spanner {
+#xedrxbdrfr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -889,11 +905,11 @@ removing citations with a single source.</p>
   width: 100%;
 }
 
-#xkuhwbufxu .gt_spanner_row {
+#xedrxbdrfr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xkuhwbufxu .gt_group_heading {
+#xedrxbdrfr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -919,7 +935,7 @@ removing citations with a single source.</p>
   text-align: left;
 }
 
-#xkuhwbufxu .gt_empty_group_heading {
+#xedrxbdrfr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -934,15 +950,15 @@ removing citations with a single source.</p>
   vertical-align: middle;
 }
 
-#xkuhwbufxu .gt_from_md > :first-child {
+#xedrxbdrfr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xkuhwbufxu .gt_from_md > :last-child {
+#xedrxbdrfr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xkuhwbufxu .gt_row {
+#xedrxbdrfr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -961,7 +977,7 @@ removing citations with a single source.</p>
   overflow-x: hidden;
 }
 
-#xkuhwbufxu .gt_stub {
+#xedrxbdrfr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -974,7 +990,7 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#xkuhwbufxu .gt_stub_row_group {
+#xedrxbdrfr .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -988,15 +1004,15 @@ removing citations with a single source.</p>
   vertical-align: top;
 }
 
-#xkuhwbufxu .gt_row_group_first td {
+#xedrxbdrfr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xkuhwbufxu .gt_row_group_first th {
+#xedrxbdrfr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xkuhwbufxu .gt_summary_row {
+#xedrxbdrfr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1006,16 +1022,16 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#xkuhwbufxu .gt_first_summary_row {
+#xedrxbdrfr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xkuhwbufxu .gt_first_summary_row.thick {
+#xedrxbdrfr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xkuhwbufxu .gt_last_summary_row {
+#xedrxbdrfr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1025,7 +1041,7 @@ removing citations with a single source.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#xkuhwbufxu .gt_grand_summary_row {
+#xedrxbdrfr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1035,7 +1051,7 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#xkuhwbufxu .gt_first_grand_summary_row {
+#xedrxbdrfr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1045,7 +1061,7 @@ removing citations with a single source.</p>
   border-top-color: #D3D3D3;
 }
 
-#xkuhwbufxu .gt_last_grand_summary_row_top {
+#xedrxbdrfr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1055,11 +1071,11 @@ removing citations with a single source.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#xkuhwbufxu .gt_striped {
+#xedrxbdrfr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xkuhwbufxu .gt_table_body {
+#xedrxbdrfr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1068,7 +1084,7 @@ removing citations with a single source.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#xkuhwbufxu .gt_footnotes {
+#xedrxbdrfr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1082,7 +1098,7 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#xkuhwbufxu .gt_footnote {
+#xedrxbdrfr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1091,7 +1107,7 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#xkuhwbufxu .gt_sourcenotes {
+#xedrxbdrfr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1105,7 +1121,7 @@ removing citations with a single source.</p>
   border-right-color: #D3D3D3;
 }
 
-#xkuhwbufxu .gt_sourcenote {
+#xedrxbdrfr .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1113,63 +1129,63 @@ removing citations with a single source.</p>
   padding-right: 5px;
 }
 
-#xkuhwbufxu .gt_left {
+#xedrxbdrfr .gt_left {
   text-align: left;
 }
 
-#xkuhwbufxu .gt_center {
+#xedrxbdrfr .gt_center {
   text-align: center;
 }
 
-#xkuhwbufxu .gt_right {
+#xedrxbdrfr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xkuhwbufxu .gt_font_normal {
+#xedrxbdrfr .gt_font_normal {
   font-weight: normal;
 }
 
-#xkuhwbufxu .gt_font_bold {
+#xedrxbdrfr .gt_font_bold {
   font-weight: bold;
 }
 
-#xkuhwbufxu .gt_font_italic {
+#xedrxbdrfr .gt_font_italic {
   font-style: italic;
 }
 
-#xkuhwbufxu .gt_super {
+#xedrxbdrfr .gt_super {
   font-size: 65%;
 }
 
-#xkuhwbufxu .gt_footnote_marks {
+#xedrxbdrfr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xkuhwbufxu .gt_asterisk {
+#xedrxbdrfr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xkuhwbufxu .gt_indent_1 {
+#xedrxbdrfr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xkuhwbufxu .gt_indent_2 {
+#xedrxbdrfr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xkuhwbufxu .gt_indent_3 {
+#xedrxbdrfr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xkuhwbufxu .gt_indent_4 {
+#xedrxbdrfr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xkuhwbufxu .gt_indent_5 {
+#xedrxbdrfr .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1202,7 +1218,7 @@ removing citations with a single source.</p>
 <tbody class="gt_table_body">
 <tr>
 <td headers="duplicate_id" class="gt_row gt_left">wos:000919545100001</td>
-<td headers="record_ids" class="gt_row gt_left">scopus-2-s2.0-85147720543, wos:000919545100001</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000919545100001, scopus-2-s2.0-85147720543</td>
 <td headers="author" class="gt_row gt_left">Larkin, Howard D. D.</td>
 <td headers="year" class="gt_row gt_right">2023</td>
 <td headers="journal" class="gt_row gt_left">JAMA-JOURNAL OF THE AMERICAN MEDICAL ASSOCIATION</td>
@@ -1252,7 +1268,7 @@ removing citations with a single source.</p>
 </tr>
 <tr>
 <td headers="duplicate_id" class="gt_row gt_left">wos:000928044600001</td>
-<td headers="record_ids" class="gt_row gt_left">wos:000922862000001, wos:000928044600001</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000928044600001, wos:000922862000001</td>
 <td headers="author" class="gt_row gt_left">Wang, Lin-Yu; Liu, Jiao; Peng, Yi-Zhu; Zhang, Cai-Ping; Zou, Wei; Liu, Feng; Zhan, Ke-Bin; Zhang, Ping</td>
 <td headers="year" class="gt_row gt_right">2022</td>
 <td headers="journal" class="gt_row gt_left">NATURAL PRODUCT COMMUNICATIONS</td>
@@ -1300,23 +1316,23 @@ dataframes.</p>
 <span>   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>   <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cols_hide.html" class="external-link">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">abstract</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="essqqkfpxb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#essqqkfpxb table {
+<div id="mbmntenlze" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mbmntenlze table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#essqqkfpxb thead, #essqqkfpxb tbody, #essqqkfpxb tfoot, #essqqkfpxb tr, #essqqkfpxb td, #essqqkfpxb th {
+#mbmntenlze thead, #mbmntenlze tbody, #mbmntenlze tfoot, #mbmntenlze tr, #mbmntenlze td, #mbmntenlze th {
   border-style: none;
 }
 
-#essqqkfpxb p {
+#mbmntenlze p {
   margin: 0;
   padding: 0;
 }
 
-#essqqkfpxb .gt_table {
+#mbmntenlze .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1342,12 +1358,12 @@ dataframes.</p>
   border-left-color: #D3D3D3;
 }
 
-#essqqkfpxb .gt_caption {
+#mbmntenlze .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#essqqkfpxb .gt_title {
+#mbmntenlze .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1359,7 +1375,7 @@ dataframes.</p>
   border-bottom-width: 0;
 }
 
-#essqqkfpxb .gt_subtitle {
+#mbmntenlze .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1371,7 +1387,7 @@ dataframes.</p>
   border-top-width: 0;
 }
 
-#essqqkfpxb .gt_heading {
+#mbmntenlze .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1383,13 +1399,13 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#essqqkfpxb .gt_bottom_border {
+#mbmntenlze .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#essqqkfpxb .gt_col_headings {
+#mbmntenlze .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1404,7 +1420,7 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#essqqkfpxb .gt_col_heading {
+#mbmntenlze .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1424,7 +1440,7 @@ dataframes.</p>
   overflow-x: hidden;
 }
 
-#essqqkfpxb .gt_column_spanner_outer {
+#mbmntenlze .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1436,15 +1452,15 @@ dataframes.</p>
   padding-right: 4px;
 }
 
-#essqqkfpxb .gt_column_spanner_outer:first-child {
+#mbmntenlze .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#essqqkfpxb .gt_column_spanner_outer:last-child {
+#mbmntenlze .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#essqqkfpxb .gt_column_spanner {
+#mbmntenlze .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1456,11 +1472,11 @@ dataframes.</p>
   width: 100%;
 }
 
-#essqqkfpxb .gt_spanner_row {
+#mbmntenlze .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#essqqkfpxb .gt_group_heading {
+#mbmntenlze .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1486,7 +1502,7 @@ dataframes.</p>
   text-align: left;
 }
 
-#essqqkfpxb .gt_empty_group_heading {
+#mbmntenlze .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1501,15 +1517,15 @@ dataframes.</p>
   vertical-align: middle;
 }
 
-#essqqkfpxb .gt_from_md > :first-child {
+#mbmntenlze .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#essqqkfpxb .gt_from_md > :last-child {
+#mbmntenlze .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#essqqkfpxb .gt_row {
+#mbmntenlze .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1528,7 +1544,7 @@ dataframes.</p>
   overflow-x: hidden;
 }
 
-#essqqkfpxb .gt_stub {
+#mbmntenlze .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1541,7 +1557,7 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#essqqkfpxb .gt_stub_row_group {
+#mbmntenlze .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1555,15 +1571,15 @@ dataframes.</p>
   vertical-align: top;
 }
 
-#essqqkfpxb .gt_row_group_first td {
+#mbmntenlze .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#essqqkfpxb .gt_row_group_first th {
+#mbmntenlze .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#essqqkfpxb .gt_summary_row {
+#mbmntenlze .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1573,16 +1589,16 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#essqqkfpxb .gt_first_summary_row {
+#mbmntenlze .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#essqqkfpxb .gt_first_summary_row.thick {
+#mbmntenlze .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#essqqkfpxb .gt_last_summary_row {
+#mbmntenlze .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1592,7 +1608,7 @@ dataframes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#essqqkfpxb .gt_grand_summary_row {
+#mbmntenlze .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1602,7 +1618,7 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#essqqkfpxb .gt_first_grand_summary_row {
+#mbmntenlze .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1612,7 +1628,7 @@ dataframes.</p>
   border-top-color: #D3D3D3;
 }
 
-#essqqkfpxb .gt_last_grand_summary_row_top {
+#mbmntenlze .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1622,11 +1638,11 @@ dataframes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#essqqkfpxb .gt_striped {
+#mbmntenlze .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#essqqkfpxb .gt_table_body {
+#mbmntenlze .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1635,7 +1651,7 @@ dataframes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#essqqkfpxb .gt_footnotes {
+#mbmntenlze .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1649,7 +1665,7 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#essqqkfpxb .gt_footnote {
+#mbmntenlze .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1658,7 +1674,7 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#essqqkfpxb .gt_sourcenotes {
+#mbmntenlze .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1672,7 +1688,7 @@ dataframes.</p>
   border-right-color: #D3D3D3;
 }
 
-#essqqkfpxb .gt_sourcenote {
+#mbmntenlze .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1680,63 +1696,63 @@ dataframes.</p>
   padding-right: 5px;
 }
 
-#essqqkfpxb .gt_left {
+#mbmntenlze .gt_left {
   text-align: left;
 }
 
-#essqqkfpxb .gt_center {
+#mbmntenlze .gt_center {
   text-align: center;
 }
 
-#essqqkfpxb .gt_right {
+#mbmntenlze .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#essqqkfpxb .gt_font_normal {
+#mbmntenlze .gt_font_normal {
   font-weight: normal;
 }
 
-#essqqkfpxb .gt_font_bold {
+#mbmntenlze .gt_font_bold {
   font-weight: bold;
 }
 
-#essqqkfpxb .gt_font_italic {
+#mbmntenlze .gt_font_italic {
   font-style: italic;
 }
 
-#essqqkfpxb .gt_super {
+#mbmntenlze .gt_super {
   font-size: 65%;
 }
 
-#essqqkfpxb .gt_footnote_marks {
+#mbmntenlze .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#essqqkfpxb .gt_asterisk {
+#mbmntenlze .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#essqqkfpxb .gt_indent_1 {
+#mbmntenlze .gt_indent_1 {
   text-indent: 5px;
 }
 
-#essqqkfpxb .gt_indent_2 {
+#mbmntenlze .gt_indent_2 {
   text-indent: 10px;
 }
 
-#essqqkfpxb .gt_indent_3 {
+#mbmntenlze .gt_indent_3 {
   text-indent: 15px;
 }
 
-#essqqkfpxb .gt_indent_4 {
+#mbmntenlze .gt_indent_4 {
   text-indent: 20px;
 }
 
-#essqqkfpxb .gt_indent_5 {
+#mbmntenlze .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1769,7 +1785,7 @@ dataframes.</p>
 <tbody class="gt_table_body">
 <tr>
 <td headers="duplicate_id" class="gt_row gt_left">wos:000919545100001</td>
-<td headers="record_ids" class="gt_row gt_left">scopus-2-s2.0-85147720543, wos:000919545100001</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000919545100001, scopus-2-s2.0-85147720543</td>
 <td headers="author" class="gt_row gt_left">Larkin, Howard D. D.</td>
 <td headers="year" class="gt_row gt_right">2023</td>
 <td headers="journal" class="gt_row gt_left">JAMA-JOURNAL OF THE AMERICAN MEDICAL ASSOCIATION</td>
@@ -1819,7 +1835,7 @@ dataframes.</p>
 </tr>
 <tr>
 <td headers="duplicate_id" class="gt_row gt_left">wos:000928044600001</td>
-<td headers="record_ids" class="gt_row gt_left">wos:000922862000001, wos:000928044600001</td>
+<td headers="record_ids" class="gt_row gt_left">wos:000928044600001, wos:000922862000001</td>
 <td headers="author" class="gt_row gt_left">Wang, Lin-Yu; Liu, Jiao; Peng, Yi-Zhu; Zhang, Cai-Ping; Zou, Wei; Liu, Feng; Zhan, Ke-Bin; Zhang, Ping</td>
 <td headers="year" class="gt_row gt_right">2022</td>
 <td headers="journal" class="gt_row gt_left">NATURAL PRODUCT COMMUNICATIONS</td>
@@ -1845,6 +1861,15 @@ dataframes.</p>
 </tbody>
 </table>
 </div>
+</div>
+<div class="section level2">
+<h2 id="exporting-results">Exporting results<a class="anchor" aria-label="anchor" href="#exporting-results"></a>
+</h2>
+<p>Once deduplication is complete, you can export the new unique records
+to a file for import into reference managers or systematic review
+software.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/write_citations.html">write_citations</a></span><span class="op">(</span><span class="va">new_citations</span>, type<span class="op">=</span><span class="st">"txt"</span>, filename<span class="op">=</span><span class="st">"unique.txt"</span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

@@ -82,33 +82,80 @@
 
     
     
+<div class="section level2">
+<h2 id="setup">
+<strong>Setup</strong><a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
+<p>First, install and load the ASySD package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://camaradesuk.github.io/ASySD/">ASySD</a></span><span class="op">)</span></span></code></pre></div>
-<p>Load citations from an Endnote XML file using the
-<code><a href="../reference/load_search.html">load_search()</a></code> funciton. You can change the <em>method</em>
-argument to upload alternative file types such as .csv files.</p>
+<code class="sourceCode R"><span><span class="co"># devtools::install_github("camaradesuk/ASySD")</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://camaradesuk.github.io/ASySD/">ASySD</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="loading-data">Loading data<a class="anchor" aria-label="anchor" href="#loading-data"></a>
+</h2>
+<p>First, load citations from an Endnote XML file using the
+<code><a href="../reference/load_search.html">load_search()</a></code> function. Alternatively, you can upload other
+file types such as .csv files by changing the method argument.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">citations</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_search.html">load_search</a></span><span class="op">(</span><span class="st">"systematic_search.xml"</span>, method<span class="op">=</span><span class="st">"endnote"</span><span class="op">)</span></span></code></pre></div>
-<p>Remove duplicate citations from a large dataset (&gt;10000 citations)
-automatically using the <code>dedup_large_search</code> function.</p>
+</div>
+<div class="section level2">
+<h2 id="batch-deduplication">Batch deduplication<a class="anchor" aria-label="anchor" href="#batch-deduplication"></a>
+</h2>
+<p>To handle large datasets effectively, we recommend running
+deduplication in batches. This approach is especially useful for
+datasets with over 100,000 records. Set the batch_n parameter to control
+batch size, with a default value of 50,000. Here, we illustrate batching
+on a smaller scale for demonstration purposes.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dedup_large_search.html">dedup_large_search</a></span><span class="op">(</span><span class="va">citations</span>, merge_citations <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>If you want to preferentially retain a certain source or label, you
-can also specify this in the function. For example, if you want to
-maintain pubmed data over other sources you can try the below code. Note
-that the source column in your dataframe must contain the relevant
-sources to allow for this selection.</p>
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/batch_dedup.html">batch_dedup</a></span><span class="op">(</span><span class="va">citations</span>, batch_n<span class="op">=</span><span class="fl">2000</span>, sort_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"title"</span>,<span class="st">"author"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Splitting up dataframe</span></span>
+<span><span class="co">#&gt; batch 1 complete ✔</span></span>
+<span><span class="co">#&gt; batch 2 complete ✔</span></span>
+<span><span class="co">#&gt; batch 3 complete ✔</span></span>
+<span><span class="co">#&gt; batch 4 complete ✔</span></span>
+<span><span class="co">#&gt; batch 5 complete ✔</span></span>
+<span><span class="co">#&gt; identified 5457 unique citations</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="additional-rounds-of-duplication">Additional rounds of duplication<a class="anchor" aria-label="anchor" href="#additional-rounds-of-duplication"></a>
+</h2>
+<p>After the initial deduplication, further refinement may be necessary.
+Duplicates may have been separated into different batches in the above
+example - such as if the years differ substantially or if one year is
+missing.</p>
+<p>You can perform additional rounds of deduplication using different
+sorting criteria, such as the title alone. Using the results from the
+first round of deduplication as input, you can run the batch
+deduplication again and check the results. In this instance, running
+again identified 3 additional duplicates.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dedup_citations.html">dedup_citations</a></span><span class="op">(</span><span class="va">citations</span>, merge_citations <span class="op">=</span> <span class="cn">TRUE</span>, keep_source<span class="op">=</span><span class="st">"pubmed"</span><span class="op">)</span></span></code></pre></div>
-<p>Your unique results can be found in the output in a list element
-called “unique”</p>
+<code class="sourceCode R"><span><span class="co"># get unique results from round 1</span></span>
+<span><span class="va">unique_r1</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">$</span><span class="va">unique</span></span>
+<span></span>
+<span><span class="co"># deduplicate again using unique results, setting different sort criteria</span></span>
+<span><span class="va">results_r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/batch_dedup.html">batch_dedup</a></span><span class="op">(</span><span class="va">unique_r1</span>, batch_n<span class="op">=</span><span class="fl">2000</span>, sort_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"title"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Splitting up dataframe</span></span>
+<span><span class="co">#&gt; batch 1 complete ✔</span></span>
+<span><span class="co">#&gt; batch 2 complete ✔</span></span>
+<span><span class="co">#&gt; batch 3 complete ✔</span></span>
+<span><span class="co">#&gt; identified 5454 unique citations</span></span>
+<span></span>
+<span><span class="co"># get results after 2 rounds of deduplication</span></span>
+<span><span class="va">unique_r2</span> <span class="op">&lt;-</span> <span class="va">results_r2</span><span class="op">$</span><span class="va">unique</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="exporting-results">Exporting results<a class="anchor" aria-label="anchor" href="#exporting-results"></a>
+</h2>
+<p>Once deduplication is complete, you can export the unique records to
+a file for import into reference managers or systematic review
+software.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">unique_citations</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">$</span><span class="va">unique</span></span></code></pre></div>
-<p>You can now write your results to a file for import into a reference
-manager or systematic review software</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/write_citations.html">write_citations</a></span><span class="op">(</span><span class="va">unique_citations</span>, type<span class="op">=</span><span class="st">"txt"</span>, filename<span class="op">=</span><span class="st">"unique.txt"</span><span class="op">)</span></span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/write_citations.html">write_citations</a></span><span class="op">(</span><span class="va">unique_r2</span>, type<span class="op">=</span><span class="st">"txt"</span>, filename<span class="op">=</span><span class="st">"unique.txt"</span><span class="op">)</span></span></code></pre></div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

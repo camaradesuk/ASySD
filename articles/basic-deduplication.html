@@ -82,18 +82,28 @@
 
     
     
-<p>Load the ASySD package.</p>
+<div class="section level2">
+<h2 id="setup">
+<strong>Setup</strong><a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
+<p>First, install and load the ASySD package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#devtools::install_github("camaradesuk/ASySD")</span></span>
+<code class="sourceCode R"><span><span class="co"># devtools::install_github("camaradesuk/ASySD")</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://camaradesuk.github.io/ASySD/">ASySD</a></span><span class="op">)</span></span></code></pre></div>
-<p>Load citations from an Endnote XML file using the
-<code><a href="../reference/load_search.html">load_search()</a></code> funciton. You can change the <em>method</em>
-argument to upload alternative file types such as .csv files.</p>
+</div>
+<div class="section level2">
+<h2 id="loading-citation-data">
+<strong>Loading Citation Data</strong><a class="anchor" aria-label="anchor" href="#loading-citation-data"></a>
+</h2>
+<p>Begin by loading your citation data from an Endnote XML file using
+the <strong><code><a href="../reference/load_search.html">load_search()</a></code></strong> function. You can
+specify alternative file formats such as CSV if needed.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">citations</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_search.html">load_search</a></span><span class="op">(</span><span class="st">"systematic_search.xml"</span>, method<span class="op">=</span><span class="st">"endnote"</span><span class="op">)</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="automated-deduplication">Automated deduplication<a class="anchor" aria-label="anchor" href="#automated-deduplication"></a>
-</h3>
+</div>
+<div class="section level2">
+<h2 id="automated-deduplication">Automated deduplication<a class="anchor" aria-label="anchor" href="#automated-deduplication"></a>
+</h2>
 <p>Remove duplicate citations automatically using the
 <code>dedup_citations</code> function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -101,7 +111,6 @@ argument to upload alternative file types such as .csv files.</p>
 <span><span class="co">#&gt; formatting data...</span></span>
 <span><span class="co">#&gt; identifying potential duplicates...</span></span>
 <span><span class="co">#&gt; identified duplicates!</span></span>
-<span><span class="co">#&gt; Joining with `by = join_by(record_id)`</span></span>
 <span><span class="co">#&gt; flagging potential pairs for manual dedup...</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(duplicate_id.x, duplicate_id.y)`</span></span>
 <span><span class="co">#&gt; 8948 citations loaded...</span></span>
@@ -116,12 +125,12 @@ step).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">unique_citations</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">$</span><span class="va">unique</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="manual-deduplication">Manual deduplication<a class="anchor" aria-label="anchor" href="#manual-deduplication"></a>
-</h3>
-<p>To check for additional duplicates, get the dataframe of citations
-for manual review. You can review within R or export as a csv / excel
-file to go through each row of pairs.</p>
+<div class="section level2">
+<h2 id="manual-deduplication">Manual deduplication<a class="anchor" aria-label="anchor" href="#manual-deduplication"></a>
+</h2>
+<p>To address remaining duplicates, review potential pairs manually. You
+can examine them within R or export them to a CSV or Excel file for
+detailed inspection.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">potential_duplicates</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">$</span><span class="va">manual_dedup</span></span></code></pre></div>
 <p>After reviewing the pairs, create a dataframe containing <strong>only
@@ -131,12 +140,23 @@ file, you could remove the rows which are not duplicates and re-upload
 the rows with true duplicates.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">true_duplicates</span> <span class="op">&lt;-</span> <span class="va">potential_duplicates</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">16</span>,<span class="op">]</span></span></code></pre></div>
-<p>Now, to get the final deduplication results, use the
-<code><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual()</a></code>function. To account for
-additional duplicates you have reviewed, add them into the
-<em>additional_pairs</em> argument.</p>
+</div>
+<div class="section level2">
+<h2 id="final-deduplication">
+<strong>Final Deduplication</strong><a class="anchor" aria-label="anchor" href="#final-deduplication"></a>
+</h2>
+<p>Combine the results of automated and manual deduplication using the
+<strong><code><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual()</a></code></strong> function.
+Include any additional duplicates you’ve identified in the
+<strong><code>additional_pairs</code></strong> argument.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">final_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual</a></span><span class="op">(</span><span class="va">unique_citations</span>, additional_pairs <span class="op">=</span> <span class="va">true_duplicates</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">final_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual</a></span><span class="op">(</span><span class="va">unique_citations</span>, additional_pairs <span class="op">=</span> <span class="va">true_duplicates</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(record_id)`</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="exporting-results">
+<strong>Exporting Results</strong><a class="anchor" aria-label="anchor" href="#exporting-results"></a>
+</h2>
 <p>You can now write your results to a file for import into a reference
 manager or systematic review software</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">

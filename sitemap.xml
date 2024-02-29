@@ -28,13 +28,22 @@
     <loc>https://camaradesuk.github.io/ASySD/news/index.html</loc>
   </url>
   <url>
+    <loc>https://camaradesuk.github.io/ASySD/reference/batch_dedup.html</loc>
+  </url>
+  <url>
+    <loc>https://camaradesuk.github.io/ASySD/reference/citations_df.html</loc>
+  </url>
+  <url>
     <loc>https://camaradesuk.github.io/ASySD/reference/dedup_citations.html</loc>
   </url>
   <url>
     <loc>https://camaradesuk.github.io/ASySD/reference/dedup_citations_add_manual.html</loc>
   </url>
   <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/dedup_large_search.html</loc>
+    <loc>https://camaradesuk.github.io/ASySD/reference/field_codes_pubmed.html</loc>
+  </url>
+  <url>
+    <loc>https://camaradesuk.github.io/ASySD/reference/field_codes_wos.html</loc>
   </url>
   <url>
     <loc>https://camaradesuk.github.io/ASySD/reference/index.html</loc>
