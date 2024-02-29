@@ -5,6 +5,7 @@
 #' @details The following fields will be used in `raw_citations` (if provided): record_id, author, year, journal, doi, title, pages, volume, number, abstract, isbn, label, source
 #' @import dplyr
 #' @import progressr
+#' @import shiny
 #' @importFrom rlang :=
 #' @importFrom utils menu
 #' @param raw_citations A dataframe containing duplicate ciations
