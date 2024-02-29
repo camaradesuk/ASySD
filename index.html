@@ -68,7 +68,8 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
+  <main id="main" class="col-md-9"><p><!-- badges: start --> <a href="https://github.com/camaradesuk/ASySD/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/camaradesuk/ASySD/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <!-- badges: end --></p>
+<div class="section level1">
 <div class="page-header"><h1 id="automated-systematic-search-deduplicator-asysd-">Automated Systematic Search Deduplicator (ASySD) <img src="reference/figures/updated_logo.png" width="200px" align="right"><a class="anchor" aria-label="anchor" href="#automated-systematic-search-deduplicator-asysd-"></a>
 </h1></div>
 <p>Removing duplicate references obtained from different databases is an essential step when conducting and updating systematic literature reviews. ASySD (pronounced “assist”) is a tool to automatically identify and remove duplicate records.</p>
@@ -90,8 +91,7 @@
 <div class="section level2">
 <h2 id="installation">Installation:<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<pre class="{r}"><code><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"camaradesuk/ASySD"</span><span class="op">)</span></span></code></pre>
+<p><code>{r} install.packages("devtools") devtools::install_github("camaradesuk/ASySD")</code></p>
 </div>
 <div class="section level2">
 <h2 id="requirements">Requirements<a class="anchor" aria-label="anchor" href="#requirements"></a>
@@ -168,16 +168,21 @@
 <div class="section level2">
 <h2 id="automatically-deduplicate-citation-data">Automatically deduplicate citation data<a class="anchor" aria-label="anchor" href="#automatically-deduplicate-citation-data"></a>
 </h2>
-<pre class="{r}"><code><span><span class="co"># load citations </span></span>
-<span><span class="va">citation_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/load_search.html">load_search</a></span><span class="op">(</span><span class="va">filepath</span>, method<span class="op">=</span><span class="st">"endnote"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># deduplicate</span></span>
-<span><span class="va">dedup_citations</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dedup_citations.html">dedup_citations</a></span><span class="op">(</span><span class="va">citation_data</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># get unique citation dataframe</span></span>
-<span><span class="va">unique_citations</span> <span class="op">&lt;-</span> <span class="va">dedup_citations</span><span class="op">$</span><span class="va">unique</span> </span></code></pre>
+<p>```{r} # load citations citation_data &lt;- load_search(filepath, method=“endnote”)</p>
 </div>
 </div>
+<div class="section level1">
+<h1 id="deduplicate">deduplicate<a class="anchor" aria-label="anchor" href="#deduplicate"></a>
+</h1>
+<p>dedup_citations &lt;- dedup_citations(citation_data)</p>
+</div>
+<div class="section level1">
+<h1 id="get-unique-citation-dataframe">get unique citation dataframe<a class="anchor" aria-label="anchor" href="#get-unique-citation-dataframe"></a>
+</h1>
+<p>unique_citations &lt;- dedup_citations$unique</p>
+<p>```</p>
+</div>
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
