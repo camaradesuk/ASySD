@@ -23,6 +23,7 @@ Imports:
     utf8,
     tidyr,
     rlang,
+    shiny,
     RefManageR,
     dplyr,
     progressr,

@@ -11,7 +11,6 @@ dedup_citations(
   keep_source = NULL,
   keep_label = NULL,
   extra_merge_fields = NULL,
-  shiny_progress = FALSE,
   show_unknown_tags = TRUE,
   user_input = NA
 )
@@ -29,8 +28,6 @@ dedup_citations(
 
 \item{extra_merge_fields}{Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value}
 
-\item{shiny_progress}{Switch on progress indicators for shiny applications}
-
 \item{show_unknown_tags}{When a label, source, or other merged field is missing, do you want this to show as "unknown"?}
 
 \item{user_input}{Do you want to proceed if important columns are missing? 1-yes; 2-no}
@@ -43,4 +40,14 @@ This function deduplicates citation data
 }
 \details{
 The following fields will be used in \code{raw_citations} (if provided): record_id, author, year, journal, doi, title, pages, volume, number, abstract, isbn, label, source
+}
+\examples{
+
+# Perform deduplication
+result <- dedup_citations(citations_df, keep_source="Embase")
+
+# View unique citations
+head(result$unique)
+
+
 }
