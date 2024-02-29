@@ -1,3 +1,10 @@
+# ASySD 0.3.4
+
+* Simplification of deduplication functions - broken down into smaller functions and called
+* Added functionality for batch deduplication + accompanying vignette
+* Automatically detecting whether shiny app in use or not (for deduplication functions) and removing redundant arguments
+* Improvements to documentation and examples
+
 # ASySD 0.3.3
 
 * Improvements to export metadata - now retains URLs in app export
