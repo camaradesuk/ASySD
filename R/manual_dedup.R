@@ -27,19 +27,6 @@
 dedup_citations_add_manual <- function(unique_citations, merge_citations=TRUE, keep_source=NULL, keep_label=NULL,
                                        additional_pairs, extra_merge_fields = NULL, show_unknown_tags=TRUE){
 
-  # if extra merge fields not null
-  if(!is.null(extra_merge_fields)){
-
-    extra_cols <- paste(extra_merge_fields, 1:2, sep = "")
-
-    duplicates <- additional_pairs %>%
-      dplyr::select(duplicate_id.x, duplicate_id.y, label1, label2, source1, source2, !!!extra_cols)
-  } else{
-
-    duplicates <- additional_pairs %>%
-      dplyr::select(duplicate_id.x, duplicate_id.y, label1, label2, source1, source2)
-  }
-
     unique_citations <- unique_citations %>%
       rename(record_id = duplicate_id)
 
