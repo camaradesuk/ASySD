@@ -1,66 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/404.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/articles/basic-deduplication.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/articles/large-dedup.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/articles/search-updates.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/index.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/batch_dedup.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/citations_df.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/dedup_citations.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/dedup_citations_add_manual.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/field_codes_pubmed.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/field_codes_wos.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/load_multi_search.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/load_search.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/merge_metadata.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/write_citations.html</loc>
-  </url>
-  <url>
-    <loc>https://camaradesuk.github.io/ASySD/reference/write_citations_app.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://camaradesuk.github.io/ASySD/404.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/LICENSE.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/articles/basic-deduplication.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/articles/index.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/articles/large-dedup.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/articles/search-updates.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/authors.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/index.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/news/index.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/reference/batch_dedup.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/reference/citations_df.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/reference/dedup_citations.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/reference/dedup_citations_add_manual.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/reference/field_codes_pubmed.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/reference/field_codes_wos.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/reference/index.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/reference/load_multi_search.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/reference/load_search.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/reference/merge_metadata.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/reference/write_citations.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/reference/write_citations_app.html</loc></url>
 </urlset>
+
