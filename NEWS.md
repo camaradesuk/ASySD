@@ -1,3 +1,9 @@
+# ASySD 0.3.5
+
+* Simplification of merge functions in deduplication process
+* Bug fix for extra_merge_fields functionality which prevented correct merging of record_ids
+* New unit test for manual deduplication
+
 # ASySD 0.3.4
 
 * Simplification of deduplication functions - broken down into smaller functions and called
