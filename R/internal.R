@@ -430,7 +430,7 @@ identify_true_matches <- function(pairs){
 #' @param true_pairs citation matches which are true duplicates'
 #' @param keep_source Character vector. Selected citation source to preferentially retain in the dataset as the unique record
 #' @param keep_label Selected citation label to preferentially retain in the dataset as the unique record
-#' @param formatted_citations formatted citation data
+#' @param raw_citations formatted citation data
 #' @return Dataframe of formatted citation data with duplicate id
 #' @import dplyr
 #' @noRd
@@ -689,87 +689,34 @@ keep_one_unique_citation <- function(true_pairs_with_ids){
 #' @param extra_merge_fields Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value
 #' @return Dataframe of formatted citation data with duplicate id
 #' @import dplyr
-merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields){
 
-  if(!is.null(extra_merge_fields)){
+merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields) {
 
-    # if on a rerun, include record_ids in merging
-    if("record_ids" %in% names(matched_pairs_with_ids)){
+    # If on a rerun, include record_ids into the merging, otherwise merge record_id field
+    if (!"record_ids" %in% names(matched_pairs_with_ids)) {
+      matched_pairs_with_ids$record_ids <- matched_pairs_with_ids$record_id
+    }
+
+    merge_fields <- c("record_ids", "label", "source", extra_merge_fields)
+
+    paste_unless_blank_or_na <- function(x) {
+      if (all(is.na(x))) return(NA)
+      if (all(x == "")) return ("")
+      paste(na.omit(x), collapse = ';;;')
+    }
 
       all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%
+        select(-record_id) %>%
         mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
         mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
         group_by(.data$duplicate_id) %>%
-        summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
-        mutate(across(c(everything(), -c(label, source, record_id, {{extra_merge_fields}})), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
-        mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-        mutate(across(record_ids, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-        mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-        mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
-        mutate(across({{extra_merge_fields}}, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-        ungroup() %>%
-        mutate(record_ids = paste0(record_ids, ", ", record_id)) %>%
-        select(-record_id)
+        summarise(across(everything(), ~ trimws(paste_unless_blank_or_na(.x))), .groups = "drop") %>% #merge all rows with same dup id, dont merge NA values
+        mutate(across(c(everything(), -{{merge_fields}}), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
+        mutate(across({{merge_fields}}, ~ gsub(.x, pattern = ";;;", replacement = ", ")))
 
-      # Apply the function to the 'id' column
+      # Ensure IDs are not repeated within the field (not sure why they would be though?)
       all_metadata_with_duplicate_id$record_ids <- sapply(all_metadata_with_duplicate_id$record_ids, remove_string_dups)
 
       return(all_metadata_with_duplicate_id)
-    } else {
 
-    all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%
-      mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
-      mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
-      group_by(.data$duplicate_id) %>% # group by duplicate id
-      summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
-      mutate(across(c(everything(), -c(label, source, record_id, {{extra_merge_fields}})), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
-      mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-      mutate(across({{extra_merge_fields}}, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-      mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-      mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
-      ungroup() %>%
-      rename(record_ids = record_id) %>%
-      ungroup()
-
-  }} else {
-
-    # if on a rerun, include record_ids in merging
-    if("record_ids" %in% names(matched_pairs_with_ids)){
-
-      all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%
-        mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
-        mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
-        group_by(.data$duplicate_id) %>%
-        summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
-        mutate(across(c(everything(), -c(label, source, record_id, record_ids)), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
-        mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-        mutate(across(record_ids, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-        mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-        mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
-        ungroup() %>%
-        mutate(record_ids = paste0(record_ids, ", ", record_id)) %>%
-        select(-record_id)
-
-      # Apply the function to the 'id' column
-      all_metadata_with_duplicate_id$record_ids <- sapply(all_metadata_with_duplicate_id$record_ids, remove_string_dups)
-
-      return(all_metadata_with_duplicate_id)
-    }
-
-    else {
-      all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%
-        mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
-        mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
-        group_by(.data$duplicate_id) %>%
-        summarise(across(everything(), ~ trimws(paste(na.omit(.), collapse = ';;;')))) %>% #merge all rows with same dup id, dont merge NA values
-        mutate(across(c(everything(), -c(label, source, record_id)), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
-        mutate(across(label, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-        mutate(across(source, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>%
-        mutate(across(record_id, ~ gsub(.x, pattern = ";;;", replacement = ", "))) %>% #replace separator to comma
-        ungroup() %>%
-        rename(record_ids = record_id) %>%
-        ungroup()
-
-    }
-  }
 }
