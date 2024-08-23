@@ -44,7 +44,7 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
   # for R shiny app
   if(shiny_progress == TRUE){
 
-    withProgress(message = "formatting data...", value = 0, {
+    res <- withProgress(message = "formatting data...", value = 0, {
 
       if(show_unknown_tags == TRUE){
 
@@ -65,6 +65,13 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
       # add misisng cols, give warnings for cols not included
       raw_citations <- add_missing_cols(raw_citations)
 
+      if(manual_dedup == TRUE){
+        # to return empty data frame in case there are no duplicates
+        res <- list("manual_dedup" = data.frame())
+      } else {
+        res <- list()
+      }
+
       # order citations
       ordered_citations <- order_citations(raw_citations, extra_merge_fields)
 
@@ -79,17 +86,11 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
       incProgress(0.4/1)
 
       # warnings if no possible duplicates detected
-      if(is.null(pairs)) {
+      if(is.null(pairs) || length(pairs$record_id1)==0) {
         warning("No duplicates detected")
-        raw_citations$duplicate_id <- raw_citations$record_id
-        return(list("unique" = raw_citations))
-      }
-
-      # warnings if no possible duplicates detected
-      if(length(pairs$record_id1)==0) {
-        warning("No duplicates detected")
-        raw_citations$duplicate_id <- raw_citations$record_id
-        return(list("unique" = raw_citations))
+        raw_citations$duplicate_id <- raw_citations$record_ids <- raw_citations$record_id
+        res$unique <- raw_citations
+        return(res)
       }
 
       # identify pairs that are true and possible pairs
@@ -100,17 +101,11 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
       incProgress(0.5/1)
 
       # warning if no true duplicates
-      if(is.null(true_pairs)) {
+      if(is.null(true_pairs) || length(true_pairs$record_id1)==0) {
         warning("No duplicates detected!")
-        raw_citations$duplicate_id <- raw_citations$record_id
-        return(list("unique" = raw_citations))
-      }
-
-      # warning if no true duplicates
-      if(length(true_pairs$record_id1)==0) {
-        warning("No duplicates detected!")
-        raw_citations$duplicate_id <- raw_citations$record_id
-        return(list("unique" = raw_citations))
+        raw_citations$duplicate_id <- raw_citations$record_ids <- raw_citations$record_id
+        res$unique <- raw_citations
+        return(res)
       }
 
       # shiny progress update
@@ -121,9 +116,9 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
       # merge citations (best option) or keep one citations from each
       if(merge_citations == TRUE){
-        unique_citations_with_metadata <- merge_metadata(matched_pairs_with_ids, extra_merge_fields)
+        res$unique <- raw_citations <- merge_metadata(matched_pairs_with_ids, extra_merge_fields)
       } else{
-        unique_citations_with_metadata <- keep_one_unique_citation(matched_pairs_with_ids)
+        res$unique <- raw_citations <- keep_one_unique_citation(matched_pairs_with_ids)
       }
 
       # processing possible pairs for manual dedup review
@@ -131,20 +126,23 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
         # shiny update message
         incProgress(0.8/1, message = "flagging potential pairs for manual dedup...")
-        manual_dedup_df <- process_possible_pairs(pair_types$maybe_pairs, ordered_citations, matched_pairs_with_ids, extra_merge_fields)
+        res$manual_dedup <- process_possible_pairs(pair_types$maybe_pairs, ordered_citations, matched_pairs_with_ids, extra_merge_fields)
 
       }
 
-      # make sure data is returned ungrouped
-      unique_citations_with_metadata <- unique_citations_with_metadata %>%
-        ungroup()
-
       # shiny update message
       incProgress(1/1) # Increase progress bar to 100%
+
+      return(res)
+
     })
 
-    return(list("unique" = unique_citations_with_metadata,
-                "manual_dedup" = manual_dedup_df))
+    # make sure data is returned ungrouped
+    res$unique <- res$unique %>%
+      ungroup()
+
+    return(res)
+
   } else {
 
     # error handling for missing cols
@@ -159,7 +157,7 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
       if (is.na(user_input)) {
         user_input <- utils::menu(c("Yes", "No"),
-                           title= paste("Are you sure you want to proceed?"))
+                                  title= paste("Are you sure you want to proceed?"))
       }
 
       if (user_input == "1") {
@@ -203,18 +201,19 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     # find matching pairs
     pairs <- match_citations(formatted_citations)
 
-    # warning if no potential duplicates
-    if(is.null(pairs)) {
-      warning("No duplicates detected!")
-      raw_citations$duplicate_id <- raw_citations$record_id
-      return(list("unique" = raw_citations))
+    if(manual_dedup == TRUE){
+      # to return empty data frame in case there are no duplicates
+      res <- list("manual_dedup" = data.frame())
+    } else {
+      res <- list()
     }
 
     # warning if no potential duplicates
-    if(length(pairs$record_id1)==0) {
+    if(is.null(pairs) || length(pairs$record_id1)==0) {
       warning("No duplicates detected!")
-      raw_citations$duplicate_id <- raw_citations$record_id
-      return(list("unique" = raw_citations))
+      raw_citations$duplicate_id <- raw_citations$record_ids <- raw_citations$record_ids <- raw_citations$record_id
+      res$unique <- raw_citations
+      return(res)
     }
 
     # identify true pairs
@@ -222,17 +221,11 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     true_pairs <- pair_types$true_pairs
 
     # warning if no true duplicates
-    if(is.null(true_pairs)) {
+    if(is.null(true_pairs) || length(true_pairs$record_id1)==0) {
       warning("No duplicates detected!")
-      raw_citations$duplicate_id <- raw_citations$record_id
-      return(list("unique" = raw_citations))
-    }
-
-    # warning if no true duplicates
-    if(length(true_pairs$record_id1)==0) {
-      warning("No duplicates detected!")
-      raw_citations$duplicate_id <- raw_citations$record_id
-      return(list("unique" = raw_citations))
+      raw_citations$duplicate_id <- raw_citations$record_ids <- raw_citations$record_id
+      res$unique <- raw_citations
+      return(res)
     }
 
     # user update message
@@ -248,9 +241,9 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
 
       if(merge_citations == TRUE){
 
-        unique_citations_with_metadata <- merge_metadata(matched_pairs_with_ids, extra_merge_fields)
+        res$unique <- merge_metadata(matched_pairs_with_ids, extra_merge_fields)
       } else{
-        unique_citations_with_metadata <- keep_one_unique_citation(matched_pairs_with_ids)
+        res$unique <- keep_one_unique_citation(matched_pairs_with_ids)
       }
 
     })
@@ -259,17 +252,16 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     if(manual_dedup == TRUE){
 
       message("flagging potential pairs for manual dedup...")
-      manual_dedup_df <- process_possible_pairs(pair_types$maybe_pairs, ordered_citations, matched_pairs_with_ids, extra_merge_fields)
+      res$manual_dedup <- process_possible_pairs(pair_types$maybe_pairs, ordered_citations, matched_pairs_with_ids, extra_merge_fields)
 
     }
 
     # make sure data is returned ungrouped
-    unique_citations_with_metadata <- unique_citations_with_metadata %>%
+    res$unique <- res$unique %>%
       ungroup()
 
-
     # calculate results and output messages
-    n_unique <- length(unique(unique_citations_with_metadata$duplicate_id))
+    n_unique <- length(unique(res$unique$duplicate_id))
     n_start <- length(unique(formatted_citations$record_id))
     n_dups <- n_start - n_unique
 
@@ -277,14 +269,7 @@ dedup_citations <- function(raw_citations, manual_dedup = TRUE,
     message(paste(n_dups, "duplicate citations removed..."))
     message(paste(n_unique, "unique citations remaining!"))
 
-    if(manual_dedup == TRUE){
-
-      return(list("unique" = unique_citations_with_metadata,
-                  "manual_dedup" = manual_dedup_df))
-    } else {
-
-      return(unique_citations_with_metadata)
-    }
+    return(res)
 
   }
 }

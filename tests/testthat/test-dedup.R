@@ -56,7 +56,7 @@ test_that("Essential column missing", {
 # Test case: Deduplication performing as normal
 test_that("Deduplication performing as normal", {
   res <- dedup_citations(test_citations, merge_citations = FALSE, manual_dedup = FALSE)
-  expect_equal(length(res$duplicate_id), 586)
+  expect_equal(length(res$unique$duplicate_id), 586)
 })
 
 # Test case: Deduplication with merge performing as normal
