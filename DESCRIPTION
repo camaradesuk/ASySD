@@ -5,7 +5,11 @@ Authors@R:
     person("Kaitlyn","Hair", ,
     role = c("aut", "cre", "cph"),
     email = "kaitlyn.hair@ed.ac.uk",
-    comment = c(ORCID = "https://orcid.org/0000-0003-0180-7343"))
+    comment = c(ORCID = "https://orcid.org/0000-0003-0180-7343")),
+    person("Lukas", "Wallrich", ,
+    role = "aut",
+    email = "lukas.wallrich@gmail.com",
+    comment = c(ORCID = "https://orcid.org/0000-0003-2121-5177")),
 Description: The Automated Systematic Search Deduplicator ('ASySD') includes functions to automatically detect and remove duplicate citations from literature searches. For details, see our paper "The Automated Systematic Search Deduplicator (ASySD): a rapid, open-source, interoperable tool to remove duplicate citations in biomedical systematic reviews. Hair K / Bahor Z / Macleod M / Liao J / Sena E (2023) <doi:10.1186/s12915-023-01686-z>.
 BugReports: https://github.com/camaradesuk/ASySD/issues
 License: GPL (>= 3)
