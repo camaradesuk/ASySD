@@ -10,4 +10,4 @@ utils::globalVariables(c("Abstract", "AlternateName", "Author", "AuthorAddress",
                          "record_id2", "record_ids", "setNames", "source1", "source2", "source_type",
                          "start_page", "title", "title1", "title2", "volume", "volume1", "volume2",
                          "withProgress", "write.csv", "write.table", "year", "year1", "year2",
-                         "max_id", "min_id", "match_score_ls"))
+                         "max_id", "min_id", "match_score_ls", "."))

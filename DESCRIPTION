@@ -31,7 +31,10 @@ Imports:
     RefManageR,
     dplyr,
     progressr,
-    igraph
+    igraph,
+    shinyjs,
+    keys,
+    shinythemes
 Suggests: 
     knitr,
     gt,
