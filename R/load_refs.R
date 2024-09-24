@@ -211,18 +211,39 @@ if(method == "txt"){
 }
 
 
-#' Load in citations for deduplication
-#'
-#' This function loads in an citations file.
-#' @import RefManageR
-#' @import bibliometrix
-#' @importFrom utils read.csv read.table
-#' @param path File path to the citations file
-#' @param method  Import method
-#' @return A dataframe of the citations
-#' @export
+ #' Load in citations for deduplication
+ #'
+ #' This function loads a citations file using the specified import method. If the method is not provided, it defaults to one based on the file extension.
+ #' Supported methods: "endnote", "csv", "txt", "bib", "zotero_csv", "ris".
+ #'
+ #' @import RefManageR
+ #' @import bibliometrix
+ #' @importFrom utils read.csv read.table
+ #' @param path File path to the citations file.
+ #' @param method Import method. Valid options are "endnote", "csv", "txt", "bib", "zotero_csv", and "ris". If not provided, the method will be inferred from the file extension.
+ #' @return A dataframe of the citations.
+ #' @export
 
-load_search <-function(path, method){
+ load_search <- function(path, method = NULL) {
+
+   # Infer method from file extension if not provided
+   if (is.null(method)) {
+     ext <- tools::file_ext(path)
+     method <- switch(ext,
+                      # "xml" = "endnote",
+                      "csv" = "csv",
+                      "txt" = "txt",
+                      "bib" = "bib",
+                      "ris" = "ris",
+                      stop("Method cannot be inferred from file extension. Please specify a valid `method` argument.")
+     )
+   }
+
+   # Validate method
+   valid_methods <- c("endnote", "csv", "txt", "bib", "zotero_csv", "ris")
+   if (!method %in% valid_methods) {
+     stop(glue::glue("Invalid method '{method}'. Valid options are: {paste(valid_methods, collapse = ', ')}"))
+   }
 
   if(method == "endnote"){
 
