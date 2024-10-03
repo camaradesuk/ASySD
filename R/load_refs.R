@@ -219,7 +219,7 @@ if(method == "txt"){
  #' @import RefManageR
  #' @import bibliometrix
  #' @importFrom utils read.csv read.table
- #' @param path File path(s) to one or more citations file(s).
+ #' @param path File path(s) to one or more citations file(s). If more than one file is passed, the file name is added into the `source` field to distinguish where citations came from
  #' @param method Import method. Valid options are "endnote", "csv", "txt", "bib", "zotero_csv", and "ris". If not provided, the method will be inferred from the file extension.
  #' @return A dataframe of the citations.
  #' @export
@@ -234,7 +234,11 @@ if(method == "txt"){
          method <- rep(method, length(path))
        }
        # Recursively call the function for each path and bind the results
-       return(do.call(rbind, lapply(seq_along(path), function(i) load_search(path[i], method[i]))))
+       return(do.call(rbind, lapply(seq_along(path), function(i) {
+         df <- load_search(path[i], method[i])
+         df$source <- path[i]
+         df
+       })))
      } else {
        stop("Length of 'method' should be either 1, equal to the length of 'path', or not provided.")
      }
