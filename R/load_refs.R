@@ -219,12 +219,26 @@ if(method == "txt"){
  #' @import RefManageR
  #' @import bibliometrix
  #' @importFrom utils read.csv read.table
- #' @param path File path to the citations file.
+ #' @param path File path(s) to one or more citations file(s).
  #' @param method Import method. Valid options are "endnote", "csv", "txt", "bib", "zotero_csv", and "ris". If not provided, the method will be inferred from the file extension.
  #' @return A dataframe of the citations.
  #' @export
 
  load_search <- function(path, method = NULL) {
+
+   if (length(path) > 1) {
+     # If there are multiple paths, handle recursion
+     if (length(method) == length(path) | length(method) == 1 | is.null(method)) {
+       if (length(method) == 1) {
+         # If only one method is provided, replicate it for all paths
+         method <- rep(method, length(path))
+       }
+       # Recursively call the function for each path and bind the results
+       return(do.call(rbind, lapply(seq_along(path), function(i) load_search(path[i], method[i]))))
+     } else {
+       stop("Length of 'method' should be either 1, equal to the length of 'path', or not provided.")
+     }
+   }
 
    # Infer method from file extension if not provided
    if (is.null(method)) {
@@ -281,6 +295,7 @@ if(method == "txt"){
   if(method == "csv"){
 
     newdat <- utils::read.csv(path)
+    names(newdat) <- tolower(names(newdat))
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
   }
@@ -289,6 +304,7 @@ if(method == "txt"){
   if(method == "txt"){
 
     newdat <- utils::read.table(path)
+    names(newdat) <- tolower(names(newdat))
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
