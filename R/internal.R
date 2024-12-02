@@ -688,6 +688,7 @@ keep_one_unique_citation <- function(true_pairs_with_ids){
 #' @param matched_pairs_with_ids citation data with duplicate ids
 #' @param extra_merge_fields Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value
 #' @return Dataframe of formatted citation data with duplicate id
+#' @importFrom stats na.omit
 #' @import dplyr
 
 merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields) {
