@@ -25,16 +25,16 @@ library(ASySD)
 
 ## **Loading citation data**
 
-Load citations from an **existing search** file using the `load_search()` function. In this example, we use a csv format. You can change the *method* argument to upload alternative file types.
+Load citations from an **existing search** file using the `load_search()` function. In this example, we use a csv format. 
 
 ```{r}
-existing_search <- load_search("old_sr_search.csv", method="csv")
+existing_search <- load_search("old_sr_search.csv")
 ```
 
 Load citations from a **new systematic search.**
 
 ```{r}
-new_search <- load_search("new_sr_search.csv", method="csv")
+new_search <- load_search("new_sr_search.csv")
 ```
 
 ### Combine old and new citation data
@@ -70,7 +70,7 @@ To check for additional duplicates, get the dataframe of citations for manual re
 potential_duplicates <- results$manual_dedup
 ```
 
-After reviewing the pairs, create a dataframe contianing **only the true duplicate pairs.** Here, all the suggested duplicates look like REAL duplicates. If you exported to a file, you could remove the rows which are not duplicates and re-upload the rows with true duplicates.
+After reviewing the pairs, create a dataframe contianing **only the true duplicate pairs.** Here, all the suggested duplicates look like REAL duplicates. Alternatively, you could go through them one-by-one using the `manual_dedup_shiny()` function. 
 
 ```{r}
 true_duplicates <- potential_duplicates
