@@ -13,4 +13,4 @@ utils::globalVariables(c("Abstract", "AlternateName", "Author", "AuthorAddress",
                          "max_id", "min_id", "match_score_ls", ".",
                          "suffix", "field_codes_wos", "field_codes_pubmed",
                          "result", "name", "URL"
-                         ))))
+                         ))
