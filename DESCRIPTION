@@ -34,7 +34,8 @@ Imports:
     igraph,
     shinyjs,
     keys,
-    shinythemes
+    shinythemes,
+    glue
 Suggests: 
     knitr,
     gt,
