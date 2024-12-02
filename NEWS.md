@@ -1,3 +1,7 @@
+# ASySD 0.4.1
+
+* Improvements to load_search() to allow for multiple files and without the need to explicity add the method argument
+
 # ASySD 0.4.0
 
 * Addition of manual_dedup_shiny() function to aid manual deduplication process in the package
