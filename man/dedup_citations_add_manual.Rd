@@ -23,7 +23,7 @@ dedup_citations_add_manual(
 
 \item{keep_label}{Selected citation label to preferentially retain in the dataset as the unique record}
 
-\item{additional_pairs}{dataframe of citations with manual pairs, a subset of the manual pairs export}
+\item{additional_pairs}{dataframe of citations with manual pairs, a subset of the manual pairs export. If a \code{result} column is included, only those with a value of \code{match} will be merged}
 
 \item{extra_merge_fields}{Add additional fields to merge, output will be similar to the label, source, and record_id columns with commas between each merged value}
 
@@ -45,6 +45,12 @@ res_unique <- result$unique
 head(result$manual_dedup)
 
 true_dups <- result$manual_dedup[1:5,]
+# or equivalently
+true_dups <- result$manual_dedup
+true_dups$result[1:5] <- "match"
+
+# You can also use a Shiny interface to review the potential duplicates
+# true_dups <- manual_dedup_shiny(result$manual_dedup)
 
 final_result <- dedup_citations_add_manual(res_unique, additional_pairs = true_dups)
 

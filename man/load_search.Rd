@@ -4,16 +4,17 @@
 \alias{load_search}
 \title{Load in citations for deduplication}
 \usage{
-load_search(path, method)
+load_search(path, method = NULL)
 }
 \arguments{
-\item{path}{File path to the citations file}
+\item{path}{File path(s) to one or more citations file(s). If more than one file is passed, the file name is added into the \code{source} field to distinguish where citations came from}
 
-\item{method}{Import method}
+\item{method}{Import method. Valid options are "endnote", "csv", "txt", "bib", "zotero_csv", and "ris". If not provided, the method will be inferred from the file extension.}
 }
 \value{
-A dataframe of the citations
+A dataframe of the citations.
 }
 \description{
-This function loads in an citations file.
+This function loads a citations file using the specified import method. If the method is not provided, it defaults to one based on the file extension.
+Supported methods: "endnote", "csv", "txt", "bib", "zotero_csv", "ris".
 }
