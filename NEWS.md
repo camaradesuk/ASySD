@@ -1,3 +1,7 @@
+# ASySD 0.4.0
+
+* Addition of manual_dedup_shiny() function to aid manual deduplication process in the package
+
 # ASySD 0.3.5
 
 * Simplification of merge functions in deduplication process
