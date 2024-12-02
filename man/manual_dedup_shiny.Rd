@@ -7,9 +7,17 @@
 manual_dedup_shiny(df, cols = names(df))
 }
 \arguments{
-\item{manual_dedup}{The dataframe with potential duplicates returned from \code{dedup_citations}}
+\item{df}{A dataframe containing potential duplicate entries, typically
+returned by \code{dedup_citations()}.}
+
+\item{cols}{A character vector of column names to display during the review process.
+By default, uses all columns in \code{df}.}
 }
 \value{
+The dataframe with an updated \code{result} column, indicating whether each
+entry is a duplicate (\code{"match"}) or not (\code{"no_match"}). This can be passed to
+\code{dedup_citations_add_manual()} for completing the deduplication process.
+
 The dataframe with a \code{result} column indicating whether the entry
 constitutes a duplicate - to be passed to \code{dedup_citations_add_manual()}
 }
