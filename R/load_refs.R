@@ -4,6 +4,7 @@
 #' @import RefManageR
 #' @import bibliometrix
 #' @import XML
+#' @import glue
 #' @importFrom utils read.csv read.table
 #' @param paths Relative paths to the citations file or files
 #' @param method  Import method
