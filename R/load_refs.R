@@ -211,18 +211,57 @@ if(method == "txt"){
 }
 
 
-#' Load in citations for deduplication
-#'
-#' This function loads in an citations file.
-#' @import RefManageR
-#' @import bibliometrix
-#' @importFrom utils read.csv read.table
-#' @param path File path to the citations file
-#' @param method  Import method
-#' @return A dataframe of the citations
-#' @export
+ #' Load in citations for deduplication
+ #'
+ #' This function loads a citations file using the specified import method. If the method is not provided, it defaults to one based on the file extension.
+ #' Supported methods: "endnote", "csv", "txt", "bib", "zotero_csv", "ris".
+ #'
+ #' @import RefManageR
+ #' @import bibliometrix
+ #' @importFrom utils read.csv read.table
+ #' @param path File path(s) to one or more citations file(s). If more than one file is passed, the file name is added into the `source` field to distinguish where citations came from
+ #' @param method Import method. Valid options are "endnote", "csv", "txt", "bib", "zotero_csv", and "ris". If not provided, the method will be inferred from the file extension.
+ #' @return A dataframe of the citations.
+ #' @export
 
-load_search <-function(path, method){
+ load_search <- function(path, method = NULL) {
+
+   if (length(path) > 1) {
+     # If there are multiple paths, handle recursion
+     if (length(method) == length(path) | length(method) == 1 | is.null(method)) {
+       if (length(method) == 1) {
+         # If only one method is provided, replicate it for all paths
+         method <- rep(method, length(path))
+       }
+       # Recursively call the function for each path and bind the results
+       return(do.call(rbind, lapply(seq_along(path), function(i) {
+         df <- load_search(path[i], method[i])
+         df$source <- path[i]
+         df
+       })))
+     } else {
+       stop("Length of 'method' should be either 1, equal to the length of 'path', or not provided.")
+     }
+   }
+
+   # Infer method from file extension if not provided
+   if (is.null(method)) {
+     ext <- tools::file_ext(path)
+     method <- switch(ext,
+                      # "xml" = "endnote",
+                      "csv" = "csv",
+                      "txt" = "txt",
+                      "bib" = "bib",
+                      "ris" = "ris",
+                      stop("Method cannot be inferred from file extension. Please specify a valid `method` argument.")
+     )
+   }
+
+   # Validate method
+   valid_methods <- c("endnote", "csv", "txt", "bib", "zotero_csv", "ris")
+   if (!method %in% valid_methods) {
+     stop(glue::glue("Invalid method '{method}'. Valid options are: {paste(valid_methods, collapse = ', ')}"))
+   }
 
   if(method == "endnote"){
 
@@ -260,6 +299,7 @@ load_search <-function(path, method){
   if(method == "csv"){
 
     newdat <- utils::read.csv(path)
+    names(newdat) <- tolower(names(newdat))
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
   }
@@ -268,6 +308,7 @@ load_search <-function(path, method){
   if(method == "txt"){
 
     newdat <- utils::read.table(path)
+    names(newdat) <- tolower(names(newdat))
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
