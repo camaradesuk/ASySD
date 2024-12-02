@@ -47,7 +47,6 @@ head(result$manual_dedup)
 true_dups <- result$manual_dedup[1:5,]
 # or equivalently
 true_dups <- result$manual_dedup
-true_dups$result[1:5] <- "match"
 
 # You can also use a Shiny interface to review the potential duplicates
 # true_dups <- manual_dedup_shiny(result$manual_dedup)

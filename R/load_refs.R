@@ -2,9 +2,9 @@
 #'
 #' This function loads in a citation file within the shiny app
 #' @import RefManageR
+#' @importFrom glue glue
 #' @import bibliometrix
 #' @import XML
-#' @import glue
 #' @importFrom utils read.csv read.table
 #' @param paths Relative paths to the citations file or files
 #' @param method  Import method

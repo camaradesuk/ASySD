@@ -23,7 +23,11 @@
 #' true_dups <- result$manual_dedup[1:5,]
 #' # or equivalently
 #' true_dups <- result$manual_dedup
-#' true_dups$result[1:5] <- "match"
+# if (!"result" %in% colnames(true_dups)) {
+#   true_dups$result <- NA  # Initialize the column with NA values
+# }
+#
+# true_dups$result[1:5] <- "match"
 #'
 #' # You can also use a Shiny interface to review the potential duplicates
 #' # true_dups <- manual_dedup_shiny(result$manual_dedup)

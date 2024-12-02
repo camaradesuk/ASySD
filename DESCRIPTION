@@ -20,7 +20,6 @@ RoxygenNote: 7.2.3
 Imports:
     parallel,
     parallelly,
-    bibliometrix,
     RecordLinkage,
     XML,
     synthesisr,
@@ -35,7 +34,8 @@ Imports:
     shinyjs,
     keys,
     shinythemes,
-    glue
+    glue,
+    bibliometrix
 Suggests: 
     knitr,
     gt,
