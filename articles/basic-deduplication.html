@@ -118,25 +118,23 @@ can examine them within R or export them to a CSV or Excel file for
 detailed inspection.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">potential_duplicates</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">$</span><span class="va">manual_dedup</span></span></code></pre></div>
-<p>After reviewing the pairs, create a dataframe containing <strong>only
-the true duplicate pairs.</strong> Here, for simplicity, I have retained
-a subset of the potential_duplicates dataframe. If you exported to a
-file, you could remove the rows which are not duplicates and re-upload
-the rows with true duplicates.</p>
+<p>Review the pairs using the <code><a href="../reference/manual_dedup_shiny.html">manual_dedup_shiny()</a></code>
+function. This opens up and interactive shiny app to allow you to go
+through each potential duplicate pair. Save the output to an object so
+you can use it in the next step.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">true_duplicates</span> <span class="op">&lt;-</span> <span class="va">potential_duplicates</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">16</span>,<span class="op">]</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">post_manual_review</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/manual_dedup_shiny.html">manual_dedup_shiny</a></span><span class="op">(</span><span class="va">potential_duplicates</span><span class="op">)</span> </span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="final-deduplication">
 <strong>Final Deduplication</strong><a class="anchor" aria-label="anchor" href="#final-deduplication"></a>
 </h2>
 <p>Combine the results of automated and manual deduplication using the
-<strong><code><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual()</a></code></strong> function.
-Include any additional duplicates you’ve identified in the
-<strong><code>additional_pairs</code></strong> argument.</p>
+<code><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual()</a></code> function. Include any
+additional duplicates you’ve identified in the
+<code>additional_pairs</code> argument.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">final_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual</a></span><span class="op">(</span><span class="va">unique_citations</span>, additional_pairs <span class="op">=</span> <span class="va">true_duplicates</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Joining with `by = join_by(record_id)`</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">final_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dedup_citations_add_manual.html">dedup_citations_add_manual</a></span><span class="op">(</span><span class="va">unique_citations</span>, additional_pairs <span class="op">=</span> <span class="va">post_manual_review</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exporting-results">

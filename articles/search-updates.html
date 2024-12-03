@@ -82,13 +82,12 @@
 </h2>
 <p>Load citations from an <strong>existing search</strong> file using
 the <code><a href="../reference/load_search.html">load_search()</a></code> function. In this example, we use a csv
-format. You can change the <em>method</em> argument to upload
-alternative file types.</p>
+format.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">existing_search</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_search.html">load_search</a></span><span class="op">(</span><span class="st">"old_sr_search.csv"</span>, method<span class="op">=</span><span class="st">"csv"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">existing_search</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_search.html">load_search</a></span><span class="op">(</span><span class="st">"old_sr_search.csv"</span><span class="op">)</span></span></code></pre></div>
 <p>Load citations from a <strong>new systematic search.</strong></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">new_search</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_search.html">load_search</a></span><span class="op">(</span><span class="st">"new_sr_search.csv"</span>, method<span class="op">=</span><span class="st">"csv"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">new_search</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_search.html">load_search</a></span><span class="op">(</span><span class="st">"new_sr_search.csv"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="combine-old-and-new-citation-data">Combine old and new citation data<a class="anchor" aria-label="anchor" href="#combine-old-and-new-citation-data"></a>
 </h3>
@@ -143,9 +142,8 @@ file to go through each row of pairs.</p>
 <code class="sourceCode R"><span><span class="va">potential_duplicates</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">$</span><span class="va">manual_dedup</span></span></code></pre></div>
 <p>After reviewing the pairs, create a dataframe contianing <strong>only
 the true duplicate pairs.</strong> Here, all the suggested duplicates
-look like REAL duplicates. If you exported to a file, you could remove
-the rows which are not duplicates and re-upload the rows with true
-duplicates.</p>
+look like REAL duplicates. Alternatively, you could go through them
+one-by-one using the <code><a href="../reference/manual_dedup_shiny.html">manual_dedup_shiny()</a></code> function.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">true_duplicates</span> <span class="op">&lt;-</span> <span class="va">potential_duplicates</span></span></code></pre></div>
 <p>Now, to get the final deduplication results, use the

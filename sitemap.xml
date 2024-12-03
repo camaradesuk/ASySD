@@ -1,6 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://camaradesuk.github.io/ASySD/404.html</loc></url>
-<url><loc>https://camaradesuk.github.io/ASySD/LICENSE.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/LICENSE-text.html</loc></url>
 <url><loc>https://camaradesuk.github.io/ASySD/articles/basic-deduplication.html</loc></url>
 <url><loc>https://camaradesuk.github.io/ASySD/articles/index.html</loc></url>
 <url><loc>https://camaradesuk.github.io/ASySD/articles/large-dedup.html</loc></url>
@@ -17,6 +17,7 @@
 <url><loc>https://camaradesuk.github.io/ASySD/reference/index.html</loc></url>
 <url><loc>https://camaradesuk.github.io/ASySD/reference/load_multi_search.html</loc></url>
 <url><loc>https://camaradesuk.github.io/ASySD/reference/load_search.html</loc></url>
+<url><loc>https://camaradesuk.github.io/ASySD/reference/manual_dedup_shiny.html</loc></url>
 <url><loc>https://camaradesuk.github.io/ASySD/reference/merge_metadata.html</loc></url>
 <url><loc>https://camaradesuk.github.io/ASySD/reference/write_citations.html</loc></url>
 <url><loc>https://camaradesuk.github.io/ASySD/reference/write_citations_app.html</loc></url>

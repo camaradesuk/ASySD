@@ -130,14 +130,6 @@
 <span class="r-in"><span><span class="va">true_dups</span> <span class="op">&lt;-</span> <span class="va">result</span><span class="op">$</span><span class="va">manual_dedup</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span></span></span>
 <span class="r-in"><span><span class="co"># or equivalently</span></span></span>
 <span class="r-in"><span><span class="va">true_dups</span> <span class="op">&lt;-</span> <span class="va">result</span><span class="op">$</span><span class="va">manual_dedup</span></span></span>
-<span class="r-in"><span><span class="va">true_dups</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"match"</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `result`.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in `$&lt;-`(`*tmp*`, result, value = c("match", "match", "match", "match", "match")):</span> Assigned data `&lt;chr&gt;` must be compatible with existing data.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Existing data has 8 rows.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Assigned data has 5 rows.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Only vectors of size 1 are recycled.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `vectbl_recycle_rhs_rows()`:</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Can't recycle input of size 5 to size 8.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># You can also use a Shiny interface to review the potential duplicates</span></span></span>
 <span class="r-in"><span><span class="co"># true_dups &lt;- manual_dedup_shiny(result$manual_dedup)</span></span></span>
