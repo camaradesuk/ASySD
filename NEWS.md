@@ -1,3 +1,9 @@
+# ASySD 0.4.2
+
+* Fixed issue in app with incorrect use of mutate in RIS export
+* Fixed issue in app with redundant arguments from old functions
+* Updated about page on app 
+
 # ASySD 0.4.1
 
 * Improvements to load_search() to allow for multiple files and without the need to explicity add the method argument

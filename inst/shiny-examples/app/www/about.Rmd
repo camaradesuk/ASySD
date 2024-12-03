@@ -4,7 +4,6 @@ output:
   html_document:
     toc: true
     toc_float: true
-bibliography: references.bib
 ---
 
 ```{=html}
@@ -18,11 +17,16 @@ bibliography: references.bib
 
 <img src="updated_logo.png" align="right" width="142"/>
 
-ASySD was developed in the [CAMARADES](https://www.ed.ac.uk/clinical-brain-sciences/research/camarades/about-camarades) research group at the University of Edinburgh by Kaitlyn Hair. By comparing metadata fields in existing in-house systematic search datasets, rule-based match criteria were iteratively developed to identify duplicate citations with a high degree of accuracy. Once developed, ASySD was evaluated on 5 unseen biomedical systematic review datasets of varying sizes (\~1800 to \~80,000 citations). Using ASySD's automated deduplication approach was highly sensitive, capturing over 95% of citations, and highly specific with a very low false positive rate of \<0.2%.
+ASySD was developed in the [CAMARADES](https://www.ed.ac.uk/clinical-brain-sciences/research/camarades/about-camarades) research group at the University of Edinburgh by Kaitlyn Hair. Lukas Wallrich and the CiteSource team have also contributed significantly to ASySD, enabling the development of new features, improvements, and use cases. ASySD is actively maintained and enhanced as both an R package and a Shiny application, with ongoing development hosted on GitHub.
+
+# Performance
+
+By comparing metadata fields in existing in-house systematic search datasets, rule-based match criteria were iteratively developed to identify duplicate citations with a high degree of accuracy. Once developed, ASySD was evaluated on 5 unseen biomedical systematic review datasets of varying sizes (\~1800 to \~80,000 citations). Using ASySD's automated deduplication approach was highly sensitive, capturing over 95% of citations, and highly specific with a very low false positive rate of \<0.2%.
+
 
 # Packages ASySD uses
 
-The data import functionality within ASySD uses the [synthesisr](https://github.com/mjwestgate/synthesisr) package, created by Martin Westgate and the [RefManageR](https://docs.ropensci.org/RefManageR/authors.html#citation) package, created by Mathew W. McLean. The record matching function underlying this tool uses the [**RecordLinkage**](https://rdrr.io/cran/RecordLinkage/) package, created by Murat Sariyar and Andreas Borg.
+The data import functionality within ASySD uses the [**synthesisr**](https://github.com/mjwestgate/synthesisr) package, created by Martin Westgate, the [**RefManageR**](https://docs.ropensci.org/RefManageR/authors.html#citation) package, created by Mathew W. McLean, and the [**Bibliometix**](https://github.com/massimoaria/bibliometrix) package by Massimo Aria & Corrado Cuccurullo. The record matching function underlying this tool uses the [**RecordLinkage**](https://rdrr.io/cran/RecordLinkage/) package, created by Murat Sariyar and Andreas Borg.
 
 # Packages using ASySD
 
@@ -36,6 +40,6 @@ If you have any questions about the tool or come across a problem when trying to
 
 If you want to use this application for your systematic review, please cite:
 
-Hair K, Bahor Z, Macleod M, Liao J, Sena ES. The Automated Systematic Search Deduplicator (ASySD): a rapid, open-source, interoperable tool to remove duplicate citations in biomedical systematic reviews. bioRxiv; 2021. DOI: 10.1101/2021.05.04.442412.
+Hair, K., Bahor, Z., Macleod, M. et al. The Automated Systematic Search Deduplicator (ASySD): a rapid, open-source, interoperable tool to remove duplicate citations in biomedical systematic reviews. BMC Biol 21, 189 (2023). [10.1186/s12915-023-01686-z](https://doi.org/10.1186/s12915-023-01686-z) and quote the Research Resource Identifier [RRID:SCR_025607](https://scicrunch.org/resolver/SCR_025607)
 
 # News

@@ -11,7 +11,7 @@ library(networkD3)
 library(rsconnect)
 library(RCurl)
 library(shiny)
-library(ASySD)
+#library(ASySD)
 library(shinythemes)
 library(knitr)
 library(shinycssloaders)
@@ -28,7 +28,11 @@ ui <- navbarPage(
 
   shinyjs::useShinyjs(),
 
-  tags$head(includeHTML(("google-analytics.html"))),
+  tags$head(
+    if (file.exists("www/google-analytics.html")) {
+      includeHTML("www/google-analytics.html")
+    }
+  ),
 
   title="ASySD",
 
@@ -757,8 +761,7 @@ remove duplicates.")
     result <- dedup_citations(citations_to_dedup(),
                               keep_source = input$keepSource,
                               keep_label = keep_label,
-                              merge_citations = TRUE,
-                              shiny_progress =TRUE)
+                              merge_citations = TRUE)
 
     rv$pairs_to_check <- result$manual_dedup %>%
       mutate(" " = "") %>%

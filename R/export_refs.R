@@ -236,7 +236,7 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 
     citations$source_type <- "JOUR" #for RIS import to work
     citations <- citations %>% dplyr::select(source_type , everything()) %>%
-      dplyr::mutate(-isbn)
+      dplyr::select(-isbn)
     citations <- tidyr::separate(citations, .data$pages, into = c("start_page", "end_page"), sep = "-", convert = TRUE)
     citations$accession_number <- citations$accession
 
