@@ -56,7 +56,14 @@ format_overviews <- function(
 #'
 #' @export
 #' @importFrom rlang .data
-#' @param manual_dedup The dataframe with potential duplicates returned from `dedup_citations`
+#' @param df A dataframe containing potential duplicate entries, typically
+#' returned by `dedup_citations()`.
+#' @param cols A character vector of column names to display during the review process.
+#' By default, uses all columns in `df`.
+#' @return The dataframe with an updated `result` column, indicating whether each
+#' entry is a duplicate (`"match"`) or not (`"no_match"`). This can be passed to
+#' `dedup_citations_add_manual()` for completing the deduplication process.
+
 #' @return The dataframe with a `result` column indicating whether the entry
 #' constitutes a duplicate - to be passed to `dedup_citations_add_manual()`
 #' @examplesIf interactive()

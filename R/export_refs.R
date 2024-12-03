@@ -137,6 +137,8 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
 #'
 #' # Example usage for exporting to txt format
 #' write_citations_app(citations, type = "txt", filename = "citations.txt")
+#' unlink("citations.txt")
+#'
 write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), filename){
 
   cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source')

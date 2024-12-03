@@ -12,7 +12,7 @@ Authors@R:
     comment = c(ORCID = "0000-0003-2121-5177")))
 Description: The Automated Systematic Search Deduplicator ('ASySD') includes functions to automatically detect and remove duplicate citations from literature searches. For details, see our paper "The Automated Systematic Search Deduplicator (ASySD): a rapid, open-source, interoperable tool to remove duplicate citations in biomedical systematic reviews. Hair K / Bahor Z / Macleod M / Liao J / Sena E (2023) <doi:10.1186/s12915-023-01686-z>.
 BugReports: https://github.com/camaradesuk/ASySD/issues
-License: GPL (>= 3)
+License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -20,7 +20,6 @@ RoxygenNote: 7.2.3
 Imports:
     parallel,
     parallelly,
-    bibliometrix,
     RecordLinkage,
     XML,
     synthesisr,
@@ -34,7 +33,9 @@ Imports:
     igraph,
     shinyjs,
     keys,
-    shinythemes
+    shinythemes,
+    glue,
+    bibliometrix
 Suggests: 
     knitr,
     gt,

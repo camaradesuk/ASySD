@@ -2,6 +2,7 @@
 #'
 #' This function loads in a citation file within the shiny app
 #' @import RefManageR
+#' @importFrom glue glue
 #' @import bibliometrix
 #' @import XML
 #' @importFrom utils read.csv read.table

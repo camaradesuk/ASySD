@@ -43,4 +43,6 @@ citations <- data.frame(
 
 # Example usage for exporting to txt format
 write_citations_app(citations, type = "txt", filename = "citations.txt")
+unlink("citations.txt")
+
 }
