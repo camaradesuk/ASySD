@@ -28,7 +28,11 @@ ui <- navbarPage(
 
   shinyjs::useShinyjs(),
 
-  tags$head(includeHTML(("google-analytics.html"))),
+  tags$head(
+    if (file.exists("www/google-analytics.html")) {
+      includeHTML("www/google-analytics.html")
+    }
+  ),
 
   title="ASySD",
 
