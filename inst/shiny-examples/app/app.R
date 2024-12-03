@@ -11,7 +11,7 @@ library(networkD3)
 library(rsconnect)
 library(RCurl)
 library(shiny)
-library(ASySD)
+#library(ASySD)
 library(shinythemes)
 library(knitr)
 library(shinycssloaders)
@@ -757,8 +757,7 @@ remove duplicates.")
     result <- dedup_citations(citations_to_dedup(),
                               keep_source = input$keepSource,
                               keep_label = keep_label,
-                              merge_citations = TRUE,
-                              shiny_progress =TRUE)
+                              merge_citations = TRUE)
 
     rv$pairs_to_check <- result$manual_dedup %>%
       mutate(" " = "") %>%
