@@ -38,7 +38,8 @@ dedup_citations_add_manual <- function(unique_citations, merge_citations=TRUE, k
                                        additional_pairs, extra_merge_fields = NULL, show_unknown_tags=TRUE){
 
     if ("result" %in% names(additional_pairs)){
-      additional_pairs <- additional_pairs[additional_pairs$result == "match",]
+      additional_pairs <- additional_pairs %>%
+        filter(result == "match")
       if (nrow(additional_pairs) == 0){
         message("Beware: if additional_pairs contains a `result` column, only those with a value of `match` will be merged. Currently, this means that there are no pairs to be merged.")
         return(unique_citations)
