@@ -1,3 +1,7 @@
+# ASySD 0.4.3
+
+* Fixed bug in manual deduplication to allow users to proceed before every article has been reviewed
+
 # ASySD 0.4.2
 
 * Fixed issue in app with incorrect use of mutate in RIS export
