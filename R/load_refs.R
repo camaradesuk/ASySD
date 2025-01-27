@@ -105,74 +105,97 @@
 
   if(method == "ris"){
 
-    newdat <- synthesisr::read_refs(path)
+    # newdat <- synthesisr::read_refs(path)
+    # Read in the RIS file
+    ris_lines <- readLines(path)
+
+    # Create a vector to store each reference's data
+    records <- list()
+    current_record <- list()
+
+    # Process each line in the RIS file
+    for (line in ris_lines) {
+
+      # If line starts with a field (e.g., TY for Type of Reference)
+      if (grepl("^[A-Z0-9]{2,5}.*-", line)) {
+
+        field <- substr(line, 1, 2)
+        value <- substr(line, 7, nchar(line))
+
+        # Skip adding empty fields
+        if (value != "") {
+
+          if (field == "AU") {
+
+            if ("AU" %in% names(current_record)) {
+
+              # If AU field already exists, append to the vector of a
+
+              current_record[["AU"]] <- paste0(current_record[["AU"]], "; ", value)
+            }
+
+            else {
+              # Otherwise, initialize with the first author
+              current_record[["AU"]] <- value
+            }
+          } else {
+
+            # Add field-value pairs to the current record
+            current_record[[field]] <- value
+          }
+        }
+      }
+
+      # If the line is 'ER' (End of Record), save the current record and reset
+      if (grepl("^ER\\s.*-", line)) {
+
+        # Extract the value of ER field
+        value <- substr(line, 7, nchar(line))
+
+        # Only append the record if it has meaningful data
+        if (value == "") {
+          # If current record contains more than 2 fields (considering at least some information is present)
+          if (length(current_record) > 2) {
+            records <- append(records, list(current_record))
+            current_record <- list()  # Reset for next record
+          }
+        } else {
+          print("uh-oh: Unexpected non-empty 'ER' field.")
+          return(NULL)
+        }
+      }
+    }
+
+    # Convert list of records to a data frame
+    newdat <- bind_rows(records)
+
+    # Rename columns with more meaningful names
+    newdat <- newdat %>%
+      dplyr::rename(
+        author = AU,
+        title = TI,
+        url = UR,
+        abstract = AB,
+        year = PY,
+        doi = DO,
+        journal = T2,
+        pages = SP,
+        volume = VL,
+        number = IS,
+        record_id = ID,
+        isbn = SN,
+        source = DB
+      )
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
-    # rename or coalesce columns
-    targets <- c("journal", "number", "pages", "isbn", "record_id", "booktitle")
-    sources <- c("source", "issue", "start_page", "issn", "ID", "title")
 
-    for (j in seq_along(targets)) {
-      if (targets[j] %in% names(newdat)) {
-        newdat[[targets[j]]] <- dplyr::coalesce(newdat[[targets[j]]], newdat[[sources[j]]])
-      }  else {
-        newdat[[targets[j]]] <- newdat[[sources[j]]]
-      }}
+    cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source', 'url')
+    newdat[cols_to_modify] <- lapply(newdat[cols_to_modify], function(x) gsub("\\r\\n|\\r|\\n", "", x))
+    return(newdat)
 
 
-    if ("end_page" %in% colnames(newdat)) {
-      newdat <- newdat %>%
-        dplyr::mutate(pages = .data$pages, "-", .data$end_page) %>%
-        dplyr::select(-end_page)
-    }
-
-    newdat$pages <- lapply(newdat$pages, function(x) gsub("--", "-", x))
-
-
-    newdat$file_name <- name
-    df_list[[i]] <- newdat
-  }
-
-  if(method == "endnote"){
-
-        newdat<- XML::xmlParse(path)
-        x <-  XML::getNodeSet(newdat,'//record')
-
-        xpath2 <-function(x, ...){
-          y <- xpathSApply(x, ...)
-          y <- gsub(",", "", y)  # remove commas if using comma separator
-          ifelse(length(y) == 0, NA,  paste(y, collapse=", "))
-        }
-
-        newdat <- data.frame(
-          author = sapply(x, xpath2, ".//author", xmlValue),
-          year   = sapply(x, xpath2, ".//dates/year", xmlValue),
-          journal = sapply(x, xpath2, ".//periodical/full-title", xmlValue),
-          doi = sapply(x, xpath2, ".//electronic-resource-num", xmlValue),
-          title = sapply(x, xpath2, ".//titles/title", xmlValue),
-          pages = sapply(x, xpath2, ".//pages", xmlValue),
-          volume = sapply(x, xpath2, ".//volume", xmlValue),
-          number = sapply(x, xpath2, ".//number", xmlValue),
-          abstract = sapply(x, xpath2, ".//abstract", xmlValue),
-          record_id = sapply(x, xpath2, ".//rec-number", xmlValue),
-          isbn = sapply(x, xpath2, ".//isbn", xmlValue),
-          secondary_title = sapply(x, xpath2, ".//titles/secondary-title", xmlValue),
-          accession_number = sapply(x, xpath2, ".//accession-num", xmlValue),
-          keywords = sapply(x, xpath2, ".//keywords", xmlValue),
-          type = sapply(x, xpath2, ".//ref-type", xmlValue),
-          label = sapply(x, xpath2, ".//label", xmlValue),
-          source = sapply(x, xpath2, ".//remote-database-name", xmlValue),
-          url = sapply(x, xpath2, ".//urls/related-urls/url", xmlValue),
-          database = sapply(x, xpath2, ".//remote-database-name", xmlValue)) %>%
-          mutate(journal = ifelse(is.na(.data$journal), .data$secondary_title, .data$journal))
-
-        cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
-        newdat[cols[!(cols %in% colnames(newdat))]] = NA
-
-        newdat$file_name <- name
-        df_list[[i]] <- newdat
   }
 
   if(method == "csv"){
@@ -271,7 +294,7 @@ if(method == "txt"){
 
     xpath2 <-function(x, ...){
       y <- XML::xpathSApply(x, ...)
-      y <- gsub(",", "", y)  # remove commas if using comma separator
+      y <- gsub(",", ";;;;;", y)  # remove commas if using comma separator
       ifelse(length(y) == 0, NA,  paste(y, collapse=", "))
     }
 
@@ -295,6 +318,10 @@ if(method == "txt"){
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
+
+    newdat <- newdat %>%
+      mutate(across(everything(), ~ gsub(.x, pattern = ";;;;;", replacement = ",")))
+
   }
 
   if(method == "csv"){
@@ -394,29 +421,90 @@ if(method == "txt"){
 
   if(method == "ris"){
 
-    newdat <- synthesisr::read_refs(path)
-    if ("booktitle" %in% colnames(newdat)) {
-      newdat <-newdat %>%
-        tidyr::unite(title, .data$title, .data$booktitle, na.rm = TRUE)
+
+    # newdat <- synthesisr::read_refs(path)
+
+    # Read in the RIS file
+    ris_lines <- readLines(path)
+
+    # Create a vector to store each reference's data
+    records <- list()
+    current_record <- list()
+
+    # Process each line in the RIS file
+    for (line in ris_lines) {
+
+      # If line starts with a field (e.g., TY for Type of Reference)
+      if (grepl("^[A-Z0-9]{2,5}.*-", line)) {
+
+        field <- substr(line, 1, 2)
+        value <- substr(line, 7, nchar(line))
+
+        # Skip adding empty fields
+        if (value != "") {
+
+          if (field == "AU") {
+
+            if ("AU" %in% names(current_record)) {
+
+              # If AU field already exists, append to the vector of a
+
+              current_record[["AU"]] <- paste0(current_record[["AU"]], "; ", value)
+            }
+
+            else {
+              # Otherwise, initialize with the first author
+              current_record[["AU"]] <- value
+            }
+          } else {
+
+          # Add field-value pairs to the current record
+          current_record[[field]] <- value
+        }
+        }
+      }
+
+      # If the line is 'ER' (End of Record), save the current record and reset
+      if (grepl("^ER\\s.*-", line)) {
+
+        # Extract the value of ER field
+        value <- substr(line, 7, nchar(line))
+
+        # Only append the record if it has meaningful data
+        if (value == "") {
+          # If current record contains more than 2 fields (considering at least some information is present)
+          if (length(current_record) > 2) {
+            records <- append(records, list(current_record))
+            current_record <- list()  # Reset for next record
+          }
+        } else {
+          print("uh-oh: Unexpected non-empty 'ER' field.")
+          return(NULL)
+        }
+      }
     }
 
-    if ("start_page" %in% colnames(newdat) &
-        "pages" %in% colnames(newdat)) {
-      newdat <- newdat %>%
-        tidyr::unite(pages, .data$pages, .data$start_page, .data$end_page, sep="-", na.rm=TRUE) %>%
-        select(-start_page, -end_page)
-    }
+    # Convert list of records to a data frame
+    newdat <- bind_rows(records)
 
-    if ("start_page" %in% colnames(newdat) &
-        "end_page" %in% colnames(newdat)) {
-      newdat <- newdat %>%
-        tidyr::unite(pages, start_page, end_page, sep="-", na.rm=TRUE)
-    }
+    # Rename columns with more meaningful names
+    newdat <- newdat %>%
+      dplyr::rename(
+        author = AU,
+        title = TI,
+        url = UR,
+        abstract = AB,
+        year = PY,
+        doi = DO,
+        journal = T2,
+        pages = SP,
+        volume = VL,
+        number = IS,
+        record_id = ID,
+        isbn = SN,
+        source = DB
+      )
 
-    if (!"journal" %in% colnames(newdat)){
-      newdat <- newdat %>%
-        rename(journal = source)
-    }
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
