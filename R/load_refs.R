@@ -171,20 +171,23 @@
 
     # Rename columns with more meaningful names
     newdat <- newdat %>%
-      dplyr::rename(
-        author = AU,
-        title = TI,
-        url = UR,
-        abstract = AB,
-        year = PY,
-        doi = DO,
-        journal = T2,
-        pages = SP,
-        volume = VL,
-        number = IS,
-        record_id = ID,
-        isbn = SN,
-        source = DB
+      dplyr::rename_with(
+        .fn = ~ case_when(
+          . == "AU" ~ "author",
+          . == "TI" ~ "title",
+          . == "UR" ~ "url",
+          . == "AB" ~ "abstract",
+          . == "PY" ~ "year",
+          . == "DO" ~ "doi",
+          . == "T2" ~ "journal",
+          . == "SP" ~ "pages",
+          . == "VL" ~ "volume",
+          . == "IS" ~ "number",
+          . == "ID" ~ "record_id",
+          . == "SN" ~ "isbn",
+          . == "DB" ~ "source",
+          TRUE ~ .
+        )
       )
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
@@ -193,10 +196,56 @@
 
     cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source', 'url')
     newdat[cols_to_modify] <- lapply(newdat[cols_to_modify], function(x) gsub("\\r\\n|\\r|\\n", "", x))
+
+    newdat$file_name <- name
+    df_list[[i]] <- newdat
+
     return(newdat)
 
-
   }
+
+    if(method == "endnote"){
+
+      newdat<- XML::xmlParse(path)
+      x <-  XML::getNodeSet(newdat,'//record')
+
+      xpath2 <-function(x, ...){
+        y <- XML::xpathSApply(x, ...)
+        y <- gsub(",", ";;;;;", y)  # remove commas if using comma separator
+        ifelse(length(y) == 0, NA,  paste(y, collapse=", "))
+      }
+
+      newdat <- data.frame(
+        author = sapply(x, xpath2, ".//author", xmlValue),
+        year   = sapply(x, xpath2, ".//dates/year", xmlValue),
+        journal = sapply(x, xpath2, ".//periodical/full-title", xmlValue),
+        doi = sapply(x, xpath2, ".//electronic-resource-num", xmlValue),
+        title = sapply(x, xpath2, ".//titles/title", xmlValue),
+        pages = sapply(x, xpath2, ".//pages", xmlValue),
+        volume = sapply(x, xpath2, ".//volume", xmlValue),
+        number = sapply(x, xpath2, ".//number", xmlValue),
+        abstract = sapply(x, xpath2, ".//abstract", xmlValue),
+        record_id = sapply(x, xpath2, ".//rec-number", xmlValue),
+        isbn = sapply(x, xpath2, ".//isbn", xmlValue),
+        secondary_title = sapply(x, xpath2, ".//titles/secondary-title", xmlValue),
+        accession_number = sapply(x, xpath2, ".//accession-num", xmlValue),
+        keywords = sapply(x, xpath2, ".//keywords", xmlValue),
+        type = sapply(x, xpath2, ".//ref-type", xmlValue),
+        label = sapply(x, xpath2, ".//label", xmlValue),
+        source = sapply(x, xpath2, ".//remote-database-name", xmlValue),
+        url = sapply(x, xpath2, ".//urls/related-urls/url", xmlValue),
+        database = sapply(x, xpath2, ".//remote-database-name", xmlValue)) %>%
+        mutate(journal = ifelse(is.na(.data$journal), .data$secondary_title, .data$journal))
+
+      cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
+      newdat[cols[!(cols %in% colnames(newdat))]] = NA
+
+      newdat <- newdat %>%
+        mutate(across(everything(), ~ gsub(.x, pattern = ";;;;;", replacement = ",")))
+
+      newdat$file_name <- name
+      df_list[[i]] <- newdat
+    }
 
   if(method == "csv"){
 
@@ -489,20 +538,23 @@ if(method == "txt"){
 
     # Rename columns with more meaningful names
     newdat <- newdat %>%
-      dplyr::rename(
-        author = AU,
-        title = TI,
-        url = UR,
-        abstract = AB,
-        year = PY,
-        doi = DO,
-        journal = T2,
-        pages = SP,
-        volume = VL,
-        number = IS,
-        record_id = ID,
-        isbn = SN,
-        source = DB
+      dplyr::rename_with(
+        .fn = ~ case_when(
+          . == "AU" ~ "author",
+          . == "TI" ~ "title",
+          . == "UR" ~ "url",
+          . == "AB" ~ "abstract",
+          . == "PY" ~ "year",
+          . == "DO" ~ "doi",
+          . == "T2" ~ "journal",
+          . == "SP" ~ "pages",
+          . == "VL" ~ "volume",
+          . == "IS" ~ "number",
+          . == "ID" ~ "record_id",
+          . == "SN" ~ "isbn",
+          . == "DB" ~ "source",
+          TRUE ~ .
+        )
       )
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
