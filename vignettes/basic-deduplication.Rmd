@@ -25,7 +25,7 @@ library(ASySD)
 
 ## **Loading Citation Data**
 
-Begin by loading your citation data from an Endnote XML file using the **`load_search()`** function. You can specify alternative file formats such as CSV if needed.
+Begin by loading your citation data from an Endnote XML file using the **`load_search()`** function. You can specify alternative file formats such as CSV, RIS, or BIB if needed.
 
 ```{r}
 citations <- load_search("systematic_search.xml", method="endnote")
@@ -47,23 +47,20 @@ unique_citations <- results$unique
 
 ## Manual deduplication
 
-To address remaining duplicates, review potential pairs manually. You can examine them within R or export them to a CSV or Excel file for detailed inspection.
+Review the pairs using the `manual_dedup_shiny()` function. This opens up and interactive shiny app to allow you to go through each potential duplicate pair and determine whether it represents a true duplicate (press 1) or not (press 3). Save the output to an object so you can use it in the next step.
 
-```{r}
-potential_duplicates <- results$manual_dedup
-```
+True duplicates will have a "match" in the result column. Non duplicates with have a "no match" in the result column.
 
-Review the pairs using the `manual_dedup_shiny()` function. This opens up and interactive shiny app to allow you to go through each potential duplicate pair. Save the output to an object so you can use it in the next step. 
 ```{r eval=FALSE}
 post_manual_review <- manual_dedup_shiny(potential_duplicates) 
 ```
 
 ## **Final Deduplication**
 
-Combine the results of automated and manual deduplication using the `dedup_citations_add_manual()` function. Include any additional duplicates you've identified in the `additional_pairs` argument.
+Combine the results of automated and manual deduplication using the `dedup_citations_add_manual()` function. Include the results of manual deduplication using the `additional_pairs` argument. The rows where the result column = "match" will be considered by ASySD to be additional duplicates.
 
 ```{r eval=FALSE}
-final_results <- dedup_citations_add_manual(unique_citations, additional_pairs = post_manual_review)
+final_results <- dedup_citations_add_manual(unique_citations,additional_pairs = post_manual_review)
 ```
 
 ## **Exporting Results**
