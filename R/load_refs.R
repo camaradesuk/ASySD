@@ -109,40 +109,47 @@
     # Read in the RIS file
     ris_lines <- readLines(path)
 
-    # Create a vector to store each reference's data
+    # Create a list to store each reference's data
     records <- list()
     current_record <- list()
 
     # Process each line in the RIS file
-    for (line in ris_lines) {
+    for (i in seq_along(ris_lines)) {
+      line <- ris_lines[i]
 
-      # If line starts with a field (e.g., TY for Type of Reference)
-      if (grepl("^[A-Z0-9]{2,5}.*-", line)) {
+      # If the line starts with a field (e.g., TY for Type of Reference)
+      if (grepl("^[A-Z0-9]{2,5}\\s+-\\s", line)) {
 
+        # Extract the field and value
         field <- substr(line, 1, 2)
         value <- substr(line, 7, nchar(line))
 
         # Skip adding empty fields
         if (value != "") {
-
           if (field == "AU") {
-
             if ("AU" %in% names(current_record)) {
-
-              # If AU field already exists, append to the vector of a
-
+              # Append to the existing AU vector
               current_record[["AU"]] <- paste0(current_record[["AU"]], "; ", value)
-            }
-
-            else {
-              # Otherwise, initialize with the first author
+            } else {
+              # Initialize with the first author
               current_record[["AU"]] <- value
             }
-          } else {
-
-            # Add field-value pairs to the current record
+          }
+          else{
+            # Add or overwrite field-value pairs in the current record
             current_record[[field]] <- value
           }
+        }
+      }
+
+      else if(grepl("^\\s", line)) {
+        # Handle continuation of the previous field
+        value <- trimws(line)
+        last_field <- field
+
+        if (!is.null(last_field)) {
+          # Append the continuation to the previous value
+          current_record[[last_field]] <- paste0(trimws(current_record[[last_field]]), " ", value)
         }
       }
 
@@ -162,6 +169,26 @@
         } else {
           print("uh-oh: Unexpected non-empty 'ER' field.")
           return(NULL)
+        }
+      }
+
+      if (line=="") {
+        # If current record contains more than 2 fields (considering at least some information is present)
+        if (length(current_record) > 2) {
+          records <- append(records, list(current_record))
+          current_record <- list()  # Reset for next record
+        }
+        else {
+          current_record <- list()
+        }
+      }
+
+      # Detect the end of a file
+      if (i == length(ris_lines)) {
+        if (length(current_record) > 2) {
+          # Add the current record to the list of records
+          records <- append(records, list(current_record))
+          current_record <- list()
         }
       }
     }
@@ -476,42 +503,49 @@ if(method == "txt"){
     # Read in the RIS file
     ris_lines <- readLines(path)
 
-    # Create a vector to store each reference's data
+    # Create a list to store each reference's data
     records <- list()
     current_record <- list()
 
     # Process each line in the RIS file
-    for (line in ris_lines) {
+    for (i in seq_along(ris_lines)) {
+      line <- ris_lines[i]
 
-      # If line starts with a field (e.g., TY for Type of Reference)
-      if (grepl("^[A-Z0-9]{2,5}.*-", line)) {
+      # If the line starts with a field (e.g., TY for Type of Reference)
+      if (grepl("^[A-Z0-9]{2,5}\\s+-\\s", line)) {
 
+        # Extract the field and value
         field <- substr(line, 1, 2)
         value <- substr(line, 7, nchar(line))
 
         # Skip adding empty fields
         if (value != "") {
-
           if (field == "AU") {
-
             if ("AU" %in% names(current_record)) {
-
-              # If AU field already exists, append to the vector of a
-
+              # Append to the existing AU vector
               current_record[["AU"]] <- paste0(current_record[["AU"]], "; ", value)
-            }
-
-            else {
-              # Otherwise, initialize with the first author
+            } else {
+              # Initialize with the first author
               current_record[["AU"]] <- value
             }
-          } else {
-
-          # Add field-value pairs to the current record
-          current_record[[field]] <- value
-        }
+          }
+          else{
+            # Add or overwrite field-value pairs in the current record
+            current_record[[field]] <- value
+          }
         }
       }
+
+          else if(grepl("^\\s", line)) {
+        # Handle continuation of the previous field
+        value <- trimws(line)
+        last_field <- field
+
+        if (!is.null(last_field)) {
+          # Append the continuation to the previous value
+          current_record[[last_field]] <- paste0(trimws(current_record[[last_field]]), " ", value)
+        }
+          }
 
       # If the line is 'ER' (End of Record), save the current record and reset
       if (grepl("^ER\\s.*-", line)) {
@@ -529,6 +563,26 @@ if(method == "txt"){
         } else {
           print("uh-oh: Unexpected non-empty 'ER' field.")
           return(NULL)
+        }
+      }
+
+      if (line=="") {
+          # If current record contains more than 2 fields (considering at least some information is present)
+          if (length(current_record) > 2) {
+            records <- append(records, list(current_record))
+            current_record <- list()  # Reset for next record
+          }
+         else {
+           current_record <- list()
+         }
+      }
+
+      # Detect the end of a file
+      if (i == length(ris_lines)) {
+        if (length(current_record) > 2) {
+          # Add the current record to the list of records
+          records <- append(records, list(current_record))
+          current_record <- list()
         }
       }
     }
