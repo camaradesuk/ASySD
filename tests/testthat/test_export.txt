@@ -1,0 +1,4 @@
+Custom 1	Author	Title	Year	Secondary Title	Abstract	DOI	Number	url	Pages	Volume	isbn	Name of Database	Label	record_id	Reference Type	ISBN/ISSN	URL
+1	Author 1	Title 1	2020	Journal 1	Abstract 1	DOI 1	1		1-10	10	ISBN 1	Source 1	Label1	1	Journal Article	ISBN 1	
+2	Author 2	Title 2	2021	Journal 2	Abstract 2	DOI 2	2		20-30	20	ISBN 2	Source 2	Label2	2	Journal Article	ISBN 2	
+3	Author 3	Title 3	2022	Journal 3	Abstract 3	DOI 3	3		40-50	30	ISBN 3	Source 3	Label3	3	Journal Article	ISBN 3	
