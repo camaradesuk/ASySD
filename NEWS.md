@@ -1,3 +1,7 @@
+# ASySD 0.4.4
+
+* Fixed issue with RIS import and replaced synthesisr RIS dependency
+
 # ASySD 0.4.3
 
 * Fixed bug in manual deduplication to allow users to proceed before every article has been reviewed
