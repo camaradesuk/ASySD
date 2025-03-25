@@ -439,7 +439,6 @@ generate_dup_id <- function(true_pairs, raw_citations, keep_source, keep_label, 
 
   if(post_auto_dedup == TRUE){
 
-
   # get df of duplicate ids and record ids
   true_pairs_small <- true_pairs %>%
     select(duplicate_id.x, duplicate_id.y) %>%
@@ -495,9 +494,6 @@ generate_dup_id <- function(true_pairs, raw_citations, keep_source, keep_label, 
     raw_citations <- raw_citations %>%
       mutate(record_id = as.character(.data$record_id))
 
-    duplicate_id$record_id <- as.character(duplicate_id$record_id)
-    raw_citations$record_id <- as.character(raw_citations$record_id)
-
     # make character
     duplicate_id <- true_pairs_small %>%
       group_by(ComponentID) %>%
@@ -505,6 +501,9 @@ generate_dup_id <- function(true_pairs, raw_citations, keep_source, keep_label, 
       summarise(record_id = paste(record_ids, collapse = ", ")) %>%
       tidyr::separate_rows(record_id, sep= ", ") %>%
       distinct()
+
+    duplicate_id$record_id <- as.character(duplicate_id$record_id)
+    raw_citations$record_id <- as.character(raw_citations$record_id)
 
     duplicate_id <- duplicate_id %>%
       right_join(raw_citations) %>%
