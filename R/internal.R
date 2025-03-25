@@ -438,7 +438,7 @@ generate_dup_id <- function(true_pairs, raw_citations, keep_source, keep_label){
 
   # get df of duplicate ids and record ids
   true_pairs_small <- true_pairs %>%
-    select(record_id1, record_id2) %>%
+    select(duplicate_id.x, duplicate_id.y) %>%
     unique()
 
   # Create a graph from the Edges1 DataFrame
@@ -448,25 +448,26 @@ generate_dup_id <- function(true_pairs, raw_citations, keep_source, keep_label){
   cc <- igraph::components(g)
 
   # Add a new column to the Edges1 DataFrame with the component ID for each row
-  true_pairs_small$ComponentID <- cc$membership[match(true_pairs_small$record_id1, names(cc$membership))]
+  true_pairs_small$ComponentID <- cc$membership[match(true_pairs_small$duplicate_id.x, names(cc$membership))]
 
   # Get the unique component IDs
   uniqueIDs <- unique(true_pairs_small$ComponentID)
 
-  raw_citations <- raw_citations %>%
-    mutate(record_id = as.character(.data$record_id))
-
   # make character
   duplicate_id <- true_pairs_small %>%
     group_by(ComponentID) %>%
-    tidyr::unite(record_ids, record_id1, record_id2, sep = ", ") %>%
+    tidyr::unite(record_ids, duplicate_id.x, duplicate_id.y, sep = ", ") %>%
     summarise(record_id = paste(record_ids, collapse = ", ")) %>%
     tidyr::separate_rows(record_id, sep= ", ") %>%
     distinct()
 
+  duplicate_id$record_id <- as.character(duplicate_id$record_id)
+  raw_citations$record_id <- as.character(raw_citations$record_id)
+
   duplicate_id <- duplicate_id %>%
     right_join(raw_citations) %>%
     mutate(ComponentID = ifelse(is.na(ComponentID), paste0(max(duplicate_id$ComponentID)+row_number()), ComponentID))
+  duplicate_id <- unique(duplicate_id)
 
   if(!is.null(keep_label)){
 
