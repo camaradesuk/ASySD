@@ -49,7 +49,7 @@ dedup_citations_add_manual <- function(unique_citations, merge_citations=TRUE, k
     unique_citations <- unique_citations %>%
       rename(record_id = duplicate_id)
 
-    res <- generate_dup_id(additional_pairs, unique_citations, keep_source, keep_label)
+    res <- generate_dup_id(additional_pairs, unique_citations, keep_source, keep_label, post_auto_dedup=TRUE)
     unique_citations_with_metadata <- merge_metadata(res, extra_merge_fields)
 
     return(unique_citations_with_metadata)
