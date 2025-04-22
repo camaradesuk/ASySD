@@ -1,3 +1,7 @@
+# ASySD 0.4.5
+
+* Fixed bug in manual dedup which was preventing removal of some TRUE duplicates (marked by humans)
+
 # ASySD 0.4.4
 
 * Fixed issue with RIS import and replaced synthesisr RIS dependency
