@@ -364,17 +364,34 @@ identify_true_matches <- function(pairs){
         (pages>0.8 & volume>0.8 & title>0.95 & author>0.80 & isbn>0.99))
 
 
+  # Define the DOI regex
+  doi_pattern <- "\\b10\\.\\d{4,9}/[-._;()/:A-Z0-9]+\\b"
+
   # Find papers with low matching dois - often indicates FALSE positive matches
   true_pairs_mismatch_doi <- true_pairs %>%
     filter(!(is.na(doi)| doi ==0 | doi > 0.99)) %>%
-    filter(!(title > 0.9 & abstract > 0.9 & (journal|isbn > 0.9)))
+    mutate(title_match_ls = levenshteinSim(title1, title2)) %>%
+    filter(!(title_match_ls > 0.95 & abstract> 0.9 & author > 0.9 & pages > 0.9 &(journal|isbn > 0.9))) %>%
+    select(-title_match_ls)
+  # mutate(title_match_ls = levenshteinSim(title1, title2)) %>%
+  # filter(!(title_match_ls > 0.95 & abstract> 0.9 & author > 0.9 & pages > 0.9 &(journal|isbn > 0.9))) %>%
+  # select(-title_match_ls)
+
+  # Filter to only rows with valid DOIs and extract the DOI
+  true_pairs_mismatch_doi <- true_pairs_mismatch_doi %>%
+    filter(stringr::str_detect(doi1, doi_pattern)) %>%
+    filter(stringr::str_detect(doi2, doi_pattern))
+
+  # Find papers with low matching dois - often indicates FALSE positive matches
+  true_pairs_mismatch_doi2 <- true_pairs %>%
+    filter(!(is.na(doi)| doi ==0 | doi > 0.99))
+
 
   # Remove papers with low matching dois from filtered matched
   true_pairs <- true_pairs %>%
-    filter(is.na(doi)| doi > 0.99 | doi == 0 | (title > 0.9 & abstract>0.9 & (journal|isbn > 0.9)))
+    anti_join(true_pairs_mismatch_doi)
 
   true_pairs <- unique(true_pairs)
-
   # Make year numeric, then find matches where year differs
   true_pairs$year1 <- as.numeric(as.character(true_pairs$year1))
   true_pairs$year2 <- as.numeric(as.character(true_pairs$year2))
@@ -439,38 +456,38 @@ generate_dup_id <- function(true_pairs, raw_citations, keep_source, keep_label, 
 
   if(post_auto_dedup == TRUE){
 
-  # get df of duplicate ids and record ids
-  true_pairs_small <- true_pairs %>%
-    select(duplicate_id.x, duplicate_id.y) %>%
-    unique()
+    # get df of duplicate ids and record ids
+    true_pairs_small <- true_pairs %>%
+      select(duplicate_id.x, duplicate_id.y) %>%
+      unique()
 
-  # Create a graph from the Edges1 DataFrame
-  g <- igraph::graph_from_data_frame(true_pairs_small, directed = FALSE)
+    # Create a graph from the Edges1 DataFrame
+    g <- igraph::graph_from_data_frame(true_pairs_small, directed = FALSE)
 
-  # Get the connected components of the graph
-  cc <- igraph::components(g)
+    # Get the connected components of the graph
+    cc <- igraph::components(g)
 
-  # Add a new column to the Edges1 DataFrame with the component ID for each row
-  true_pairs_small$ComponentID <- cc$membership[match(true_pairs_small$duplicate_id.x, names(cc$membership))]
+    # Add a new column to the Edges1 DataFrame with the component ID for each row
+    true_pairs_small$ComponentID <- cc$membership[match(true_pairs_small$duplicate_id.x, names(cc$membership))]
 
-  # Get the unique component IDs
-  uniqueIDs <- unique(true_pairs_small$ComponentID)
+    # Get the unique component IDs
+    uniqueIDs <- unique(true_pairs_small$ComponentID)
 
-  # make character
-  duplicate_id <- true_pairs_small %>%
-    group_by(ComponentID) %>%
-    tidyr::unite(record_ids, duplicate_id.x, duplicate_id.y, sep = ", ") %>%
-    summarise(record_id = paste(record_ids, collapse = ", ")) %>%
-    tidyr::separate_rows(record_id, sep= ", ") %>%
-    distinct()
+    # make character
+    duplicate_id <- true_pairs_small %>%
+      group_by(ComponentID) %>%
+      tidyr::unite(record_ids, duplicate_id.x, duplicate_id.y, sep = ", ") %>%
+      summarise(record_id = paste(record_ids, collapse = ", ")) %>%
+      tidyr::separate_rows(record_id, sep= ", ") %>%
+      distinct()
 
-  duplicate_id$record_id <- as.character(duplicate_id$record_id)
-  raw_citations$record_id <- as.character(raw_citations$record_id)
+    duplicate_id$record_id <- as.character(duplicate_id$record_id)
+    raw_citations$record_id <- as.character(raw_citations$record_id)
 
-  duplicate_id <- duplicate_id %>%
-    right_join(raw_citations) %>%
-    mutate(ComponentID = ifelse(is.na(ComponentID), paste0(max(duplicate_id$ComponentID)+row_number()), ComponentID))
-  duplicate_id <- unique(duplicate_id)
+    duplicate_id <- duplicate_id %>%
+      right_join(raw_citations) %>%
+      mutate(ComponentID = ifelse(is.na(ComponentID), paste0(max(duplicate_id$ComponentID)+row_number()), ComponentID))
+    duplicate_id <- unique(duplicate_id)
 
   } else {
 
@@ -736,31 +753,32 @@ keep_one_unique_citation <- function(true_pairs_with_ids){
 
 merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields) {
 
-    # If on a rerun, include record_ids into the merging, otherwise merge record_id field
-    if (!"record_ids" %in% names(matched_pairs_with_ids)) {
-      matched_pairs_with_ids$record_ids <- matched_pairs_with_ids$record_id
-    }
+  # If on a rerun, include record_ids into the merging, otherwise merge record_id field
+  if (!"record_ids" %in% names(matched_pairs_with_ids)) {
+    matched_pairs_with_ids$record_ids <- matched_pairs_with_ids$record_id
+  }
 
-    merge_fields <- c("record_ids", "label", "source", extra_merge_fields)
+  merge_fields <- c("record_ids", "label", "source", extra_merge_fields)
 
-    paste_unless_blank_or_na <- function(x) {
-      if (all(is.na(x))) return(NA)
-      if (all(x == "")) return ("")
-      paste(na.omit(x), collapse = ';;;')
-    }
+  paste_unless_blank_or_na <- function(x) {
+    if (all(is.na(x))) return(NA)
+    if (all(x == "")) return ("")
+    paste(na.omit(x), collapse = ';;;')
+  }
 
-      all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%
-        select(-record_id) %>%
-        mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
-        mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
-        group_by(.data$duplicate_id) %>%
-        summarise(across(everything(), ~ trimws(paste_unless_blank_or_na(.x))), .groups = "drop") %>% #merge all rows with same dup id, dont merge NA values
-        mutate(across(c(everything(), -{{merge_fields}}), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
-        mutate(across({{merge_fields}}, ~ gsub(.x, pattern = ";;;", replacement = ", ")))
+  all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%
+    select(-record_id) %>%
+    mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
+    mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
+    group_by(.data$duplicate_id) %>%
+    summarise(across(everything(), ~ trimws(paste_unless_blank_or_na(.x))), .groups = "drop") %>% #merge all rows with same dup id, dont merge NA values
+    mutate(across(c(everything(), -{{merge_fields}}), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only
+    mutate(across({{merge_fields}}, ~ gsub(.x, pattern = ";;;", replacement = ", ")))
 
-      # Ensure IDs are not repeated within the field (not sure why they would be though?)
-      all_metadata_with_duplicate_id$record_ids <- sapply(all_metadata_with_duplicate_id$record_ids, remove_string_dups)
+  # Ensure IDs are not repeated within the field (not sure why they would be though?)
+  all_metadata_with_duplicate_id$record_ids <- sapply(all_metadata_with_duplicate_id$record_ids, remove_string_dups)
 
-      return(all_metadata_with_duplicate_id)
+  return(all_metadata_with_duplicate_id)
 
 }
+
