@@ -29,8 +29,8 @@ ui <- navbarPage(
   shinyjs::useShinyjs(),
 
   tags$head(
-    if (file.exists("www/google-analytics.html")) {
-      includeHTML("www/google-analytics.html")
+    if (file.exists("google-analytics.html")) {
+      includeHTML("google-analytics.html")
     }
   ),
 
