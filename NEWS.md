@@ -1,3 +1,7 @@
+# ASySD (development version)
+
+* Fixed issue with analytics tracking link in shiny app
+
 # ASySD 0.4.5
 
 * Fixed bug in manual dedup which was preventing removal of some TRUE duplicates (marked by humans)
