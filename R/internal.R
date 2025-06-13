@@ -120,6 +120,9 @@ format_citations <- function(raw_citations){
   # Fix page formatting
   raw_citations$pages <- lapply(raw_citations$pages, function(x) gsub("--", "-", x))
 
+  # Normalise pages
+  raw_citations$pages <- sapply(raw_citations$pages, normalize_pages)
+
   # Make all upper case by selecting cols in order and formatting all metadata to upper
   # Note that source, label and record id are retained - important for joining later
   formatted_citations <- raw_citations %>%
@@ -150,6 +153,14 @@ format_citations <- function(raw_citations){
 
   formatted_citations<-formatted_citations %>%
     filter(!is.na(record_id))
+
+  # Extract single DOI
+  formatted_citations <- formatted_citations %>%
+    mutate(doi = stringr::str_extract(doi, "10\\.\\d{4,9}/[-._;()/:A-Z0-9]+"))
+
+  # Remove HTML tags
+  formatted_citations$title <- rm_html_tags(formatted_citations$title)
+  formatted_citations$abstract <- rm_html_tags(formatted_citations$abstract)
 
   # sort out NA / missing data formatting for optimal matching
   formatted_citations <- formatted_citations %>%
@@ -373,6 +384,12 @@ identify_true_matches <- function(pairs){
     mutate(title_match_ls = levenshteinSim(title1, title2)) %>%
     filter(!(title_match_ls > 0.95 & abstract> 0.9 & author > 0.9 & pages > 0.9 &(journal|isbn > 0.9))) %>%
     select(-title_match_ls)
+
+  true_pairs_mismatch_title <- true_pairs %>%
+    filter(!doi > 0.99) %>%
+    mutate(title_match_ls = levenshteinDist(title1, title2)) %>%
+    filter(title_match_ls > 2 & pages < 0.98)
+
   # mutate(title_match_ls = levenshteinSim(title1, title2)) %>%
   # filter(!(title_match_ls > 0.95 & abstract> 0.9 & author > 0.9 & pages > 0.9 &(journal|isbn > 0.9))) %>%
   # select(-title_match_ls)
@@ -382,14 +399,11 @@ identify_true_matches <- function(pairs){
     filter(stringr::str_detect(doi1, doi_pattern)) %>%
     filter(stringr::str_detect(doi2, doi_pattern))
 
-  # Find papers with low matching dois - often indicates FALSE positive matches
-  true_pairs_mismatch_doi2 <- true_pairs %>%
-    filter(!(is.na(doi)| doi ==0 | doi > 0.99))
-
 
   # Remove papers with low matching dois from filtered matched
   true_pairs <- true_pairs %>%
-    anti_join(true_pairs_mismatch_doi)
+    anti_join(true_pairs_mismatch_doi) %>%
+    anti_join(true_pairs_mismatch_title)
 
   true_pairs <- unique(true_pairs)
   # Make year numeric, then find matches where year differs
@@ -781,4 +795,66 @@ merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields) {
   return(all_metadata_with_duplicate_id)
 
 }
+
+
+
+#' Remove HTML tags from text
+#'
+#' A function that can be used to remove HTML tags from titles and abstracts
+#'
+#' @param string The input text for formatting
+#'
+#' @return This function returns the formatted input string, with HTML tags removed.
+#'
+#' @details Currently, only basic text formatting tags are identified and removed. See: https://www.w3schools.com/html/html_formatting.asp
+#'
+#'
+#' @examples
+#' \dontrun{
+#' # Example usage:
+#' df %>% mutate(across(c(title, abstract), ~ rm_html_tags(.)))
+#' }
+#'
+#' @export
+#'
+
+rm_html_tags <- function(string) {
+
+  pattern <- "<\\/?i>|<\\/?su(p|b)>|<\\/?bold>|<\\/?b>|<\\/?em>|<\\/?mark>|
+  <\\/?small>|<\\/?del>|<\\/?in(s|f)>"
+
+  try(string_nohtml <- gsub(pattern, "", string, ignore.case = T))
+
+  if(is.null(string_nohtml))
+    return(string)
+
+  else if(!is.null(string_nohtml))
+    return(string_nohtml)
+}
+
+
+normalize_pages <- function(page_range) {
+  page_range <- gsub("[–—−]", "-", page_range)  # Normalize dash types
+  page_range <- trimws(page_range)
+
+  # Split the range
+  parts <- unlist(strsplit(page_range, "-"))
+
+  # If only one page, return as-is
+  if (length(parts) != 2) return(page_range)
+
+  start <- parts[1]
+  end <- parts[2]
+
+  # Expand shorthand end pages (e.g. 343-5 => 343-345)
+  if (nchar(end) < nchar(start)) {
+    # Use the prefix of the start to complete the end
+    prefix_len <- nchar(start) - nchar(end)
+    prefix <- substr(start, 1, prefix_len)
+    end <- paste0(prefix, end)
+  }
+
+  return(paste0(trimws(start), "-", trimws(end)))
+}
+
 
