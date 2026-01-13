@@ -1,11 +1,11 @@
 pandoc: 3.1.11
-pkgdown: 2.1.3
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   basic-deduplication: basic-deduplication.html
   large-dedup: large-dedup.html
   search-updates: search-updates.html
-last_built: 2025-06-13T14:37Z
+last_built: 2026-01-13T17:13Z
 urls:
   reference: https://camaradesuk.github.io/ASySD/reference
   article: https://camaradesuk.github.io/ASySD/articles
