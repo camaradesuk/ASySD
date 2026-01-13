@@ -17,7 +17,7 @@ output:
 
 <img src="updated_logo.png" align="right" width="142"/>
 
-ASySD was developed in the [CAMARADES](https://www.ed.ac.uk/clinical-brain-sciences/research/camarades/about-camarades) research group at the University of Edinburgh by Kaitlyn Hair. Lukas Wallrich and the CiteSource team have also contributed significantly to ASySD, enabling the development of new features, improvements, and use cases. ASySD is actively maintained and enhanced as both an R package and a Shiny application, with ongoing development hosted on GitHub.
+ASySD was developed in the [CAMARADES](https://www.ed.ac.uk/clinical-brain-sciences/research/camarades/about-camarades) research group at the University of Edinburgh by Kaitlyn Hair (Note: Kaitlyn is now based at University College London). Lukas Wallrich and the CiteSource team have also contributed significantly to ASySD, enabling the development of new features, improvements, and use cases. ASySD is actively maintained and enhanced as both an R package and a Shiny application, with ongoing development hosted on GitHub.
 
 # Performance
 
@@ -34,7 +34,7 @@ The data import functionality within ASySD uses the [**synthesisr**](https://git
 
 # Issues and feature requests
 
-If you have any questions about the tool or come across a problem when trying to use it, please raise an issue on the [GitHub Repository](https://github.com/camaradesuk/ASySD) or send an email to [kaitlyn.hair\@ed.ac.uk](mailto:kaitlyn.hair@ed.ac.uk).
+If you have any questions about the tool or come across a problem when trying to use it, please raise an issue on the [GitHub Repository](https://github.com/camaradesuk/ASySD) or send an email to [kaitlyn.hair\@ucl.ac.uk](mailto:kaitlyn.hair@ucl.ac.uk).
 
 # Citation
 

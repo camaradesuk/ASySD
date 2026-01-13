@@ -2,7 +2,3 @@
 .Rhistory
 .RData
 .Ruserdata
-bin
-inst/shiny-examples/app/google-analytics.html
-packrat/lib*/
-inst/doc
