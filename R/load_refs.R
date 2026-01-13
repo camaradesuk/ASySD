@@ -269,7 +269,7 @@
         isbn = sapply(x, xpath2, ".//isbn"),
         secondary_title = sapply(x, xpath2, ".//titles/secondary-title"),
         accession_number = sapply(x, xpath2, ".//accession-num"),
-        keywords = sapply(x, keywords2),
+        keywords = sapply(x, getkw),
         type = sapply(x, xpath2, ".//ref-type", attr = "name"),
         label = sapply(x, xpath2, ".//label"),
         source = sapply(x, xpath2, ".//remote-database-name"),
@@ -383,29 +383,47 @@ if(method == "txt"){
     newdat<- XML::xmlParse(path)
     x <-  XML::getNodeSet(newdat,'//record')
 
-    xpath2 <-function(x, ...){
-      y <- XML::xpathSApply(x, ...)
-      y <- gsub(",", ";;;;;", y)  # remove commas if using comma separator
-      ifelse(length(y) == 0, NA,  paste(y, collapse=", "))
+    # Enhanced xpath2: optionally get attribute instead of node text
+    xpath2 <- function(x, path, attr = NULL) {
+      if (is.null(attr)) {
+        y <- XML::xpathSApply(x, path, XML::xmlValue)
+      } else {
+        y <- XML::xpathSApply(x, path, XML::xmlGetAttr, attr)
+      }
+      # Remove commas if using comma-separated fields
+      y <- gsub(",", ";;;;;", y)
+      if (length(y) == 0) return(NA)
+      paste(y, collapse = ", ")
+    }
+
+    getkw <- function(x, path = ".//keywords/keyword") {
+      kws <- XML::xpathSApply(x, path, XML::xmlValue)
+      if(length(kws) == 0) return("")   # no keywords
+      paste(kws, collapse = "; ")
     }
 
     newdat <- data.frame(
-      author = sapply(x, xpath2, ".//author", xmlValue),
-      year   = sapply(x, xpath2, ".//dates/year", xmlValue),
-      journal = sapply(x, xpath2, ".//periodical/full-title", xmlValue),
-      doi = sapply(x, xpath2, ".//electronic-resource-num", xmlValue),
-      title = sapply(x, xpath2, ".//titles/title", xmlValue),
-      pages = sapply(x, xpath2, ".//pages", xmlValue),
-      volume = sapply(x, xpath2, ".//volume", xmlValue),
-      number = sapply(x, xpath2, ".//number", xmlValue),
-      abstract = sapply(x, xpath2, ".//abstract", xmlValue),
-      record_id = sapply(x, xpath2, ".//rec-number", xmlValue),
-      isbn = sapply(x, xpath2, ".//isbn", xmlValue),
-      secondary_title = sapply(x, xpath2, ".//titles/secondary-title", xmlValue),
-      label = sapply(x, xpath2, ".//label", xmlValue),
-      url = sapply(x, xpath2, ".//url", xmlValue),
-      source = sapply(x, xpath2, ".//remote-database-name", xmlValue)) %>%
-      mutate(journal = ifelse(is.na(.data$journal), .data$secondary_title, .data$journal))
+      author = sapply(x, xpath2, ".//author"),
+      year   = sapply(x, xpath2, ".//dates/year"),
+      journal = sapply(x, xpath2, ".//periodical/full-title"),
+      doi = sapply(x, xpath2, ".//electronic-resource-num"),
+      title = sapply(x, xpath2, ".//titles/title"),
+      pages = sapply(x, xpath2, ".//pages"),
+      volume = sapply(x, xpath2, ".//volume"),
+      number = sapply(x, xpath2, ".//number"),
+      abstract = sapply(x, xpath2, ".//abstract"),
+      record_id = sapply(x, xpath2, ".//rec-number"),
+      isbn = sapply(x, xpath2, ".//isbn"),
+      secondary_title = sapply(x, xpath2, ".//titles/secondary-title"),
+      accession_number = sapply(x, xpath2, ".//accession-num"),
+      keywords = sapply(x, getkw),
+      type = sapply(x, xpath2, ".//ref-type", attr = "name"),
+      label = sapply(x, xpath2, ".//label"),
+      source = sapply(x, xpath2, ".//remote-database-name"),
+      url = sapply(x, xpath2, ".//urls/related-urls/url"),
+      database = sapply(x, xpath2, ".//remote-database-name")
+    ) %>%
+      mutate(journal = ifelse(is.na(.data$journal) | .data$journal == "", .data$secondary_title, .data$journal))
 
     cols <- c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source", "url")
     newdat[cols[!(cols %in% colnames(newdat))]] = NA
