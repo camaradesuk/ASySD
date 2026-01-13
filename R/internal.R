@@ -394,11 +394,13 @@ identify_true_matches <- function(pairs){
 
   # Get potential duplicates for manual deduplication
   maybe_pairs <- pairs %>%
-    filter(title>0.85 & author>0.75 |
-             title>0.80 & abstract>0.80 |
-             title>0.80 & isbn>0.99 |
-             title>0.80 & journal>0.80) %>%
+    mutate(title_match_ls = levenshteinSim(title1, title2)) %>%
+    filter(title_match_ls>0.80 & author>0.75 |
+             title_match_ls>0.80 & abstract>0.80 |
+             title_match_ls>0.80 & isbn>0.99 |
+             title_match_ls>0.80 & journal>0.80) %>%
     filter(doi > 0.99 | doi == 0 | is.na(doi)) %>%
+    select(-title_match_ls) %>%
     filter(!(as.numeric(year1) - as.numeric(year2) >1)) %>%
     filter(!(as.numeric(year2) - as.numeric(year1) >1))
 
