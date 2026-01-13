@@ -394,18 +394,14 @@ identify_true_matches <- function(pairs){
 
   # Get potential duplicates for manual deduplication
   maybe_pairs <- pairs %>%
-    filter(title_match_ls>0.80 & author>0.75 |
-             title_match_ls>0.80 & abstract>0.80 |
-             title>0.85 & abstract>0.90 |
-             title>0.85 & pages>0.90 |
-             title>0.85 & author>0.90 |
-             title_match_ls>0.80 & isbn>0.99 |
-             doi>0.999 |
-             title_match_ls>0.80 & journal>0.80) %>%
-    filter(!(as.numeric(year1) - as.numeric(year2) >2) | doi>0.999) %>%
-    filter(!(as.numeric(year2) - as.numeric(year1) >2) | doi>0.999)
-    select(-title_match_ls) 
-  
+    filter(title>0.85 & author>0.75 |
+             title>0.80 & abstract>0.80 |
+             title>0.80 & isbn>0.99 |
+             title>0.80 & journal>0.80) %>%
+    filter(doi > 0.99 | doi == 0 | is.na(doi)) %>%
+    filter(!(as.numeric(year1) - as.numeric(year2) >1)) %>%
+    filter(!(as.numeric(year2) - as.numeric(year1) >1))
+
   maybe_pairs$record_id1 <- as.character(maybe_pairs$record_id1)
   maybe_pairs$record_id2 <- as.character(maybe_pairs$record_id2)
   true_pairs$record_id1 <- as.character(true_pairs$record_id1)
