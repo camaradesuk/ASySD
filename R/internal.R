@@ -400,6 +400,7 @@ identify_true_matches <- function(pairs){
              title_match_ls>0.80 & isbn>0.99 |
              title_match_ls>0.80 & journal>0.80) %>%
     filter(doi > 0.99 | doi == 0 | is.na(doi)) %>%
+    select(-title_match_ls) %>%
     filter(!(as.numeric(year1) - as.numeric(year2) >1)) %>%
     filter(!(as.numeric(year2) - as.numeric(year1) >1))
 
