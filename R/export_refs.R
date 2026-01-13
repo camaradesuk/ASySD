@@ -234,16 +234,9 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
       citations$notes <- citations$flag
     }
 
-    citations$source_type <- "JOUR" #for RIS import to work
-    citations <- citations %>% dplyr::select(source_type , everything()) %>%
-      dplyr::select(-isbn)
-    citations <- tidyr::separate(citations, .data$pages, into = c("start_page", "end_page"), sep = "-", convert = TRUE)
-    citations$accession_number <- citations$accession
+    write_ris_df(citations, file = filename)
 
-    synthesisr::write_refs(citations,
-                           format = "ris",
-                           file = filename
-    )
+
   } else if(type == "bib"){
 
     citations <- as.data.frame(citations)
@@ -261,3 +254,113 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 }
 
 
+write_ris_df <- function(df, file) {
+
+  stopifnot(is.data.frame(df))
+
+  # convert all NA to empty string
+  df[is.na(df)] <- ""
+
+  # helper: split author string safely
+  split_authors <- function(x) {
+    if (x == "") return(character(0))
+
+    if (grepl("\\.\\s*,", x)) {
+      authors <- unlist(strsplit(x, "\\.\\s*,\\s*"))
+      authors <- paste0(trimws(authors), ".")
+    } else if (grepl(";", x)) {
+      authors <- trimws(unlist(strsplit(x, ";")))
+    } else {
+      authors <- trimws(x)
+    }
+
+    authors
+  }
+
+  # helper: split keywords
+  split_keywords <- function(x) {
+    if (x == "") return(character(0))
+    if (grepl(";", x)) {
+      kw <- trimws(unlist(strsplit(x, ";")))
+    } else if (grepl(",", x)) {
+      kw <- trimws(unlist(strsplit(x, ",")))
+    } else {
+      kw <- x
+    }
+    kw
+  }
+
+  con <- file(file, open = "w", encoding = "UTF-8")
+  on.exit(close(con))
+
+  for (i in seq_len(nrow(df))) {
+
+    cat("TY  - JOUR\n", file = con)
+
+    ## Authors
+    if ("author" %in% names(df)) {
+      for (a in split_authors(df$author[i])) {
+        cat("AU  - ", a, "\n", sep = "", file = con)
+      }
+    }
+
+    ## Core fields
+    if ("title" %in% names(df) && df$title[i] != "")
+      cat("TI  - ", df$title[i], "\n", sep = "", file = con)
+
+    if ("journal" %in% names(df) && df$journal[i] != "")
+      cat("JO  - ", df$journal[i], "\n", sep = "", file = con)
+
+    if ("year" %in% names(df) && df$year[i] != "")
+      cat("PY  - ", df$year[i], "\n", sep = "", file = con)
+
+    if ("volume" %in% names(df) && df$volume[i] != "")
+      cat("VL  - ", df$volume[i], "\n", sep = "", file = con)
+
+    if ("number" %in% names(df) && df$number[i] != "")
+      cat("IS  - ", df$number[i], "\n", sep = "", file = con)
+
+    if ("pages" %in% names(df) && df$pages[i] != "") {
+      pg <- strsplit(df$pages[i], "-", fixed = TRUE)[[1]]
+      cat("SP  - ", trimws(pg[1]), "\n", sep = "", file = con)
+      if (length(pg) > 1)
+        cat("EP  - ", trimws(pg[2]), "\n", sep = "", file = con)
+    }
+
+    if ("doi" %in% names(df) && df$doi[i] != "")
+      cat("DO  - ", df$doi[i], "\n", sep = "", file = con)
+
+    if ("abstract" %in% names(df) && df$abstract[i] != "")
+      cat("AB  - ", df$abstract[i], "\n", sep = "", file = con)
+
+    ## Optional fields
+    if ("notes" %in% names(df) && df$notes[i] != "")
+      cat("N1  - ", df$notes[i], "\n", sep = "", file = con)
+
+    if ("database" %in% names(df) && df$database[i] != "")
+      cat("DB  - ", df$database[i], "\n", sep = "", file = con)
+
+    if ("keywords" %in% names(df) && df$keywords[i] != "") {
+      for (kw in split_keywords(df$keywords[i])) {
+        cat("KW  - ", kw, "\n", sep = "", file = con)
+      }
+    }
+
+    if ("url" %in% names(df) && df$url[i] != "")
+      cat("UR  - ", df$url[i], "\n", sep = "", file = con)
+
+    if ("isbn" %in% names(df) && df$isbn[i] != "")
+      cat("SN  - ", df$isbn[i], "\n", sep = "", file = con)
+
+    if ("accession_number" %in% names(df) && df$accession_number[i] != "")
+      cat("AN  - ", df$accession_number[i], "\n", sep = "", file = con)
+
+    ## Optional identifiers
+    if ("record_id" %in% names(df) && df$record_id[i] != "")
+      cat("ID  - ", df$record_id[i], "\n", sep = "", file = con)
+
+    cat("ER  -\n\n", file = con)
+  }
+
+  invisible(TRUE)
+}
