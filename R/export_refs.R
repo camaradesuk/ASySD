@@ -17,10 +17,14 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
 
   if(type == "txt"){
 
+    if (!"url" %in% names(citations)) {
+      citations <- citations %>% dplyr::mutate(url = "")
+    }
+
     refs <- citations %>%
-      dplyr::mutate("Reference Type" = "Journal Article") %>%
-      dplyr::mutate("ISBN/ISSN" =  isbn,
-                    URL = ifelse("url" %in% names(.), url, "")) %>%
+      dplyr::mutate(`Reference Type` = "Journal Article") %>%
+      dplyr::mutate(`ISBN/ISSN` = isbn,
+                    URL = url) %>%
       dplyr::rename(`Custom 1` = duplicate_id,
              Author = author,
              Title = title,
@@ -159,10 +163,14 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
     }
 
 
+    if (!"url" %in% names(citations)) {
+      citations <- citations %>% dplyr::mutate(url = "")
+    }
+
     refs <- citations %>%
       dplyr::mutate(`Reference Type` = "Journal Article") %>%
       dplyr::mutate(`ISBN/ISSN` = isbn,
-                    URL = ifelse("url" %in% names(.), url, "")) %>%
+                    URL = url) %>%
       dplyr::rename(`Custom 1` = duplicate_id,
              Author = author,
              Title = title,

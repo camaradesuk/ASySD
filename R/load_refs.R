@@ -287,8 +287,32 @@
 
 if(method == "txt"){
 
-  cols <- c("label","isbn","source")
-  newdat <- read.table(path)
+  cols <- c("label","isbn","source", "url")
+  newdat <- read.delim(path, sep = "\t", header = TRUE, stringsAsFactors = FALSE)
+
+  # Create a mapping from source names to your desired names
+  name_map <- c(
+    "Author"          = "author",
+    "Year"            = "year",
+    "Secondary.Title" = "journal",
+    "DOI"             = "doi",
+    "Title"           = "title",
+    "Pages"           = "pages",
+    "Volume"          = "volume",
+    "Number"          = "number",
+    "Abstract"        = "abstract",
+    "Custom.1"        = "record_id",
+    "ISBN.ISSN"       = "isbn",
+    "Url"             = "url"
+  )
+
+  # Rename only the columns that match
+  for (old in names(name_map)) {
+    if (old %in% names(newdat)) {
+      names(newdat)[names(newdat) == old] <- name_map[old]
+    }
+  }
+
   newdat[cols[!(cols %in% colnames(newdat))]] = NA
 
         newdat$file_name <- name
