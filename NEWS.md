@@ -1,6 +1,9 @@
-# ASySD (development version)
+# ASySD 0.4.6
 
 * Fixed issue with analytics tracking link in shiny app
+* Improvements to XML import of Keywords and Reference Type 
+* Improvements to RIS export - Author separation 
+* Fixed bug in Tab Delimited export with repeated URLs
 
 # ASySD 0.4.5
 
