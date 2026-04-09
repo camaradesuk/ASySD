@@ -6,3 +6,7 @@
 ^pkgdown$
 ^\.github$
 ^data-raw$
+^vignettes/systematic_search\.xml$
+^vignettes/citations\.txt$
+^vignettes/old_sr_search\.csv$
+^vignettes/new_sr_search\.csv$

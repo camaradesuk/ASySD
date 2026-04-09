@@ -10,7 +10,7 @@
 #' @author Kaitlyn Hair \email{kaitlyn.hair@ed.ac.uk}
 "field_codes_wos"
 
-#' Exmaple citation data
+#' Example citation data
 #'
 #' @docType data
 "citations_df"

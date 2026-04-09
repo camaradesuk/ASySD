@@ -1,16 +1,21 @@
-#' Load in citations for deduplication
+﻿#' Load in citations for deduplication
 #'
 #' This function loads in a citation file within the shiny app
 #' @import RefManageR
 #' @importFrom glue glue
 #' @import bibliometrix
 #' @import XML
-#' @importFrom utils read.csv read.table
+#' @importFrom utils read.csv read.table read.delim
 #' @param paths Relative paths to the citations file or files
 #' @param method  Import method
 #' @param names File names of input file or files
 #' @return A dataframe of the loaded citations.
 #' @export
+#' @examples
+#' \dontrun{
+#' citations <- load_multi_search(paths = c("file1.ris", "file2.ris"),
+#'   names = c("file1", "file2"), method = "ris")
+#' }
 
  load_multi_search <-function(paths, names, method){
 
@@ -167,7 +172,7 @@
             current_record <- list()  # Reset for next record
           }
         } else {
-          print("uh-oh: Unexpected non-empty 'ER' field.")
+          warning("Unexpected non-empty 'ER' field.")
           return(NULL)
         }
       }
@@ -362,6 +367,12 @@ if(method == "txt"){
  #' @param method Import method. Valid options are "endnote", "csv", "txt", "bib", "zotero_csv", and "ris". If not provided, the method will be inferred from the file extension.
  #' @return A dataframe of the citations.
  #' @export
+ #' @examples
+ #' # Load a CSV file
+ #' file <- system.file("shiny-examples/app/www", package = "ASySD")
+ #' \dontrun{
+ #' citations <- load_search("path/to/file.csv")
+ #' }
 
  load_search <- function(path, method = NULL) {
 
@@ -618,7 +629,7 @@ if(method == "txt"){
             current_record <- list()  # Reset for next record
           }
         } else {
-          print("uh-oh: Unexpected non-empty 'ER' field.")
+          warning("Unexpected non-empty 'ER' field.")
           return(NULL)
         }
       }

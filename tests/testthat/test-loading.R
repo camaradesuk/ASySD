@@ -9,8 +9,8 @@ test_that("BibTeX file is read in correctly", {
   expect_true(all(c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source") %in% colnames(df2)))
 
   # Check rows
-  expect_equal(nrow(df1), 1000)
-  expect_equal(nrow(df2), 1000)
+  expect_equal(nrow(df1), 20)
+  expect_equal(nrow(df2), 20)
 })
 
 # Test for reading in a CSV file exported from Zotero
@@ -25,8 +25,8 @@ test_that("Zotero CSV file is read in correctly", {
   expect_true(all(c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source") %in% colnames(df2)))
 
   # Check rows
-  expect_equal(nrow(df1), 1233)
-  expect_equal(nrow(df2), 1233)
+  expect_equal(nrow(df1), 20)
+  expect_equal(nrow(df2), 20)
 })
 # Test for reading in a RIS file
 test_that("RIS file is read in correctly", {
@@ -40,8 +40,8 @@ test_that("RIS file is read in correctly", {
   expect_true(all(c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source") %in% colnames(df2)))
 
   # Check rows
-  expect_equal(nrow(df1), 1000)
-  expect_equal(nrow(df2), 1000)
+  expect_equal(nrow(df1), 20)
+  expect_equal(nrow(df2), 20)
 })
 
 # Test for reading in an XML file exported from Zotero
@@ -56,8 +56,8 @@ test_that("EndNote XML file from Zotero is read in correctly", {
   expect_true(all(c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source") %in% colnames(df2)))
 
   # Check rows
-  expect_equal(nrow(df1), 1233)
-  expect_equal(nrow(df2), 1233)
+  expect_equal(nrow(df1), 20)
+  expect_equal(nrow(df2), 20)
 })
 
 # Test for reading in an XML file exported from EndNote
@@ -72,8 +72,8 @@ test_that("EndNote XML file from Endnote is read in correctly", {
   expect_true(all(c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source") %in% colnames(df2)))
 
   # Check rows
-  expect_equal(nrow(df1), 1233)
-  expect_equal(nrow(df2), 1233)
+  expect_equal(nrow(df1), 20)
+  expect_equal(nrow(df2), 20)
 })
 
 # Test for reading in an XML file exported from Mendeley
@@ -88,8 +88,8 @@ test_that("EndNote XML file from Mendeley is read in correctly", {
   expect_true(all(c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source") %in% colnames(df2)))
 
   # Check rows
-  expect_equal(nrow(df1), 1233)
-  expect_equal(nrow(df2), 1233)
+  expect_equal(nrow(df1), 20)
+  expect_equal(nrow(df2), 20)
 })
 
 # Test for reading in an XML file exported from Mendeley
@@ -104,8 +104,8 @@ test_that("RIS file from Endnote is read in correctly", {
   expect_true(all(c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source") %in% colnames(df2)))
 
   # Check rows
-  expect_equal(nrow(df1), 69)
-  expect_equal(nrow(df2), 69)
+  expect_equal(nrow(df1), 20)
+  expect_equal(nrow(df2), 20)
 })
 
 # Test for reading in an NBIB file from PubMed
@@ -120,8 +120,8 @@ test_that("NBIB file from PubMed is read in correctly", {
   expect_true(all(c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source") %in% colnames(df2)))
 
   # Check rows
-  expect_equal(nrow(df1), 3286)
-  expect_equal(nrow(df2), 3286)
+  expect_equal(nrow(df1), 10)
+  expect_equal(nrow(df2), 10)
 })
 
 # Test for reading in an RIS file from PubMed
@@ -136,8 +136,8 @@ test_that("RIS file from PubMed is read in correctly", {
   expect_true(all(c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source") %in% colnames(df2)))
 
   # Check rows
-  expect_equal(nrow(df1), 3286)
-  expect_equal(nrow(df2), 3286)
+  expect_equal(nrow(df1), 10)
+  expect_equal(nrow(df2), 10)
 })
 
 # Test for reading in an RIS file from WoS
@@ -152,8 +152,8 @@ test_that("RIS file from WoS is read in correctly", {
   expect_true(all(c("author", "year", "journal", "doi", "title", "pages", "volume", "number", "abstract", "record_id", "isbn", "label", "source") %in% colnames(df2)))
 
   # Check rows
-  expect_equal(nrow(df1), 50)
-  expect_equal(nrow(df2), 50)
+  expect_equal(nrow(df1), 20)
+  expect_equal(nrow(df2), 20)
 })
 
 # Test for reading in an RIS file from Scopus

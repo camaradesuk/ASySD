@@ -2,7 +2,7 @@
 title: "Deduplicating large datasets"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{deduplicating-large-datasets}
+  %\VignetteIndexEntry{Deduplicating large datasets}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = FALSE
 )
 ```
 

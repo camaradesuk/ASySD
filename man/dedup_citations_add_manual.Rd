@@ -36,21 +36,16 @@ Unique citations post manual deduplication
 This function performs additional deduplication with the additional of manually flagged duplicates
 }
 \examples{
-
+\donttest{
 # Perform deduplication
 result <- dedup_citations(citations_df, keep_source="Embase")
 
 # View unique citations
 res_unique <- result$unique
-head(result$manual_dedup)
 
 true_dups <- result$manual_dedup[1:5,]
-# or equivalently
-true_dups <- result$manual_dedup
-
-# You can also use a Shiny interface to review the potential duplicates
-# true_dups <- manual_dedup_shiny(result$manual_dedup)
 
 final_result <- dedup_citations_add_manual(res_unique, additional_pairs = true_dups)
+}
 
 }

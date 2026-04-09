@@ -1,4 +1,6 @@
-#' This function writes citation data to disk in different formats
+#' Write citation data to disk
+#'
+#' This function writes citation data to disk in different formats.
 #' @export
 #' @import dplyr
 #' @import synthesisr
@@ -7,7 +9,11 @@
 #' @param citations A data frame containing citations - usually post-deduplication
 #' @param type export type
 #' @param filename output file name
-#' @return file export
+#' @return No return value, called for side effects (writes file to disk).
+#' @examples
+#' \dontrun{
+#' write_citations(citations, type = "csv", filename = "output.csv")
+#' }
 
 write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filename){
 
@@ -107,7 +113,9 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
   }
 }
 
-#' This function writes citation data to disk in different formats
+#' Write citation data to disk (app version)
+#'
+#' This function writes citation data to disk in different formats.
 #' @export
 #' @import dplyr
 #' @importFrom rlang .data
@@ -116,7 +124,7 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
 #' @param citations A dataframe containing citations - usually post-deduplication
 #' @param type export type
 #' @param filename output file name
-#' @return file export
+#' @return No return value, called for side effects (writes file to disk).
 #' @examples
 #'
 #' # Create sample citations dataframe
@@ -264,6 +272,7 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 
 #' Export a Data Frame to RIS Format
 #'
+#' @noRd
 #' @description
 #' `write_ris_df()` exports a data frame containing bibliographic information
 #' to a `.ris` file suitable for EndNote, Zotero, or other reference managers.

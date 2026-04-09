@@ -18,3 +18,10 @@ A dataframe of the citations.
 This function loads a citations file using the specified import method. If the method is not provided, it defaults to one based on the file extension.
 Supported methods: "endnote", "csv", "txt", "bib", "zotero_csv", "ris".
 }
+\examples{
+# Load a CSV file
+file <- system.file("shiny-examples/app/www", package = "ASySD")
+\dontrun{
+citations <- load_search("path/to/file.csv")
+}
+}

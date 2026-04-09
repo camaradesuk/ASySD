@@ -42,12 +42,12 @@ This function deduplicates citation data
 The following fields will be used in \code{raw_citations} (if provided): record_id, author, year, journal, doi, title, pages, volume, number, abstract, isbn, label, source
 }
 \examples{
-
+\donttest{
 # Perform deduplication
 result <- dedup_citations(citations_df, keep_source="Embase")
 
 # View unique citations
 head(result$unique)
-
+}
 
 }

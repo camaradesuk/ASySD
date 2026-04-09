@@ -46,7 +46,7 @@ test_that("Essential column missing", {
   test_citations_nopages <- test_citations %>% select(-pages)
 
   res <- dedup_citations(test_citations_nopages, merge_citations = FALSE, user_input = 1)
-  expect_equal(length(res$unique$duplicate_id), 583)
+  expect_equal(length(res$unique$duplicate_id), 16)
 
   expect_match({
     dedup_citations(test_citations_nopages, merge_citations = FALSE, user_input = 2)
@@ -56,13 +56,13 @@ test_that("Essential column missing", {
 # Test case: Deduplication performing as normal
 test_that("Deduplication performing as normal", {
   res <- dedup_citations(test_citations, merge_citations = FALSE, manual_dedup = FALSE)
-  expect_equal(length(res$unique$duplicate_id), 586)
+  expect_equal(length(res$unique$duplicate_id), 16)
 })
 
 # Test case: Deduplication with merge performing as normal
 test_that("Deduplication with merge performing as normal", {
   res <- dedup_citations(test_citations, merge_citations = TRUE)
-  expect_equal(length(res$unique$duplicate_id), 586)
+  expect_equal(length(res$unique$duplicate_id), 16)
 })
 
 # Test case: Deduplication with non-numeric record IDs

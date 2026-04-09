@@ -37,12 +37,12 @@ This function splits citations into batches, deduplicates each batch, and binds 
 The following fields will be used in \code{citations} (if provided): record_id, author, year, journal, doi, title, pages, volume, number, abstract, isbn, label, source
 }
 \examples{
-
+\donttest{
 # Perform batch deduplication
 result <- batch_dedup(citations_df, batch_n = 250)
 
 # View unique citations
 head(result$unique)
-
+}
 
 }

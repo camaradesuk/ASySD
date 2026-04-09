@@ -20,13 +20,13 @@
 #' @export
 #'
 #' @examples
-#'
+#' \donttest{
 #' # Perform deduplication
 #' result <- dedup_citations(citations_df, keep_source="Embase")
 #'
 #' # View unique citations
 #' head(result$unique)
-#'
+#' }
 #'
 dedup_citations <- function(raw_citations, manual_dedup = TRUE,
                             merge_citations=TRUE, keep_source=NULL, keep_label=NULL, extra_merge_fields = NULL,

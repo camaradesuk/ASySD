@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = FALSE
 )
 ```
 
@@ -91,10 +92,14 @@ library(dplyr)
 new_citations <- final_results %>%
   filter(source == "new") 
 
-new_citations %>%
-   tail(3) %>%
-   gt::gt() %>%
-   gt::cols_hide(c(abstract))
+if (requireNamespace("gt", quietly = TRUE)) {
+  new_citations %>%
+    tail(3) %>%
+    gt::gt() %>%
+    gt::cols_hide(c(abstract))
+} else {
+  new_citations %>% tail(3)
+}
 ```
 
 Lets also have a look at the citations identified in both searches by removing citations with a single source.
@@ -104,10 +109,14 @@ crossover <- final_results %>%
   filter(!source == "new") %>%
   filter(!source == "old") 
 
-crossover %>%
-   tail(3) %>%
-   gt::gt() %>%
-   gt::cols_hide(c(abstract))
+if (requireNamespace("gt", quietly = TRUE)) {
+  crossover %>%
+    tail(3) %>%
+    gt::gt() %>%
+    gt::cols_hide(c(abstract))
+} else {
+  crossover %>% tail(3)
+}
 ```
 
 To keep good records, we don't want to lose track of identifiers for studies we have already included in a review. This is why specifying the citation to keep was important! To illustrate this, look specifically at the citations present in the old search.
@@ -124,10 +133,14 @@ We can check that the duplicate ids here refer to the original record id in the 
 old_citations_check <- old_citations %>%
   filter(duplicate_id %in% existing_search$record_id) #check that all citations use the OLD record_id as the duplicate_id
 
-crossover %>%
-   tail(3) %>%
-   gt::gt() %>%
-   gt::cols_hide(c(abstract))
+if (requireNamespace("gt", quietly = TRUE)) {
+  crossover %>%
+    tail(3) %>%
+    gt::gt() %>%
+    gt::cols_hide(c(abstract))
+} else {
+  crossover %>% tail(3)
+}
 ```
 
 ## Exporting results

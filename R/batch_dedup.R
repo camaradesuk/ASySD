@@ -13,13 +13,13 @@
 #' @import dplyr
 #' @export
 #' @examples
-#'
+#' \donttest{
 #' # Perform batch deduplication
 #' result <- batch_dedup(citations_df, batch_n = 250)
 #'
 #' # View unique citations
 #' head(result$unique)
-#'
+#' }
 #'
 batch_dedup <- function(citations, batch_n = 50000, keep_source=NULL, keep_label=NULL, sort_by = c("year", "title","author")){
 
@@ -40,7 +40,7 @@ batch_dedup <- function(citations, batch_n = 50000, keep_source=NULL, keep_label
 
   # Arrange dataframe based on sortby criteria
   citations <- citations %>%
-    arrange_at(valid_sortby)
+    arrange(across(all_of(valid_sortby)))
 
 
   split_citations <- split(citations, ceiling(seq(nrow(citations))/batch_n))

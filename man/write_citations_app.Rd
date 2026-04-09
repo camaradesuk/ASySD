@@ -2,7 +2,7 @@
 % Please edit documentation in R/export_refs.R
 \name{write_citations_app}
 \alias{write_citations_app}
-\title{This function writes citation data to disk in different formats}
+\title{Write citation data to disk (app version)}
 \usage{
 write_citations_app(citations, type = c("ris", "txt", "csv", "bib"), filename)
 }
@@ -14,10 +14,10 @@ write_citations_app(citations, type = c("ris", "txt", "csv", "bib"), filename)
 \item{filename}{output file name}
 }
 \value{
-file export
+No return value, called for side effects (writes file to disk).
 }
 \description{
-This function writes citation data to disk in different formats
+This function writes citation data to disk in different formats.
 }
 \examples{
 

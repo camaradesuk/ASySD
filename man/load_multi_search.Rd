@@ -19,3 +19,9 @@ A dataframe of the loaded citations.
 \description{
 This function loads in a citation file within the shiny app
 }
+\examples{
+\dontrun{
+citations <- load_multi_search(paths = c("file1.ris", "file2.ris"),
+  names = c("file1", "file2"), method = "ris")
+}
+}

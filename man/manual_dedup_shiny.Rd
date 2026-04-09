@@ -29,7 +29,7 @@ be passed to \code{dedup_citations_add_manual()} to complete the deduplication, 
 be used to call this function again if manual review is not yet complete.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 
 # Perform deduplication
 result <- dedup_citations(citations_df, keep_source="Embase")

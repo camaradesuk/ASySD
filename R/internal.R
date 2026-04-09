@@ -62,7 +62,7 @@ order_citations <- function(raw_citations, extra_merge_fields) {
   # arrange by Year and presence of an Abstract - we want to keep newer records and records with an abstract preferentially
   ordered_citations <- raw_citations %>%
     arrange(abstract, year) %>%
-    dplyr::mutate_if(is.character, utf8::utf8_encode) # make sure utf8
+    dplyr::mutate(across(where(is.character), utf8::utf8_encode)) # make sure utf8
 
   # select relevant columns
   ordered_citations <- ordered_citations  %>%
@@ -115,7 +115,7 @@ format_citations <- function(raw_citations){
     mutate(author = ifelse(.data$author=="Anonymous", "Unknown", .data$author)) %>%
     mutate(author = ifelse(.data$author=="Anonymous.", "Unknown", .data$author)) %>%
     mutate(author = ifelse(.data$author=="[Anonymous] A", "Unknown", .data$author)) %>%
-    dplyr::mutate_if(is.character, utf8::utf8_encode) # make sure utf8
+    dplyr::mutate(across(where(is.character), utf8::utf8_encode)) # make sure utf8
 
   # Fix page formatting
   raw_citations$pages <- lapply(raw_citations$pages, function(x) gsub("--", "-", x))
@@ -733,6 +733,7 @@ keep_one_unique_citation <- function(true_pairs_with_ids){
 #' @return Dataframe of formatted citation data with duplicate id
 #' @importFrom stats na.omit
 #' @import dplyr
+#' @noRd
 
 merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields) {
 
@@ -751,8 +752,8 @@ merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields) {
 
       all_metadata_with_duplicate_id <- matched_pairs_with_ids %>%
         select(-record_id) %>%
-        mutate_if(is.character, utf8::utf8_encode) %>% # ensure all utf8
-        mutate_all(~replace(., .=='NA', NA)) %>% #replace NA
+        mutate(across(where(is.character), utf8::utf8_encode)) %>% # ensure all utf8
+        mutate(across(everything(), ~replace(., .=='NA', NA))) %>% #replace NA
         group_by(.data$duplicate_id) %>%
         summarise(across(everything(), ~ trimws(paste_unless_blank_or_na(.x))), .groups = "drop") %>% #merge all rows with same dup id, dont merge NA values
         mutate(across(c(everything(), -{{merge_fields}}), ~ gsub(.x, pattern = ";;;.*", replacement = ""))) %>% #remove extra values in each col, keep first one only

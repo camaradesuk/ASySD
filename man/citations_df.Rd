@@ -3,7 +3,7 @@
 \docType{data}
 \name{citations_df}
 \alias{citations_df}
-\title{Exmaple citation data}
+\title{Example citation data}
 \format{
 An object of class \code{data.frame} with 1001 rows and 15 columns.
 }
@@ -11,6 +11,6 @@ An object of class \code{data.frame} with 1001 rows and 15 columns.
 citations_df
 }
 \description{
-Exmaple citation data
+Example citation data
 }
 \keyword{datasets}
