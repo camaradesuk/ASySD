@@ -47,6 +47,12 @@ test_that("write_citations_app txt export tolerates missing optional columns", {
   filename <- "test_export_app.txt"
   write_citations_app(citations, "txt", filename)
   expect_true(file.exists(filename))
+
+  exported <- utils::read.delim(filename, sep = "\t", check.names = FALSE)
+  expect_true(all(c("Keywords", "Accession Number", "URL") %in% names(exported)))
+  expect_equal(exported$Keywords, c("", ""))
+  expect_equal(exported$`Accession Number`, c("", ""))
+  expect_equal(exported$URL, c("", ""))
 })
 
 test_that("write_citations exports data frame correctly in csv format", {
