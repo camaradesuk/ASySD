@@ -764,3 +764,107 @@ merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields) {
       return(all_metadata_with_duplicate_id)
 
 }
+
+#' Normalise a Comma-Separated Author String
+#'
+#' Converts author strings in the format `Surname, Initials, Surname, Initials`
+#' into a standard `Surname INITIALS; Surname INITIALS` format.
+#' The function removes punctuation noise (e.g. trailing full stops), squishes
+#' whitespace, and transliterates accented characters to ASCII.
+#'
+#' @param x A single character string containing authors.
+#' @importFrom utils head
+#'
+#' @return A single normalised character string, or `NA_character_` if `x` is
+#'   missing/empty.
+#'
+#' @examples
+#' a <- "SurnameA,. AB, SurnameB, C, SurnameC, DE"
+#' b <- "SurnameA,. A.B., SurnameB, C., SurnameC, D.E."
+#' normalise_author_list(a)
+#' normalise_author_list(b)
+normalise_author_list <- function(x) {
+  if (is.na(x) || !nzchar(trimws(x))) {
+    return(NA_character_)
+  }
+
+  x <- iconv(x, from = "", to = "ASCII//TRANSLIT")
+  x <- gsub("\r|\n", " ", x)
+  x <- gsub(",\\s*\\.", ",", x)
+  x <- gsub("\\.", "", x)
+  x <- gsub("\\s+", " ", x)
+  x <- trimws(x)
+
+  parts <- strsplit(x, ",", fixed = TRUE)[[1]]
+  parts <- trimws(parts)
+  parts <- parts[nzchar(parts)]
+
+  if (length(parts) %% 2 != 0) {
+    return(x)
+  }
+
+  authors <- character(length(parts) / 2)
+  author_index <- 1
+
+  for (index in seq(1, length(parts), by = 2)) {
+    surname <- trimws(parts[index])
+    initials <- gsub("[^A-Za-z]", "", parts[index + 1])
+
+    if (!nzchar(surname) || !nzchar(initials)) {
+      next
+    }
+
+    surname <- paste(
+      toupper(substring(strsplit(surname, "\\s+")[[1]], 1, 1)),
+      substring(strsplit(surname, "\\s+")[[1]], 2),
+      sep = "",
+      collapse = " "
+    )
+
+    authors[author_index] <- paste(surname, toupper(initials))
+    author_index <- author_index + 1
+  }
+
+  authors <- authors[nzchar(authors)]
+
+  if (!length(authors)) {
+    return(NA_character_)
+  }
+
+  paste(authors, collapse = "; ")
+}
+
+#' Normalise an Author Column in a Data Frame
+#'
+#' Applies [normalise_author_list()] to every row in a selected column.
+#'
+#' @param df A data frame.
+#' @param column Name of the author column to normalise. Defaults to
+#'   `"author"`.
+#' @importFrom utils head
+#'
+#' @return A data frame with the selected column normalised.
+#'
+#' @examples
+#' df <- data.frame(
+#'   author = c(
+#'     "SurnameA,. AB, SurnameB, C",
+#'     "SurnameA,. A.B., SurnameB, C."
+#'   ),
+#'   title = c("record one", "record two"),
+#'   stringsAsFactors = FALSE
+#' )
+#' out <- normalise_author_column(df, "author")
+#' head(out)
+normalise_author_column <- function(df, column = "author") {
+  if (!column %in% names(df)) {
+    stop(sprintf("Column '%s' not found in data frame.", column))
+  }
+
+  df[[column]] <- vapply(df[[column]], normalise_author_list, character(1))
+  df
+}
+
+
+
+
