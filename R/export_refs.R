@@ -31,6 +31,10 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
       citations <- citations %>% dplyr::mutate(accession_number = "")
     }
 
+    if ("keywords" %in% names(citations)) {
+      citations <- citations %>% dplyr::mutate(Keywords = keywords)
+    }
+
     refs <- citations %>%
       dplyr::mutate(`Reference Type` = "Journal Article") %>%
       dplyr::mutate(`ISBN/ISSN` = isbn,

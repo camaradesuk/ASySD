@@ -55,6 +55,32 @@ test_that("write_citations_app txt export tolerates missing optional columns", {
   expect_equal(exported$URL, c("", ""))
 })
 
+test_that("write_citations txt export retains keywords when provided", {
+  citations <- data.frame(
+    duplicate_id = 1,
+    author = "Author 1",
+    title = "Title 1",
+    year = 2020,
+    journal = "Journal 1",
+    abstract = "Abstract 1",
+    doi = "DOI 1",
+    number = 1,
+    pages = "1-10",
+    volume = 10,
+    isbn = "ISBN 1",
+    source = "Source 1",
+    label = "Label1",
+    keywords = "alpha; beta"
+  )
+
+  filename <- "test_export_keywords.txt"
+  write_citations(citations, "txt", filename)
+
+  exported <- utils::read.delim(filename, sep = "\t", check.names = FALSE)
+  expect_true("Keywords" %in% names(exported))
+  expect_equal(exported$Keywords, "alpha; beta")
+})
+
 test_that("write_citations exports data frame correctly in csv format", {
   citations <- data.frame(
     duplicate_id = 1:3,
