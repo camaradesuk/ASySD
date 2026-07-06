@@ -31,14 +31,15 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
       citations <- citations %>% dplyr::mutate(accession_number = "")
     }
 
-    if ("keywords" %in% names(citations)) {
-      citations <- citations %>% dplyr::mutate(Keywords = keywords)
+    if (!"keywords" %in% names(citations)) {
+      citations <- citations %>% dplyr::mutate(keywords = "")
     }
 
     refs <- citations %>%
       dplyr::mutate(`Reference Type` = "Journal Article") %>%
       dplyr::mutate(`ISBN/ISSN` = isbn,
                     URL = url,
+                    Keywords = keywords,
                     `Accession Number` = accession_number) %>%
       dplyr::rename(`Custom 1` = duplicate_id,
                     Author = author,
@@ -56,7 +57,7 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
         `Reference Type`, Author, Year,
         `Secondary Title`, DOI, Title,
         Pages, Volume, Number, Abstract,
-        dplyr::any_of(c("Keywords", "Accession Number")),
+        Keywords, `Accession Number`,
         `Custom 1`, `ISBN/ISSN`, Label,
         `Name of Database`, URL
       )

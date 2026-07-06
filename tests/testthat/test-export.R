@@ -23,7 +23,12 @@ test_that("write_citations exports data frame correctly in txt format", {
   # Check if the file content matches the expected content
   expected_content <- readLines(filename)
   expect_equal(length(expected_content), 4) # Check header + 3 rows
-  # Add more specific checks here if needed
+
+  exported <- utils::read.delim(filename, sep = "\t", check.names = FALSE)
+  expect_true(all(c("Keywords", "Accession Number", "URL") %in% names(exported)))
+  expect_equal(exported$Keywords, c("", "", ""))
+  expect_equal(exported$`Accession Number`, c("", "", ""))
+  expect_equal(exported$URL, c("", "", ""))
 })
 
 test_that("write_citations_app txt export tolerates missing optional columns", {
