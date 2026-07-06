@@ -33,21 +33,25 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
                     URL = url,
                     `Accession Number` = accession_number) %>%
       dplyr::rename(`Custom 1` = duplicate_id,
-             Author = author,
-             Title = title,
-             Volume = volume,
-             Number = number,
-             Label = label,
-             Year = year,
-             Abstract = abstract,
-             Pages = pages,
-             DOI = doi,
-             `Name of Database` = source,
-             `Secondary Title` = journal) %>%
-      dplyr::select(`Reference Type`, Author, Year,
-             `Secondary Title`, DOI, Title,
-              Pages, Volume, Number, Abstract, Keywords, `Accession Number`,
-             `Custom 1`, `ISBN/ISSN`, Label, `Name of Database`, URL)
+                    Author = author,
+                    Title = title,
+                    Volume = volume,
+                    Number = number,
+                    Label = label,
+                    Year = year,
+                    Abstract = abstract,
+                    Pages = pages,
+                    DOI = doi,
+                    `Name of Database` = source,
+                    `Secondary Title` = journal) %>%
+      dplyr::select(
+        `Reference Type`, Author, Year,
+        `Secondary Title`, DOI, Title,
+        Pages, Volume, Number, Abstract,
+        dplyr::any_of(c("Keywords", "Accession Number")),
+        `Custom 1`, `ISBN/ISSN`, Label,
+        `Name of Database`, URL
+      )
 
     write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
