@@ -26,6 +26,29 @@ test_that("write_citations exports data frame correctly in txt format", {
   # Add more specific checks here if needed
 })
 
+test_that("write_citations_app txt export tolerates missing optional columns", {
+  citations <- data.frame(
+    duplicate_id = 1:2,
+    author = c("Author 1", "Author 2"),
+    title = c("Title 1", "Title 2"),
+    year = c(2020, 2021),
+    journal = c("Journal 1", "Journal 2"),
+    abstract = c("Abstract 1", "Abstract 2"),
+    doi = c("DOI 1", "DOI 2"),
+    number = c(1, 2),
+    pages = c("1-10", "20-30"),
+    volume = c(10, 20),
+    isbn = c("ISBN 1", "ISBN 2"),
+    source = c("Source 1", "Source 2"),
+    label = c("Label1", "Label2"),
+    file_name = c("", "")
+  )
+
+  filename <- "test_export_app.txt"
+  write_citations_app(citations, "txt", filename)
+  expect_true(file.exists(filename))
+})
+
 test_that("write_citations exports data frame correctly in csv format", {
   citations <- data.frame(
     duplicate_id = 1:3,
@@ -133,4 +156,3 @@ test_that("write_citations exports data frame correctly in bib format", {
   # Check if the file content matches the expected content
   expected_content <- readLines(filename)
 })
-

@@ -27,6 +27,10 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
       citations <- citations %>% dplyr::mutate(url = "")
     }
 
+    if (!"accession_number" %in% names(citations)) {
+      citations <- citations %>% dplyr::mutate(accession_number = "")
+    }
+
     refs <- citations %>%
       dplyr::mutate(`Reference Type` = "Journal Article") %>%
       dplyr::mutate(`ISBN/ISSN` = isbn,
@@ -177,6 +181,14 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
 
     if (!"url" %in% names(citations)) {
       citations <- citations %>% dplyr::mutate(url = "")
+    }
+
+    if (!"keywords" %in% names(citations)) {
+      citations <- citations %>% dplyr::mutate(keywords = "")
+    }
+
+    if (!"accession_number" %in% names(citations)) {
+      citations <- citations %>% dplyr::mutate(accession_number = "")
     }
 
     refs <- citations %>%
