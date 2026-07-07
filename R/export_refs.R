@@ -165,7 +165,7 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
 #'
 write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), filename){
 
-  cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source')
+  cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'duplicate_id', 'label', 'source')
   citations[cols_to_modify] <- lapply(citations[cols_to_modify], function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
   citations <- citations %>%
