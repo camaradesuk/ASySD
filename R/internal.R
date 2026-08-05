@@ -777,12 +777,7 @@ merge_metadata <- function(matched_pairs_with_ids, extra_merge_fields) {
 #'
 #' @return A single normalised character string, or `NA_character_` if `x` is
 #'   missing/empty.
-#'
-#' @examples
-#' a <- "SurnameA,. AB, SurnameB, C, SurnameC, DE"
-#' b <- "SurnameA,. A.B., SurnameB, C., SurnameC, D.E."
-#' normalise_author_list(a)
-#' normalise_author_list(b)
+#' @noRd
 normalise_author_list <- function(x) {
   if (is.na(x) || !nzchar(trimws(x))) {
     return(NA_character_)
@@ -844,18 +839,7 @@ normalise_author_list <- function(x) {
 #' @importFrom utils head
 #'
 #' @return A data frame with the selected column normalised.
-#'
-#' @examples
-#' df <- data.frame(
-#'   author = c(
-#'     "SurnameA,. AB, SurnameB, C",
-#'     "SurnameA,. A.B., SurnameB, C."
-#'   ),
-#'   title = c("record one", "record two"),
-#'   stringsAsFactors = FALSE
-#' )
-#' out <- normalise_author_column(df, "author")
-#' head(out)
+#' @noRd
 normalise_author_column <- function(df, column = "author") {
   if (!column %in% names(df)) {
     stop(sprintf("Column '%s' not found in data frame.", column))
