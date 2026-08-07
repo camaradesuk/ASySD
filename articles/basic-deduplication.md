@@ -5,6 +5,7 @@
 First, install and load the ASySD package.
 
 ``` r
+
 # devtools::install_github("camaradesuk/ASySD")
 library(ASySD)
 ```
@@ -17,6 +18,7 @@ function. You can specify alternative file formats such as CSV, RIS, or
 BIB if needed.
 
 ``` r
+
 citations <- load_search("systematic_search.xml", method="endnote")
 ```
 
@@ -26,6 +28,7 @@ Remove duplicate citations automatically using the `dedup_citations`
 function.
 
 ``` r
+
 results <- dedup_citations(citations, merge_citations = TRUE)
 #> formatting data...
 #> identifying potential duplicates...
@@ -44,6 +47,7 @@ majority of duplicates. There will likely be some duplicates remaining
 which need manual review by a human (see next step).
 
 ``` r
+
 unique_citations <- results$unique
 ```
 
@@ -60,6 +64,7 @@ True duplicates will have a “match” in the result column. Non duplicates
 with have a “no match” in the result column.
 
 ``` r
+
 post_manual_review <- manual_dedup_shiny(potential_duplicates) 
 ```
 
@@ -72,6 +77,7 @@ function. Include the results of manual deduplication using the
 will be considered by ASySD to be additional duplicates.
 
 ``` r
+
 final_results <- dedup_citations_add_manual(unique_citations,additional_pairs = post_manual_review)
 ```
 
@@ -81,5 +87,6 @@ You can now write your results to a file for import into a reference
 manager or systematic review software
 
 ``` r
+
 write_citations(final_results, type="txt", filename="citations.txt")
 ```

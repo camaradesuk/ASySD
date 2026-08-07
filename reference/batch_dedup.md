@@ -60,6 +60,7 @@ abstract, isbn, label, source
 ## Examples
 
 ``` r
+
 # Perform batch deduplication
 result <- batch_dedup(citations_df, batch_n = 250)
 #> Splitting up dataframe

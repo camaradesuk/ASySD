@@ -28,3 +28,5 @@
   : This function writes citation data to disk in different formats
 - [`write_citations_app()`](https://camaradesuk.github.io/ASySD/reference/write_citations_app.md)
   : This function writes citation data to disk in different formats
+- [`write_ris_df()`](https://camaradesuk.github.io/ASySD/reference/write_ris_df.md)
+  : Export a Data Frame to RIS Format

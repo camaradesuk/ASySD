@@ -29,6 +29,7 @@ file export
 ## Examples
 
 ``` r
+
 # Create sample citations dataframe
 citations <- data.frame(
   author = c("Author1", "Author2"),

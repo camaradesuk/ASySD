@@ -70,6 +70,7 @@ abstract, isbn, label, source
 ## Examples
 
 ``` r
+
 # Perform deduplication
 result <- dedup_citations(citations_df, keep_source="Embase")
 #> formatting data...

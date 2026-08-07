@@ -39,21 +39,21 @@ optimal performance, we recommend having as much metadata as possible.
 If using a dataframe, you should ideally have the following column
 names:
 
-| **Name**              | **Definition**                                                                                                                                                                       |
-|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **author**            | The author(s) of the publication                                                                                                                                                     |
-| **year**              | The year the publication was published                                                                                                                                               |
-| **journal**           | The name of the journal in which the publication appeared                                                                                                                            |
-| **doi**               | The Digital Object Identifier (DOI) assigned to the publication                                                                                                                      |
-| **title**             | The title of the publication                                                                                                                                                         |
-| **pages**             | The page numbers of the publication                                                                                                                                                  |
-| **volume**            | The volume number of the publication (if applicable)                                                                                                                                 |
-| **number**            | The issue number of the publication (if applicable)                                                                                                                                  |
-| **abstract**          | Abstract of publication                                                                                                                                                              |
-| **record_id**         | A unique identifier for the publication. If this is not obtained from the citation file, ASySD will genereate an id for each citation based on row numbers.                          |
-| **isbn**              | The International Standard Book Number (ISBN) assigned to the publication (if applicable). If unavailable, the International Standard Serial Number can be used here instead (ISSN). |
-| **label (optional)**  | A label or tag assigned to the publication (if applicable) - for example, **new search** or **old search**                                                                           |
-| **source (optional)** | The source or database from which the publication was obtained - for example **wos**, **embase**, **pubmed**, **scopus**                                                             |
+| **Name** | **Definition** |
+|----|----|
+| **author** | The author(s) of the publication |
+| **year** | The year the publication was published |
+| **journal** | The name of the journal in which the publication appeared |
+| **doi** | The Digital Object Identifier (DOI) assigned to the publication |
+| **title** | The title of the publication |
+| **pages** | The page numbers of the publication |
+| **volume** | The volume number of the publication (if applicable) |
+| **number** | The issue number of the publication (if applicable) |
+| **abstract** | Abstract of publication |
+| **record_id** | A unique identifier for the publication. If this is not obtained from the citation file, ASySD will genereate an id for each citation based on row numbers. |
+| **isbn** | The International Standard Book Number (ISBN) assigned to the publication (if applicable). If unavailable, the International Standard Serial Number can be used here instead (ISSN). |
+| **label (optional)** | A label or tag assigned to the publication (if applicable) - for example, **new search** or **old search** |
+| **source (optional)** | The source or database from which the publication was obtained - for example **wos**, **embase**, **pubmed**, **scopus** |
 
 ## Automatically deduplicate citation data
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## ASySD 0.4.7
+
+- Resolves issue with author formatting and keyword formatting when
+  importing into Endnote
+
 ## ASySD 0.4.6
 
 - Fixed issue with analytics tracking link in shiny app
