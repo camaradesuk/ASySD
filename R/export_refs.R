@@ -15,32 +15,52 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
   cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source')
   citations[cols_to_modify] <- lapply(citations[cols_to_modify], function(x) gsub("\\r\\n|\\r|\\n", "", x))
 
+  citations <- citations %>%
+    mutate(author = sapply(author, function(x) {
+      names_split <- unlist(strsplit(x, " And "))
+      paste0(sub("^(\\S+)", "\\1.", names_split), collapse = "; ")
+    }))
+
   if(type == "txt"){
 
     if (!"url" %in% names(citations)) {
       citations <- citations %>% dplyr::mutate(url = "")
     }
 
+    if (!"accession_number" %in% names(citations)) {
+      citations <- citations %>% dplyr::mutate(accession_number = "")
+    }
+
+    if (!"keywords" %in% names(citations)) {
+      citations <- citations %>% dplyr::mutate(keywords = "")
+    }
+
     refs <- citations %>%
       dplyr::mutate(`Reference Type` = "Journal Article") %>%
       dplyr::mutate(`ISBN/ISSN` = isbn,
-                    URL = url) %>%
+                    URL = url,
+                    Keywords = keywords,
+                    `Accession Number` = accession_number) %>%
       dplyr::rename(`Custom 1` = duplicate_id,
-             Author = author,
-             Title = title,
-             Volume = volume,
-             Number = number,
-             Label = label,
-             Year = year,
-             Abstract = abstract,
-             Pages = pages,
-             DOI = doi,
-             `Name of Database` = source,
-             `Secondary Title` = journal) %>%
-      dplyr::mutate(`Reference Type`, Author, Year,
-             `Secondary Title`, DOI, Title,
-              Pages, Volume, Number, Abstract,
-             `Custom 1`, `ISBN/ISSN`, Label, `Name of Database`, URL)
+                    Author = author,
+                    Title = title,
+                    Volume = volume,
+                    Number = number,
+                    Label = label,
+                    Year = year,
+                    Abstract = abstract,
+                    Pages = pages,
+                    DOI = doi,
+                    `Name of Database` = source,
+                    `Secondary Title` = journal) %>%
+      dplyr::select(
+        `Reference Type`, Author, Year,
+        `Secondary Title`, DOI, Title,
+        Pages, Volume, Number, Abstract,
+        Keywords, `Accession Number`,
+        `Custom 1`, `ISBN/ISSN`, Label,
+        `Name of Database`, URL
+      )
 
     write.table(refs, filename, sep="\t",
                 col.names=TRUE, row.names = F, quote=FALSE, na="")
@@ -145,12 +165,13 @@ write_citations <- function(citations, type=c("ris", "txt", "csv", "bib"), filen
 #'
 write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), filename){
 
-  cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'record_id', 'label', 'source')
+  cols_to_modify <-  c('title', 'year', 'journal', 'abstract', 'doi', 'number', 'pages', 'volume', 'isbn', 'duplicate_id', 'label', 'source')
   citations[cols_to_modify] <- lapply(citations[cols_to_modify], function(x) gsub("\\r\\n|\\r|\\n", "", x))
-
 
   citations <- citations %>%
     dplyr::select(-file_name)
+
+  citations <- normalise_author_column(citations, column="author")
 
   if(type == "txt"){
 
@@ -167,10 +188,20 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
       citations <- citations %>% dplyr::mutate(url = "")
     }
 
+    if (!"keywords" %in% names(citations)) {
+      citations <- citations %>% dplyr::mutate(keywords = "")
+    }
+
+    if (!"accession_number" %in% names(citations)) {
+      citations <- citations %>% dplyr::mutate(accession_number = "")
+    }
+
     refs <- citations %>%
       dplyr::mutate(`Reference Type` = "Journal Article") %>%
       dplyr::mutate(`ISBN/ISSN` = isbn,
-                    URL = url) %>%
+                    URL = url,
+                    Keywords = keywords,
+                    `Accession Number` = accession_number) %>%
       dplyr::rename(`Custom 1` = duplicate_id,
              Author = author,
              Title = title,
@@ -184,6 +215,8 @@ write_citations_app <- function(citations, type=c("ris", "txt", "csv", "bib"), f
              `Name of Database` = source,
              `Secondary Title` = journal) %>%
       dplyr::select("Reference Type", Author, Year,
+                    Keywords,
+                    `Accession Number`,
              "Secondary Title", DOI, Title,
              Pages, Volume, Number, Abstract,
              "Custom 1", "Custom 2", "ISBN/ISSN", Label, "Name of Database", URL)

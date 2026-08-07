@@ -9,7 +9,7 @@ output:
 ```{=html}
 <style>
 .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
-    background-color: #754E9B;
+    background-color: #80CBC4;
 }
 </style>
 ```
